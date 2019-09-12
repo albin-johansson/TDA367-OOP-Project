@@ -5,3 +5,7 @@ jdk:
 notifications:
   email: false
   slack: smash-bros-workspace:IRqJyRAcRp0P6hAxhyw3edEo
+branches:
+  only:
+  - master
+  - dev
