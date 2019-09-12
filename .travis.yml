@@ -2,3 +2,8 @@ language: java
 script:
   - jdk_switcher use oraclejdk8
   - jdk_switcher use openjdk8
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
