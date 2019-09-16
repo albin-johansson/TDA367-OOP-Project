@@ -5,7 +5,7 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.chalmers.tda367</groupId>
-  <artifactId>image-editor</artifactId>
+  <artifactId>pimp</artifactId>
   <version>0.1</version>
   <packaging>jar</packaging>
   <name>ImageEditor</name>
