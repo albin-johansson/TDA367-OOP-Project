@@ -14,7 +14,7 @@ public class HelloWorld extends Application {
     stage.setWidth(800);
     stage.setHeight(600);
 
-    stage.setTitle("Image Editor");
+    stage.setTitle("PIMP - Professional Image Manipulation Program");
 
     stage.show();
   }
