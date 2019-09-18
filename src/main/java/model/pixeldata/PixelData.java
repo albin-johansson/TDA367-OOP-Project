@@ -74,6 +74,35 @@ public final class PixelData implements IReadOnlyPixelData {
    */
   public void setPixel(int x, int y, Color color) {
   /**
+   * Checks if a coordinate is within the matrix.
+   *
+   * @param x the zero-indexed x coordinate of the pixel.
+   * @param y the zero-indexed y coordinate of the pixel.
+   * @return true if coordinate is in range, otherwise false.
+   */
+  private boolean validCoordinate(int x, int y) {
+    return !(x < 0 || y < 0 || x >= getWidth() || y >= getHeight());
+  }
+
+  /**
+   * Returns the width (amount of pixels horizontally) of the PixelData.
+   *
+   * @return the amount of pixels in width.
+   */
+  private int getWidth() {
+    return pixels.get(0).size();
+  }
+
+  /**
+   * Returns the height (amount of pixels vertically) of the PixelData.
+   *
+   * @return the amount of pixels in height.
+   */
+  private int getHeight() {
+    return pixels.size();
+  }
+
+  /**
    * Check if a specific coordinate is valid and throws a IndexOutOfBoundsException otherwise.
    *
    * @param x the zero-indexed x coordinate of the pixel.
