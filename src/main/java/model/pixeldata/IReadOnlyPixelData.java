@@ -1,4 +1,4 @@
-package model;
+package model.pixeldata;
 
 import java.awt.Color;
 import java.util.Iterator;
