@@ -6,4 +6,9 @@ package controller;
  */
 public interface IController {
 
+  /**
+   * Runs the application.
+   */
+  void run();
+
 }

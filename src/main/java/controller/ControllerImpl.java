@@ -32,6 +32,10 @@ final class ControllerImpl implements IController {
 
     stage.setScene(new Scene(pane, 800, 600));
     stage.setMaximized(true);
+  }
+
+  @Override
+  public void run() {
     stage.show();
   }
 }
