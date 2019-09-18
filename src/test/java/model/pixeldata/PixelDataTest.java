@@ -25,4 +25,24 @@ class PixelDataTest {
     assertEquals(firstPixel.getRGB(), Color.BLACK.getRGB());
   }
 
+  @Test
+  private void getPixelTest() {
+    PixelData pixelData = new PixelData(100, 100);
+
+    assertDoesNotThrow(() -> {
+      pixelData.getPixel(0, 0);
+    });
+
+    assertThrows(IndexOutOfBoundsException.class, () -> {
+      pixelData.getPixel(0, 100);
+    });
+
+    assertThrows(IndexOutOfBoundsException.class, () -> {
+      pixelData.getPixel(100, 0);
+    });
+
+    assertThrows(IndexOutOfBoundsException.class, () -> {
+      pixelData.getPixel(100, 100);
+    });
+  }
 }
