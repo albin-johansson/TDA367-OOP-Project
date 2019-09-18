@@ -1,23 +1,23 @@
 package model.pixeldata;
 
 import java.awt.Color;
-import java.util.Iterator;
 
 public interface IReadOnlyPixelData {
 
   /**
-   * Returns a copy of the matrix of colors (raster).
+   * Returns a read only matrix of colors (raster).
    *
    * @return the matrix of colors.
    */
-  Iterator<? extends Iterator<Color>> getPixels();
+  Iterable<? extends Iterable<Color>> getPixels();
 
   /**
-   * Returns the color of a specific pixel.
+   * Returns the color of a specific pixel. Origin is located at the top left corner.
    *
-   * @param row the row of the pixel zero indexed.
-   * @param col the column of the pixel zero indexed.
+   * @param x the x coordinate of the pixel zero indexed.
+   * @param y the y coordinate of column of the pixel zero indexed.
    * @return the color of the pixel.
+   * @throws IndexOutOfBoundsException if the given coordinates is out of range.
    */
-  Color getPixel(int row, int col);
+  Color getPixel(int x, int y);
 }
