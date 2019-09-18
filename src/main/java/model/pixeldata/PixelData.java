@@ -9,10 +9,46 @@ import java.awt.Color;
  */
 public final class PixelData implements IReadOnlyPixelData {
 
+  private final List<List<Color>> pixels;
+  private final List<String> hello = new ArrayList<>();
 
+  /**
+   * Creates a PixelData with the given width (amount of pixels horizontally) and height (amount of
+   * pixels vertically).
+   *
+   * @param width  the amount of pixels in width.
+   * @param height the amount of pixels in height.
+   * @throws IndexOutOfBoundsException if width or height is smaller than or equal to zero.
+   */
   public PixelData(int width, int height) {
     if (width <= 0 || height <= 0) {
       throw new IndexOutOfBoundsException("Width and height must be greater than zero.");
+    }
+
+    pixels = new ArrayList<>(height);
+    populateMatrix(width, height);
+  }
+
+  /**
+   * Populates the matrix with opaque colored pixels.
+   *
+   * @param width  the amount of pixels in width.
+   * @param height the amount of pixels in height.
+   * @throws IndexOutOfBoundsException if width or height is smaller than or equal to zero.
+   */
+  private void populateMatrix(int width, int height) {
+    if (width <= 0 || height <= 0) {
+      throw new IndexOutOfBoundsException("Width and height must be greater than zero.");
+    }
+
+    for (int row = 0; row < height; row++) {
+      List<Color> tempRow = new ArrayList<>();
+
+      for (int col = 0; col < width; col++) {
+        tempRow.add(new Color(0, 0, 0, 0));
+      }
+
+      pixels.add(tempRow);
     }
   }
 
