@@ -59,7 +59,9 @@ public final class PixelData implements IReadOnlyPixelData {
 
   @Override
   public Color getPixel(int x, int y) {
-    return null;
+    ensureInRange(x, y);
+
+    return pixels.get(y).get(x);
   }
 
   /**
@@ -71,5 +73,17 @@ public final class PixelData implements IReadOnlyPixelData {
    * @param color the color to be set.
    */
   public void setPixel(int x, int y, Color color) {
+  /**
+   * Check if a specific coordinate is valid and throws a IndexOutOfBoundsException otherwise.
+   *
+   * @param x the zero-indexed x coordinate of the pixel.
+   * @param y the zero-indexed y coordinate of the pixel.
+   * @throws IndexOutOfBoundsException if the given coordinate isn't in the PixelData matrix.
+   */
+  private void ensureInRange(int x, int y) {
+    if (!validCoordinate(x, y)) {
+      throw new IndexOutOfBoundsException(
+          "X and Y coordinates must be within the size of the PixelData matrix.");
+    }
   }
 }
