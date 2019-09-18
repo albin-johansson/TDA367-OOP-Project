@@ -8,6 +8,8 @@ class ControllerFactoryTest {
 
   @Test
   void createController() {
-    assertThrows(NullPointerException.class, () -> ControllerFactory.createController(null));
+    assertThrows(NullPointerException.class, () -> {
+      ControllerFactory.createController(null, null, null);
+    });
   }
 }

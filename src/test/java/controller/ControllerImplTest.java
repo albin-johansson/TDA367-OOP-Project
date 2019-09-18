@@ -8,6 +8,6 @@ class ControllerImplTest {
 
   @Test
   void ctor() {
-    assertThrows(NullPointerException.class, () -> new ControllerImpl(null));
+    assertThrows(NullPointerException.class, () -> new ControllerImpl(null, null, null));
   }
 }
