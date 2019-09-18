@@ -1,6 +1,8 @@
 package model.pixeldata;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A matrix of "pixels" in the form of colors, representing a "image".
@@ -54,7 +56,7 @@ public final class PixelData implements IReadOnlyPixelData {
 
   @Override
   public Iterable<? extends Iterable<Color>> getPixels() {
-    return null;
+    return pixels;
   }
 
   @Override
