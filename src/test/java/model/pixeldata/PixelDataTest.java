@@ -9,4 +9,12 @@ import java.awt.Color;
 import org.junit.jupiter.api.Test;
 
 class PixelDataTest {
+
+  @Test
+  private void getPixelsTest() {
+    PixelData pixelData = new PixelData(100, 100);
+    Iterable<? extends Iterable<Color>> pixels = pixelData.getPixels();
+    assertNotNull(pixels, "Should not return a null object");
+  }
+
 }
