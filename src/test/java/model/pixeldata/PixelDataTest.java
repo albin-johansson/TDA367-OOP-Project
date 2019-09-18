@@ -17,4 +17,12 @@ class PixelDataTest {
     assertNotNull(pixels, "Should not return a null object");
   }
 
+  @Test
+  private void setPixelTest() {
+    PixelData pixelData = new PixelData(100, 100);
+    pixelData.setPixel(0, 0, Color.BLACK);
+    Color firstPixel = pixelData.getPixel(0, 0);
+    assertEquals(firstPixel.getRGB(), Color.BLACK.getRGB());
+  }
+
 }
