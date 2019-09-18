@@ -71,8 +71,17 @@ public final class PixelData implements IReadOnlyPixelData {
    * @param x     the zero indexed x coordinate of the pixel to change color.
    * @param y     the zero indexed y coordinate of the pixel to change color.
    * @param color the color to be set.
+   * @throws IndexOutOfBoundsException if the given coordinates is out of range.
    */
   public void setPixel(int x, int y, Color color) {
+    if (!validCoordinate(x, y)) {
+      throw new IndexOutOfBoundsException(
+          "X and Y coordinates must be within the size of the PixelData matrix.");
+    }
+
+    pixels.get(y).set(x, color);
+  }
+
   /**
    * Checks if a coordinate is within the matrix.
    *
