@@ -45,4 +45,11 @@ public class PixelDataTest {
       pixelData.getPixel(100, 100);
     });
   }
+
+  @Test
+  void constructorTest() {
+    assertThrows(IndexOutOfBoundsException.class, () -> new PixelData(-1, -1));
+    assertThrows(IndexOutOfBoundsException.class, () -> new PixelData(0, 0));
+    assertDoesNotThrow(() -> new PixelData(100, 100));
+  }
 }
