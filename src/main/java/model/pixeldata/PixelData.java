@@ -99,7 +99,7 @@ public final class PixelData implements IReadOnlyPixelData {
    *
    * @return the amount of pixels in width.
    */
-  private int getWidth() {
+  public int getWidth() {
     return pixels.get(0).size();
   }
 
@@ -108,7 +108,7 @@ public final class PixelData implements IReadOnlyPixelData {
    *
    * @return the amount of pixels in height.
    */
-  private int getHeight() {
+  public int getHeight() {
     return pixels.size();
   }
 
