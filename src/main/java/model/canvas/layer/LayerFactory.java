@@ -12,9 +12,12 @@ public final class LayerFactory {
   /**
    * Creates and returns a layer that holds basic raster data.
    *
+   * @param width the width of the raster.
+   * @param height the height of the raster.
    * @return a layer that holds basic raster data.
+   * @throws IndexOutOfBoundsException if the supplied dimensions aren't greater than zero.
    */
-  public static ILayer createRasterLayer() {
-    return new Raster();
+  public static ILayer createRasterLayer(int width, int height) {
+    return new Raster(width, height);
   }
 }
