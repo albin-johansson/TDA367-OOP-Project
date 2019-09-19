@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import model.IModel;
 import model.ModelFactory;
-import model.canvas.ICanvasUpdateListener;
 import view.IView;
 import view.ViewFactory;
 
