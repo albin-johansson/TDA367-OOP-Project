@@ -39,8 +39,7 @@ public final class PixelData implements IReadOnlyPixelData {
       throw new IndexOutOfBoundsException("Width and height must be greater than zero.");
     }
 
-    pixels = new ArrayList<>(height);
-    populateMatrix(width, height);
+    pixels = getPixelDataMatrix(width, height);
   }
 
   /**
