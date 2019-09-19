@@ -16,6 +16,7 @@ public interface ILayer extends IReadOnlyLayer {
    * @param x the x-coordinate of the pixel that will be changed.
    * @param y the y-coordinate of the pixel that will be changed.
    * @param color the new color of the specified pixel.
+   * @throws IndexOutOfBoundsException if the specified coordinate is out-of-bounds.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   void setPixel(int x, int y, Color color);
