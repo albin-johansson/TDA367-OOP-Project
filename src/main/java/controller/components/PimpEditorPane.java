@@ -2,8 +2,10 @@ package controller.components;
 
 import controller.ControllerUtils;
 import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
 import util.Resources;
 
@@ -22,5 +24,10 @@ public final class PimpEditorPane extends AnchorPane {
   public PimpEditorPane() throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "root.fxml"));
     setStyle("-fx-background-color: gray;");
+  }
+
+
+  public GraphicsContext getGraphics() {
+    return canvas.getGraphicsContext2D();
   }
 }

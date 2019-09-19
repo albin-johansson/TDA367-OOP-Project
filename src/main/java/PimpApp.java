@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import model.IModel;
 import model.ModelFactory;
+import model.canvas.ICanvasUpdateListener;
 import view.IView;
 import view.ViewFactory;
 
@@ -17,7 +18,7 @@ public final class PimpApp extends Application {
     IModel model = ModelFactory.createModel();
     IView view = ViewFactory.createView(model);
     IController controller = ControllerFactory.createController(model, view, stage);
-
+    model.addCanvasUpdateListener(view);
     controller.run();
   }
 

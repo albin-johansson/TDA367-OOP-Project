@@ -29,6 +29,7 @@ final class ControllerImpl implements IController {
     this.stage = Objects.requireNonNull(stage);
 
     PimpEditorPane pane = new PimpEditorPane();
+    view.setGraphics(pane.getGraphics());
 
     stage.setScene(new Scene(pane, 800, 600));
     stage.setMaximized(true);
