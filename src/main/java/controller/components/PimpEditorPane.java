@@ -26,7 +26,9 @@ public final class PimpEditorPane extends AnchorPane {
     setStyle("-fx-background-color: gray;");
   }
 
-
+  /**
+   * @return a refference to the graphicscontext used by the canvas
+   */
   public GraphicsContext getGraphics() {
     return canvas.getGraphicsContext2D();
   }

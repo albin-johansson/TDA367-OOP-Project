@@ -13,7 +13,7 @@ import model.IModel;
 final class ViewImpl implements IView {
 
   private final IModel model;
-  private GraphicsContext gc;
+  private GraphicsContext graphics;
 
 
   /**
@@ -29,18 +29,15 @@ final class ViewImpl implements IView {
     repaint();
   }
 
-  /**
-   * Repaints the canvas by fetching the layers in model.
-   */
+
   @Override
   public void repaint() {
-    PixelWriter pw = gc.getPixelWriter();
+    PixelWriter pw = graphics.getPixelWriter();
 
   }
 
-
   @Override
-  public void setGraphics(GraphicsContext gc) {
-
+  public void setGraphics(GraphicsContext graphics) {
+    this.graphics = graphics;
   }
 }
