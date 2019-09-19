@@ -31,16 +31,15 @@ public final class PixelData implements IReadOnlyPixelData {
   }
 
   /**
-   * Populates the matrix with opaque colored pixels.
+   * Returns a matrix with the desired width and height with opaque colored pixels. Returns a matrix
+   * (a list of rows).
    *
    * @param width  the amount of pixels in width.
    * @param height the amount of pixels in height.
-   * @throws IndexOutOfBoundsException if width or height is smaller than or equal to zero.
+   * @return List<List < Color>> a matrix of colors. A list containing the rows.
    */
-  private void populateMatrix(int width, int height) {
-    if ((width <= 0) || (height <= 0)) {
-      throw new IndexOutOfBoundsException("Width and height must be greater than zero.");
-    }
+  private List<List<Color>> getPixelDataMatrix(int width, int height) {
+    List<List<Color>> tempPixels = new ArrayList<>();
 
     for (int row = 0; row < height; row++) {
       List<Color> tempRow = new ArrayList<>();
@@ -48,9 +47,10 @@ public final class PixelData implements IReadOnlyPixelData {
       for (int col = 0; col < width; col++) {
         tempRow.add(new Color(0, 0, 0, 0));
       }
-
-      pixels.add(tempRow);
+      tempPixels.add(tempRow);
     }
+
+    return tempPixels;
   }
 
   @Override
