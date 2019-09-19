@@ -33,6 +33,29 @@ class CanvasTest {
   }
 
   @Test
+  void setPixel() {
+    // TODO test
+  }
+
+  @Test
+  void setLayerVisible() {
+    assertThrows(IllegalStateException.class, () -> canvas.setLayerVisible(true));
+
+    canvas.addLayer(defaultLayer);
+    canvas.selectLayer(0);
+
+    assertDoesNotThrow(() -> canvas.setLayerVisible(true));
+  }
+
+  @Test
+  void selectLayer() {
+    assertThrows(IllegalArgumentException.class, () -> canvas.selectLayer(-1));
+
+    canvas.addLayer(defaultLayer);
+    assertDoesNotThrow(() -> canvas.selectLayer(0));
+  }
+
+  @Test
   void addLayer() {
     assertThrows(NullPointerException.class, () -> canvas.addLayer(null));
 
@@ -69,6 +92,17 @@ class CanvasTest {
   }
 
   @Test
+  void getAmountOfLayers() {
+    assertEquals(0, canvas.getAmountOfLayers());
+
+    canvas.addLayer(defaultLayer);
+    assertEquals(1, canvas.getAmountOfLayers());
+
+    canvas.removeLayer(defaultLayer);
+    assertEquals(0, canvas.getAmountOfLayers());
+  }
+
+  @Test
   void getLayers() {
     assertNotNull(canvas.getLayers()); // should be empty, not null
 
@@ -87,4 +121,5 @@ class CanvasTest {
 
     assertEquals(count, actualCount);
   }
+
 }
