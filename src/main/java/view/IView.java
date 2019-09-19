@@ -5,7 +5,7 @@ import model.canvas.ICanvasUpdateListener;
 
 /**
  * The {@code IView} interface specifies the main view component in the Pimp application.
- * extends ICanvasUpdateListener
+ * extends {@link ICanvasUpdateListener}
  */
 public interface IView extends ICanvasUpdateListener {
 
