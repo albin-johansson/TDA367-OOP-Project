@@ -11,7 +11,20 @@ import java.util.List;
  */
 public final class PixelData implements IReadOnlyPixelData {
 
+  /**
+   * A matrix of pixels with a List containing Lists (rows).
+   */
   private final List<List<Color>> pixels;
+
+  /**
+   * The max width of the matrix.
+   */
+  private final static int MAX_WIDTH = 100_000;
+
+  /**
+   * The max height of the matrix.
+   */
+  private final static int MAX_HEIGHT = 100_000;
 
   /**
    * Creates a PixelData with the given width (amount of pixels horizontally) and height (amount of
@@ -22,7 +35,7 @@ public final class PixelData implements IReadOnlyPixelData {
    * @throws IndexOutOfBoundsException if width or height is smaller than or equal to zero.
    */
   public PixelData(int width, int height) {
-    if ((width <= 0) || (height <= 0)) {
+    if ((width <= 0) || (width > MAX_WIDTH) || (height <= 0) || (height > MAX_HEIGHT)) {
       throw new IndexOutOfBoundsException("Width and height must be greater than zero.");
     }
 
