@@ -12,7 +12,6 @@ import java.util.List;
 public final class PixelData implements IReadOnlyPixelData {
 
   private final List<List<Color>> pixels;
-  private final List<String> hello = new ArrayList<>();
 
   /**
    * Creates a PixelData with the given width (amount of pixels horizontally) and height (amount of
@@ -23,7 +22,7 @@ public final class PixelData implements IReadOnlyPixelData {
    * @throws IndexOutOfBoundsException if width or height is smaller than or equal to zero.
    */
   public PixelData(int width, int height) {
-    if (width <= 0 || height <= 0) {
+    if ((width <= 0) || (height <= 0)) {
       throw new IndexOutOfBoundsException("Width and height must be greater than zero.");
     }
 
@@ -39,7 +38,7 @@ public final class PixelData implements IReadOnlyPixelData {
    * @throws IndexOutOfBoundsException if width or height is smaller than or equal to zero.
    */
   private void populateMatrix(int width, int height) {
-    if (width <= 0 || height <= 0) {
+    if ((width <= 0) || (height <= 0)) {
       throw new IndexOutOfBoundsException("Width and height must be greater than zero.");
     }
 
@@ -92,7 +91,7 @@ public final class PixelData implements IReadOnlyPixelData {
    * @return true if coordinate is in range, otherwise false.
    */
   private boolean validCoordinate(int x, int y) {
-    return !(x < 0 || y < 0 || x >= getWidth() || y >= getHeight());
+    return !((x < 0) || (y < 0) || (x >= getWidth()) || (y >= getHeight()));
   }
 
   /**
