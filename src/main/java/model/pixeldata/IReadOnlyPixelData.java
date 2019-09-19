@@ -14,8 +14,8 @@ public interface IReadOnlyPixelData {
   /**
    * Returns the color of a specific pixel. Origin is located at the top left corner.
    *
-   * @param x the x coordinate of the pixel zero indexed.
-   * @param y the y coordinate of column of the pixel zero indexed.
+   * @param x the x coordinate of the pixel zero-indexed.
+   * @param y the y coordinate of column of the pixel zero-indexed.
    * @return the color of the pixel.
    * @throws IndexOutOfBoundsException if the given coordinates is out of range.
    */

@@ -69,8 +69,8 @@ public final class PixelData implements IReadOnlyPixelData {
    * Sets the color of a specific pixel in the pixel matrix. Origin is positioned at top left corner
    * and is zero indexed.
    *
-   * @param x     the zero indexed x coordinate of the pixel to change color.
-   * @param y     the zero indexed y coordinate of the pixel to change color.
+   * @param x     the zero-indexed x coordinate of the pixel to change color.
+   * @param y     the zero-indexed y coordinate of the pixel to change color.
    * @param color the color to be set.
    * @throws IndexOutOfBoundsException if the given coordinates is out of range.
    */
