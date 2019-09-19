@@ -29,7 +29,7 @@ class CanvasTest {
    * @return a new layer instance, to be used when testing.
    */
   private static ILayer createLayer() {
-    return LayerFactory.createRasterLayer();
+    return LayerFactory.createRasterLayer(10, 10);
   }
 
   @Test
