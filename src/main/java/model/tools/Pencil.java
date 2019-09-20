@@ -14,6 +14,7 @@ public class Pencil implements ITool {
    */
   private int width;
   private Color color;
+  private ILayer targetLayer;
 
   public Pencil() {
     new Pencil(10, Color.BLACK);
@@ -77,6 +78,8 @@ public class Pencil implements ITool {
 
   @Override
   public void setTarget(ILayer iLayer) {
+    targetLayer = iLayer;
+  }
 
   }
 }
