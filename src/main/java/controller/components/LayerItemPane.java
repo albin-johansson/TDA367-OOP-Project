@@ -9,6 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import util.Resources;
 
+/**
+ * The {@code LayerItemPane} class represents a layer item in the view.
+ */
 public class LayerItemPane extends AnchorPane {
 
   @FXML
