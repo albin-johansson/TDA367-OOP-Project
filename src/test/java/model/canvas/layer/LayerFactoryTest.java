@@ -1,6 +1,7 @@
 package model.canvas.layer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ class LayerFactoryTest {
 
   @Test
   void createRasterLayer() {
-    assertNotNull(LayerFactory.createRasterLayer());
+    assertThrows(IndexOutOfBoundsException.class, () -> LayerFactory.createRasterLayer(-1, -1));
+    assertNotNull(LayerFactory.createRasterLayer(10, 10));
   }
 }

@@ -1,5 +1,6 @@
 package model.canvas;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,12 +13,67 @@ public final class Canvas {
 
   private final CanvasUpdateListenerComposite canvasUpdateListeners;
   private final List<ILayer> layers;
-  private ILayer activeLayer; // TODO use when the ILayer interface has been further specified
+  private ILayer activeLayer;
 
   public Canvas() {
     canvasUpdateListeners = new CanvasUpdateListenerComposite();
     layers = new ArrayList<>(20);
     activeLayer = null;
+  }
+
+  /**
+   * Verifies that there is an active layer. If that isn't the case, an exception is thrown.
+   *
+   * @throws IllegalStateException if there is no active layer.
+   */
+  private void verifyActiveLayerExistence() {
+    if (activeLayer == null) {
+      throw new IllegalStateException("No available active layer!");
+    }
+  }
+
+  /**
+   * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates
+   * are zero-indexed.
+   *
+   * @param x the x-coordinate of the pixel that will be changed.
+   * @param y the y-coordinate of the pixel that will be changed.
+   * @param color the new color of the pixel.
+   * @throws IllegalStateException if there is no active layer.
+   * @throws IndexOutOfBoundsException if the specified coordinate is out-of-bounds.
+   * @throws NullPointerException if any arguments are {@code null}.
+   */
+  public void setPixel(int x, int y, Color color) {
+    verifyActiveLayerExistence();
+    activeLayer.setPixel(x, y, color);
+    canvasUpdateListeners.canvasUpdated();
+  }
+
+  /**
+   * Sets the visibility property value for the active layer.
+   *
+   * @param isVisible {@code true} if the active layer should be visible; {@code false} otherwise.
+   * @throws IllegalStateException if there is no active layer.
+   */
+  public void setLayerVisible(boolean isVisible) {
+    verifyActiveLayerExistence();
+    activeLayer.setVisible(isVisible);
+    canvasUpdateListeners.canvasUpdated();
+  }
+
+  /**
+   * Selects the layer associated with the specified index (it's made active). The layer index is
+   * zero-indexed.
+   *
+   * @param layerIndex the index associated with the layer that will be made active.
+   * @throws IllegalArgumentException if the supplied index isn't associated with a layer.
+   */
+  public void selectLayer(int layerIndex) {
+    if ((layerIndex < 0) || (layerIndex >= layers.size())) {
+      throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
+    } else {
+      activeLayer = layers.get(layerIndex);
+    }
   }
 
   /**
@@ -35,6 +91,7 @@ public final class Canvas {
     }
 
     layers.add(layer);
+    canvasUpdateListeners.canvasUpdated();
   }
 
   /**
@@ -47,6 +104,22 @@ public final class Canvas {
   public void removeLayer(ILayer layer) {
     Objects.requireNonNull(layer);
     layers.remove(layer);
+    canvasUpdateListeners.canvasUpdated();
+  }
+
+  /**
+   * Removes the layer associated with the specified layer index. The layer index is zero-indexed.
+   *
+   * @param layerIndex the layer index associated with the layer that will be removed
+   * (zero-indexed).
+   * @throws IllegalArgumentException if the specified index isn't associated with a layer.
+   */
+  public void removeLayer(int layerIndex) {
+    if ((layerIndex < 0) || (layerIndex >= layers.size())) {
+      throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
+    }
+    layers.remove(layerIndex);
+    canvasUpdateListeners.canvasUpdated();
   }
 
   /**
@@ -60,7 +133,14 @@ public final class Canvas {
     canvasUpdateListeners.add(listener);
   }
 
-  // TODO create methods that delegate to the active layer, if no layer is active: throw exceptions.
+  /**
+   * Returns the current amount of layers in the canvas.
+   *
+   * @return the current amount of layers in the canvas.
+   */
+  public int getAmountOfLayers() {
+    return layers.size();
+  }
 
   /**
    * Returns all of the layers present in the canvas.
