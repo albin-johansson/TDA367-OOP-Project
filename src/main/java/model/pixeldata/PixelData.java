@@ -19,18 +19,18 @@ public final class PixelData implements IReadOnlyPixelData {
   /**
    * The max width of the matrix.
    */
-  private final static int MAX_WIDTH = 100_000;
+  private static final int MAX_WIDTH = 100_000;
 
   /**
    * The max height of the matrix.
    */
-  private final static int MAX_HEIGHT = 100_000;
+  private static final int MAX_HEIGHT = 100_000;
 
   /**
    * Creates a PixelData with the given width (amount of pixels horizontally) and height (amount of
    * pixels vertically).
    *
-   * @param width  the amount of pixels in width.
+   * @param width the amount of pixels in width.
    * @param height the amount of pixels in height.
    * @throws IndexOutOfBoundsException if width or height is smaller than or equal to zero.
    */
@@ -46,7 +46,7 @@ public final class PixelData implements IReadOnlyPixelData {
    * Returns a matrix with the desired width and height with opaque colored pixels. Returns a matrix
    * (a list of rows).
    *
-   * @param width  the amount of pixels in width.
+   * @param width the amount of pixels in width.
    * @param height the amount of pixels in height.
    * @return List<List < Color>> a matrix of colors. A list containing the rows.
    */
@@ -81,8 +81,8 @@ public final class PixelData implements IReadOnlyPixelData {
    * Sets the color of a specific pixel in the pixel matrix. Origin is positioned at top left corner
    * and is zero indexed.
    *
-   * @param x     the zero-indexed x coordinate of the pixel to change color.
-   * @param y     the zero-indexed y coordinate of the pixel to change color.
+   * @param x the zero-indexed x coordinate of the pixel to change color.
+   * @param y the zero-indexed y coordinate of the pixel to change color.
    * @param color the color to be set.
    * @throws IndexOutOfBoundsException if the given coordinates is out of range.
    */
