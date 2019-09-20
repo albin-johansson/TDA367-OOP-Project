@@ -29,7 +29,7 @@ public class LayerItemPane extends AnchorPane {
   /**
    * @throws IOException if the associated FXML file cannot be found.
    */
-  public LayerItemPane() throws IOException {
+  LayerItemPane() throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
     setStyle("-fx-background-color: gray;");
   }
