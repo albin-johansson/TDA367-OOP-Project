@@ -4,9 +4,12 @@ import controller.ControllerUtils;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import util.Resources;
 
 /**
@@ -17,6 +20,14 @@ public final class PimpEditorPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private Canvas canvas;
+
+  @FXML
+  @SuppressWarnings("unused")
+  private VBox verticalLayerBox;
+
+  @FXML
+  @SuppressWarnings("unused")
+  private HBox horizontalToolBar;
 
   /**
    * @throws IOException if the associated FXML file cannot be found.
