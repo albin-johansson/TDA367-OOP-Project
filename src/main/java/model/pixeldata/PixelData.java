@@ -51,10 +51,10 @@ public final class PixelData implements IReadOnlyPixelData {
    * @return List<List < Color>> a matrix of colors. A list containing the rows.
    */
   private List<List<Color>> getPixelDataMatrix(int width, int height) {
-    List<List<Color>> tempPixels = new ArrayList<>();
+    List<List<Color>> tempPixels = new ArrayList<>(height);
 
     for (int row = 0; row < height; row++) {
-      List<Color> tempRow = new ArrayList<>();
+      List<Color> tempRow = new ArrayList<>(width);
 
       for (int col = 0; col < width; col++) {
         tempRow.add(new Color(0, 0, 0, 0));
