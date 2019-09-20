@@ -10,7 +10,7 @@ import model.canvas.layer.ILayer;
 public class Pencil implements ITool {
 
   /**
-   * The diameter of pencil.
+   * The diameter of the pencil.
    */
   private int width;
   private Color color;
