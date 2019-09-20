@@ -3,13 +3,10 @@ package controller.components;
 import controller.ControllerUtils;
 import java.io.IOException;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import util.Resources;
 
 public class LayerItemPane extends AnchorPane {
