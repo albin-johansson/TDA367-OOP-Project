@@ -11,7 +11,7 @@ import java.awt.Color;
 public interface ILayer extends IReadOnlyLayer {
 
   /**
-   * Sets the pixel color at the specified coordinates.
+   * Sets the pixel color at the specified coordinates. The coordinates are zero-indexed.
    *
    * @param x the x-coordinate of the pixel that will be changed.
    * @param y the y-coordinate of the pixel that will be changed.

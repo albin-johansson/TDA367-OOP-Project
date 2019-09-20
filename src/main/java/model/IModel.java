@@ -37,7 +37,8 @@ public interface IModel {
   void selectLayer(int layerIndex);
 
   /**
-   * Sets the color of the pixel at the specified coordinate, in the active layer.
+   * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates
+   * are zero-indexed.
    *
    * @param x the x-coordinate of the pixel that will be changed.
    * @param y the y-coordinate of the pixel that will be changed.
