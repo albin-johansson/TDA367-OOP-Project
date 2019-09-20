@@ -106,20 +106,12 @@ public final class PixelData implements IReadOnlyPixelData {
     return !((x < 0) || (y < 0) || (x >= getWidth()) || (y >= getHeight()));
   }
 
-  /**
-   * Returns the width (amount of pixels horizontally) of the PixelData.
-   *
-   * @return the amount of pixels in width.
-   */
+  @Override
   public int getWidth() {
     return pixels.get(0).size();
   }
 
-  /**
-   * Returns the height (amount of pixels vertically) of the PixelData.
-   *
-   * @return the amount of pixels in height.
-   */
+  @Override
   public int getHeight() {
     return pixels.size();
   }
