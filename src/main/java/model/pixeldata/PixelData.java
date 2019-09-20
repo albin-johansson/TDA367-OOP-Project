@@ -40,7 +40,7 @@ public final class PixelData implements IReadOnlyPixelData {
       throw new IndexOutOfBoundsException("Width and height must be greater than zero.");
     }
 
-    pixels = getPixelDataMatrix(width, height);
+    pixels = createPixelDataMatrix(width, height);
   }
 
   /**
@@ -51,7 +51,7 @@ public final class PixelData implements IReadOnlyPixelData {
    * @param height the amount of pixels in height.
    * @return List<List < Color>> a matrix of colors. A list containing the rows.
    */
-  private List<List<Color>> getPixelDataMatrix(int width, int height) {
+  private List<List<Color>> createPixelDataMatrix(int width, int height) {
     List<List<Color>> tempPixels = new ArrayList<>(height);
 
     for (int row = 0; row < height; row++) {
@@ -66,16 +66,18 @@ public final class PixelData implements IReadOnlyPixelData {
     return tempPixels;
   }
 
-  @Override
-  public Iterable<? extends Iterable<Color>> getPixels() {
-    return pixels;
-  }
-
-  @Override
-  public Color getPixel(int x, int y) {
-    ensureInRange(x, y);
-
-    return pixels.get(y).get(x);
+  /**
+   * Check if a specific coordinate is valid and throws a IndexOutOfBoundsException otherwise.
+   *
+   * @param x the zero-indexed x coordinate of the pixel.
+   * @param y the zero-indexed y coordinate of the pixel.
+   * @throws IndexOutOfBoundsException if the given coordinate isn't in the PixelData matrix.
+   */
+  private void ensureInRange(int x, int y) {
+    if (!validCoordinate(x, y)) {
+      throw new IndexOutOfBoundsException(
+          "X and Y coordinates must be within the size of the PixelData matrix.");
+    }
   }
 
   /**
@@ -111,6 +113,18 @@ public final class PixelData implements IReadOnlyPixelData {
   }
 
   @Override
+  public Iterable<? extends Iterable<Color>> getPixels() {
+    return pixels;
+  }
+
+  @Override
+  public Color getPixel(int x, int y) {
+    ensureInRange(x, y);
+
+    return pixels.get(y).get(x);
+  }
+
+  @Override
   public int getWidth() {
     return pixels.get(0).size();
   }
@@ -118,19 +132,5 @@ public final class PixelData implements IReadOnlyPixelData {
   @Override
   public int getHeight() {
     return pixels.size();
-  }
-
-  /**
-   * Check if a specific coordinate is valid and throws a IndexOutOfBoundsException otherwise.
-   *
-   * @param x the zero-indexed x coordinate of the pixel.
-   * @param y the zero-indexed y coordinate of the pixel.
-   * @throws IndexOutOfBoundsException if the given coordinate isn't in the PixelData matrix.
-   */
-  private void ensureInRange(int x, int y) {
-    if (!validCoordinate(x, y)) {
-      throw new IndexOutOfBoundsException(
-          "X and Y coordinates must be within the size of the PixelData matrix.");
-    }
   }
 }
