@@ -3,6 +3,7 @@ package model.pixeldata;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A matrix of "pixels" in the form of colors, representing a "image".
@@ -85,8 +86,11 @@ public final class PixelData implements IReadOnlyPixelData {
    * @param y the zero-indexed y coordinate of the pixel to change color.
    * @param color the color to be set.
    * @throws IndexOutOfBoundsException if the given coordinates is out of range.
+   * @throws NullPointerException if any arguments are {@code null}.
    */
   public void setPixel(int x, int y, Color color) {
+    Objects.requireNonNull(color);
+
     if (!validCoordinate(x, y)) {
       throw new IndexOutOfBoundsException(
           "X and Y coordinates must be within the size of the PixelData matrix.");

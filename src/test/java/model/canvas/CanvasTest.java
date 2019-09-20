@@ -34,7 +34,9 @@ class CanvasTest {
 
   @Test
   void setPixel() {
-    // TODO test
+    canvas.addLayer(defaultLayer);
+    canvas.selectLayer(0);
+    assertThrows(NullPointerException.class, () -> canvas.setPixel(0, 0, null));
   }
 
   @Test
