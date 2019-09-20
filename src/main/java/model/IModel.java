@@ -29,6 +29,14 @@ public interface IModel {
   void removeLayer(ILayer layer);
 
   /**
+   * Removes the layer associated with the specified index. The layer index is zero-indexed.
+   *
+   * @param layerIndex the layer associated with the specified index (zero-indexed).
+   * @throws IllegalArgumentException if the specified index isn't associated with a layer.
+   */
+  void removeLayer(int layerIndex);
+
+  /**
    * Selects the layer associated with the specified index.
    *
    * @param layerIndex the index associated with the layer that will be made active.

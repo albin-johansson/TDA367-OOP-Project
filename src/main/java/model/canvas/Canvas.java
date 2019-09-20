@@ -108,6 +108,21 @@ public final class Canvas {
   }
 
   /**
+   * Removes the layer associated with the specified layer index. The layer index is zero-indexed.
+   *
+   * @param layerIndex the layer index associated with the layer that will be removed
+   * (zero-indexed).
+   * @throws IllegalArgumentException if the specified index isn't associated with a layer.
+   */
+  public void removeLayer(int layerIndex) {
+    if ((layerIndex < 0) || (layerIndex >= layers.size())) {
+      throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
+    }
+    layers.remove(layerIndex);
+    canvasUpdateListeners.canvasUpdated();
+  }
+
+  /**
    * Adds a canvas update listener to the canvas.
    *
    * @param listener the listener that will be added, may not be {@code null}.

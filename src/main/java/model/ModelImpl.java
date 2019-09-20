@@ -28,6 +28,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void removeLayer(int layerIndex) {
+    canvas.removeLayer(layerIndex);
+  }
+
+  @Override
   public void selectLayer(int layerIndex) {
     canvas.selectLayer(layerIndex);
   }

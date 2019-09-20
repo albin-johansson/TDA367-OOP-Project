@@ -31,12 +31,24 @@ class ModelImplTest {
   }
 
   @Test
-  void removeLayer() {
+  void removeLayerByReference() {
     assertThrows(NullPointerException.class, () -> model.removeLayer(null));
 
     ILayer nonAddedLayer = LayerFactory.createRasterLayer(10, 10);
 
     assertDoesNotThrow(() -> model.removeLayer(nonAddedLayer));
+  }
+
+  @Test
+  void removeLayerByIndex() {
+    assertThrows(IllegalArgumentException.class, () -> model.removeLayer(-1));
+
+    ILayer layer = LayerFactory.createRasterLayer(10, 10);
+    model.addLayer(layer); // 0
+
+    model.removeLayer(0);
+
+    assertEquals(0, model.getAmountOfLayers());
   }
 
   @Test

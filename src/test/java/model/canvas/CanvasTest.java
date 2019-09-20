@@ -69,7 +69,7 @@ class CanvasTest {
   }
 
   @Test
-  void removeLayer() {
+  void removeLayerByReference() {
     assertThrows(NullPointerException.class, () -> canvas.removeLayer(null));
 
     canvas.addLayer(createLayer());
@@ -84,6 +84,25 @@ class CanvasTest {
     for (ILayer layer : canvas.getLayers()) {
       assertNotEquals(layer, defaultLayer);
     }
+  }
+
+  @Test
+  void removeLayerByIndex() {
+    assertThrows(IllegalArgumentException.class, () -> canvas.removeLayer(-1));
+
+    canvas.addLayer(createLayer()); // 0
+    canvas.addLayer(createLayer()); // 1
+    canvas.addLayer(defaultLayer); // 2
+
+    canvas.removeLayer(2); // removes defaultLayer
+    for (ILayer layer : canvas.getLayers()) {
+      assertNotEquals(layer, defaultLayer);
+    }
+
+    // Since the layers are zero-indexed, the maximum index is n-1 where n is the number of layers.
+    final int nLayers = canvas.getAmountOfLayers();
+    assertThrows(IllegalArgumentException.class, () -> canvas.removeLayer(nLayers));
+    assertDoesNotThrow(() -> canvas.removeLayer(nLayers - 1));
   }
 
   @Test
