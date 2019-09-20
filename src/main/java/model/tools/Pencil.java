@@ -85,7 +85,7 @@ public final class Pencil implements ITool {
 
   /**
    * Draws a square of pixels in the pencils color starting at the first coordinate given and
-   * continuing down right.
+   * continuing down right. TODO: Implement som kind of "pattern" the pencil will draw.
    *
    * @param x the zero-indexed x coordinate for the square to be drawn.
    * @param y the zero-indexed y coordinate for the square to be drawn.
