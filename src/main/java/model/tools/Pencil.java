@@ -81,5 +81,22 @@ public class Pencil implements ITool {
     targetLayer = iLayer;
   }
 
+  /**
+   * Draws a square of pixels in the pencils color starting at the first coordinate given and
+   * continuing down right.
+   *
+   * @param x the zero-indexed x coordinate for the square to be drawn.
+   * @param y the zero-indexed y coordinate for the square to be drawn.
+   */
+  public void draw(int x, int y) {
+    if (targetLayer == null) {
+      return;
+    }
+
+    for (int row = 0; row < width; row++) {
+      for (int col = 0; col < width; col++) {
+        targetLayer.setPixel(col + x, row + y, color);
+      }
+    }
   }
 }
