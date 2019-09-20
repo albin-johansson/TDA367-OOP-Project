@@ -4,19 +4,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.Color;
 import model.canvas.layer.ILayer;
+import model.canvas.layer.LayerFactory;
 import org.junit.jupiter.api.Test;
 
 class PencilTest {
 
   @Test
   void drawTest() {
-    ITool pencil = new Pencil(2, Color.BLACK);
-    ILayer layer = new Raster();
+    Pencil pencil = new Pencil(2, Color.BLACK);
+    ILayer layer = LayerFactory.createRasterLayer(100, 100);
     pencil.setTarget(layer);
     pencil.draw(10, 10);
     int nBlackPixels = 0;
 
-    for (Iterable<Color> row : layer.getPixelData()) {
+    for (Iterable<Color> row : layer.getPixelData().getPixels()) {
       for (Color color : row) {
         if (color.getRGB() == Color.BLACK.getRGB()) {
           nBlackPixels++;
