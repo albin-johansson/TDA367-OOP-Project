@@ -63,7 +63,11 @@ class ModelImplTest {
 
   @Test
   void setPixel() {
-    // TODO test when PixelData has been improved
+    ILayer layer = LayerFactory.createRasterLayer(10, 10);
+    model.addLayer(layer);
+    model.selectLayer(0);
+
+    assertThrows(NullPointerException.class, () -> model.setPixel(0, 0, null));
   }
 
   @Test
