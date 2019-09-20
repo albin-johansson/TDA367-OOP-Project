@@ -2,6 +2,7 @@ package view;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+
 import org.junit.jupiter.api.Test;
 
 class ViewImplTest {
@@ -10,4 +11,5 @@ class ViewImplTest {
   void ctor() {
     assertThrows(NullPointerException.class, () -> new ViewImpl(null));
   }
+
 }
