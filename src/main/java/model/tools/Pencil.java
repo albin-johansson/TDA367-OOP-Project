@@ -66,6 +66,7 @@ public class Pencil implements ITool {
 
   @Override
   public void dragged(MouseEvent mouseEvent) {
+    draw((int) mouseEvent.getX(), (int) mouseEvent.getY());
   }
 
   @Override
