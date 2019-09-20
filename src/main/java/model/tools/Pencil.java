@@ -7,7 +7,7 @@ import model.canvas.layer.ILayer;
 /**
  * A pencil is a tool that paints a layer that is a raster (a grid of pixels).
  */
-public class Pencil implements ITool {
+public final class Pencil implements ITool {
 
   /**
    * The diameter of the pencil.
