@@ -1,9 +1,8 @@
-package model;
+package model.tools;
 
 import java.awt.Color;
 import javafx.scene.input.MouseEvent;
 import model.canvas.layer.ILayer;
-import model.tools.ITool;
 
 /**
  * A pencil is a tool that paints a layer that is a raster (a grid of pixels).
