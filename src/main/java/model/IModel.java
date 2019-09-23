@@ -88,25 +88,4 @@ public interface IModel {
    * @return the current amount of layers in the model.
    */
   int getAmountOfLayers();
-
-  /**
-   * Function which is executed when the user clicks the canvas
-   *
-   * @param e information about the mouse event
-   */
-  void onCanvasClick(MouseEvent e);
-
-  /**
-   * Function which is executed when mouse hold and drag is first detected
-   *
-   * @param e information about the mouse event
-   */
-  void onCanvasDragStart(MouseEvent e);
-
-  /**
-   * Function which is executed each time the mouse position has changed during a drag
-   *
-   * @param e information about the mouse event
-   */
-  void onCanvasDragged(MouseEvent e);
 }

@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.Color;
-import javafx.scene.input.MouseEvent;
 import model.canvas.Canvas;
 import model.canvas.ICanvasUpdateListener;
 import model.canvas.layer.ILayer;
@@ -61,20 +60,5 @@ final class ModelImpl implements IModel {
   @Override
   public int getAmountOfLayers() {
     return canvas.getAmountOfLayers();
-  }
-
-  @Override
-  public void onCanvasClick(MouseEvent e) {
-
-  }
-
-  @Override
-  public void onCanvasDragStart(MouseEvent e) {
-
-  }
-
-  @Override
-  public void onCanvasDragged(MouseEvent e) {
-
   }
 }
