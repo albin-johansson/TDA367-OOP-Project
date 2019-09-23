@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.Color;
-import javafx.scene.input.MouseEvent;
 import model.canvas.ICanvasUpdateListener;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
@@ -88,4 +87,5 @@ public interface IModel {
    * @return the current amount of layers in the model.
    */
   int getAmountOfLayers();
+
 }
