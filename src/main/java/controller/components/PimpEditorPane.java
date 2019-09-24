@@ -47,13 +47,21 @@ public final class PimpEditorPane extends AnchorPane {
   }
 
   /**
-   * Sets what function will be executed when the user clicks the canvas
-   * The function will be executed when the the mouse is released
+   * Sets what function will be executed when the user press the mouse over the canvas
    *
    * @param e the function which will be executed
    */
-  public void setOnCanvasClick(EventHandler<? super MouseEvent> e){
-    this.canvas.setOnMouseClicked(e);
+  public void setOnCanvasPressed(EventHandler<? super MouseEvent> e){
+    this.canvas.setOnMousePressed(e);
+  }
+
+  /**
+   * Sets what function will be executed when drag is first detected
+   *
+   * @param e the function which will be executed
+   */
+  public void setOnCanvasReleased(EventHandler<? super MouseEvent> e){
+    this.canvas.setOnMouseReleased(e);
   }
 
   /**
@@ -64,14 +72,5 @@ public final class PimpEditorPane extends AnchorPane {
    */
   public void setOnCanvasDragged(EventHandler<? super MouseEvent> e){
     this.canvas.setOnMouseDragged(e);
-  }
-
-  /**
-   * Sets what function will be executed when drag is first detected
-   *
-   * @param e the function which will be executed
-   */
-  public void setOnCanvasDragStart(EventHandler<? super MouseEvent> e){
-    this.canvas.setOnDragDetected(e);
   }
 }

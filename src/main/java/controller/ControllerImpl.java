@@ -35,8 +35,8 @@ final class ControllerImpl implements IController {
     stage.setScene(new Scene(pane, 800, 600));
     stage.setMaximized(true);
 
-    pane.setOnCanvasClick(e -> this.onCanvasClick(e));
-    pane.setOnCanvasDragStart(e -> this.onCanvasDragStart(e));
+    pane.setOnCanvasPressed(e -> this.onCanvasPressed(e));
+    pane.setOnCanvasReleased(e -> this.onCanvasReleased(e));
     pane.setOnCanvasDragged(e -> this.onCanvasDragged(e));
   }
 
@@ -46,20 +46,20 @@ final class ControllerImpl implements IController {
   }
 
   /**
-   * Function which is executed when the user clicks the canvas
+   * Function which is executed when the user presses the canvas with the mouse
    *
    * @param e information about the mouse event
    */
-  private void onCanvasClick(MouseEvent e){
+  private void onCanvasPressed(MouseEvent e){
 
   }
 
   /**
-   * Function which is executed when mouse hold and drag is first detected
+   * Function which is executed when mouse is released when clicking the canvas
    *
    * @param e information about the mouse event
    */
-  private void onCanvasDragStart(MouseEvent e){
+  private void onCanvasReleased(MouseEvent e){
 
   }
 
