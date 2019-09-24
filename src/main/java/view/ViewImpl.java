@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Objects;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
 import model.IModel;
@@ -15,7 +14,6 @@ final class ViewImpl implements IView {
   private final IModel model;
   private GraphicsContext graphics;
 
-
   /**
    * @param model the associated model instance.
    * @throws NullPointerException if any arguments are {@code null}.
@@ -28,7 +26,6 @@ final class ViewImpl implements IView {
   public void canvasUpdated() {
     repaint();
   }
-
 
   @Override
   public void repaint() {
