@@ -8,7 +8,7 @@ import model.pixeldata.IReadOnlyPixelData;
  * a rectangle.
  */
 public class Rectangle implements ILayer {
-
+  
   private int width;
   private int height;
   private final LayerDelegate layerDelegate;
@@ -20,8 +20,10 @@ public class Rectangle implements ILayer {
    * @param width the width of the rectangle.
    * @param height the height of the rectangle.
    */
-  Rectangle(int width, int height) {
-    this.layerDelegate = new LayerDelegate();
+  Rectangle(int x, int y, int width, int height) {
+    layerDelegate = new LayerDelegate();
+    layerDelegate.setX(x);
+    layerDelegate.setY(y);
     this.width = width;
     this.height = height;
   }
