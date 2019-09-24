@@ -18,6 +18,9 @@ public final class Pencil implements ITool {
 
   /**
    * Creates a pencil with the specified width and color.
+   *
+   * @param width the diameter of the pencil.
+   * @param color the color of the pencils strokes.
    */
   Pencil(int width, Color color) {
     this.width = width;
