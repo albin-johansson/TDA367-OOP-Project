@@ -12,7 +12,7 @@ final class Raster implements ILayer {
 
   private final LayerDelegate layerDelegate;
   private final PixelData pixelData;
-  private final LayerType layerType = LayerType.RASTER;
+  private static final LayerType layerType = LayerType.RASTER;
 
   /**
    * @param width the width of the raster.

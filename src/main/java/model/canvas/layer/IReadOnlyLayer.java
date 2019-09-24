@@ -37,7 +37,7 @@ public interface IReadOnlyLayer {
 
 
   /**
-   * Returns the type of the layer, which is private final.
+   * Returns the type of the layer.
    *
    * @return the type of the layer.
    */
