@@ -2,6 +2,7 @@ package model.canvas.layer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,7 @@ class RasterTest {
 
   @Test
   void setPixel() {
-    // TODO this requires the PixelData fix
-//    assertThrows(NullPointerException.class, () -> raster.setPixel(0, 0, null));
+    assertThrows(NullPointerException.class, () -> raster.setPixel(0, 0, null));
   }
 
   @Test

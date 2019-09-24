@@ -4,6 +4,7 @@ import controller.components.PimpEditorPane;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.IModel;
 import view.IView;
@@ -33,10 +34,41 @@ final class ControllerImpl implements IController {
 
     stage.setScene(new Scene(pane, 800, 600));
     stage.setMaximized(true);
+
+    pane.setOnCanvasPressed(e -> this.onCanvasPressed(e));
+    pane.setOnCanvasReleased(e -> this.onCanvasReleased(e));
+    pane.setOnCanvasDragged(e -> this.onCanvasDragged(e));
   }
 
   @Override
   public void run() {
     stage.show();
+  }
+
+  /**
+   * Function which is executed when the user presses the canvas with the mouse
+   *
+   * @param e information about the mouse event
+   */
+  private void onCanvasPressed(MouseEvent e) {
+
+  }
+
+  /**
+   * Function which is executed when mouse is released when clicking the canvas
+   *
+   * @param e information about the mouse event
+   */
+  private void onCanvasReleased(MouseEvent e) {
+
+  }
+
+  /**
+   * Function which is executed each time the mouse position has changed during a drag
+   *
+   * @param e information about the mouse event
+   */
+  private void onCanvasDragged(MouseEvent e) {
+
   }
 }

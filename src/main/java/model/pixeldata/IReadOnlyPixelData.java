@@ -20,4 +20,20 @@ public interface IReadOnlyPixelData {
    * @throws IndexOutOfBoundsException if the given coordinates is out of range.
    */
   Color getPixel(int x, int y);
+
+  /**
+   * Returns the width of this pixel data instance. The width is equivalent to the amount of pixels
+   * when counted horizontally.
+   *
+   * @return the width of this pixel data instance.
+   */
+  int getWidth();
+
+  /**
+   * Returns the height of this pixel data instance. The width is equivalent to the amount of pixels
+   * when counted vertically.
+   *
+   * @return the height of this pixel data instance.
+   */
+  int getHeight();
 }
