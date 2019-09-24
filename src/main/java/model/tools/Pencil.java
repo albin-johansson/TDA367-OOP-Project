@@ -90,7 +90,7 @@ public final class Pencil implements ITool {
    * @param x the zero-indexed x coordinate for the square to be drawn.
    * @param y the zero-indexed y coordinate for the square to be drawn.
    */
-  public void draw(int x, int y) {
+  private void draw(int x, int y) {
     if (targetLayer == null) {
       return;
     }
