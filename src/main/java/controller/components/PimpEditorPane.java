@@ -51,7 +51,7 @@ public final class PimpEditorPane extends AnchorPane {
    *
    * @param e the function which will be executed
    */
-  public void setOnCanvasPressed(EventHandler<? super MouseEvent> e){
+  public void setOnCanvasPressed(EventHandler<? super MouseEvent> e) {
     this.canvas.setOnMousePressed(e);
   }
 
@@ -60,17 +60,17 @@ public final class PimpEditorPane extends AnchorPane {
    *
    * @param e the function which will be executed
    */
-  public void setOnCanvasReleased(EventHandler<? super MouseEvent> e){
+  public void setOnCanvasReleased(EventHandler<? super MouseEvent> e) {
     this.canvas.setOnMouseReleased(e);
   }
 
   /**
-   * Set what function to execute when the mouse is hold and dragged
-   * The function will be each time the position change
+   * Set what function to execute when the mouse is hold and dragged The function will be each time
+   * the position change
    *
    * @param e the function which will be executed
    */
-  public void setOnCanvasDragged(EventHandler<? super MouseEvent> e){
+  public void setOnCanvasDragged(EventHandler<? super MouseEvent> e) {
     this.canvas.setOnMouseDragged(e);
   }
 }

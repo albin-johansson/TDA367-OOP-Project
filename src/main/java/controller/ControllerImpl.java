@@ -50,7 +50,7 @@ final class ControllerImpl implements IController {
    *
    * @param e information about the mouse event
    */
-  private void onCanvasPressed(MouseEvent e){
+  private void onCanvasPressed(MouseEvent e) {
 
   }
 
@@ -59,7 +59,7 @@ final class ControllerImpl implements IController {
    *
    * @param e information about the mouse event
    */
-  private void onCanvasReleased(MouseEvent e){
+  private void onCanvasReleased(MouseEvent e) {
 
   }
 
@@ -68,7 +68,7 @@ final class ControllerImpl implements IController {
    *
    * @param e information about the mouse event
    */
-  private void onCanvasDragged(MouseEvent e){
+  private void onCanvasDragged(MouseEvent e) {
 
   }
 }
