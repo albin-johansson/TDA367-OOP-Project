@@ -80,21 +80,22 @@ public final class Pencil implements ITool {
   }
 
   /**
-   * Updates the {@code targetLayer}'s pixels in a square of the pencils width and color starting at
-   * the first coordinate given and continuing down right. TODO: Implement som kind of "pattern" the
-   * pencil will draw. And do not draw the pattern from the top left.
+   * Updates the {@code targetLayer}'s pixels in a square of the pencils width and color. TODO: Add
+   * some kind pattern for the pencil to draw.
    *
-   * @param x the zero-indexed x coordinate for the square to be drawn.
-   * @param y the zero-indexed y coordinate for the square to be drawn.
+   * @param x the zero-indexed x coordinate for the squares center.
+   * @param y the zero-indexed y coordinate for the squares center.
    */
   private void updateTargetsPixels(int x, int y) {
     if (targetLayer == null) {
       return;
     }
 
+    int radius = (int) (width / 2.0);
+
     for (int row = 0; row < width; row++) {
       for (int col = 0; col < width; col++) {
-        targetLayer.setPixel(col + x, row + y, color);
+        targetLayer.setPixel(col - radius + x, row - radius + y, color);
       }
     }
   }
