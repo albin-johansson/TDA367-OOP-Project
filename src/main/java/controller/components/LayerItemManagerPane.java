@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import model.canvas.ILayerUpdateListener;
 import model.canvas.layer.IReadOnlyLayer;
 import util.Resources;
 
@@ -13,7 +14,7 @@ import util.Resources;
  * The {@code LayerItemManagerPane} class manages the layer items in the view. Listens to the model
  * for updates.
  */
-public class LayerItemManagerPane extends AnchorPane {
+public class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListener {
 
   @FXML
   private StackPane stackPane;
@@ -33,7 +34,9 @@ public class LayerItemManagerPane extends AnchorPane {
     setStyle("-fx-background-color: gray;");
   }
 
-  
+  public void layersUpdate(){
+
+  }
 
   /**
    * Creates the LayerItems for the view, based on a {@code IReadOnlyLayer}
