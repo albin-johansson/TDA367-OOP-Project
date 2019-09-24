@@ -62,12 +62,12 @@ public final class Pencil implements ITool {
 
   @Override
   public void dragged(MouseEvent mouseEvent) {
-    draw((int) mouseEvent.getX(), (int) mouseEvent.getY());
+    updateTargetsPixels((int) mouseEvent.getX(), (int) mouseEvent.getY());
   }
 
   @Override
   public void pressed(MouseEvent mouseEvent) {
-    draw((int) mouseEvent.getX(), (int) mouseEvent.getY());
+    updateTargetsPixels((int) mouseEvent.getX(), (int) mouseEvent.getY());
   }
 
   @Override
@@ -80,13 +80,14 @@ public final class Pencil implements ITool {
   }
 
   /**
-   * Draws a square of pixels in the pencils color starting at the first coordinate given and
-   * continuing down right. TODO: Implement som kind of "pattern" the pencil will draw.
+   * Updates the {@code targetLayer}'s pixels in a square of the pencils width and color starting at
+   * the first coordinate given and continuing down right. TODO: Implement som kind of "pattern" the
+   * pencil will draw. And do not draw the pattern from the top left.
    *
    * @param x the zero-indexed x coordinate for the square to be drawn.
    * @param y the zero-indexed y coordinate for the square to be drawn.
    */
-  private void draw(int x, int y) {
+  private void updateTargetsPixels(int x, int y) {
     if (targetLayer == null) {
       return;
     }
