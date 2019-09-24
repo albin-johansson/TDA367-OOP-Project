@@ -2,13 +2,14 @@ package model.canvas.layer;
 
 import java.awt.Color;
 import model.pixeldata.IReadOnlyPixelData;
+import model.pixeldata.PixelData;
 
 /**
  * The {@code Rectangle} class is an implementation of the {@code ILayer} interface that represents
  * a rectangle.
  */
 public class Rectangle implements ILayer {
-  
+
   private int width;
   private int height;
   private final LayerDelegate layerDelegate;
@@ -64,7 +65,15 @@ public class Rectangle implements ILayer {
 
   @Override
   public IReadOnlyPixelData getPixelData() {
-    return null;
+    PixelData pixelData = new PixelData(width, height);
+
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        pixelData.setPixel(col,row, Color.MAGENTA);
+      }
+    }
+
+    return pixelData;
   }
 
   @Override
