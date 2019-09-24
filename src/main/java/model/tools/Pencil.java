@@ -16,14 +16,10 @@ public final class Pencil implements ITool {
   private Color color;
   private ILayer targetLayer;
 
-  public Pencil() {
-    new Pencil(10, Color.BLACK);
-  }
-
   /**
    * Creates a pencil with the specified width and color.
    */
-  public Pencil(int width, Color color) {
+  Pencil(int width, Color color) {
     this.width = width;
     this.color = color;
   }
