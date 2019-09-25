@@ -25,6 +25,7 @@ public class Rectangle implements ILayer {
     layerDelegate = new LayerDelegate();
     layerDelegate.setX(x);
     layerDelegate.setY(y);
+    layerDelegate.setVisible(true);
     this.width = width;
     this.height = height;
   }
@@ -69,7 +70,7 @@ public class Rectangle implements ILayer {
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
-        pixelData.setPixel(col,row, Color.MAGENTA);
+        pixelData.setPixel(col, row, Color.MAGENTA);
       }
     }
 
