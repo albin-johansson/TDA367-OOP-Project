@@ -35,9 +35,9 @@ final class LayerUpdateListenerComposite implements ILayerUpdateListener {
   }
 
   @Override
-  public void layersUpdate() {
+  public void layersUpdated() {
     for (ILayerUpdateListener listener : listeners) {
-      listener.layersUpdate();
+      listener.layersUpdated();
     }
   }
 }

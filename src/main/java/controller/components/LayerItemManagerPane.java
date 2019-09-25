@@ -34,7 +34,7 @@ public class LayerItemManagerPane extends AnchorPane implements ILayerUpdateList
     setStyle("-fx-background-color: gray;");
   }
 
-  public void layersUpdate(){
+  public void layersUpdated(){
 
   }
 
