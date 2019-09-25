@@ -5,12 +5,14 @@ import controller.ControllerUtils;
 import java.io.IOException;
 import java.util.concurrent.ForkJoinPool;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import model.IModel;
 import model.canvas.ILayerUpdateListener;
 import model.canvas.layer.IReadOnlyLayer;
+import sun.plugin.javascript.navig4.Layer;
 import util.Resources;
 
 /**
@@ -29,43 +31,29 @@ public class LayerItemManagerPane extends AnchorPane implements ILayerUpdateList
   @FXML
   private VBox layerItemVBox;
 
-  IModel iModel;
 
   /**
    * @throws IOException if the associated FXML file cannot be found.
    */
-  LayerItemManagerPane(IModel iModel) throws IOException {
+  LayerItemManagerPane() throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item_manager.fxml"));
     setStyle("-fx-background-color: gray;");
-    this.iModel = iModel;
     layersUpdated();
   }
 
   public void layersUpdated(){
-    layerItemVBox = new VBox();
-    for (IReadOnlyLayer layer: iModel.getLayers()){
-      addLayerItemPane(createLayerItemPane(layer));
+    for(Node node: layerItemVBox.getChildren()){
+      LayerItemPane layerItemPane = (LayerItemPane)node;
+      //TBA, Events?
     }
   }
 
-  /**
-   * Creates the LayerItems for the view, based on a {@code IReadOnlyLayer}
-   *
-   * @param layer the {@code IReadOnlyLayer} that will be created as a view component
-   * @return the corresponding {@code LayerItemPane} created from the {@code IReadOnlyLayer}
-   */
-  private LayerItemPane createLayerItemPane(IReadOnlyLayer layer) {
-    try {
-      return new LayerItemPane(layer);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
+
 
   /**
    * @param layerItemPane the layerItemPane to add to the VBox for display
    */
-  private void addLayerItemPane(LayerItemPane layerItemPane) {
+  void addLayerItemPane(LayerItemPane layerItemPane) {
       layerItemVBox.getChildren().add(layerItemPane);
   }
 }
