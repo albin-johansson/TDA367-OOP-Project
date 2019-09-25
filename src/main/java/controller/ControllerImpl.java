@@ -2,11 +2,9 @@ package controller;
 
 import controller.components.PimpEditorPane;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Objects;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.IModel;
 import util.Resources;
@@ -31,54 +29,34 @@ final class ControllerImpl implements IController {
     this.model = Objects.requireNonNull(model);
     this.view = Objects.requireNonNull(view);
     this.stage = Objects.requireNonNull(stage);
-    this.stage.setTitle("PIMP - Professional Image Manipulation Program");
 
-    PimpEditorPane pane = new PimpEditorPane();
+    PimpEditorPane pane = new PimpEditorPane(this);
     view.setGraphics(pane.getGraphics());
 
-    stage.setScene(new Scene(pane, 800, 600));
+    prepareStage(new Scene(pane, 800, 600));
+  }
+
+  /**
+   * Prepares the primary stage for use.
+   *
+   * @param scene the scene that will be added to the stage.
+   * @throws NullPointerException if the supplied scene is {@code null}.
+   */
+  private void prepareStage(Scene scene) {
+    Objects.requireNonNull(scene);
+    stage.setScene(scene);
     stage.setMaximized(true);
+    stage.setTitle("PIMP - Professional Image Manipulation Program");
     try {
-      stage.getIcons()
-          .add(new Image(Resources.find(getClass(), "images/pimp_icon.png").toURI().toString()));
-    } catch (URISyntaxException e) {
+      Image icon = new Image(Resources.find(getClass(), "images/pimp_icon.png").toURI().toString());
+      stage.getIcons().add(icon);
+    } catch (Exception e) {
       e.printStackTrace();
     }
-
-    pane.setOnCanvasPressed(this::onCanvasPressed);
-    pane.setOnCanvasReleased(this::onCanvasReleased);
-    pane.setOnCanvasDragged(this::onCanvasDragged);
   }
 
   @Override
   public void run() {
     stage.show();
-  }
-
-  /**
-   * Function which is executed when the user presses the canvas with the mouse
-   *
-   * @param e information about the mouse event
-   */
-  private void onCanvasPressed(MouseEvent e) {
-
-  }
-
-  /**
-   * Function which is executed when mouse is released when clicking the canvas
-   *
-   * @param e information about the mouse event
-   */
-  private void onCanvasReleased(MouseEvent e) {
-
-  }
-
-  /**
-   * Function which is executed each time the mouse position has changed during a drag
-   *
-   * @param e information about the mouse event
-   */
-  private void onCanvasDragged(MouseEvent e) {
-
   }
 }
