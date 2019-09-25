@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import model.canvas.layer.IReadOnlyLayer;
 import util.Resources;
 
 /**
@@ -29,7 +30,7 @@ public class LayerItemPane extends AnchorPane {
   /**
    * @throws IOException if the associated FXML file cannot be found.
    */
-  LayerItemPane() throws IOException {
+  LayerItemPane(IReadOnlyLayer layer) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
     setStyle("-fx-background-color: gray;");
   }
