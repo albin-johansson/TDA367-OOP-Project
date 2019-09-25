@@ -25,7 +25,6 @@ public class Rectangle implements ILayer {
     layerDelegate = new LayerDelegate();
     layerDelegate.setX(x);
     layerDelegate.setY(y);
-    layerDelegate.setVisible(true);
     this.width = width;
     this.height = height;
   }
