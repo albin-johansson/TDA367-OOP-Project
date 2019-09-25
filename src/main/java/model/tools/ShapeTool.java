@@ -4,7 +4,7 @@ import javafx.scene.input.MouseEvent;
 import model.canvas.layer.ILayer;
 
 /**
- * A tool for creating and editing tools.
+ * A tool for creating and editing shapes.
  */
 public class ShapeTool implements ITool {
 
