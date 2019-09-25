@@ -18,6 +18,8 @@ public class Rectangle implements ILayer {
   /**
    * Creates a rectangle.
    *
+   * @param x the zero-indexed x coordinate of the rectangle.
+   * @param y the zero-indexed y coordinate of the rectangle.
    * @param width the width of the rectangle.
    * @param height the height of the rectangle.
    */
