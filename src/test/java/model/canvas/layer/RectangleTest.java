@@ -1,5 +1,6 @@
 package model.canvas.layer;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,7 +19,8 @@ class RectangleTest {
 
   @Test
   void setPixel() {
-    assertThrows(NullPointerException.class, () -> rectangle.setPixel(0, 0, null));
+    // Should not actually manipulate anything.
+    assertDoesNotThrow(() -> rectangle.setPixel(0, 0, null));
   }
 
   @Test
