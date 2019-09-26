@@ -5,6 +5,9 @@ import java.util.Objects;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * Utility class for AnchorPanes
+ */
 public final class AnchorPanes {
 
   private AnchorPanes() {

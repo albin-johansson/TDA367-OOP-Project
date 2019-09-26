@@ -32,7 +32,7 @@ public final class PimpEditorPane extends AnchorPane {
   @SuppressWarnings("unused")
   private HBox horizontalToolBar;
 
-  private IModel model;
+  private final IModel model;
   private LayerItemManagerPane layerItemManagerPane;
 
   private final IController controller;
@@ -48,8 +48,7 @@ public final class PimpEditorPane extends AnchorPane {
     setStyle("-fx-background-color: gray;");
     this.model = Objects.requireNonNull(model);
     this.controller = Objects.requireNonNull(controller);
-    model.addLayer(LayerFactory.createRasterLayer(10, 10));
-    model.addLayer(LayerFactory.createRasterLayer(20, 10));
+
     layerItemManagerPane = new LayerItemManagerPane();
     verticalAnchorPane.getChildren().add(layerItemManagerPane);
     AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
@@ -78,6 +77,10 @@ public final class PimpEditorPane extends AnchorPane {
     return canvas.getGraphicsContext2D();
   }
 
+  /**
+   * Populates this PEP's LayerItemManagerPane with LayerItems based on the layers in the model this
+   * PEP has
+   */
   private void populateLayerItemManagerPane() {
     for (IReadOnlyLayer layer : model.getLayers()) {
       layerItemManagerPane.addLayerItemPane(createLayerItemPane(layer));

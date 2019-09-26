@@ -36,6 +36,11 @@ public class LayerItemManagerPane extends AnchorPane implements ILayerUpdateList
     layersUpdated();
   }
 
+  /**
+   * The update method from the Interface {@Code} ILayerUpdateListener that updates this
+   * Managers LayerItems
+   *
+   */
   public void layersUpdated() {
     for (Node node : layerItemVBox.getChildren()) {
       LayerItemPane layerItemPane = (LayerItemPane) node;
@@ -45,6 +50,7 @@ public class LayerItemManagerPane extends AnchorPane implements ILayerUpdateList
 
 
   /**
+   * Adds a LayerItemPane to this managers layerItemVBox
    * @param layerItemPane the layerItemPane to add to the VBox for display
    */
   void addLayerItemPane(LayerItemPane layerItemPane) {
