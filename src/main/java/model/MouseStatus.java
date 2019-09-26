@@ -4,7 +4,7 @@ package model;
  * The {@code MouseStatus} class is an immutable class used to store relevant information about a
  * mouse event.
  */
-public class MouseStatus {
+public final class MouseStatus {
 
   private final int x;
   private final int y;
@@ -15,7 +15,6 @@ public class MouseStatus {
    * @param x the x coordinate of the mouse
    * @param y the y coordinate of the mouse
    * @param button the button pressed
-   * @throws NullPointerException if x or y coordinates are {@code null}.
    */
   MouseStatus(int x, int y, int button) {
     this.x = x;
