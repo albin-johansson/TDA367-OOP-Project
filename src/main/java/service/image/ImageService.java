@@ -3,19 +3,14 @@ package service.image;
 import java.io.IOException;
 import javafx.scene.image.Image;
 
-public class ImageService {
+/**
+ * This service loads images
+ */
+public final class ImageService {
 
-  private static ImageService self;
+  private static ImageService instance;
 
   private ImageService() {
-  }
-
-  public static ImageService getInstance() {
-    if (self == null) {
-      self = new ImageService();
-    }
-
-    return self;
   }
 
   /**
@@ -24,10 +19,10 @@ public class ImageService {
    * @param path the full path to the specified image
    * @return an javafx.scene.image.Image
    */
-  public Image importImage(String path) throws IOException {
-    try{
+  public static Image importImage(String path) throws IOException {
+    try {
       return new Image("file://" + path, true);
-    } catch (Exception e){
+    } catch (Exception e) {
       throw new IOException("The image at file://" + path + " was not found.");
     }
   }
