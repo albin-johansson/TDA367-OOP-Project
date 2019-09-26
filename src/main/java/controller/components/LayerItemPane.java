@@ -39,4 +39,8 @@ final class LayerItemPane extends AnchorPane {
     setStyle("-fx-background-color: gray;");
     this.layer = Objects.requireNonNull(layer);
   }
+
+  void update() {
+
+  }
 }

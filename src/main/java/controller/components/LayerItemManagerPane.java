@@ -43,7 +43,7 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
   public void layersUpdated() {
     for (Node node : layerItemVBox.getChildren()) {
       LayerItemPane layerItemPane = (LayerItemPane) node;
-      //TBA, Events?
+      layerItemPane.update();
     }
   }
 
