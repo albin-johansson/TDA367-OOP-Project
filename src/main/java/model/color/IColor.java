@@ -13,6 +13,25 @@ public interface IColor extends IReadOnlyColor {
   void setColor(String hex);
 
   /**
+   * Sets the color by RGBA values.
+   *
+   * @param red the red component [0, 255].
+   * @param green the green component [0, 255].
+   * @param blue the blue component [0, 255].
+   * @param alpha the alpha value [0, 1].
+   */
+  void setColor(int red, int green, int blue, double alpha);
+
+  /**
+   * Sets the color by RGB values.
+   *
+   * @param red the red component in the range [0, 255].
+   * @param green the green component [0, 255].
+   * @param blue the blue component [0, 255].
+   */
+  void setColor(int red, int green, int blue);
+
+  /**
    * Sets the red component in the range [0, 255].
    *
    * @param red the red component.
