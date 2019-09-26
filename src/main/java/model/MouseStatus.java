@@ -1,10 +1,8 @@
 package model;
 
-import java.util.Objects;
-
 /**
- * The {@code MouseStatus} class is an immutable class used to store relevant information about
- * a mouse event.
+ * The {@code MouseStatus} class is an immutable class used to store relevant information about a
+ * mouse event.
  */
 public class MouseStatus {
 
@@ -14,7 +12,6 @@ public class MouseStatus {
   private final int button;
 
   /**
-   *
    * @param x the x coordinate of the mouse
    * @param y the y coordinate of the mouse
    * @param button the button pressed
