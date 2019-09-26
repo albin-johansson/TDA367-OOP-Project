@@ -58,76 +58,83 @@ public final class ColorImp implements IColor {
 
   @Override
   public void setRed(int red) {
-
+    this.red = getClosestRGBValue(red);
   }
 
   @Override
   public void setGreen(int green) {
-
+    this.green = getClosestRGBValue(green);
   }
 
   @Override
   public void setBlue(int blue) {
+    this.blue = getClosestRGBValue(blue);
+  }
 
+  @Override
+  public void setAlpha(double alpha) {
+    this.alpha = getClosestAlphaValue(alpha);
   }
 
   @Override
   public void setPercentageRed(double red) {
-
+    // TODO
   }
 
   @Override
   public void setPercentageGreen(double green) {
-
+    // TODO
   }
 
   @Override
   public void setPercentageBlue(double blue) {
-
+    // TODO
   }
 
   @Override
   public int getRed() {
-    return 0;
+    return red;
   }
 
   @Override
   public int getGreen() {
-    return 0;
+    return green;
   }
 
   @Override
   public int getBlue() {
-    return 0;
+    return blue;
   }
 
   @Override
-  public float getAlpha() {
-    return 0;
+  public double getAlpha() {
+    return alpha;
   }
 
   @Override
   public double getRedPercentage() {
-    return 0;
+    return (red / (double) MAX_RGB_VALUE);
   }
 
   @Override
   public double getGreenPercentage() {
-    return 0;
+    return (green / (double) MAX_RGB_VALUE);
   }
 
   @Override
   public double getBluePercentage() {
-    return 0;
+    return (blue / (double) MAX_RGB_VALUE);
   }
 
   @Override
   public String getAlphaHexCode() {
+    // TODO
     return null;
   }
 
   @Override
   public String getHexCode() {
+    // TODO
     return null;
   }
 }
