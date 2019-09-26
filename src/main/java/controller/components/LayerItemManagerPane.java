@@ -1,18 +1,13 @@
 package controller.components;
 
-import com.sun.org.apache.bcel.internal.generic.FieldOrMethod;
 import controller.ControllerUtils;
 import java.io.IOException;
-import java.util.concurrent.ForkJoinPool;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import model.IModel;
 import model.canvas.ILayerUpdateListener;
-import model.canvas.layer.IReadOnlyLayer;
-import sun.plugin.javascript.navig4.Layer;
 import util.Resources;
 
 /**
@@ -41,19 +36,18 @@ public class LayerItemManagerPane extends AnchorPane implements ILayerUpdateList
     layersUpdated();
   }
 
-  public void layersUpdated(){
-    for(Node node: layerItemVBox.getChildren()){
-      LayerItemPane layerItemPane = (LayerItemPane)node;
+  public void layersUpdated() {
+    for (Node node : layerItemVBox.getChildren()) {
+      LayerItemPane layerItemPane = (LayerItemPane) node;
       //TBA, Events?
     }
   }
-
 
 
   /**
    * @param layerItemPane the layerItemPane to add to the VBox for display
    */
   void addLayerItemPane(LayerItemPane layerItemPane) {
-      layerItemVBox.getChildren().add(layerItemPane);
+    layerItemVBox.getChildren().add(layerItemPane);
   }
 }

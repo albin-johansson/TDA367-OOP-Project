@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Objects;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
 import model.IModel;
