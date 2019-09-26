@@ -29,12 +29,16 @@ public final class PimpEditorPane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")
+  private AnchorPane topAnchorPane;
+
+  @FXML
+  @SuppressWarnings("unused")
   private HBox horizontalToolBar;
 
   private final IModel model;
-  private LayerItemManagerPane layerItemManagerPane;
-
   private final IController controller;
+  private final LayerItemManagerPane layerItemManagerPane;
+  private final ToolbarPane toolbarPane;
 
   /**
    * @param model a reference to the a IModel
@@ -48,9 +52,14 @@ public final class PimpEditorPane extends AnchorPane {
     this.model = Objects.requireNonNull(model);
     this.controller = Objects.requireNonNull(controller);
 
+    toolbarPane = new ToolbarPane(controller);
+    topAnchorPane.getChildren().add(toolbarPane);
+    AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
+
     layerItemManagerPane = new LayerItemManagerPane();
     verticalAnchorPane.getChildren().add(layerItemManagerPane);
     AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
+
     populateLayerItemManagerPane();
 
     canvas.setOnMousePressed(event -> {
