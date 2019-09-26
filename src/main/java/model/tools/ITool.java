@@ -1,6 +1,5 @@
 package model.tools;
 
-import javafx.scene.input.MouseEvent;
 import model.MouseStatus;
 import model.canvas.layer.ILayer;
 
