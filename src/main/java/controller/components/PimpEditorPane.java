@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import model.IModel;
 import model.canvas.layer.IReadOnlyLayer;
-import model.canvas.layer.LayerFactory;
 import util.AnchorPanes;
 import util.Resources;
 
@@ -66,7 +65,6 @@ public final class PimpEditorPane extends AnchorPane {
       // TODO...
     });
   }
-
 
   /**
    * Returns the graphics context used by the main canvas.

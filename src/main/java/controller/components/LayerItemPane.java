@@ -13,7 +13,7 @@ import util.Resources;
 /**
  * The {@code LayerItemPane} class represents a layer item in the view.
  */
-public final class LayerItemPane extends AnchorPane {
+final class LayerItemPane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")

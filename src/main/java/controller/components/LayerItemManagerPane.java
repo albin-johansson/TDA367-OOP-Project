@@ -14,7 +14,7 @@ import util.Resources;
  * The {@code LayerItemManagerPane} class manages the layer items in the view. Listens to the model
  * for updates.
  */
-public class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListener {
+final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListener {
 
   @FXML
   private StackPane stackPane;
@@ -26,7 +26,6 @@ public class LayerItemManagerPane extends AnchorPane implements ILayerUpdateList
   @FXML
   private VBox layerItemVBox;
 
-
   /**
    * @throws IOException if the associated FXML file cannot be found.
    */
@@ -37,10 +36,10 @@ public class LayerItemManagerPane extends AnchorPane implements ILayerUpdateList
   }
 
   /**
-   * The update method from the Interface {@Code} ILayerUpdateListener that updates this
-   * Managers LayerItems
-   *
+   * The update method from the Interface {@Code} ILayerUpdateListener that updates this Managers
+   * LayerItems
    */
+  @Override
   public void layersUpdated() {
     for (Node node : layerItemVBox.getChildren()) {
       LayerItemPane layerItemPane = (LayerItemPane) node;
@@ -51,6 +50,7 @@ public class LayerItemManagerPane extends AnchorPane implements ILayerUpdateList
 
   /**
    * Adds a LayerItemPane to this managers layerItemVBox
+   *
    * @param layerItemPane the layerItemPane to add to the VBox for display
    */
   void addLayerItemPane(LayerItemPane layerItemPane) {
