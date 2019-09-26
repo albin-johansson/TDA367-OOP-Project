@@ -60,7 +60,7 @@ public final class Canvas {
   public void setLayerVisible(boolean isVisible) {
     verifyActiveLayerExistence();
     activeLayer.setVisible(isVisible);
-    informAllListeners();
+    notifyAllListeners();
   }
 
   /**
@@ -94,7 +94,7 @@ public final class Canvas {
     }
 
     layers.add(layer);
-    informAllListeners();
+    notifyAllListeners();
   }
 
   /**
@@ -107,7 +107,7 @@ public final class Canvas {
   public void removeLayer(ILayer layer) {
     Objects.requireNonNull(layer);
     layers.remove(layer);
-    informAllListeners();
+    notifyAllListeners();
   }
 
   /**
@@ -122,7 +122,7 @@ public final class Canvas {
       throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
     }
     layers.remove(layerIndex);
-    informAllListeners();
+    notifyAllListeners();
   }
 
   /**
@@ -148,9 +148,9 @@ public final class Canvas {
   }
 
   /**
-   *
+   * Notifies the listeners for this Canvas
    */
-  private void informAllListeners() {
+  private void notifyAllListeners() {
     layerUpdateListeners.layersUpdated();
     canvasUpdateListeners.canvasUpdated();
   }

@@ -21,6 +21,7 @@ public final class AnchorPanes {
    * @param right set value for right
    * @param bottom set value for bottom
    * @param left set value for left
+   * @throws NullPointerException if the Node argument is null
    */
   public static void setAnchors(Node node, int top, int right, int bottom, int left) {
     Objects.requireNonNull(node);
