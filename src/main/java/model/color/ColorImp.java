@@ -77,18 +77,18 @@ public final class ColorImp implements IColor {
   }
 
   @Override
-  public void setPercentageRed(double red) {
-    // TODO
+  public void setPercentageRed(double percentageRed) {
+    red = (int) (MAX_VALUE * percentageRed);
   }
 
   @Override
-  public void setPercentageGreen(double green) {
-    // TODO
+  public void setPercentageGreen(double percentageGreen) {
+    green = (int) (MAX_VALUE * percentageGreen);
   }
 
   @Override
-  public void setPercentageBlue(double blue) {
-    // TODO
+  public void setPercentageBlue(double percentageBlue) {
+    blue = (int) (MAX_VALUE * percentageBlue);
   }
 
   @Override
