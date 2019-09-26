@@ -8,8 +8,6 @@ import javafx.scene.image.Image;
  */
 public final class ImageService {
 
-  private static ImageService instance;
-
   private ImageService() {
   }
 
