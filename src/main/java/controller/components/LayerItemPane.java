@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
 import util.Resources;
 
@@ -23,7 +22,7 @@ public final class LayerItemPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private ToggleButton toggleButton;
-  
+
   @FXML
   @SuppressWarnings("unused")
   private ImageView imageView;

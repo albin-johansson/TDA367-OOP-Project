@@ -34,7 +34,7 @@ public final class PimpEditorPane extends AnchorPane {
 
   private IModel model;
   private LayerItemManagerPane layerItemManagerPane;
-  
+
   private final IController controller;
 
   /**
@@ -54,7 +54,7 @@ public final class PimpEditorPane extends AnchorPane {
     verticalAnchorPane.getChildren().add(layerItemManagerPane);
     AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
     populateLayerItemManagerPane();
-    
+
     canvas.setOnMousePressed(event -> {
       // TODO...
     });
