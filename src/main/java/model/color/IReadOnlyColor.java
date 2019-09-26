@@ -1,4 +1,4 @@
-package model;
+package model.color;
 
 /**
  * The {@code IReadOnlyColor} represent a color that can only be read.
