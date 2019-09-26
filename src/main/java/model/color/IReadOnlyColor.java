@@ -27,6 +27,13 @@ public interface IReadOnlyColor {
   int getBlue();
 
   /**
+   * Returns the alpha value in the range [0, 1].
+   *
+   * @return the alpha value.
+   */
+  double getAlpha();
+
+  /**
    * Returns the red percentage of the color in the range [0, 1].
    *
    * @return the red percentage.
