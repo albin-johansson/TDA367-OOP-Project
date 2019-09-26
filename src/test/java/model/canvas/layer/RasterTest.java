@@ -60,4 +60,9 @@ class RasterTest {
   void getPixelData() {
     assertNotNull(raster.getPixelData());
   }
+
+  @Test
+  void getLayerType() {
+    assertEquals(LayerType.RASTER, raster.getLayerType());
+  }
 }

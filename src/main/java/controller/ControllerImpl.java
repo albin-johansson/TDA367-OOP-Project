@@ -4,8 +4,10 @@ import controller.components.PimpEditorPane;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.IModel;
+import util.Resources;
 import view.IView;
 
 /**
@@ -28,11 +30,29 @@ final class ControllerImpl implements IController {
     this.view = Objects.requireNonNull(view);
     this.stage = Objects.requireNonNull(stage);
 
-    PimpEditorPane pane = new PimpEditorPane();
+    PimpEditorPane pane = new PimpEditorPane(model, this);
     view.setGraphics(pane.getGraphics());
 
-    stage.setScene(new Scene(pane, 800, 600));
+    prepareStage(new Scene(pane, 800, 600));
+  }
+
+  /**
+   * Prepares the primary stage for use.
+   *
+   * @param scene the scene that will be added to the stage.
+   * @throws NullPointerException if the supplied scene is {@code null}.
+   */
+  private void prepareStage(Scene scene) {
+    Objects.requireNonNull(scene);
+    stage.setScene(scene);
     stage.setMaximized(true);
+    stage.setTitle("PIMP - Professional Image Manipulation Program");
+    try {
+      Image icon = new Image(Resources.find(getClass(), "images/pimp_icon.png").toURI().toString());
+      stage.getIcons().add(icon);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

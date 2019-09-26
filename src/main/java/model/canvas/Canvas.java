@@ -12,11 +12,13 @@ import model.canvas.layer.ILayer;
 public final class Canvas {
 
   private final CanvasUpdateListenerComposite canvasUpdateListeners;
+  private final LayerUpdateListenerComposite layerUpdateListeners;
   private final List<ILayer> layers;
   private ILayer activeLayer;
 
   public Canvas() {
     canvasUpdateListeners = new CanvasUpdateListenerComposite();
+    layerUpdateListeners = new LayerUpdateListenerComposite();
     layers = new ArrayList<>(20);
     activeLayer = null;
   }
@@ -58,7 +60,7 @@ public final class Canvas {
   public void setLayerVisible(boolean isVisible) {
     verifyActiveLayerExistence();
     activeLayer.setVisible(isVisible);
-    canvasUpdateListeners.canvasUpdated();
+    notifyAllListeners();
   }
 
   /**
@@ -74,6 +76,7 @@ public final class Canvas {
     } else {
       activeLayer = layers.get(layerIndex);
     }
+    layerUpdateListeners.layersUpdated();
   }
 
   /**
@@ -91,7 +94,7 @@ public final class Canvas {
     }
 
     layers.add(layer);
-    canvasUpdateListeners.canvasUpdated();
+    notifyAllListeners();
   }
 
   /**
@@ -104,7 +107,7 @@ public final class Canvas {
   public void removeLayer(ILayer layer) {
     Objects.requireNonNull(layer);
     layers.remove(layer);
-    canvasUpdateListeners.canvasUpdated();
+    notifyAllListeners();
   }
 
   /**
@@ -119,7 +122,7 @@ public final class Canvas {
       throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
     }
     layers.remove(layerIndex);
-    canvasUpdateListeners.canvasUpdated();
+    notifyAllListeners();
   }
 
   /**
@@ -131,6 +134,25 @@ public final class Canvas {
    */
   public void addCanvasUpdateListener(ICanvasUpdateListener listener) {
     canvasUpdateListeners.add(listener);
+  }
+
+  /**
+   * Adds a layer update listener to the canvas.
+   *
+   * @param listener the listener that will be added, may not be {@code null}.
+   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws IllegalArgumentException if the supplied listener has been added previously.
+   */
+  public void addLayerUpdateListener(ILayerUpdateListener listener) {
+    layerUpdateListeners.add(listener);
+  }
+
+  /**
+   * Notifies the listeners for this Canvas
+   */
+  private void notifyAllListeners() {
+    layerUpdateListeners.layersUpdated();
+    canvasUpdateListeners.canvasUpdated();
   }
 
   /**

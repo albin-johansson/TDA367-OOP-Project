@@ -5,27 +5,34 @@ import model.pixeldata.IReadOnlyPixelData;
 import model.pixeldata.PixelData;
 
 /**
- * The {@code Raster} class is an implementation of the {@code ILayer} interface that represents a
- * layer that contains an arbitrary collection of pixels.
+ * The {@code Rectangle} class is an implementation of the {@code ILayer} interface that represents
+ * a rectangle.
  */
-final class Raster implements ILayer {
+public class Rectangle implements ILayer {
 
+  private int width;
+  private int height;
   private final LayerDelegate layerDelegate;
-  private final PixelData pixelData;
-  private static final LayerType layerType = LayerType.RASTER;
+  private static final LayerType layerType = LayerType.SHAPE;
 
   /**
-   * @param width the width of the raster.
-   * @param height the height of the raster.
+   * Creates a rectangle.
+   *
+   * @param x the zero-indexed x coordinate of the rectangle.
+   * @param y the zero-indexed y coordinate of the rectangle.
+   * @param width the width of the rectangle.
+   * @param height the height of the rectangle.
    */
-  Raster(int width, int height) {
+  Rectangle(int x, int y, int width, int height) {
     layerDelegate = new LayerDelegate();
-    pixelData = new PixelData(width, height);
+    layerDelegate.setX(x);
+    layerDelegate.setY(y);
+    this.width = width;
+    this.height = height;
   }
 
   @Override
   public void setPixel(int x, int y, Color color) {
-    pixelData.setPixel(x, y, color);
   }
 
   @Override
@@ -60,6 +67,14 @@ final class Raster implements ILayer {
 
   @Override
   public IReadOnlyPixelData getPixelData() {
+    PixelData pixelData = new PixelData(width, height);
+
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        pixelData.setPixel(col, row, Color.MAGENTA);
+      }
+    }
+
     return pixelData;
   }
 
