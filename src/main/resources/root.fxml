@@ -11,11 +11,14 @@
         <Canvas fx:id="canvas" height="200.0" width="200.0" BorderPane.alignment="CENTER" />
       </center>
          <right>
-            <AnchorPane fx:id="verticalAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <AnchorPane fx:id="rightAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </right>
          <top>
             <AnchorPane fx:id="topAnchorPane" prefHeight="64.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </top>
+         <left>
+            <AnchorPane fx:id="leftAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="64.0" BorderPane.alignment="CENTER" />
+         </left>
     </BorderPane>
   </children>
 </fx:root>
