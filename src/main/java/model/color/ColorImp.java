@@ -18,6 +18,34 @@ public class ColorImp implements IColor {
     this.alpha = alpha;
   }
 
+  /**
+   * Returns the closest legal alpha value to the specified value.
+   *
+   * @param alpha the alpha value that will be checked.
+   * @return the closest legal alpha value.
+   */
+  private double getClosestAlphaValue(double alpha) {
+    if (alpha >= MAX_ALPHA_VALUE) {
+      return MAX_ALPHA_VALUE;
+    } else {
+      return Math.max(alpha, MIN_ALPHA_VALUE);
+    }
+  }
+
+  /**
+   * Returns the closest legal color component value to the specified value.
+   *
+   * @param val the color component value that will be checked.
+   * @return the closest legal color component.
+   */
+  private double getClosestRGBValue(int val) {
+    if (val >= MAX_RGB_VALUE) {
+      return MAX_RGB_VALUE;
+    } else {
+      return Math.max(val, MIN_RGB_VALUE);
+    }
+  }
+
   @Override
   public void setColor(String hex) {
 
