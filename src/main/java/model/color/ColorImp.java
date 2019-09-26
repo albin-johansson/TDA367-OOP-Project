@@ -15,11 +15,14 @@ public final class ColorImp implements IColor {
   private static final int MIN_VALUE = 0;
   private static final String HEX_PATTERN = "#?([\\da-fA-F]{2})([\\da-fA-F]{2})([\\da-fA-F]{2})";
 
-  ColorImp(int red, int green, int blue, double alpha) {
-    this.red = red;
-    this.green = green;
-    this.blue = blue;
-    this.alpha = alpha;
+  /**
+   * @param red the red component [0, 255].
+   * @param green the green component [0, 255].
+   * @param blue the blue component [0, 255].
+   * @param alpha the alpha component [0, 255].
+   */
+  ColorImp(int red, int green, int blue, int alpha) {
+    setColor(red, green, blue, alpha);
   }
 
   /**
