@@ -6,6 +6,10 @@ public class ColorImp implements IColor {
   private int green;
   private int blue;
   private double alpha;
+  private static final int MAX_RGB_VALUE = 255;
+  private static final int MIN_RGB_VALUE = 0;
+  private static final int MAX_ALPHA_VALUE = 1;
+  private static final int MIN_ALPHA_VALUE = 0;
 
   ColorImp(int red, int green, int blue, double alpha) {
     this.red = red;
