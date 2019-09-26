@@ -64,7 +64,7 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public LayerType getLayerType(){
+  public LayerType getLayerType() {
     return layerType;
   }
 }
