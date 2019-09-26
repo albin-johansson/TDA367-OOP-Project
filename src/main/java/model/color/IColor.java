@@ -34,6 +34,13 @@ public interface IColor extends IReadOnlyColor {
   void setBlue(int blue);
 
   /**
+   * Sets the alpha value in the range [0, 1].
+   *
+   * @param alpha the alpha value.
+   */
+  void setAlpha(double alpha);
+
+  /**
    * Sets the red percentage of the color in the range [0, 1].
    *
    * @param red the blue percentage.
