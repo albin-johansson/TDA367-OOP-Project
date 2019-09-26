@@ -1,6 +1,11 @@
 package model.color;
 
-public class ColorImp implements IColor {
+/**
+ * The {@code ColorImp} class is an implementation of the {@code IColor} interface.
+ *
+ * @see IColor
+ */
+public final class ColorImp implements IColor {
 
   private int red;
   private int green;
