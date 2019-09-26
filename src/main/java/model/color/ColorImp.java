@@ -5,9 +5,9 @@ public class ColorImp implements IColor {
   private int red;
   private int green;
   private int blue;
-  private int alpha;
+  private double alpha;
 
-  ColorImp(int red, int green, int blue, int alpha) {
+  ColorImp(int red, int green, int blue, double alpha) {
     this.red = red;
     this.green = green;
     this.blue = blue;
@@ -61,6 +61,11 @@ public class ColorImp implements IColor {
 
   @Override
   public int getBlue() {
+    return 0;
+  }
+
+  @Override
+  public float getAlpha() {
     return 0;
   }
 
