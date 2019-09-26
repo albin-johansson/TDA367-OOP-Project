@@ -49,6 +49,7 @@ public final class PimpEditorPane extends AnchorPane {
     this.controller = Objects.requireNonNull(controller);
 
     layerItemManagerPane = new LayerItemManagerPane();
+    model.addLayerUpdateListener(layerItemManagerPane);
     verticalAnchorPane.getChildren().add(layerItemManagerPane);
     AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
     populateLayerItemManagerPane();

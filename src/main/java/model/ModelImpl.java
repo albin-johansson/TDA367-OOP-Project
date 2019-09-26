@@ -3,6 +3,7 @@ package model;
 import java.awt.Color;
 import model.canvas.Canvas;
 import model.canvas.ICanvasUpdateListener;
+import model.canvas.ILayerUpdateListener;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
 
@@ -50,6 +51,11 @@ final class ModelImpl implements IModel {
   @Override
   public void addCanvasUpdateListener(ICanvasUpdateListener listener) {
     canvas.addCanvasUpdateListener(listener);
+  }
+
+  @Override
+  public void addLayerUpdateListener(ILayerUpdateListener listener) {
+    canvas.addLayerUpdateListener(listener);
   }
 
   @Override
