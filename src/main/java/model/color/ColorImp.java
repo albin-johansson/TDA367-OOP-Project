@@ -10,11 +10,10 @@ public final class ColorImp implements IColor {
   private int red;
   private int green;
   private int blue;
-  private double alpha;
-  private static final int MAX_RGB_VALUE = 255;
-  private static final int MIN_RGB_VALUE = 0;
-  private static final int MAX_ALPHA_VALUE = 1;
-  private static final int MIN_ALPHA_VALUE = 0;
+  private int alpha;
+  private static final int MAX_VALUE = 255;
+  private static final int MIN_VALUE = 0;
+  private static final String HEX_PATTERN = "#?([\\da-fA-F]{2})([\\da-fA-F]{2})([\\da-fA-F]{2})";
 
   ColorImp(int red, int green, int blue, double alpha) {
     this.red = red;
