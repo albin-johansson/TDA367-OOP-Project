@@ -38,7 +38,7 @@ public class ColorImp implements IColor {
    * @param val the color component value that will be checked.
    * @return the closest legal color component.
    */
-  private double getClosestRGBValue(int val) {
+  private int getClosestRGBValue(int val) {
     if (val >= MAX_RGB_VALUE) {
       return MAX_RGB_VALUE;
     } else {
