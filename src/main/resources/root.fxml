@@ -13,6 +13,9 @@
          <right>
             <AnchorPane fx:id="verticalAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </right>
+         <top>
+            <AnchorPane fx:id="topAnchorPane" prefHeight="64.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </top>
     </BorderPane>
   </children>
 </fx:root>
