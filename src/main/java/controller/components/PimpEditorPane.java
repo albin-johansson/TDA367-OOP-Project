@@ -25,16 +25,25 @@ public final class PimpEditorPane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")
-  private AnchorPane verticalAnchorPane;
+  private AnchorPane topAnchorPane;
+
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane rightAnchorPane;
+
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane leftAnchorPane;
 
   @FXML
   @SuppressWarnings("unused")
   private HBox horizontalToolBar;
 
   private final IModel model;
-  private LayerItemManagerPane layerItemManagerPane;
-
   private final IController controller;
+  private final LayerItemManagerPane layerItemManagerPane;
+  private final ToolbarPane toolbarPane;
+  private final PalettePane palettePane;
 
   /**
    * @param model a reference to the a IModel
@@ -48,10 +57,19 @@ public final class PimpEditorPane extends AnchorPane {
     this.model = Objects.requireNonNull(model);
     this.controller = Objects.requireNonNull(controller);
 
+    toolbarPane = new ToolbarPane(controller);
+    topAnchorPane.getChildren().add(toolbarPane);
+    AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
+
     layerItemManagerPane = new LayerItemManagerPane();
     model.addLayerUpdateListener(layerItemManagerPane);
-    verticalAnchorPane.getChildren().add(layerItemManagerPane);
+    rightAnchorPane.getChildren().add(layerItemManagerPane);
     AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
+
+    palettePane = new PalettePane(controller);
+    leftAnchorPane.getChildren().add(palettePane);
+    AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
+
     populateLayerItemManagerPane();
 
     canvas.setOnMousePressed(event -> {
