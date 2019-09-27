@@ -56,6 +56,9 @@ public final class ColorImp implements IColor {
   @Override
   public void setColor(String hex) {
 
+  @Override
+  public void setColor(int red, int green, int blue) {
+    setColor(red, green, blue, MAX_VALUE);
   }
 
   @Override
