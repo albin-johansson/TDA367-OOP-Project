@@ -74,10 +74,11 @@ public final class ColorImp implements IColor {
    * @return true if the provided hex code is valid.
    */
   private boolean validHexCode(String hex) {
-    if (hex == null) {
+    if ((hex == null) || (hex.length() == 0)) {
       return false;
     }
 
+    // TODO: Update so that the regex validates strings with and without #.
     String stringToValidate;
     if (hex.charAt(0) == '#') {
       stringToValidate = hex;
@@ -94,7 +95,7 @@ public final class ColorImp implements IColor {
     initHexRegEx();
 
     if (!validHexCode(hex)) {
-      setColor(MAX_VALUE, MAX_VALUE, MAX_VALUE, MAX_VALUE);
+      setColor(MIN_VALUE, MIN_VALUE, MIN_VALUE, MIN_VALUE);
       return;
     }
 
