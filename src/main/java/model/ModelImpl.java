@@ -44,7 +44,12 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void setLayerVisibility(boolean isVisible) {
+  public void setLayerVisibility(int layerIndex, boolean isVisible) {
+    canvas.setLayerVisible(isVisible);
+  }
+
+  @Override
+  public void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible) {
     canvas.setLayerVisible(isVisible);
   }
 

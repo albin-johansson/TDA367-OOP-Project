@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import model.canvas.layer.ILayer;
+import model.canvas.layer.IReadOnlyLayer;
 
 /**
  * The {@code Canvas} class is responsible for handling layers.
@@ -35,6 +36,33 @@ public final class Canvas {
   }
 
   /**
+   * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
+   *
+   * @throws IllegalStateException if there is no active layer.
+   */
+  private void verifyIndexedLayerExistence(int layerIndex) {
+    if (layerIndex < 0 || layerIndex >= layers.size()) {
+      throw new IllegalStateException("Indexed layer does not exist!");
+    } else {
+      IReadOnlyLayer layer = layers.get(layerIndex);
+      if (layer == null) {
+        throw new IllegalStateException("Indexed layer does not exist!");
+      }
+    }
+  }
+
+  /**
+   * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
+   *
+   * @throws IllegalStateException if there is no active layer.
+   */
+  private void verifyLayerExistence(IReadOnlyLayer layer) {
+    if (layer == null) {
+      throw new IllegalStateException("Layer does not exist!");
+    }
+  }
+
+  /**
    * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates
    * are zero-indexed.
    *
@@ -57,7 +85,7 @@ public final class Canvas {
    * @param isVisible {@code true} if the active layer should be visible; {@code false} otherwise.
    * @throws IllegalStateException if there is no active layer.
    */
-  public void setLayerVisible(boolean isVisible) {
+  public void setLayerVisible(IReadOnlyLayer layer, boolean isVisible) {
     verifyActiveLayerExistence();
     activeLayer.setVisible(isVisible);
     notifyAllListeners();
