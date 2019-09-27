@@ -3,6 +3,10 @@ package model.canvas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import model.canvas.layer.ILayerUpdateListener;
+import model.canvas.layer.IReadOnlyLayer;
+import model.canvas.layer.LayerUpdateEvent;
+import model.canvas.layer.LayerUpdateEvent.EventType;
 
 /**
  * The {@code LayerUpdateListenerComposite} class is a composite of instances of the {@code
@@ -35,9 +39,9 @@ final class LayerUpdateListenerComposite implements ILayerUpdateListener {
   }
 
   @Override
-  public void layersUpdated() {
+  public void layersUpdated(LayerUpdateEvent e) {
     for (ILayerUpdateListener listener : listeners) {
-      listener.layersUpdated();
+      listener.layersUpdated(e);
     }
   }
 }
