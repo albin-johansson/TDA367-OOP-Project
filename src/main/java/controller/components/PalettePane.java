@@ -28,16 +28,16 @@ final class PalettePane extends AnchorPane {
 
   @FXML
   private void selectPencil() {
-    // TODO do something with controller
+    controller.selectPencil();
   }
 
   @FXML
   private void selectEraser() {
-    // TODO do something with controller
+    controller.selectEraser();
   }
 
   @FXML
   private void selectBucket() {
-    // TODO do something with controller
+    controller.selectBucket();
   }
 }

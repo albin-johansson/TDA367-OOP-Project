@@ -3,9 +3,10 @@ package model;
 import java.awt.Color;
 import model.canvas.Canvas;
 import model.canvas.ICanvasUpdateListener;
-import model.canvas.ILayerUpdateListener;
+import model.canvas.layer.ILayerUpdateListener;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
+import model.tools.ITool;
 
 /**
  * The {@code ModelImpl} class is an implementation of the {@code IModel} interface.
@@ -13,6 +14,8 @@ import model.canvas.layer.IReadOnlyLayer;
 final class ModelImpl implements IModel {
 
   private final Canvas canvas;
+
+  private ITool selectedTool;
 
   ModelImpl() {
     canvas = new Canvas();
@@ -71,5 +74,25 @@ final class ModelImpl implements IModel {
   @Override
   public int getAmountOfLayers() {
     return canvas.getAmountOfLayers();
+  }
+
+  @Override
+  public void setSelectedTool(ITool selectedTool) {
+    this.selectedTool = selectedTool;
+  }
+
+  @Override
+  public void selectedToolPressed(MouseStatus mouseStatus) {
+    //TODO Implement
+  }
+
+  @Override
+  public void selectedToolDragged(MouseStatus mouseStatus) {
+    //TODO Implement
+  }
+
+  @Override
+  public void selectedToolReleased(MouseStatus mouseStatus) {
+    //TODO Implement
   }
 }

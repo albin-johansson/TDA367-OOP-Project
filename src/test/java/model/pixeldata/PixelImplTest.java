@@ -3,6 +3,7 @@ package model.pixeldata;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +35,7 @@ class PixelImplTest {
   void setRed() {
     final double validRed = 0.8;
     pixel.setRed(validRed);
-    assertEquals(validRed, pixel.getRed());
+    assertEquals(validRed, pixel.getRed(), 0.01);
 
     assertDoesNotThrow(() -> pixel.setRed(-0.1));
     assertEquals(0, pixel.getRed());
@@ -47,7 +48,7 @@ class PixelImplTest {
   void setGreen() {
     final double validGreen = 0.2;
     pixel.setGreen(validGreen);
-    assertEquals(validGreen, pixel.getGreen());
+    assertEquals(validGreen, pixel.getGreen(), 0.01);
 
     assertDoesNotThrow(() -> pixel.setGreen(-0.25));
     assertEquals(0, pixel.getGreen());
@@ -60,7 +61,7 @@ class PixelImplTest {
   void setBlue() {
     final double validBlue = 0.38;
     pixel.setBlue(validBlue);
-    assertEquals(validBlue, pixel.getBlue());
+    assertEquals(validBlue, pixel.getBlue(), 0.01);
 
     assertDoesNotThrow(() -> pixel.setBlue(-0.8));
     assertEquals(0, pixel.getBlue());
@@ -73,7 +74,7 @@ class PixelImplTest {
   void setAlpha() {
     final double validAlpha = 0.63;
     pixel.setAlpha(validAlpha);
-    assertEquals(validAlpha, pixel.getAlpha());
+    assertEquals(validAlpha, pixel.getAlpha(), 0.01);
 
     assertDoesNotThrow(() -> pixel.setAlpha(-0.49));
     assertEquals(0, pixel.getAlpha());
@@ -89,7 +90,7 @@ class PixelImplTest {
     double red = 0.2;
     pixel.setRed(red);
 
-    assertEquals(red, pixel.getRed());
+    assertEquals(red, pixel.getRed(), 0.01);
   }
 
   @Test
@@ -99,7 +100,7 @@ class PixelImplTest {
     double green = 0.9;
     pixel.setGreen(green);
 
-    assertEquals(green, pixel.getGreen());
+    assertEquals(green, pixel.getGreen(), 0.01);
   }
 
   @Test
@@ -109,17 +110,17 @@ class PixelImplTest {
     double blue = 0.5;
     pixel.setBlue(blue);
 
-    assertEquals(blue, pixel.getBlue());
+    assertEquals(blue, pixel.getBlue(), 0.01);
   }
 
   @Test
   void getAlpha() {
-    assertEquals(1, pixel.getAlpha());
+    assertEquals(0, pixel.getAlpha());
 
     double alpha = 0.8;
     pixel.setAlpha(alpha);
 
-    assertEquals(alpha, pixel.getAlpha());
+    assertEquals(alpha, pixel.getAlpha(), 0.01);
   }
 
   @Test
@@ -149,5 +150,10 @@ class PixelImplTest {
   @Test
   void toStringTest() {
     System.out.println(pixel.toString()); // visual test
+  }
+
+  @Test
+  void getColor() {
+    assertNotNull(pixel.getColor());
   }
 }

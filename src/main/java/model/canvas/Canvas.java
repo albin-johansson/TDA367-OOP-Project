@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import model.MouseStatus;
 import model.canvas.layer.ILayer;
+import model.canvas.layer.ILayerUpdateListener;
+import model.canvas.layer.LayerUpdateEvent;
+import model.canvas.layer.LayerUpdateEvent.EventType;
 import model.canvas.layer.IReadOnlyLayer;
 
 /**
@@ -89,7 +93,7 @@ public final class Canvas {
         break;
       }
     }
-    notifyAllListeners();
+    notifyAllListeners(new LayerUpdateEvent(EventType.VISIBILITY_TOGGLED, activeLayer));
   }
 
   /**
@@ -102,7 +106,7 @@ public final class Canvas {
   public void setLayerVisible(int layerIndex, boolean isVisible) {
     verifyIndexedLayerExistence(layerIndex);
     layers.get(layerIndex).setVisible(isVisible);
-    notifyAllListeners();
+    notifyAllListeners(new LayerUpdateEvent(EventType.VISIBILITY_TOGGLED, layers.get(layerIndex)));
   }
 
   /**
@@ -118,7 +122,7 @@ public final class Canvas {
     } else {
       activeLayer = layers.get(layerIndex);
     }
-    layerUpdateListeners.layersUpdated();
+    layerUpdateListeners.layersUpdated(new LayerUpdateEvent(EventType.SELECTED, activeLayer));
   }
 
   /**
@@ -136,7 +140,7 @@ public final class Canvas {
     }
 
     layers.add(layer);
-    notifyAllListeners();
+    notifyAllListeners(new LayerUpdateEvent(EventType.CREATED, layer));
   }
 
   /**
@@ -149,7 +153,7 @@ public final class Canvas {
   public void removeLayer(ILayer layer) {
     Objects.requireNonNull(layer);
     layers.remove(layer);
-    notifyAllListeners();
+    notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layer));
   }
 
   /**
@@ -163,8 +167,7 @@ public final class Canvas {
     if ((layerIndex < 0) || (layerIndex >= layers.size())) {
       throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
     }
-    layers.remove(layerIndex);
-    notifyAllListeners();
+    notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layers.remove(layerIndex)));
   }
 
   /**
@@ -192,8 +195,8 @@ public final class Canvas {
   /**
    * Notifies the listeners for this Canvas
    */
-  private void notifyAllListeners() {
-    layerUpdateListeners.layersUpdated();
+  private void notifyAllListeners(LayerUpdateEvent e) {
+    layerUpdateListeners.layersUpdated(e);
     canvasUpdateListeners.canvasUpdated();
   }
 
@@ -214,4 +217,5 @@ public final class Canvas {
   public Iterable<ILayer> getLayers() {
     return layers;
   }
+
 }

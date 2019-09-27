@@ -1,5 +1,7 @@
 package model.pixeldata;
 
+import model.color.IReadOnlyColor;
+
 /**
  * The {@code IPixel} interface specifies objects that represent a pixel.
  */
@@ -90,7 +92,7 @@ public interface IPixel {
    *   <li>the objects have equal blue component values.</li>
    *   <li>the objects have equal alpha component values.</li>
    * </ul>
-   *
+   * <p>
    * Note! Two pixels instances do <b>not</b> need to have the same coordinates in order to be
    * considered equal.
    *
@@ -101,4 +103,10 @@ public interface IPixel {
   @Override
   boolean equals(Object obj);
 
+  /**
+   * Returns a readable color of the pixel.
+   *
+   * @return a readable color.
+   */
+  IReadOnlyColor getColor();
 }
