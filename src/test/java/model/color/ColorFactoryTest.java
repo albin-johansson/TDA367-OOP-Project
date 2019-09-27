@@ -2,7 +2,6 @@ package model.color;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,17 +21,5 @@ class ColorFactoryTest {
     assertEquals(color.getRed(), 249);
     assertEquals(color.getGreen(), 119);
     assertEquals(color.getBlue(), 161);
-  }
-
-  /**
-   * "Bad params" tests.
-   */
-  @Test
-  @SuppressWarnings("ResultOfMethodCallIgnored")
-  void createColor1() {
-    assertThrows(NullPointerException.class, () -> ColorFactory.createColor(-1, -1, -1, -1));
-    assertThrows(NullPointerException.class, () -> ColorFactory.createColor("FF00GG"));
-    assertThrows(NullPointerException.class, () -> ColorFactory.createColor("hello !"));
-    assertThrows(NullPointerException.class, () -> ColorFactory.createColor("ffffffffffff"));
   }
 }
