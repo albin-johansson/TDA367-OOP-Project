@@ -46,9 +46,9 @@ public final class PimpEditorPane extends AnchorPane {
   private final PalettePane palettePane;
 
   /**
-   * @param model a reference to the a IModel
+   * @param model      a reference to the a IModel
    * @param controller the parent controller instance.
-   * @throws IOException if the associated FXML file cannot be found.
+   * @throws IOException          if the associated FXML file cannot be found.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   public PimpEditorPane(IModel model, IController controller) throws IOException {
@@ -72,17 +72,11 @@ public final class PimpEditorPane extends AnchorPane {
 
     populateLayerItemManagerPane();
 
-    canvas.setOnMousePressed(event -> {
-      // TODO...
-    });
+    canvas.setOnMousePressed(controller::selectedToolPressed);
 
-    canvas.setOnMouseMoved(event -> {
-      // TODO...
-    });
+    canvas.setOnMouseDragged(controller::selectedToolDragged);
 
-    canvas.setOnMouseReleased(event -> {
-      // TODO...
-    });
+    canvas.setOnMouseReleased(controller::selectedToolReleased);
   }
 
   /**

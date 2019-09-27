@@ -118,4 +118,9 @@ class ModelImplTest {
     model.removeLayer(layer);
     assertEquals(0, model.getAmountOfLayers());
   }
+
+  @Test
+  void setSelectedTool(){
+    assertDoesNotThrow(() -> model.setSelectedTool(null));
+  }
 }

@@ -20,4 +20,5 @@ class ControllerImplTest {
     assertThrows(NullPointerException.class, () -> new ControllerImpl(model, null, null));
     assertThrows(NullPointerException.class, () -> new ControllerImpl(model, view, null));
   }
+
 }

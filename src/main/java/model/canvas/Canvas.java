@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import model.MouseStatus;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
 
@@ -214,4 +215,5 @@ public final class Canvas {
   public Iterable<ILayer> getLayers() {
     return layers;
   }
+
 }
