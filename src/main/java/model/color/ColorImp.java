@@ -109,23 +109,38 @@ public final class ColorImp implements IColor {
   }
 
   @Override
-  public double getAlpha() {
+  public int getAlpha() {
     return alpha;
   }
 
   @Override
   public double getRedPercentage() {
-    return (red / (double) MAX_RGB_VALUE);
+    return getPercentage(red);
   }
 
   @Override
   public double getGreenPercentage() {
-    return (green / (double) MAX_RGB_VALUE);
+    return getPercentage(green);
   }
 
   @Override
   public double getBluePercentage() {
-    return (blue / (double) MAX_RGB_VALUE);
+    return getPercentage(blue);
+  }
+
+  @Override
+  public double getPAlphaPercentage() {
+    return getPercentage(alpha);
+  }
+
+  /**
+   * Returns the percentage of the color.
+   *
+   * @param val the color component.
+   * @return the percentage of the color.
+   */
+  private double getPercentage(int val) {
+    return (val / (double) MAX_VALUE);
   }
 
   @Override

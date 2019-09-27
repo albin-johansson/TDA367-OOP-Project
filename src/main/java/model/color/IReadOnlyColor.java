@@ -55,6 +55,13 @@ public interface IReadOnlyColor {
   double getBluePercentage();
 
   /**
+   * Returns the alpha percentage in the range [0, 1].
+   *
+   * @return the alpha percentage.
+   */
+  double getPAlphaPercentage();
+
+  /**
    * Returns the alpha hexadecimal code without a # for the color. A hex code that includes the
    * alpha values at the end.
    *
