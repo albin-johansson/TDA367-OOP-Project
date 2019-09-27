@@ -16,10 +16,18 @@ class ColorFactoryTest {
     assertEquals(color.getRed(), 255);
     assertEquals(color.getGreen(), 0);
     assertEquals(color.getBlue(), 0);
+    assertEquals(color.getAlpha(), 255);
 
     color.setColor("f977a1");
     assertEquals(color.getRed(), 249);
     assertEquals(color.getGreen(), 119);
     assertEquals(color.getBlue(), 161);
+    assertEquals(color.getAlpha(), 255);
+
+    color.setColor("");
+    assertEquals(color.getRed(), 0);
+    assertEquals(color.getGreen(), 0);
+    assertEquals(color.getBlue(), 0);
+    assertEquals(color.getAlpha(), 0);
   }
 }
