@@ -24,8 +24,11 @@ public final class ColorImp implements IColor {
   private static final String HEX_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
   private Pattern pattern;
   private Matcher matcher;
+
+  /**
+   * @param red   the red component [0, 255].
    * @param green the green component [0, 255].
-   * @param blue the blue component [0, 255].
+   * @param blue  the blue component [0, 255].
    * @param alpha the alpha component [0, 255].
    */
   ColorImp(int red, int green, int blue, int alpha) {
@@ -64,10 +67,11 @@ public final class ColorImp implements IColor {
   }
 
   /**
-   * Returns the closest legal color component value to the specified value.
+   * Checks if a hex code is valid. Accepts both RGB and RGBA codes. Must start with #. TODO: Create
+   * a better RegEx so that it does not require to start with a #.
    *
-   * @param val the color component value that will be checked.
-   * @return the closest legal color component.
+   * @param hex the hex code.
+   * @return true if the provided hex code is valid.
    */
   private int getClosestRGBValue(int val) {
     if (val >= MAX_RGB_VALUE) {
