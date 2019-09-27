@@ -1,7 +1,7 @@
 package model.canvas.layer;
 
 /**
- * Gives information the a listener when a layer is updated
+ * Gives information to a listener when a layer is updated
  */
 public final class LayerUpdateEvent {
 
@@ -21,7 +21,7 @@ public final class LayerUpdateEvent {
   private final EventType type;
 
   /**
-   * Gives ILayerUpdateListeners information about the event which accured
+   * Gives ILayerUpdateListeners information about the event which occurred
    *
    * @param type what happened to the layer which was affected.
    * @param layer the layer which was affected
@@ -34,7 +34,7 @@ public final class LayerUpdateEvent {
   /**
    * Returns the EventType
    *
-   * @return what type of event which accured
+   * @return what type of event which occurred
    */
   public EventType getType() {
     return type;
