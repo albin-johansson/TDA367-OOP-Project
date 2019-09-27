@@ -73,12 +73,20 @@ public final class ColorImp implements IColor {
    * @param hex the hex code.
    * @return true if the provided hex code is valid.
    */
-  private int getClosestRGBValue(int val) {
-    if (val >= MAX_RGB_VALUE) {
-      return MAX_RGB_VALUE;
-    } else {
-      return Math.max(val, MIN_RGB_VALUE);
+  private boolean validHexCode(String hex) {
+    if (hex == null) {
+      return false;
     }
+
+    String stringToValidate;
+    if (hex.charAt(0) == '#') {
+      stringToValidate = hex;
+    } else {
+      stringToValidate = "#" + hex;
+    }
+
+    matcher = pattern.matcher(stringToValidate);
+    return matcher.matches();
   }
 
   @Override
