@@ -54,48 +54,4 @@ class ColorImpTest {
     colorImp.setBlue(256);
     assertEquals(colorImp.getBlue(), 255);
   }
-
-  @Test
-  void setPercentageRed() {
-  }
-
-  @Test
-  void setPercentageGreen() {
-  }
-
-  @Test
-  void setPercentageBlue() {
-  }
-
-  @Test
-  void getRed() {
-  }
-
-  @Test
-  void getGreen() {
-  }
-
-  @Test
-  void getBlue() {
-  }
-
-  @Test
-  void getRedPercentage() {
-  }
-
-  @Test
-  void getGreenPercentage() {
-  }
-
-  @Test
-  void getBluePercentage() {
-  }
-
-  @Test
-  void getAlphaHexCode() {
-  }
-
-  @Test
-  void getHexCode() {
-  }
 }

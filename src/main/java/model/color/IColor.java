@@ -15,9 +15,9 @@ public interface IColor extends IReadOnlyColor {
   /**
    * Sets the color by RGBA values.
    *
-   * @param red the red component [0, 255].
+   * @param red   the red component [0, 255].
    * @param green the green component [0, 255].
-   * @param blue the blue component [0, 255].
+   * @param blue  the blue component [0, 255].
    * @param alpha the alpha value [0, 255].
    */
   void setColor(int red, int green, int blue, int alpha);
@@ -25,9 +25,9 @@ public interface IColor extends IReadOnlyColor {
   /**
    * Sets the color by RGB values.
    *
-   * @param red the red component in the range [0, 255].
+   * @param red   the red component in the range [0, 255].
    * @param green the green component [0, 255].
-   * @param blue the blue component [0, 255].
+   * @param blue  the blue component [0, 255].
    */
   void setColor(int red, int green, int blue);
 
@@ -79,4 +79,11 @@ public interface IColor extends IReadOnlyColor {
    * @param blue the blue percentage.
    */
   void setPercentageBlue(double blue);
+
+  /**
+   * Sets the alpha percentage of the color in the range [0, 1].
+   *
+   * @param alpha the alpha percentage.
+   */
+  void setPercentageAlpha(double alpha);
 }

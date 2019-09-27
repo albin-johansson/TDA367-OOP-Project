@@ -67,6 +67,22 @@ public final class ColorImp implements IColor {
   }
 
   /**
+   * Returns the closest percentage between [0, 1].
+   *
+   * @return the closest percentage.
+   */
+  private double getClosestPercentage(double val) {
+    double max = 1;
+    double min = 0;
+
+    if (val >= max) {
+      return max;
+    } else {
+      return Math.max(min, val);
+    }
+  }
+
+  /**
    * Checks if a hex code is valid. Accepts both RGB and RGBA codes. Must start with #. TODO: Create
    * a better RegEx so that it does not require to start with a #.
    *
@@ -148,17 +164,33 @@ public final class ColorImp implements IColor {
 
   @Override
   public void setPercentageRed(double percentageRed) {
-    red = (int) (MAX_VALUE * percentageRed);
+    red = convertPercentage(percentageRed);
   }
 
   @Override
   public void setPercentageGreen(double percentageGreen) {
-    green = (int) (MAX_VALUE * percentageGreen);
+    green = convertPercentage(percentageGreen);
   }
 
   @Override
   public void setPercentageBlue(double percentageBlue) {
-    blue = (int) (MAX_VALUE * percentageBlue);
+    blue = convertPercentage(percentageBlue);
+  }
+
+  @Override
+  public void setPercentageAlpha(double percentageAlpha) {
+    alpha = convertPercentage(percentageAlpha);
+  }
+
+  /**
+   * Converts a percentage between [0, 1] to a value between [0, 255]. An input of 0.5 would return
+   * what 50% of 255 is.
+   *
+   * @param percentage the percentage between [0, 1].
+   * @return a int in the range [0, 255]
+   */
+  private int convertPercentage(double percentage) {
+    return (int) (MAX_VALUE * getClosestPercentage(percentage));
   }
 
   @Override
