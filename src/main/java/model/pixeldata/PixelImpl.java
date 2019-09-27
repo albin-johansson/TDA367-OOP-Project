@@ -1,6 +1,9 @@
 package model.pixeldata;
 
 import java.util.Objects;
+import model.color.ColorFactory;
+import model.color.IColor;
+import model.color.IReadOnlyColor;
 
 /**
  * The {@code PixelImpl} class is an implementation of the {@code IPixel} interface.
@@ -9,22 +12,9 @@ import java.util.Objects;
  */
 final class PixelImpl implements IPixel {
 
-  /**
-   * The maximum possible value for a color component.
-   */
-  private static final double MAX_VALUE = 1;
-
-  /**
-   * The minimum possible value for a color component.
-   */
-  private static final double MIN_VALUE = 0;
-
   private final int x;
   private final int y;
-  private double red;
-  private double green;
-  private double blue;
-  private double alpha;
+  private final IColor color;
 
   /**
    * @param x the x-coordinate of the pixel (the column index).
@@ -34,24 +24,7 @@ final class PixelImpl implements IPixel {
     this.x = x;
     this.y = y;
 
-    red = MIN_VALUE;
-    green = MIN_VALUE;
-    blue = MIN_VALUE;
-    alpha = MAX_VALUE;
-  }
-
-  /**
-   * Returns the closest legal color component value to the specified value.
-   *
-   * @param colorValue the color component value that will be checked.
-   * @return the closest legal color component value to the specified value.
-   */
-  private double getClosestValidValue(double colorValue) {
-    if (colorValue < MIN_VALUE) {
-      return MIN_VALUE;
-    } else {
-      return Math.min(colorValue, MAX_VALUE);
-    }
+    color = ColorFactory.createColor();
   }
 
   @Override
@@ -66,47 +39,47 @@ final class PixelImpl implements IPixel {
 
   @Override
   public void setRed(double red) {
-    this.red = getClosestValidValue(red);
+    color.setPercentageRed(red);
   }
 
   @Override
   public void setGreen(double green) {
-    this.green = getClosestValidValue(green);
+    color.setPercentageGreen(green);
   }
 
   @Override
   public void setBlue(double blue) {
-    this.blue = getClosestValidValue(blue);
+    color.setPercentageBlue(blue);
   }
 
   @Override
   public void setAlpha(double alpha) {
-    this.alpha = getClosestValidValue(alpha);
+    color.setPercentageAlpha(alpha);
   }
 
   @Override
   public double getRed() {
-    return red;
+    return color.getRedPercentage();
   }
 
   @Override
   public double getGreen() {
-    return green;
+    return color.getGreenPercentage();
   }
 
   @Override
   public double getBlue() {
-    return blue;
+    return color.getBluePercentage();
   }
 
   @Override
   public double getAlpha() {
-    return alpha;
+    return color.getAlphaPercentage();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(x, y, red, green, blue, alpha);
+    return Objects.hash(x, y, getRed(), getGreen(), getBlue());
   }
 
   @Override
@@ -117,14 +90,22 @@ final class PixelImpl implements IPixel {
 
     IPixel pixel = (IPixel) obj;
 
-    return (pixel.getRed() == red) && (pixel.getGreen() == green) && (pixel.getBlue() == blue) && (
-        pixel.getAlpha() == alpha);
+    return (pixel.getRed() == getRed()) && (pixel.getGreen() == getGreen()) && (pixel.getBlue()
+        == getBlue()) && (
+        pixel.getAlpha() == getAlpha());
+  }
+
+  @Override
+  public IReadOnlyColor getColor() {
+    return color;
   }
 
   @Override
   public String toString() {
     String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
-    String state = "Red: " + red + ", Green: " + green + ", Blue: " + blue + ", Alpha: " + alpha;
+    String state =
+        "Red: " + getRed() + ", Green: " + getGreen() + ", Blue: " + getBlue() + ", Alpha: "
+            + getAlpha();
     return "(" + id + " | " + state + ")";
   }
 }
