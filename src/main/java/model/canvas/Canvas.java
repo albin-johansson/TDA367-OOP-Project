@@ -80,14 +80,33 @@ public final class Canvas {
   }
 
   /**
-   * Sets the visibility property value for the active layer.
+   * Sets the visibility property value for the supplied layer.
    *
-   * @param isVisible {@code true} if the active layer should be visible; {@code false} otherwise.
-   * @throws IllegalStateException if there is no active layer.
+   * @param isVisible {@code true} if the supplied layer should be visible; {@code false}
+   * otherwise.
+   * @throws IllegalStateException if there is no supplied layer.
    */
-  public void setLayerVisible(IReadOnlyLayer layer, boolean isVisible) {
-    verifyActiveLayerExistence();
-    activeLayer.setVisible(isVisible);
+  public void setLayerVisible(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
+    verifyLayerExistence(readOnlyLayer);
+    for (ILayer layer : layers) {
+      if (readOnlyLayer == layer) {
+        layer.setVisible(isVisible);
+        break;
+      }
+    }
+    notifyAllListeners();
+  }
+
+  /**
+   * Sets the visibility property value for the supplied indexed layer.
+   *
+   * @param isVisible {@code true} if the supplied indexed layer should be visible; {@code false}
+   * otherwise.
+   * @throws IllegalStateException if there is supplied indexed layer.
+   */
+  public void setLayerVisible(int layerIndex, boolean isVisible) {
+    verifyIndexedLayerExistence(layerIndex);
+    layers.get(layerIndex).setVisible(isVisible);
     notifyAllListeners();
   }
 
