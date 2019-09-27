@@ -59,7 +59,7 @@ public interface IReadOnlyColor {
    *
    * @return the alpha percentage.
    */
-  double getPAlphaPercentage();
+  double getAlphaPercentage();
 
   /**
    * Returns the alpha hexadecimal code without a # for the color. A hex code that includes the

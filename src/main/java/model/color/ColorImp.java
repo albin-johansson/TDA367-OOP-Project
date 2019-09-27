@@ -229,7 +229,7 @@ public final class ColorImp implements IColor {
   }
 
   @Override
-  public double getPAlphaPercentage() {
+  public double getAlphaPercentage() {
     return getPercentage(alpha);
   }
 
