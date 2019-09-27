@@ -17,7 +17,7 @@ public final class ControllerUtils {
    * Makes the supplied node the controller for the specified FXML-file.
    *
    * @param node the node instance that will made the controller for the FXML-file.
-   * @param url  the path of the FXML-file.
+   * @param url the path of the FXML-file.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   public static void makeController(Node node, URL url) {

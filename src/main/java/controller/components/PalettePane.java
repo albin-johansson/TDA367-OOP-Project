@@ -18,7 +18,7 @@ final class PalettePane extends AnchorPane {
 
   /**
    * @param controller the associated controller instance.
-   * @throws IOException          if the associated FXML file cannot be loaded.
+   * @throws IOException if the associated FXML file cannot be loaded.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   PalettePane(IController controller) throws IOException {

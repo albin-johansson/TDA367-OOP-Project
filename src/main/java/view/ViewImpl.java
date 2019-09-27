@@ -1,11 +1,17 @@
 package view;
 
+import static service.FXImageService.getFXImage;
+
+import java.awt.Color;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelWriter;
 import model.IModel;
 import model.canvas.layer.IReadOnlyLayer;
+import model.pixeldata.IReadOnlyPixelData;
 import service.FXImageService;
+
 
 /**
  * The {@code ViewImpl} class is an implementation of the {@code IView} interface.
@@ -50,6 +56,7 @@ final class ViewImpl implements IView {
     Image image = FXImageService.getFXImage(layer.getPixelData());
 
     graphics.drawImage(image, xPos, yPos);
+
   }
 
   @Override

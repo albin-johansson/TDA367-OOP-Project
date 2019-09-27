@@ -18,7 +18,7 @@ final class ToolbarPane extends AnchorPane {
 
   /**
    * @param controller the associated controller instance.
-   * @throws IOException          if the associated FXML file cannot be read.
+   * @throws IOException if the associated FXML file cannot be read.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   ToolbarPane(IController controller) throws IOException {

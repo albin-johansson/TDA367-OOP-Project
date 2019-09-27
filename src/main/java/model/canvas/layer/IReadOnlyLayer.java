@@ -35,10 +35,12 @@ public interface IReadOnlyLayer {
    */
   IReadOnlyPixelData getPixelData();
 
+
   /**
    * Returns the type of the layer.
    *
    * @return the type of the layer.
    */
   LayerType getLayerType();
+
 }

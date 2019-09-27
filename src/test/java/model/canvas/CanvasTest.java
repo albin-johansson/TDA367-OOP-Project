@@ -17,6 +17,12 @@ class CanvasTest {
   private Canvas canvas;
   private ILayer defaultLayer;
 
+  @BeforeEach
+  private void setUp() {
+    canvas = new Canvas();
+    defaultLayer = createLayer();
+  }
+
   /**
    * Creates and returns a new layer instance, to be used when testing.
    *
@@ -24,12 +30,6 @@ class CanvasTest {
    */
   private static ILayer createLayer() {
     return LayerFactory.createRasterLayer(10, 10);
-  }
-
-  @BeforeEach
-  private void setUp() {
-    canvas = new Canvas();
-    defaultLayer = createLayer();
   }
 
   @Test
@@ -45,10 +45,12 @@ class CanvasTest {
     assertThrows(IllegalStateException.class, () -> canvas.setLayerVisible(null, true));
 
     canvas.addLayer(defaultLayer);
-    canvas.addLayer(LayerFactory.createRasterLayer(10, 10));
+    canvas.addLayer(LayerFactory.createRasterLayer(10,10));
 
     assertDoesNotThrow(() -> canvas.setLayerVisible(0, true));
     assertDoesNotThrow(() -> canvas.setLayerVisible(defaultLayer, false));
+
+
   }
 
   @Test

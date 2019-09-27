@@ -18,7 +18,7 @@ public final class ControllerFactory {
    * Creates and returns a controller instance.
    *
    * @param model the associated model instance.
-   * @param view  the associated view instance.
+   * @param view the associated view instance.
    * @param stage the parent stage instance.
    * @return a controller instance.
    * @throws NullPointerException if any arguments are {@code null}.

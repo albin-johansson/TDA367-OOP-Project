@@ -19,26 +19,31 @@ import util.Resources;
  */
 public final class PimpEditorPane extends AnchorPane {
 
+  @FXML
+  @SuppressWarnings("unused")
+  private Canvas canvas;
+
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane topAnchorPane;
+
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane rightAnchorPane;
+
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane leftAnchorPane;
+
+  @FXML
+  @SuppressWarnings("unused")
+  private HBox horizontalToolBar;
+
   private final IModel model;
   private final IController controller;
   private final LayerItemManagerPane layerItemManagerPane;
   private final ToolbarPane toolbarPane;
   private final PalettePane palettePane;
-  @FXML
-  @SuppressWarnings("unused")
-  private Canvas canvas;
-  @FXML
-  @SuppressWarnings("unused")
-  private AnchorPane topAnchorPane;
-  @FXML
-  @SuppressWarnings("unused")
-  private AnchorPane rightAnchorPane;
-  @FXML
-  @SuppressWarnings("unused")
-  private AnchorPane leftAnchorPane;
-  @FXML
-  @SuppressWarnings("unused")
-  private HBox horizontalToolBar;
 
   /**
    * @param model      a reference to the a IModel

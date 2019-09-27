@@ -1,6 +1,7 @@
 package controller;
 
 import controller.components.PimpEditorPane;
+
 import java.awt.Color;
 import java.io.IOException;
 import java.util.Objects;

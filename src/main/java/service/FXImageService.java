@@ -11,6 +11,7 @@ import model.pixeldata.IReadOnlyPixelData;
  */
 public class FXImageService {
 
+
   /**
    * Creates a new WriteableImage and sets the pixels to represent the pixelData entered.
    *
@@ -27,16 +28,18 @@ public class FXImageService {
     for (Iterable<Color> pixelDataRow : pixelData.getPixels()) {
       setImagePixelRow(pixelDataRow, offsetY, pw);
       offsetY++;
+
     }
     return fxImage;
   }
+
 
   /**
    * Copies one row from the pixeldata to the new FXImage
    *
    * @param pixelDataRow the row of Pixeldata to be copied
-   * @param offsetY      The current row in the fx Image
-   * @param pw           the pixelwriter of the connected fx Image
+   * @param offsetY The current row in the fx Image
+   * @param pw the pixelwriter of the connected fx Image
    */
   //TODO change color representation to our own.
   private static void setImagePixelRow(Iterable<Color> pixelDataRow, int offsetY, PixelWriter pw) {
@@ -50,4 +53,5 @@ public class FXImageService {
       offsetX++;
     }
   }
+
 }

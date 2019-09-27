@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 public class MouseStatusTest {
 
+
   @Test
   void getCoordinateTest() {
     MouseStatus mouseStatus = new MouseStatus(151, 231, 0);

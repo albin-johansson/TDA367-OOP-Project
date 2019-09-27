@@ -16,11 +16,11 @@ public final class Resources {
    * Finds the resource at the given path and returns it.
    *
    * @param context the context class (the encapsulating class of the code that invoked this
-   *                method).
-   * @param path    the path of the desired resource.
+   * method).
+   * @param path the path of the desired resource.
    * @return the URL of the found resource.
    * @throws NullPointerException if any arguments are {@code null}.
-   * @throws IOException          if the resource isn't found.
+   * @throws IOException if the resource isn't found.
    */
   public static URL find(Class<?> context, String path) throws IOException {
     Objects.requireNonNull(context);

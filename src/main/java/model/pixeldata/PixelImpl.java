@@ -38,18 +38,8 @@ final class PixelImpl implements IPixel {
   }
 
   @Override
-  public double getRed() {
-    return color.getRedPercentage();
-  }
-
-  @Override
   public void setRed(double red) {
     color.setPercentageRed(red);
-  }
-
-  @Override
-  public double getGreen() {
-    return color.getGreenPercentage();
   }
 
   @Override
@@ -58,23 +48,33 @@ final class PixelImpl implements IPixel {
   }
 
   @Override
-  public double getBlue() {
-    return color.getBluePercentage();
-  }
-
-  @Override
   public void setBlue(double blue) {
     color.setPercentageBlue(blue);
   }
 
   @Override
-  public double getAlpha() {
-    return color.getAlphaPercentage();
+  public void setAlpha(double alpha) {
+    color.setPercentageAlpha(alpha);
   }
 
   @Override
-  public void setAlpha(double alpha) {
-    color.setPercentageAlpha(alpha);
+  public double getRed() {
+    return color.getRedPercentage();
+  }
+
+  @Override
+  public double getGreen() {
+    return color.getGreenPercentage();
+  }
+
+  @Override
+  public double getBlue() {
+    return color.getBluePercentage();
+  }
+
+  @Override
+  public double getAlpha() {
+    return color.getAlphaPercentage();
   }
 
   @Override

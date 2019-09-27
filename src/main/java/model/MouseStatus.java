@@ -13,8 +13,8 @@ public final class MouseStatus {
   private final int button;
 
   /**
-   * @param x      the x coordinate of the mouse
-   * @param y      the y coordinate of the mouse
+   * @param x the x coordinate of the mouse
+   * @param y the y coordinate of the mouse
    * @param button the button pressed
    */
   public MouseStatus(int x, int y, int button) {

@@ -9,6 +9,7 @@ import model.canvas.ICanvasUpdateListener;
  */
 public interface IView extends ICanvasUpdateListener {
 
+
   /**
    * @param graphics the graphicscontext the view should manipulate
    */
@@ -18,4 +19,5 @@ public interface IView extends ICanvasUpdateListener {
    * Tells the View to repaint itself
    */
   void repaint();
+
 }

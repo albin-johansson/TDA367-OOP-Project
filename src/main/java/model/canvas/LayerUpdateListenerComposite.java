@@ -20,9 +20,9 @@ final class LayerUpdateListenerComposite implements ILayerUpdateListener {
    * Adds a canvas update listener to the composite.
    *
    * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException     if any arguments are {@code null}.
+   * @throws NullPointerException if any arguments are {@code null}.
    * @throws IllegalArgumentException if the supplied listener has been added to the composite
-   *                                  previously.
+   * previously.
    */
   void add(ILayerUpdateListener listener) {
     Objects.requireNonNull(listener);

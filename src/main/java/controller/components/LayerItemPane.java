@@ -29,7 +29,7 @@ final class LayerItemPane extends AnchorPane {
       path = (Resources.find(LayerItemPane.class, "images/eye_open.png"));
       EYE_OPEN_IMAGE = new Image(path.toURI().toString());
     } catch (Exception e) {
-      throw new RuntimeException(e);
+     throw new RuntimeException(e);
     }
   }
 
@@ -51,7 +51,7 @@ final class LayerItemPane extends AnchorPane {
   /**
    * @param model an reference to the {@code IModel}.
    * @param layer the layer this {@code LayerItem} represents.
-   * @throws IOException          if the associated FXML file cannot be found.
+   * @throws IOException if the associated FXML file cannot be found.
    * @throws NullPointerException if the IReadOnlyLayer argument is null
    */
   LayerItemPane(IModel model, IReadOnlyLayer layer) throws IOException {
@@ -63,8 +63,7 @@ final class LayerItemPane extends AnchorPane {
   }
 
   /**
-   * Toggles the visibility boolean connected with this layerItem's layer through the model'a
-   * method
+   * Toggles the visibility boolean connected with this layerItem's layer through the model'a method
    */
   @FXML
   private void toggleVisibility() {
@@ -78,13 +77,12 @@ final class LayerItemPane extends AnchorPane {
   }
 
   /**
-   * Updates the image used on the visibility button based on "this" layers visibility in the
-   * model.
+   * Updates the image used on the visibility button based on "this" layers visibility in the model.
    */
   private void updateVisibilityImage() {
-    if (layer.isVisible()) {
+    if (layer.isVisible()){
       imageView.setImage(EYE_OPEN_IMAGE);
-    } else {
+    }else{
       imageView.setImage(EYE_CLOSED_IMAGE);
     }
   }

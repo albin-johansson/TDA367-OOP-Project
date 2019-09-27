@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import model.MouseStatus;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
 
@@ -61,12 +62,12 @@ public final class Canvas {
    * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates
    * are zero-indexed.
    *
-   * @param x     the x-coordinate of the pixel that will be changed.
-   * @param y     the y-coordinate of the pixel that will be changed.
+   * @param x the x-coordinate of the pixel that will be changed.
+   * @param y the y-coordinate of the pixel that will be changed.
    * @param color the new color of the pixel.
-   * @throws IllegalStateException     if there is no active layer.
+   * @throws IllegalStateException if there is no active layer.
    * @throws IndexOutOfBoundsException if the specified coordinate is out-of-bounds.
-   * @throws NullPointerException      if any arguments are {@code null}.
+   * @throws NullPointerException if any arguments are {@code null}.
    */
   public void setPixel(int x, int y, Color color) {
     verifyActiveLayerExistence();
@@ -78,7 +79,7 @@ public final class Canvas {
    * Sets the visibility property value for the supplied layer.
    *
    * @param isVisible {@code true} if the supplied layer should be visible; {@code false}
-   *                  otherwise.
+   * otherwise.
    * @throws IllegalStateException if there is no supplied layer.
    */
   public void setLayerVisible(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
@@ -96,7 +97,7 @@ public final class Canvas {
    * Sets the visibility property value for the supplied indexed layer.
    *
    * @param isVisible {@code true} if the supplied indexed layer should be visible; {@code false}
-   *                  otherwise.
+   * otherwise.
    * @throws IllegalStateException if there is supplied indexed layer.
    */
   public void setLayerVisible(int layerIndex, boolean isVisible) {
@@ -125,7 +126,7 @@ public final class Canvas {
    * Adds a layer to the canvas. Duplicates are not allowed.
    *
    * @param layer the layer that will be added, may not be {@code null}.
-   * @throws NullPointerException     if any arguments are {@code null}.
+   * @throws NullPointerException if any arguments are {@code null}.
    * @throws IllegalArgumentException if the supplied layer is already present in the canvas.
    */
   public void addLayer(ILayer layer) {
@@ -156,7 +157,7 @@ public final class Canvas {
    * Removes the layer associated with the specified layer index. The layer index is zero-indexed.
    *
    * @param layerIndex the layer index associated with the layer that will be removed
-   *                   (zero-indexed).
+   * (zero-indexed).
    * @throws IllegalArgumentException if the specified index isn't associated with a layer.
    */
   public void removeLayer(int layerIndex) {
@@ -171,7 +172,7 @@ public final class Canvas {
    * Adds a canvas update listener to the canvas.
    *
    * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException     if any arguments are {@code null}.
+   * @throws NullPointerException if any arguments are {@code null}.
    * @throws IllegalArgumentException if the supplied listener has been added previously.
    */
   public void addCanvasUpdateListener(ICanvasUpdateListener listener) {
@@ -182,7 +183,7 @@ public final class Canvas {
    * Adds a layer update listener to the canvas.
    *
    * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException     if any arguments are {@code null}.
+   * @throws NullPointerException if any arguments are {@code null}.
    * @throws IllegalArgumentException if the supplied listener has been added previously.
    */
   public void addLayerUpdateListener(ILayerUpdateListener listener) {
@@ -214,4 +215,5 @@ public final class Canvas {
   public Iterable<ILayer> getLayers() {
     return layers;
   }
+
 }
