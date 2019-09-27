@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  *
  * @see IColor
  */
-public final class ColorImp implements IColor {
+public final class ColorImpl implements IColor {
 
   private int red;
   private int green;
@@ -31,7 +31,7 @@ public final class ColorImp implements IColor {
    * @param blue  the blue component [0, 255].
    * @param alpha the alpha component [0, 255].
    */
-  ColorImp(int red, int green, int blue, int alpha) {
+  ColorImpl(int red, int green, int blue, int alpha) {
     setColor(red, green, blue, alpha);
   }
 
@@ -41,7 +41,7 @@ public final class ColorImp implements IColor {
    *
    * @param hex the hexadecimal code for the color.
    */
-  ColorImp(String hex) {
+  ColorImpl(String hex) {
     setColor(hex);
   }
 

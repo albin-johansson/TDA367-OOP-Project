@@ -6,18 +6,18 @@ package model.color;
 public class ColorFactory {
 
   public static IColor createColor() {
-    return new ColorImp(0, 0, 0, 0);
+    return new ColorImpl(0, 0, 0, 0);
   }
 
   public static IColor createColor(int red, int green, int blue, int alpha) {
-    return new ColorImp(red, green, blue, alpha);
+    return new ColorImpl(red, green, blue, alpha);
   }
 
   public static IColor createColor(int red, int green, int blue) {
-    return new ColorImp(red, green, blue, 1);
+    return new ColorImpl(red, green, blue, 1);
   }
 
   public static IColor createColor(String hex) {
-    return new ColorImp(hex);
+    return new ColorImpl(hex);
   }
 }
