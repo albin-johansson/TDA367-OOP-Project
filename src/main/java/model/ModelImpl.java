@@ -3,7 +3,7 @@ package model;
 import java.awt.Color;
 import model.canvas.Canvas;
 import model.canvas.ICanvasUpdateListener;
-import model.canvas.ILayerUpdateListener;
+import model.canvas.layer.ILayerUpdateListener;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
 import model.tools.ITool;

@@ -7,7 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import model.canvas.ILayerUpdateListener;
+import model.canvas.layer.ILayerUpdateListener;
+import model.canvas.layer.LayerUpdateEvent;
 import util.Resources;
 
 /**
@@ -32,7 +33,6 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
   LayerItemManagerPane() throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_pane.fxml"));
     setStyle("-fx-background-color: gray;");
-    layersUpdated();
   }
 
   /**
@@ -40,7 +40,7 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
    * LayerItems
    */
   @Override
-  public void layersUpdated() {
+  public void layersUpdated(LayerUpdateEvent e) {
     for (Node node : layerItemVBox.getChildren()) {
       LayerItemPane layerItemPane = (LayerItemPane) node;
       //TODO

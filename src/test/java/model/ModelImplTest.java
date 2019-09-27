@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import model.canvas.ICanvasUpdateListener;
-import model.canvas.ILayerUpdateListener;
+import model.canvas.layer.ILayerUpdateListener;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.LayerFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -95,7 +95,7 @@ class ModelImplTest {
   @Test
   void addLayerUpdateListener() {
     assertThrows(NullPointerException.class, () -> model.addLayerUpdateListener(null));
-    ILayerUpdateListener listener = () -> {
+    ILayerUpdateListener listener = (e) -> {
     };
     model.addLayerUpdateListener(listener);
     assertThrows(IllegalArgumentException.class, () -> model.addLayerUpdateListener(listener));
