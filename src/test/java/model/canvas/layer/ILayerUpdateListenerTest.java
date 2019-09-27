@@ -70,10 +70,7 @@ class ILayerUpdateListenerTest {
   @Test
   void testVisible(){
 
-    canvas.selectLayer(0);
-    action = null;
-    layer = null;
-    canvas.setLayerVisible(true);
+    canvas.setLayerVisible(0, true);
     assertEquals(action, EventType.VISIBILITY_TOGGLED);
     assertEquals(layer, addedLayer);
   }

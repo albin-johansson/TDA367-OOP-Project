@@ -106,7 +106,7 @@ public final class Canvas {
   public void setLayerVisible(int layerIndex, boolean isVisible) {
     verifyIndexedLayerExistence(layerIndex);
     layers.get(layerIndex).setVisible(isVisible);
-    notifyAllListeners(new LayerUpdateEvent(EventType.VISIBILITY_TOGGLED, activeLayer));
+    notifyAllListeners(new LayerUpdateEvent(EventType.VISIBILITY_TOGGLED, layers.get(layerIndex)));
   }
 
   /**

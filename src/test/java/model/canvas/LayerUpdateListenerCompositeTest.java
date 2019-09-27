@@ -3,6 +3,8 @@ package model.canvas;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import model.canvas.layer.ILayerUpdateListener;
+import model.canvas.layer.LayerUpdateEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +25,7 @@ class LayerUpdateListenerCompositeTest {
    * @return a generic canvas update listener instance, to be used for testing.
    */
   private ILayerUpdateListener createListener() {
-    return () -> {
+    return (e) -> {
       // do nothing when triggered
     };
   }
@@ -44,15 +46,15 @@ class LayerUpdateListenerCompositeTest {
 
     final int firstTerm = 2;
     final int secondTerm = 5;
-    ILayerUpdateListener firstListener = () -> LayerUpdatedTestCount += firstTerm;
-    ILayerUpdateListener secondListener = () -> LayerUpdatedTestCount += secondTerm;
+    ILayerUpdateListener firstListener = (e) -> LayerUpdatedTestCount += firstTerm;
+    ILayerUpdateListener secondListener = (e) -> LayerUpdatedTestCount += secondTerm;
 
     final int expectedSum = firstTerm + secondTerm;
 
     composite.add(firstListener);
     composite.add(secondListener);
 
-    composite.layersUpdated();
+    composite.layersUpdated(null);
 
     assertEquals(expectedSum, LayerUpdatedTestCount);
   }
