@@ -42,11 +42,13 @@ class CanvasTest {
   @Test
   void setLayerVisible() {
     assertThrows(IllegalStateException.class, () -> canvas.setLayerVisible(0, true));
+    assertThrows(IllegalStateException.class, () -> canvas.setLayerVisible(null, true));
 
     canvas.addLayer(defaultLayer);
-    canvas.selectLayer(0);
 
     assertDoesNotThrow(() -> canvas.setLayerVisible(0, true));
+    assertDoesNotThrow(() -> canvas.setLayerVisible(defaultLayer, false));
+
   }
 
   @Test
@@ -113,6 +115,11 @@ class CanvasTest {
   }
 
   @Test
+  void addLayerUpdateListener() {
+    assertThrows(NullPointerException.class, () -> canvas.addLayerUpdateListener(null));
+  }
+
+  @Test
   void getAmountOfLayers() {
     assertEquals(0, canvas.getAmountOfLayers());
 
@@ -142,5 +149,4 @@ class CanvasTest {
 
     assertEquals(count, actualCount);
   }
-
 }
