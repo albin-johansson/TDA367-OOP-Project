@@ -72,6 +72,27 @@ public final class ColorImp implements IColor {
 
   @Override
   public void setColor(String hex) {
+    initHexRegEx();
+
+    if (!validHexCode(hex)) {
+      setColor(MAX_VALUE, MAX_VALUE, MAX_VALUE, MAX_VALUE);
+      return;
+    }
+
+    hex = hex.replace("#", "");
+
+    red = Integer.valueOf(hex.substring(0, 2), 16);
+    green = Integer.valueOf(hex.substring(2, 4), 16);
+    blue = Integer.valueOf(hex.substring(4, 6), 16);
+
+    // Optional alpha value
+    if (hex.length() == 8) {
+      alpha = Integer.valueOf(hex.substring(6, 8), 16);
+    } else {
+      alpha = MAX_VALUE;
+    }
+  }
+
   @Override
   public void setColor(int red, int green, int blue, int alpha) {
     this.red = getClosestValue(red);
