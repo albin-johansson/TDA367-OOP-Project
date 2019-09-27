@@ -44,6 +44,16 @@ final class LayerItemPane extends AnchorPane {
     this.layer = Objects.requireNonNull(layer);
   }
 
+  @FXML
+  private void toggleVisibility() {
+    for (IReadOnlyLayer layer : model.getLayers()) {
+      if (this.layer.equals(layer)) {
+        model.setLayerVisibility(layer,
+            toggleButton.getToggleGroup().getSelectedToggle().isSelected());
+      }
+    }
+  }
+
   void update() {
 
   }
