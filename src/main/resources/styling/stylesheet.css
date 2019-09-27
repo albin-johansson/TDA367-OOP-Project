@@ -9,8 +9,8 @@
   -selected-color: #AB82FF;
 
   -background-color: #333333; /* Used for the background of panes. */
-  -background-hover-color: derive(-background-color, -10%);
-  -background-pressed-color: derive(-background-color, -50%);
+  -background-hover-color: derive(-background-color, 15%);
+  -background-pressed-color: derive(-background-color, 25%);
 
   -text-color: white; /* Used for text that is directly placed on something that uses the background color. */
   -component-text-color: white; /* Used for text contained in a component (which used the accent color). */
@@ -18,6 +18,23 @@
 
 /* Pane isn't used by JavaFX by default, it must be set to pane classes manually. */
 .pane {
+  -fx-background-color: -background-color;
+}
+
+.scroll-bar {
+  -fx-background-color: derive(-background-color, 10%);
+}
+
+.scroll-bar .thumb {
+  -fx-background-color: -accent-color;
+}
+
+.scroll-pane {
+  -fx-background-color: -background-color;
+  -fx-text-fill: -text-color;
+}
+
+.scroll-pane .viewport {
   -fx-background-color: -background-color;
 }
 
@@ -57,7 +74,7 @@
 .tooltip {
   -fx-background-color: black;
   -fx-text-fill: white;
-  -fx-border-color: white;
+  -fx-border-color: -accent-color;
   -fx-padding: 2pt 2pt 2pt 2pt;
   -fx-border-radius: 2pt;
   -fx-font-size: 12pt;
@@ -66,6 +83,7 @@
 .label {
   -fx-font-size: 12pt;
   -fx-font-weight: normal;
+  -fx-text-fill: -text-color;
 }
 
 .menu-bar {
@@ -81,6 +99,11 @@
 
 .menu:hover {
   -fx-cursor: hand;
+  -fx-background-color: -background-hover-color;
+}
+
+.menu:pressed {
+  -fx-background-color: -background-pressed-color;
 }
 
 .menu .label {
@@ -94,9 +117,10 @@
 }
 
 .menu-item:hover {
+  -fx-cursor: hand;
   -fx-background-color: -background-hover-color;
 }
 
 .menu-item:pressed {
-  -fx-background-color: -background-hover-color;
+  -fx-background-color: -background-pressed-color;
 }
