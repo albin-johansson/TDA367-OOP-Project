@@ -55,6 +55,13 @@ public final class ColorImp implements IColor {
 
   @Override
   public void setColor(String hex) {
+  @Override
+  public void setColor(int red, int green, int blue, int alpha) {
+    this.red = getClosestValue(red);
+    this.green = getClosestValue(green);
+    this.blue = getClosestValue(blue);
+    this.alpha = getClosestValue(alpha);
+  }
 
   @Override
   public void setColor(int red, int green, int blue) {
