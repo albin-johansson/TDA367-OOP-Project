@@ -2,10 +2,12 @@ package controller.components;
 
 import controller.ControllerUtils;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import model.IModel;
@@ -33,7 +35,7 @@ final class LayerItemPane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")
-  private TextField textField;
+  private Label textLabel;
 
   @FXML
   @SuppressWarnings("unused")
@@ -44,10 +46,11 @@ final class LayerItemPane extends AnchorPane {
   private ImageView imageView;
 
   private IModel model;
-
   private IReadOnlyLayer layer;
 
   /**
+   * @param model an reference to the {@code IModel}.
+   * @param layer the layer this {@code LayerItem} represents.
    * @throws IOException if the associated FXML file cannot be found.
    * @throws NullPointerException if the IReadOnlyLayer argument is null
    */
@@ -56,19 +59,31 @@ final class LayerItemPane extends AnchorPane {
     setStyle("-fx-background-color: gray;");
     this.model = Objects.requireNonNull(model);
     this.layer = Objects.requireNonNull(layer);
+    updateVisibilityImage();
   }
 
+  /**
+   * Toggles the visibility boolean connected with this layerItem's layer through the model'a method
+   */
   @FXML
   private void toggleVisibility() {
-    for (IReadOnlyLayer layer : model.getLayers()) {
-      if (this.layer.equals(layer)) {
-        model.setLayerVisibility(layer,
-            toggleButton.getToggleGroup().getSelectedToggle().isSelected());
+    for (IReadOnlyLayer l : model.getLayers()) {
+      if (layer.equals(l)) {
+        model.setLayerVisibility(l, toggleButton.isSelected());
+        break;
       }
     }
+    updateVisibilityImage();
   }
 
-  void update() {
-
+  /**
+   * Updates the image used on the visibility button based on "this" layers visibility in the model.
+   */
+  private void updateVisibilityImage() {
+    if (layer.isVisible()){
+      imageView.setImage(EYE_OPEN_IMAGE);
+    }else{
+      imageView.setImage(EYE_CLOSED_IMAGE);
+    }
   }
 }
