@@ -41,12 +41,12 @@ class CanvasTest {
 
   @Test
   void setLayerVisible() {
-    assertThrows(IllegalStateException.class, () -> canvas.setLayerVisible(true));
+    assertThrows(IllegalStateException.class, () -> canvas.setLayerVisible(0, true));
 
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
 
-    assertDoesNotThrow(() -> canvas.setLayerVisible(true));
+    assertDoesNotThrow(() -> canvas.setLayerVisible(0, true));
   }
 
   @Test

@@ -72,13 +72,13 @@ class ModelImplTest {
 
   @Test
   void setLayerVisibility() {
-    assertThrows(IllegalStateException.class, () -> model.setLayerVisibility(true));
+    assertThrows(IllegalStateException.class, () -> model.setLayerVisibility(0, true));
 
     ILayer layer = LayerFactory.createRasterLayer(10, 10);
     model.addLayer(layer);
     model.selectLayer(0);
 
-    assertDoesNotThrow(() -> model.setLayerVisibility(false));
+    assertDoesNotThrow(() -> model.setLayerVisibility(0, false));
   }
 
   @Test
