@@ -26,6 +26,15 @@ public final class ColorImp implements IColor {
   }
 
   /**
+   * Creates a color by its hex color code. Can also include alpha value at the end. Creates a
+   * transparent color if provided hex code is invalid.
+   *
+   * @param hex the hexadecimal code for the color.
+   */
+  ColorImp(String hex) {
+    setColor(hex);
+  }
+  /**
    * Returns the closest legal color component value to the specified value.
    *
    * @param val the color component value that will be checked.
