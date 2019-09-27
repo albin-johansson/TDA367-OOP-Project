@@ -72,11 +72,16 @@ final class ModelImpl implements IModel {
 
   @Override
   public void selectedToolPressed(MouseStatus mouseStatus) {
-    canvas.toolPressed(selectedTool,mouseStatus);
+    //TODO Implement
   }
 
   @Override
   public void selectedToolDragged(MouseStatus mouseStatus) {
-    canvas.toolDragged(selectedTool,mouseStatus);
+    //TODO Implement
+  }
+
+  @Override
+  public void selectedToolReleased(MouseStatus mouseStatus) {
+    //TODO Implement
   }
 }

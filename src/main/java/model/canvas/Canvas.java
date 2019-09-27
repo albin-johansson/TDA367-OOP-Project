@@ -175,18 +175,4 @@ public final class Canvas {
     return layers;
   }
 
-
-  //Test Method
-  public void toolPressed(ITool tool, MouseStatus mouseStatus){
-    tool.setTarget(activeLayer);
-    tool.pressed(mouseStatus);
-    notifyAllListeners();
-  }
-
-  //Test Method
-  public void toolDragged(ITool tool, MouseStatus mouseStatus){
-    tool.setTarget(activeLayer);
-    tool.dragged(mouseStatus);
-    notifyAllListeners();
-  }
 }

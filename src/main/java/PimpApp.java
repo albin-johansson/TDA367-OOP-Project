@@ -22,11 +22,7 @@ public final class PimpApp extends Application {
     IController controller = ControllerFactory.createController(model, view, stage);
     model.addCanvasUpdateListener(view);
     controller.run();
-
-    model.addLayer(LayerFactory.createRasterLayer(1000,1000));
-    model.selectLayer(0);
-
-
+    
   }
 
   /**

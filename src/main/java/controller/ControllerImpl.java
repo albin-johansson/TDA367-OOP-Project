@@ -27,7 +27,7 @@ final class ControllerImpl implements IController {
 
   /**
    * @param model the associated model instance.
-   * @param view the associated view instance.
+   * @param view  the associated view instance.
    * @param stage the parent stage instance.
    * @throws NullPointerException if any arguments are {@code null}.
    */
@@ -68,7 +68,7 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectPencil() {
-    model.setSelectedTool(ToolFactory.createPencil(30, Color.GREEN));
+    model.setSelectedTool(ToolFactory.createPencil(10, Color.ORANGE));
   }
 
   @Override
@@ -84,17 +84,26 @@ final class ControllerImpl implements IController {
   @Override
   public void selectedToolPressed(MouseEvent mouseEvent) {
 
-    MouseStatus status = new MouseStatus((int)mouseEvent.getX(),(int)mouseEvent.getY(),fxButtonToInt(mouseEvent.getButton()));
+    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
+        fxButtonToInt(mouseEvent.getButton()));
 
     model.selectedToolPressed(status);
-
   }
 
   @Override
-  public void seletedToolDragged(MouseEvent mouseEvent) {
-    MouseStatus status = new MouseStatus((int)mouseEvent.getX(),(int)mouseEvent.getY(),fxButtonToInt(mouseEvent.getButton()));
+  public void selectedToolDragged(MouseEvent mouseEvent) {
+    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
+        fxButtonToInt(mouseEvent.getButton()));
 
     model.selectedToolDragged(status);
+  }
+
+  @Override
+  public void selectedToolReleased(MouseEvent mouseEvent) {
+    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
+        fxButtonToInt(mouseEvent.getButton()));
+
+    model.selectedToolReleased(status);
   }
 
   /**
@@ -104,13 +113,21 @@ final class ControllerImpl implements IController {
    * @return an int representation
    */
   //TODO Change int representation to ENUM when updated in Model
-  private int fxButtonToInt(MouseButton mouseButton){
+  private int fxButtonToInt(MouseButton mouseButton) {
     int output = 0;
-    switch (mouseButton){
-      case NONE: output = 0; break;
-      case PRIMARY: output = 1; break;
-      case MIDDLE: output = 2; break;
-      case SECONDARY: output = 3; break;
+    switch (mouseButton) {
+      case NONE:
+        output = 0;
+        break;
+      case PRIMARY:
+        output = 1;
+        break;
+      case MIDDLE:
+        output = 2;
+        break;
+      case SECONDARY:
+        output = 3;
+        break;
     }
     return output;
   }

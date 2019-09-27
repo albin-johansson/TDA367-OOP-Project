@@ -109,4 +109,11 @@ public interface IModel {
    * @param mouseStatus the status of the mouse.
    */
   void selectedToolDragged(MouseStatus mouseStatus);
+
+  /**
+   * Tells the model that the selected tool has been Released
+   *
+   * @param mouseStatus the status of the mouse.
+   */
+  void selectedToolReleased(MouseStatus mouseStatus);
 }

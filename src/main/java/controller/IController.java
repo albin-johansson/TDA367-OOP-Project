@@ -36,9 +36,16 @@ public interface IController {
   void selectedToolPressed(MouseEvent mouseEvent);
 
   /**
-   * Tells the model that the selected tool has been draged.
+   * Tells the model that the selected tool has been dragged.
    *
    * @param mouseEvent the associated mouseEvent.
    */
-  void seletedToolDragged(MouseEvent mouseEvent);
+  void selectedToolDragged(MouseEvent mouseEvent);
+
+  /**
+   * Tells the model that the selected tool has been released.
+   *
+   * @param mouseEvent the associated mouseEvent.
+   */
+  void selectedToolReleased(MouseEvent mouseEvent);
 }
