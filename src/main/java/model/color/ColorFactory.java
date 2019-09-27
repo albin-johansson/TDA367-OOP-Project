@@ -1,6 +1,13 @@
 package model.color;
 
+/**
+ * Creates colors.
+ */
 public class ColorFactory {
+
+  public static IColor createColor() {
+    return new ColorImp(0, 0, 0, 0);
+  }
 
   public static IColor createColor(int red, int green, int blue, int alpha) {
     return new ColorImp(red, green, blue, alpha);
