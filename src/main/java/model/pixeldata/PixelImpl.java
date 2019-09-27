@@ -119,6 +119,9 @@ final class PixelImpl implements IPixel {
 
     return (pixel.getRed() == red) && (pixel.getGreen() == green) && (pixel.getBlue() == blue) && (
         pixel.getAlpha() == alpha);
+  @Override
+  public IReadOnlyColor getColor() {
+    return color;
   }
 
   @Override
