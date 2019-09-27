@@ -1,12 +1,18 @@
 package controller;
 
 import controller.components.PimpEditorPane;
+
+import java.awt.Color;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.IModel;
+import model.MouseStatus;
+import model.tools.ToolFactory;
 import util.Resources;
 import view.IView;
 
@@ -21,7 +27,7 @@ final class ControllerImpl implements IController {
 
   /**
    * @param model the associated model instance.
-   * @param view the associated view instance.
+   * @param view  the associated view instance.
    * @param stage the parent stage instance.
    * @throws NullPointerException if any arguments are {@code null}.
    */
@@ -58,5 +64,76 @@ final class ControllerImpl implements IController {
   @Override
   public void run() {
     stage.show();
+  }
+
+  @Override
+  public void selectPencil() {
+    model.setSelectedTool(ToolFactory.createPencil(10, Color.ORANGE));
+  }
+
+  @Override
+  public void selectEraser() {
+
+  }
+
+  @Override
+  public void selectBucket() {
+
+  }
+
+  @Override
+  public void selectedToolPressed(MouseEvent mouseEvent) {
+
+    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
+        fxButtonToInt(mouseEvent.getButton()));
+
+    model.selectedToolPressed(status);
+  }
+
+  @Override
+  public void selectedToolDragged(MouseEvent mouseEvent) {
+    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
+        fxButtonToInt(mouseEvent.getButton()));
+
+    model.selectedToolDragged(status);
+  }
+
+  @Override
+  public void selectedToolReleased(MouseEvent mouseEvent) {
+    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
+        fxButtonToInt(mouseEvent.getButton()));
+
+    model.selectedToolReleased(status);
+  }
+
+  /**
+   * Converts the button pressed to an int representation to reduce model dependency of JavaFX
+   *
+   * @param mouseButton the fx ENUM that tells which button has been pressed
+   * @return an int representation
+   * @throws IllegalStateException if mouseButton is not a MouseButton Enum
+   */
+  //TODO Change int representation to ENUM when updated in Model
+  private int fxButtonToInt(MouseButton mouseButton) {
+    int output = 0;
+    switch (mouseButton) {
+      case NONE:
+        output = 0;
+        break;
+      case PRIMARY:
+        output = 1;
+        break;
+      case MIDDLE:
+        output = 2;
+        break;
+      case SECONDARY:
+        output = 3;
+        break;
+      default:
+        throw new IllegalStateException(
+            "Mousebutton must be either NONE, PRIMARY, MIDDLE or SECONDARY");
+    }
+
+    return output;
   }
 }

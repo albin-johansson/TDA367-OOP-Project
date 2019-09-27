@@ -2,8 +2,10 @@ package model;
 
 import java.awt.Color;
 import model.canvas.ICanvasUpdateListener;
+import model.canvas.ILayerUpdateListener;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
+import model.tools.ITool;
 
 /**
  * The {@code IModel} interface specifies the facade for the main model component in the Pimp
@@ -15,7 +17,7 @@ public interface IModel {
    * Adds the supplied layer to the model.
    *
    * @param layer the layer that will be added.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException     if any arguments are {@code null}.
    * @throws IllegalArgumentException if the supplied layer has been added to the model previously.
    */
   void addLayer(ILayer layer);
@@ -48,31 +50,50 @@ public interface IModel {
    * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates
    * are zero-indexed.
    *
-   * @param x the x-coordinate of the pixel that will be changed.
-   * @param y the y-coordinate of the pixel that will be changed.
+   * @param x     the x-coordinate of the pixel that will be changed.
+   * @param y     the y-coordinate of the pixel that will be changed.
    * @param color the new color of the pixel.
-   * @throws IllegalStateException if there is no active layer.
+   * @throws IllegalStateException     if there is no active layer.
    * @throws IndexOutOfBoundsException if the specified coordinate is out-of-bounds.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException      if any arguments are {@code null}.
    */
   void setPixel(int x, int y, Color color);
 
   /**
-   * Sets the visibility property value for the active layer.
+   * Sets the visibility property value for the supplied layer.
    *
+   * @param layer the {@code layer} which will have it's visibility changed.
    * @param isVisible {@code true} if the active layer should be visible; {@code false} otherwise.
    * @throws IllegalStateException if there is no active layer.
    */
-  void setLayerVisibility(boolean isVisible);
+  void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible);
+
+  /**
+   * Sets the visibility property value for the supplied layer.
+   *
+   * @param layerIndex the {@code int} index of the layer which will have it's visibility changed.
+   * @param isVisible {@code true} if the active layer should be visible; {@code false} otherwise.
+   * @throws IllegalStateException if there is no active layer.
+   */
+  void setLayerVisibility(int layerIndex, boolean isVisible);
 
   /**
    * Adds a canvas update listener to the model.
    *
    * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException     if any arguments are {@code null}.
    * @throws IllegalArgumentException if the supplied listener has been added previously.
    */
   void addCanvasUpdateListener(ICanvasUpdateListener listener);
+
+  /**
+   * Adds a layer update listener to the model.
+   *
+   * @param listener the listener that will be added, may not be {@code null}.
+   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws IllegalArgumentException if the supplied listener has been added previously.
+   */
+  void addLayerUpdateListener(ILayerUpdateListener listener);
 
   /**
    * Returns all of the layers in the model.
@@ -88,4 +109,31 @@ public interface IModel {
    */
   int getAmountOfLayers();
 
+  /**
+   * Can be Null if user chooses to deselect a tool.
+   *
+   * @param tool the tool to be selected.
+   */
+  void setSelectedTool(ITool tool);
+
+  /**
+   * Tells the model that the selected tool has been pressed.
+   *
+   * @param mouseStatus the status of the mouse.
+   */
+  void selectedToolPressed(MouseStatus mouseStatus);
+
+  /**
+   * Tells the model that the selected tool has been dragged.
+   *
+   * @param mouseStatus the status of the mouse.
+   */
+  void selectedToolDragged(MouseStatus mouseStatus);
+
+  /**
+   * Tells the model that the selected tool has been Released
+   *
+   * @param mouseStatus the status of the mouse.
+   */
+  void selectedToolReleased(MouseStatus mouseStatus);
 }

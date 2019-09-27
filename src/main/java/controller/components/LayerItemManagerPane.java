@@ -31,7 +31,7 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
    * @throws IOException if the associated FXML file cannot be found.
    */
   LayerItemManagerPane() throws IOException {
-    ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item_manager.fxml"));
+    ControllerUtils.makeController(this, Resources.find(getClass(), "layer_pane.fxml"));
     setStyle("-fx-background-color: gray;");
   }
 
@@ -43,7 +43,7 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
   public void layersUpdated(LayerUpdateEvent e) {
     for (Node node : layerItemVBox.getChildren()) {
       LayerItemPane layerItemPane = (LayerItemPane) node;
-      //TBA, Events?
+      //TODO
     }
   }
 

@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import model.MouseStatus;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.ILayerUpdateListener;
 import model.canvas.layer.LayerUpdateEvent;
 import model.canvas.layer.LayerUpdateEvent.EventType;
+import model.canvas.layer.IReadOnlyLayer;
 
 /**
  * The {@code Canvas} class is responsible for handling layers.
@@ -38,6 +40,28 @@ public final class Canvas {
   }
 
   /**
+   * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
+   *
+   * @throws IllegalStateException if there is no active layer.
+   */
+  private void verifyIndexedLayerExistence(int layerIndex) {
+    if (layerIndex < 0 || layerIndex >= layers.size()) {
+      throw new IllegalStateException("Indexed layer does not exist!");
+    }
+  }
+
+  /**
+   * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
+   *
+   * @throws IllegalStateException if there is no active layer.
+   */
+  private void verifyLayerExistence(IReadOnlyLayer layer) {
+    if (layer == null) {
+      throw new IllegalStateException("Layer does not exist!");
+    }
+  }
+
+  /**
    * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates
    * are zero-indexed.
    *
@@ -55,14 +79,33 @@ public final class Canvas {
   }
 
   /**
-   * Sets the visibility property value for the active layer.
+   * Sets the visibility property value for the supplied layer.
    *
-   * @param isVisible {@code true} if the active layer should be visible; {@code false} otherwise.
-   * @throws IllegalStateException if there is no active layer.
+   * @param isVisible {@code true} if the supplied layer should be visible; {@code false}
+   * otherwise.
+   * @throws IllegalStateException if there is no supplied layer.
    */
-  public void setLayerVisible(boolean isVisible) {
-    verifyActiveLayerExistence();
-    activeLayer.setVisible(isVisible);
+  public void setLayerVisible(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
+    verifyLayerExistence(readOnlyLayer);
+    for (ILayer layer : layers) {
+      if (readOnlyLayer == layer) {
+        layer.setVisible(isVisible);
+        break;
+      }
+    }
+    notifyAllListeners(new LayerUpdateEvent(EventType.VISIBILITY_TOGGLED, activeLayer));
+  }
+
+  /**
+   * Sets the visibility property value for the supplied indexed layer.
+   *
+   * @param isVisible {@code true} if the supplied indexed layer should be visible; {@code false}
+   * otherwise.
+   * @throws IllegalStateException if there is supplied indexed layer.
+   */
+  public void setLayerVisible(int layerIndex, boolean isVisible) {
+    verifyIndexedLayerExistence(layerIndex);
+    layers.get(layerIndex).setVisible(isVisible);
     notifyAllListeners(new LayerUpdateEvent(EventType.VISIBILITY_TOGGLED, activeLayer));
   }
 
@@ -174,4 +217,5 @@ public final class Canvas {
   public Iterable<ILayer> getLayers() {
     return layers;
   }
+
 }

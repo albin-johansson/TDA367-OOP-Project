@@ -9,6 +9,7 @@ public final class MouseStatus {
   private final int x;
   private final int y;
 
+  //TODO Change to ENUM, 0=None, 1=Primary, 2=Middle, 3=Secondary
   private final int button;
 
   /**
@@ -16,7 +17,7 @@ public final class MouseStatus {
    * @param y the y coordinate of the mouse
    * @param button the button pressed
    */
-  MouseStatus(int x, int y, int button) {
+  public MouseStatus(int x, int y, int button) {
     this.x = x;
     this.y = y;
     this.button = button;

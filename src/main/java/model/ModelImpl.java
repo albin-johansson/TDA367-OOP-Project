@@ -3,8 +3,10 @@ package model;
 import java.awt.Color;
 import model.canvas.Canvas;
 import model.canvas.ICanvasUpdateListener;
+import model.canvas.ILayerUpdateListener;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
+import model.tools.ITool;
 
 /**
  * The {@code ModelImpl} class is an implementation of the {@code IModel} interface.
@@ -12,6 +14,8 @@ import model.canvas.layer.IReadOnlyLayer;
 final class ModelImpl implements IModel {
 
   private final Canvas canvas;
+
+  private ITool selectedTool;
 
   ModelImpl() {
     canvas = new Canvas();
@@ -43,13 +47,23 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void setLayerVisibility(boolean isVisible) {
-    canvas.setLayerVisible(isVisible);
+  public void setLayerVisibility(int layerIndex, boolean isVisible) {
+    canvas.setLayerVisible(layerIndex, isVisible);
+  }
+
+  @Override
+  public void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible) {
+    canvas.setLayerVisible(layer, isVisible);
   }
 
   @Override
   public void addCanvasUpdateListener(ICanvasUpdateListener listener) {
     canvas.addCanvasUpdateListener(listener);
+  }
+
+  @Override
+  public void addLayerUpdateListener(ILayerUpdateListener listener) {
+    canvas.addLayerUpdateListener(listener);
   }
 
   @Override
@@ -60,5 +74,25 @@ final class ModelImpl implements IModel {
   @Override
   public int getAmountOfLayers() {
     return canvas.getAmountOfLayers();
+  }
+
+  @Override
+  public void setSelectedTool(ITool selectedTool) {
+    this.selectedTool = selectedTool;
+  }
+
+  @Override
+  public void selectedToolPressed(MouseStatus mouseStatus) {
+    //TODO Implement
+  }
+
+  @Override
+  public void selectedToolDragged(MouseStatus mouseStatus) {
+    //TODO Implement
+  }
+
+  @Override
+  public void selectedToolReleased(MouseStatus mouseStatus) {
+    //TODO Implement
   }
 }
