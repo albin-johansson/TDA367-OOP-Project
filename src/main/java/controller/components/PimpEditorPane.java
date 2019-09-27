@@ -62,6 +62,7 @@ public final class PimpEditorPane extends AnchorPane {
     AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
 
     layerItemManagerPane = new LayerItemManagerPane();
+    model.addLayerUpdateListener(layerItemManagerPane);
     rightAnchorPane.getChildren().add(layerItemManagerPane);
     AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
 
@@ -111,7 +112,7 @@ public final class PimpEditorPane extends AnchorPane {
    */
   private LayerItemPane createLayerItemPane(IReadOnlyLayer layer) {
     try {
-      return new LayerItemPane(layer);
+      return new LayerItemPane(model, layer);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
