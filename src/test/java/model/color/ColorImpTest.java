@@ -54,4 +54,15 @@ class ColorImpTest {
     colorImp.setBlue(256);
     assertEquals(colorImp.getBlue(), 255);
   }
+
+  @Test
+  void setAlpha() {
+    colorImp.setAlpha(val);
+    assertEquals(colorImp.getAlpha(), val);
+    assertEquals(colorImp.getAlphaPercentage(), percentage);
+    colorImp.setAlpha(-val);
+    assertEquals(colorImp.getAlpha(), 0);
+    colorImp.setAlpha(256);
+    assertEquals(colorImp.getAlpha(), 255);
+  }
 }
