@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.Color;
-import javax.swing.JLayer;
 import model.canvas.ICanvasUpdateListener;
 import model.canvas.ILayerUpdateListener;
 import model.canvas.layer.ILayer;
