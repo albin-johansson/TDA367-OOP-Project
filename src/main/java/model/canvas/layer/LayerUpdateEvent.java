@@ -1,6 +1,9 @@
 package model.canvas.layer;
 
-public class LayerUpdateEvent {
+/**
+ * Gives information the a listener when a layer is updated
+ */
+public final class LayerUpdateEvent {
 
   /**
    * EventType specifies what happened when the LayerUpdateEvent was sent
