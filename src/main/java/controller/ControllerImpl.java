@@ -111,6 +111,7 @@ final class ControllerImpl implements IController {
    *
    * @param mouseButton the fx ENUM that tells which button has been pressed
    * @return an int representation
+   * @throws IllegalStateException if mouseButton is not a MouseButton Enum
    */
   //TODO Change int representation to ENUM when updated in Model
   private int fxButtonToInt(MouseButton mouseButton) {
@@ -128,7 +129,11 @@ final class ControllerImpl implements IController {
       case SECONDARY:
         output = 3;
         break;
+      default:
+        throw new IllegalStateException(
+            "Mousebutton must be either NONE, PRIMARY, MIDDLE or SECONDARY");
     }
+
     return output;
   }
 }
