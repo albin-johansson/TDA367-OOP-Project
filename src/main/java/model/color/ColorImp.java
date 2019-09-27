@@ -26,16 +26,16 @@ public final class ColorImp implements IColor {
   }
 
   /**
-   * Returns the closest legal alpha value to the specified value.
+   * Returns the closest legal color component value to the specified value.
    *
-   * @param alpha the alpha value that will be checked.
-   * @return the closest legal alpha value.
+   * @param val the color component value that will be checked.
+   * @return the closest legal color component.
    */
-  private double getClosestAlphaValue(double alpha) {
-    if (alpha >= MAX_ALPHA_VALUE) {
-      return MAX_ALPHA_VALUE;
+  private int getClosestValue(int val) {
+    if (val >= MAX_VALUE) {
+      return MAX_VALUE;
     } else {
-      return Math.max(alpha, MIN_ALPHA_VALUE);
+      return Math.max(val, MIN_VALUE);
     }
   }
 
@@ -60,22 +60,22 @@ public final class ColorImp implements IColor {
 
   @Override
   public void setRed(int red) {
-    this.red = getClosestRGBValue(red);
+    this.red = getClosestValue(red);
   }
 
   @Override
   public void setGreen(int green) {
-    this.green = getClosestRGBValue(green);
+    this.green = getClosestValue(green);
   }
 
   @Override
   public void setBlue(int blue) {
-    this.blue = getClosestRGBValue(blue);
+    this.blue = getClosestValue(blue);
   }
 
   @Override
-  public void setAlpha(double alpha) {
-    this.alpha = getClosestAlphaValue(alpha);
+  public void setAlpha(int alpha) {
+    this.alpha = getClosestValue(alpha);
   }
 
   @Override
