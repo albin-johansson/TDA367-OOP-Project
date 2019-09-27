@@ -22,12 +22,26 @@ public interface IPixel {
   int getY();
 
   /**
+   * Returns the value of the red component of this pixel. By default this property is set to 0.
+   *
+   * @return the value of the red component of this pixel, in the range [0, 1].
+   */
+  double getRed();
+
+  /**
    * Sets the red component value of this pixel. If the supplied value is out-of-bounds, then the
    * closest value (either 0 or 1) will be used.
    *
    * @param red the red component value, in the range [0, 1].
    */
   void setRed(double red);
+
+  /**
+   * Returns the value of the green component of this pixel. By default this property is set to 0.
+   *
+   * @return the value of the green component of this pixel, in the range [0, 1].
+   */
+  double getGreen();
 
   /**
    * Sets the green component value of this pixel. If the supplied value is out-of-bounds, then the
@@ -38,6 +52,13 @@ public interface IPixel {
   void setGreen(double green);
 
   /**
+   * Returns the value of the blue component of this pixel. By default this property is set to 0.
+   *
+   * @return the value of the blue component of this pixel, in the range [0, 1].
+   */
+  double getBlue();
+
+  /**
    * Sets the blue component value of this pixel. If the supplied value is out-of-bounds, then the
    * closest value (either 0 or 1) will be used.
    *
@@ -46,41 +67,20 @@ public interface IPixel {
   void setBlue(double blue);
 
   /**
-   * Sets the alpha component value of this pixel. If the supplied value is out-of-bounds, then the
-   * closest value (either 0 or 1) will be used.
-   *
-   * @param alpha the alpha component value, in the range [0, 1].
-   */
-  void setAlpha(double alpha);
-
-  /**
-   * Returns the value of the red component of this pixel. By default this property is set to 0.
-   *
-   * @return the value of the red component of this pixel, in the range [0, 1].
-   */
-  double getRed();
-
-  /**
-   * Returns the value of the green component of this pixel. By default this property is set to 0.
-   *
-   * @return the value of the green component of this pixel, in the range [0, 1].
-   */
-  double getGreen();
-
-  /**
-   * Returns the value of the blue component of this pixel. By default this property is set to 0.
-   *
-   * @return the value of the blue component of this pixel, in the range [0, 1].
-   */
-  double getBlue();
-
-  /**
    * Returns the value of the alpha (transparency) component of this pixel. By default this property
    * is set to 1.
    *
    * @return the value of the alpha component of this pixel, in the range [0, 1].
    */
   double getAlpha();
+
+  /**
+   * Sets the alpha component value of this pixel. If the supplied value is out-of-bounds, then the
+   * closest value (either 0 or 1) will be used.
+   *
+   * @param alpha the alpha component value, in the range [0, 1].
+   */
+  void setAlpha(double alpha);
 
   /**
    * Indicates whether or not the supplied object is considered "equal" to this object. The

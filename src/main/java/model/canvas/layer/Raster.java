@@ -10,12 +10,12 @@ import model.pixeldata.PixelData;
  */
 final class Raster implements ILayer {
 
+  private static final LayerType layerType = LayerType.RASTER;
   private final LayerDelegate layerDelegate;
   private final PixelData pixelData;
-  private static final LayerType layerType = LayerType.RASTER;
 
   /**
-   * @param width the width of the raster.
+   * @param width  the width of the raster.
    * @param height the height of the raster.
    */
   Raster(int width, int height) {
@@ -29,23 +29,13 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
-  }
-
-  @Override
-  public void setX(int x) {
-    layerDelegate.setX(x);
-  }
-
-  @Override
-  public void setY(int y) {
-    layerDelegate.setY(y);
-  }
-
-  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
+  }
+
+  @Override
+  public void setVisible(boolean isVisible) {
+    layerDelegate.setVisible(isVisible);
   }
 
   @Override
@@ -54,8 +44,18 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public void setX(int x) {
+    layerDelegate.setX(x);
+  }
+
+  @Override
   public int getY() {
     return layerDelegate.getY();
+  }
+
+  @Override
+  public void setY(int y) {
+    layerDelegate.setY(y);
   }
 
   @Override

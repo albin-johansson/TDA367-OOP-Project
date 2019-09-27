@@ -7,12 +7,12 @@ package model.color;
  */
 public final class ColorImpl implements IColor {
 
+  private static final int MAX_VALUE = 255;
+  private static final int MIN_VALUE = 0;
   private int red;
   private int green;
   private int blue;
   private int alpha;
-  private static final int MAX_VALUE = 255;
-  private static final int MIN_VALUE = 0;
 
   /**
    * @param red   the red component [0, 255].
@@ -68,26 +68,6 @@ public final class ColorImpl implements IColor {
   }
 
   @Override
-  public void setRed(int red) {
-    this.red = getClosestValue(red);
-  }
-
-  @Override
-  public void setGreen(int green) {
-    this.green = getClosestValue(green);
-  }
-
-  @Override
-  public void setBlue(int blue) {
-    this.blue = getClosestValue(blue);
-  }
-
-  @Override
-  public void setAlpha(int alpha) {
-    this.alpha = getClosestValue(alpha);
-  }
-
-  @Override
   public void setPercentageRed(double percentageRed) {
     red = convertPercentage(percentageRed);
   }
@@ -124,8 +104,18 @@ public final class ColorImpl implements IColor {
   }
 
   @Override
+  public void setRed(int red) {
+    this.red = getClosestValue(red);
+  }
+
+  @Override
   public int getGreen() {
     return green;
+  }
+
+  @Override
+  public void setGreen(int green) {
+    this.green = getClosestValue(green);
   }
 
   @Override
@@ -134,8 +124,18 @@ public final class ColorImpl implements IColor {
   }
 
   @Override
+  public void setBlue(int blue) {
+    this.blue = getClosestValue(blue);
+  }
+
+  @Override
   public int getAlpha() {
     return alpha;
+  }
+
+  @Override
+  public void setAlpha(int alpha) {
+    this.alpha = getClosestValue(alpha);
   }
 
   @Override

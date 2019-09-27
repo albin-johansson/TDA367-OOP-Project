@@ -10,5 +10,4 @@ public interface ILayerUpdateListener {
    * Invoked when the layers has been updated.
    */
   void layersUpdated(); // TODO add LayersUpdateEvent parameter
-
 }

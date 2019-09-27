@@ -62,7 +62,7 @@ public interface IModel {
   /**
    * Sets the visibility property value for the supplied layer.
    *
-   * @param layer the {@code layer} which will have it's visibility changed.
+   * @param layer     the {@code layer} which will have it's visibility changed.
    * @param isVisible {@code true} if the active layer should be visible; {@code false} otherwise.
    * @throws IllegalStateException if there is no active layer.
    */
@@ -72,7 +72,7 @@ public interface IModel {
    * Sets the visibility property value for the supplied layer.
    *
    * @param layerIndex the {@code int} index of the layer which will have it's visibility changed.
-   * @param isVisible {@code true} if the active layer should be visible; {@code false} otherwise.
+   * @param isVisible  {@code true} if the active layer should be visible; {@code false} otherwise.
    * @throws IllegalStateException if there is no active layer.
    */
   void setLayerVisibility(int layerIndex, boolean isVisible);
@@ -90,7 +90,7 @@ public interface IModel {
    * Adds a layer update listener to the model.
    *
    * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException     if any arguments are {@code null}.
    * @throws IllegalArgumentException if the supplied listener has been added previously.
    */
   void addLayerUpdateListener(ILayerUpdateListener listener);

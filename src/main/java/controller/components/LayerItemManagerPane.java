@@ -47,7 +47,6 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
     }
   }
 
-
   /**
    * Adds a LayerItemPane to this managers layerItemVBox
    *

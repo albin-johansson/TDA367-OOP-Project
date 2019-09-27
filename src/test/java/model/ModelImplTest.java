@@ -80,7 +80,6 @@ class ModelImplTest {
 
     assertDoesNotThrow(() -> model.setLayerVisibility(0, false));
     assertDoesNotThrow(() -> model.setLayerVisibility(layer, true));
-
   }
 
   @Test
@@ -120,7 +119,7 @@ class ModelImplTest {
   }
 
   @Test
-  void setSelectedTool(){
+  void setSelectedTool() {
     assertDoesNotThrow(() -> model.setSelectedTool(null));
   }
 }
