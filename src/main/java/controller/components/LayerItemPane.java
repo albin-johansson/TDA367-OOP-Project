@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import model.IModel;
 import model.canvas.layer.IReadOnlyLayer;
 import util.Resources;
 
@@ -28,15 +29,18 @@ final class LayerItemPane extends AnchorPane {
   @SuppressWarnings("unused")
   private ImageView imageView;
 
+  private IModel model;
+
   private IReadOnlyLayer layer;
 
   /**
    * @throws IOException if the associated FXML file cannot be found.
    * @throws NullPointerException if the IReadOnlyLayer argument is null
    */
-  LayerItemPane(IReadOnlyLayer layer) throws IOException {
+  LayerItemPane(IModel model, IReadOnlyLayer layer) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
     setStyle("-fx-background-color: gray;");
+    this.model = Objects.requireNonNull(model);
     this.layer = Objects.requireNonNull(layer);
   }
 
