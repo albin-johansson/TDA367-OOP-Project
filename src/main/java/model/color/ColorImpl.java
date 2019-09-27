@@ -1,8 +1,5 @@
 package model.color;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * The {@code ColorImp} class is an implementation of the {@code IColor} interface.
  *
@@ -18,14 +15,6 @@ public final class ColorImpl implements IColor {
   private static final int MIN_VALUE = 0;
 
   /**
-   * The regular expression for validating a hex code. Requires a # at the start and can be for
-   * example #000 or #000000.
-   */
-  private static final String HEX_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
-  private Pattern pattern;
-  private Matcher matcher;
-
-  /**
    * @param red   the red component [0, 255].
    * @param green the green component [0, 255].
    * @param blue  the blue component [0, 255].
@@ -33,23 +22,6 @@ public final class ColorImpl implements IColor {
    */
   ColorImpl(int red, int green, int blue, int alpha) {
     setColor(red, green, blue, alpha);
-  }
-
-  /**
-   * Creates a color by its hex color code. Can also include alpha value at the end. Creates a
-   * transparent color if provided hex code is invalid.
-   *
-   * @param hex the hexadecimal code for the color.
-   */
-  ColorImpl(String hex) {
-    setColor(hex);
-  }
-
-  /**
-   * Initializes the hex regex pattern.
-   */
-  private void initHexRegEx() {
-    pattern = Pattern.compile(HEX_PATTERN);
   }
 
   /**
@@ -79,53 +51,6 @@ public final class ColorImpl implements IColor {
       return max;
     } else {
       return Math.max(min, val);
-    }
-  }
-
-  /**
-   * Checks if a hex code is valid. Accepts both RGB and RGBA codes. Must start with #. TODO: Create
-   * a better RegEx so that it does not require to start with a #.
-   *
-   * @param hex the hex code.
-   * @return true if the provided hex code is valid.
-   */
-  private boolean validHexCode(String hex) {
-    if ((hex == null) || (hex.length() == 0)) {
-      return false;
-    }
-
-    // TODO: Update so that the regex validates strings with and without #.
-    String stringToValidate;
-    if (hex.charAt(0) == '#') {
-      stringToValidate = hex;
-    } else {
-      stringToValidate = "#" + hex;
-    }
-
-    matcher = pattern.matcher(stringToValidate);
-    return matcher.matches();
-  }
-
-  @Override
-  public void setColor(String hex) {
-    initHexRegEx();
-
-    if (!validHexCode(hex)) {
-      setColor(MIN_VALUE, MIN_VALUE, MIN_VALUE, MIN_VALUE);
-      return;
-    }
-
-    hex = hex.replace("#", "");
-
-    red = Integer.valueOf(hex.substring(0, 2), 16);
-    green = Integer.valueOf(hex.substring(2, 4), 16);
-    blue = Integer.valueOf(hex.substring(4, 6), 16);
-
-    // Optional alpha value
-    if (hex.length() == 8) {
-      alpha = Integer.valueOf(hex.substring(6, 8), 16);
-    } else {
-      alpha = MAX_VALUE;
     }
   }
 
@@ -241,17 +166,5 @@ public final class ColorImpl implements IColor {
    */
   private double getPercentage(int val) {
     return (val / (double) MAX_VALUE);
-  }
-
-  @Override
-  public String getAlphaHexCode() {
-    // TODO
-    return null;
-  }
-
-  @Override
-  public String getHexCode() {
-    // TODO
-    return null;
   }
 }

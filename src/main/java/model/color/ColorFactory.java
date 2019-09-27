@@ -43,13 +43,4 @@ public final class ColorFactory {
   public static IColor createColor(int red, int green, int blue) {
     return new ColorImpl(red, green, blue, 1);
   }
-
-  /**
-   * Sets a color by its hex value.
-   * @param hex the hexadecimal value of the color.
-   * @return a color specified by the hexadecimal color.
-   */
-  public static IColor createColor(String hex) {
-    return new ColorImpl(hex);
-  }
 }

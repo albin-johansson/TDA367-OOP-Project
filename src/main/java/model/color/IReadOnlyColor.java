@@ -60,19 +60,4 @@ public interface IReadOnlyColor {
    * @return the alpha percentage.
    */
   double getAlphaPercentage();
-
-  /**
-   * Returns the alpha hexadecimal code without a # for the color. A hex code that includes the
-   * alpha values at the end.
-   *
-   * @return the alpha hexadecimal code for the color.
-   */
-  String getAlphaHexCode();
-
-  /**
-   * Returns the hexadecimal code without a # for the color.
-   *
-   * @return the hexadecimal code for the color.
-   */
-  String getHexCode();
 }

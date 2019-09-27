@@ -6,13 +6,6 @@ package model.color;
 public interface IColor extends IReadOnlyColor {
 
   /**
-   * Sets the color by its hexadecimal code. Works both with and without alpha hex.
-   *
-   * @param hex the hexadecimal code the color should have.
-   */
-  void setColor(String hex);
-
-  /**
    * Sets the color by RGBA values.
    *
    * @param red   the red component [0, 255].

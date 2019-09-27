@@ -13,7 +13,7 @@ class ColorImplTest {
 
   @BeforeEach
   void setUp() {
-    colorImpl = new ColorImpl(0, 0, 0, 1);
+    colorImpl = new ColorImpl(0, 0, 0, 200);
     val = 10;
     percentage = val / 255.0;
   }
