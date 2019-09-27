@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import model.MouseStatus;
 import model.canvas.layer.ILayer;
+import model.canvas.layer.IReadOnlyLayer;
 
 /**
  * The {@code Canvas} class is responsible for handling layers.
@@ -12,11 +14,13 @@ import model.canvas.layer.ILayer;
 public final class Canvas {
 
   private final CanvasUpdateListenerComposite canvasUpdateListeners;
+  private final LayerUpdateListenerComposite layerUpdateListeners;
   private final List<ILayer> layers;
   private ILayer activeLayer;
 
   public Canvas() {
     canvasUpdateListeners = new CanvasUpdateListenerComposite();
+    layerUpdateListeners = new LayerUpdateListenerComposite();
     layers = new ArrayList<>(20);
     activeLayer = null;
   }
@@ -29,6 +33,28 @@ public final class Canvas {
   private void verifyActiveLayerExistence() {
     if (activeLayer == null) {
       throw new IllegalStateException("No available active layer!");
+    }
+  }
+
+  /**
+   * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
+   *
+   * @throws IllegalStateException if there is no active layer.
+   */
+  private void verifyIndexedLayerExistence(int layerIndex) {
+    if (layerIndex < 0 || layerIndex >= layers.size()) {
+      throw new IllegalStateException("Indexed layer does not exist!");
+    }
+  }
+
+  /**
+   * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
+   *
+   * @throws IllegalStateException if there is no active layer.
+   */
+  private void verifyLayerExistence(IReadOnlyLayer layer) {
+    if (layer == null) {
+      throw new IllegalStateException("Layer does not exist!");
     }
   }
 
@@ -50,15 +76,34 @@ public final class Canvas {
   }
 
   /**
-   * Sets the visibility property value for the active layer.
+   * Sets the visibility property value for the supplied layer.
    *
-   * @param isVisible {@code true} if the active layer should be visible; {@code false} otherwise.
-   * @throws IllegalStateException if there is no active layer.
+   * @param isVisible {@code true} if the supplied layer should be visible; {@code false}
+   * otherwise.
+   * @throws IllegalStateException if there is no supplied layer.
    */
-  public void setLayerVisible(boolean isVisible) {
-    verifyActiveLayerExistence();
-    activeLayer.setVisible(isVisible);
-    canvasUpdateListeners.canvasUpdated();
+  public void setLayerVisible(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
+    verifyLayerExistence(readOnlyLayer);
+    for (ILayer layer : layers) {
+      if (readOnlyLayer == layer) {
+        layer.setVisible(isVisible);
+        break;
+      }
+    }
+    notifyAllListeners();
+  }
+
+  /**
+   * Sets the visibility property value for the supplied indexed layer.
+   *
+   * @param isVisible {@code true} if the supplied indexed layer should be visible; {@code false}
+   * otherwise.
+   * @throws IllegalStateException if there is supplied indexed layer.
+   */
+  public void setLayerVisible(int layerIndex, boolean isVisible) {
+    verifyIndexedLayerExistence(layerIndex);
+    layers.get(layerIndex).setVisible(isVisible);
+    notifyAllListeners();
   }
 
   /**
@@ -74,6 +119,7 @@ public final class Canvas {
     } else {
       activeLayer = layers.get(layerIndex);
     }
+    layerUpdateListeners.layersUpdated();
   }
 
   /**
@@ -91,7 +137,7 @@ public final class Canvas {
     }
 
     layers.add(layer);
-    canvasUpdateListeners.canvasUpdated();
+    notifyAllListeners();
   }
 
   /**
@@ -104,7 +150,7 @@ public final class Canvas {
   public void removeLayer(ILayer layer) {
     Objects.requireNonNull(layer);
     layers.remove(layer);
-    canvasUpdateListeners.canvasUpdated();
+    notifyAllListeners();
   }
 
   /**
@@ -119,7 +165,7 @@ public final class Canvas {
       throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
     }
     layers.remove(layerIndex);
-    canvasUpdateListeners.canvasUpdated();
+    notifyAllListeners();
   }
 
   /**
@@ -131,6 +177,25 @@ public final class Canvas {
    */
   public void addCanvasUpdateListener(ICanvasUpdateListener listener) {
     canvasUpdateListeners.add(listener);
+  }
+
+  /**
+   * Adds a layer update listener to the canvas.
+   *
+   * @param listener the listener that will be added, may not be {@code null}.
+   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws IllegalArgumentException if the supplied listener has been added previously.
+   */
+  public void addLayerUpdateListener(ILayerUpdateListener listener) {
+    layerUpdateListeners.add(listener);
+  }
+
+  /**
+   * Notifies the listeners for this Canvas
+   */
+  private void notifyAllListeners() {
+    layerUpdateListeners.layersUpdated();
+    canvasUpdateListeners.canvasUpdated();
   }
 
   /**
@@ -150,4 +215,5 @@ public final class Canvas {
   public Iterable<ILayer> getLayers() {
     return layers;
   }
+
 }

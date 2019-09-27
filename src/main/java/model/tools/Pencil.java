@@ -1,7 +1,7 @@
 package model.tools;
 
 import java.awt.Color;
-import javafx.scene.input.MouseEvent;
+import model.MouseStatus;
 import model.canvas.layer.ILayer;
 
 /**
@@ -64,17 +64,17 @@ public final class Pencil implements ITool {
   }
 
   @Override
-  public void dragged(MouseEvent mouseEvent) {
-    updateTargetsPixels((int) mouseEvent.getX(), (int) mouseEvent.getY());
+  public void dragged(MouseStatus mouseStatus) {
+    updateTargetsPixels(mouseStatus.getX(), mouseStatus.getY());
   }
 
   @Override
-  public void pressed(MouseEvent mouseEvent) {
-    updateTargetsPixels((int) mouseEvent.getX(), (int) mouseEvent.getY());
+  public void pressed(MouseStatus mouseStatus) {
+    updateTargetsPixels(mouseStatus.getX(), mouseStatus.getY());
   }
 
   @Override
-  public void released(MouseEvent mouseEvent) {
+  public void released(MouseStatus mouseStatus) {
   }
 
   @Override

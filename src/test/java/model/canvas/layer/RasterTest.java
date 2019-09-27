@@ -62,5 +62,7 @@ class RasterTest {
   }
 
   @Test
-  void getLayerType() {assertEquals(LayerType.RASTER, raster.getLayerType());}
+  void getLayerType() {
+    assertEquals(LayerType.RASTER, raster.getLayerType());
+  }
 }

@@ -1,6 +1,6 @@
 package model.tools;
 
-import javafx.scene.input.MouseEvent;
+import model.MouseStatus;
 import model.canvas.layer.ILayer;
 
 /**
@@ -15,17 +15,17 @@ public final class ShapeTool implements ITool {
   }
 
   @Override
-  public void dragged(MouseEvent mouseEvent) {
+  public void dragged(MouseStatus mouseStatus) {
 
   }
 
   @Override
-  public void pressed(MouseEvent mouseEvent) {
+  public void pressed(MouseStatus mouseStatus) {
 
   }
 
   @Override
-  public void released(MouseEvent mouseEvent) {
+  public void released(MouseStatus mouseStatus) {
 
   }
 

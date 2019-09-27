@@ -1,9 +1,16 @@
 package view;
 
+import static service.FXImageService.getFXImage;
+
+import java.awt.Color;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import model.IModel;
+import model.canvas.layer.IReadOnlyLayer;
+import model.pixeldata.IReadOnlyPixelData;
+import service.FXImageService;
 
 
 /**
@@ -29,7 +36,26 @@ final class ViewImpl implements IView {
 
   @Override
   public void repaint() {
-    PixelWriter pw = graphics.getPixelWriter();
+    for (IReadOnlyLayer layer : model.getLayers()) {
+      paintLayer(layer);
+    }
+  }
+
+  //TODO Change color to pixelData interface to gain abstraction
+
+  /**
+   * Paints a layer by fetching an JavaFX Image of the pixeldata and drawing on the GraphicContext.
+   *
+   * @param layer the layer the method is supposed to draw
+   * @throws NullPointerException if layer = null
+   */
+  private void paintLayer(IReadOnlyLayer layer) {
+    final int xPos = layer.getX();
+    final int yPos = layer.getY();
+
+    Image image = FXImageService.getFXImage(layer.getPixelData());
+
+    graphics.drawImage(image, xPos, yPos);
 
   }
 

@@ -1,6 +1,6 @@
 package model.tools;
 
-import javafx.scene.input.MouseEvent;
+import model.MouseStatus;
 import model.canvas.layer.ILayer;
 
 /**
@@ -11,23 +11,23 @@ public interface ITool {
   /**
    * Notifies a tool that the mouse has been dragged on the canvas.
    *
-   * @param mouseEvent a mouse event including information about the mouse.
+   * @param mouseStatus the status of the mouse including necessary information.
    */
-  void dragged(MouseEvent mouseEvent);
+  void dragged(MouseStatus mouseStatus);
 
   /**
    * Notifies a tool that the mouse has been clicked on the canvas.
    *
-   * @param mouseEvent a mouse event including information about the mouse.
+   * @param mouseStatus the status of the mouse including necessary information.
    */
-  void pressed(MouseEvent mouseEvent);
+  void pressed(MouseStatus mouseStatus);
 
   /**
    * Notifies a tool that the mouse has been released on the canvas.
    *
-   * @param mouseEvent a mouse event including information about the mouse.
+   * @param mouseStatus the status of the mouse including necessary information.
    */
-  void released(MouseEvent mouseEvent);
+  void released(MouseStatus mouseStatus);
 
   /**
    * Sets the tools target layer.
