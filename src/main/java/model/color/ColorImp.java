@@ -1,5 +1,8 @@
 package model.color;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * The {@code ColorImp} class is an implementation of the {@code IColor} interface.
  *
@@ -13,10 +16,14 @@ public final class ColorImp implements IColor {
   private int alpha;
   private static final int MAX_VALUE = 255;
   private static final int MIN_VALUE = 0;
-  private static final String HEX_PATTERN = "#?([\\da-fA-F]{2})([\\da-fA-F]{2})([\\da-fA-F]{2})";
 
   /**
-   * @param red the red component [0, 255].
+   * The regular expression for validating a hex code. Requires a # at the start and can be for
+   * example #000 or #000000.
+   */
+  private static final String HEX_PATTERN = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
+  private Pattern pattern;
+  private Matcher matcher;
    * @param green the green component [0, 255].
    * @param blue the blue component [0, 255].
    * @param alpha the alpha component [0, 255].
