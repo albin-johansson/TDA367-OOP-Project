@@ -102,4 +102,11 @@ public interface IModel {
    * @param mouseStatus the status of the mouse.
    */
   void selectedToolPressed(MouseStatus mouseStatus);
+
+  /**
+   * Tells the model that the selected tool has been dragged.
+   *
+   * @param mouseStatus the status of the mouse.
+   */
+  void selectedToolDragged(MouseStatus mouseStatus);
 }

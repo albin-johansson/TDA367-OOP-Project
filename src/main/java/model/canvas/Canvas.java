@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import model.MouseStatus;
 import model.canvas.layer.ILayer;
+import model.tools.ITool;
 
 /**
  * The {@code Canvas} class is responsible for handling layers.
@@ -171,5 +173,20 @@ public final class Canvas {
    */
   public Iterable<ILayer> getLayers() {
     return layers;
+  }
+
+
+  //Test Method
+  public void toolPressed(ITool tool, MouseStatus mouseStatus){
+    tool.setTarget(activeLayer);
+    tool.pressed(mouseStatus);
+    notifyAllListeners();
+  }
+
+  //Test Method
+  public void toolDragged(ITool tool, MouseStatus mouseStatus){
+    tool.setTarget(activeLayer);
+    tool.dragged(mouseStatus);
+    notifyAllListeners();
   }
 }

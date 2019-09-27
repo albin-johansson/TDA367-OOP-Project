@@ -2,6 +2,7 @@ package controller;
 
 import controller.components.PimpEditorPane;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.scene.Scene;
@@ -67,7 +68,7 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectPencil() {
-    model.setSelectedTool(ToolFactory.createPencil());
+    model.setSelectedTool(ToolFactory.createPencil(30, Color.GREEN));
   }
 
   @Override
@@ -87,6 +88,13 @@ final class ControllerImpl implements IController {
 
     model.selectedToolPressed(status);
 
+  }
+
+  @Override
+  public void seletedToolDragged(MouseEvent mouseEvent) {
+    MouseStatus status = new MouseStatus((int)mouseEvent.getX(),(int)mouseEvent.getY(),fxButtonToInt(mouseEvent.getButton()));
+
+    model.selectedToolDragged(status);
   }
 
   /**

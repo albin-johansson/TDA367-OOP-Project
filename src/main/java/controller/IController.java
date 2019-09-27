@@ -29,8 +29,16 @@ public interface IController {
   void selectBucket();
 
   /**
-   * Tells the model that the selected tool has been pressed
+   * Tells the model that the selected tool has been pressed.
+   *
+   * @param mouseEvent the associated mouseEvent
    */
   void selectedToolPressed(MouseEvent mouseEvent);
 
+  /**
+   * Tells the model that the selected tool has been draged.
+   *
+   * @param mouseEvent the associated mouseEvent.
+   */
+  void seletedToolDragged(MouseEvent mouseEvent);
 }
