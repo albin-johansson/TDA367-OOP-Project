@@ -23,7 +23,7 @@ public final class LayerUpdateEvent {
   /**
    * Gives ILayerUpdateListeners information about the event which accured
    *
-   * @param type  what happened to the layer which was affected.
+   * @param type what happened to the layer which was affected.
    * @param layer the layer which was affected
    */
   public LayerUpdateEvent(EventType type, IReadOnlyLayer layer) {
@@ -32,6 +32,8 @@ public final class LayerUpdateEvent {
   }
 
   /**
+   * Returns the EventType
+   *
    * @return what type of event which accured
    */
   public EventType getType() {
@@ -39,6 +41,8 @@ public final class LayerUpdateEvent {
   }
 
   /**
+   * Returns the affected layer
+   *
    * @return the layer which was affected
    */
   public IReadOnlyLayer getLayer() {
