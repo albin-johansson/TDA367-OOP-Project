@@ -45,9 +45,11 @@ class CanvasTest {
     assertThrows(IllegalStateException.class, () -> canvas.setLayerVisible(null, true));
 
     canvas.addLayer(defaultLayer);
+    canvas.addLayer(LayerFactory.createRasterLayer(10,10));
 
     assertDoesNotThrow(() -> canvas.setLayerVisible(0, true));
     assertDoesNotThrow(() -> canvas.setLayerVisible(defaultLayer, false));
+
 
   }
 

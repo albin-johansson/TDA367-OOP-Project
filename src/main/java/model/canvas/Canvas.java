@@ -43,11 +43,6 @@ public final class Canvas {
   private void verifyIndexedLayerExistence(int layerIndex) {
     if (layerIndex < 0 || layerIndex >= layers.size()) {
       throw new IllegalStateException("Indexed layer does not exist!");
-    } else {
-      IReadOnlyLayer layer = layers.get(layerIndex);
-      if (layer == null) {
-        throw new IllegalStateException("Indexed layer does not exist!");
-      }
     }
   }
 
