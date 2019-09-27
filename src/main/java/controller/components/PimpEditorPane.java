@@ -71,9 +71,7 @@ public final class PimpEditorPane extends AnchorPane {
 
     populateLayerItemManagerPane();
 
-    canvas.setOnMousePressed(event -> {
-      // TODO...
-    });
+    canvas.setOnMousePressed(controller::selectedToolPressed);
 
     canvas.setOnMouseMoved(event -> {
       // TODO...

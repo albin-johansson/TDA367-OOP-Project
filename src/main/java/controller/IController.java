@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.scene.input.MouseEvent;
+
 /**
  * The {@code IController} interface specifies the facade for the controller component in the MVC
  * architecture that the Pimp application uses.
@@ -25,5 +27,10 @@ public interface IController {
    * Sets Bucket as selectedTool in model
    */
   void selectBucket();
+
+  /**
+   * Tells the model that the selected tool has been pressed
+   */
+  void selectedToolPressed(MouseEvent mouseEvent);
 
 }

@@ -16,7 +16,7 @@ public interface IModel {
    * Adds the supplied layer to the model.
    *
    * @param layer the layer that will be added.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException     if any arguments are {@code null}.
    * @throws IllegalArgumentException if the supplied layer has been added to the model previously.
    */
   void addLayer(ILayer layer);
@@ -49,12 +49,12 @@ public interface IModel {
    * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates
    * are zero-indexed.
    *
-   * @param x the x-coordinate of the pixel that will be changed.
-   * @param y the y-coordinate of the pixel that will be changed.
+   * @param x     the x-coordinate of the pixel that will be changed.
+   * @param y     the y-coordinate of the pixel that will be changed.
    * @param color the new color of the pixel.
-   * @throws IllegalStateException if there is no active layer.
+   * @throws IllegalStateException     if there is no active layer.
    * @throws IndexOutOfBoundsException if the specified coordinate is out-of-bounds.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException      if any arguments are {@code null}.
    */
   void setPixel(int x, int y, Color color);
 
@@ -70,7 +70,7 @@ public interface IModel {
    * Adds a canvas update listener to the model.
    *
    * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException     if any arguments are {@code null}.
    * @throws IllegalArgumentException if the supplied listener has been added previously.
    */
   void addCanvasUpdateListener(ICanvasUpdateListener listener);
@@ -89,6 +89,17 @@ public interface IModel {
    */
   int getAmountOfLayers();
 
+  /**
+   * Can be Null if user chooses to deselect a tool.
+   *
+   * @param tool the tool to be selected.
+   */
   void setSelectedTool(ITool tool);
 
+  /**
+   * Tells the model that the selected tool has been pressed.
+   *
+   * @param mouseStatus the status of the mouse.
+   */
+  void selectedToolPressed(MouseStatus mouseStatus);
 }

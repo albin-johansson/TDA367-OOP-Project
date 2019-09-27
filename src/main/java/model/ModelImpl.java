@@ -65,13 +65,13 @@ final class ModelImpl implements IModel {
     return canvas.getAmountOfLayers();
   }
 
-  /**
-   * Can be Null if user chooses to deselect a tool.
-   *
-   * @param selectedTool the tool that is to be selected.
-   */
   @Override
   public void setSelectedTool(ITool selectedTool) {
     this.selectedTool = selectedTool;
+  }
+
+  @Override
+  public void selectedToolPressed(MouseStatus mouseStatus) {
+    selectedTool.pressed(mouseStatus);
   }
 }
