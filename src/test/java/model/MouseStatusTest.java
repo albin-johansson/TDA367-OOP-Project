@@ -1,7 +1,5 @@
 package model;
 
-import org.junit.jupiter.api.BeforeEach;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -18,8 +16,8 @@ public class MouseStatusTest {
   }
 
   @Test
-  void getButtonTest(){
-    MouseStatus mouseStatus = new MouseStatus(180,150, 2);
+  void getButtonTest() {
+    MouseStatus mouseStatus = new MouseStatus(180, 150, 2);
 
     assertEquals(2, mouseStatus.getButton());
   }
