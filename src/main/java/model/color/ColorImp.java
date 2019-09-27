@@ -34,6 +34,14 @@ public final class ColorImp implements IColor {
   ColorImp(String hex) {
     setColor(hex);
   }
+
+  /**
+   * Initializes the hex regex pattern.
+   */
+  private void initHexRegEx() {
+    pattern = Pattern.compile(HEX_PATTERN);
+  }
+
   /**
    * Returns the closest legal color component value to the specified value.
    *
