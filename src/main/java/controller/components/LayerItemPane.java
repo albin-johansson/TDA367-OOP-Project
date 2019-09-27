@@ -56,7 +56,6 @@ final class LayerItemPane extends AnchorPane {
    */
   LayerItemPane(IModel model, IReadOnlyLayer layer) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
-    setStyle("-fx-background-color: gray;");
     this.model = Objects.requireNonNull(model);
     this.layer = Objects.requireNonNull(layer);
     updateVisibilityImage();
