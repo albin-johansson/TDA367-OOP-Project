@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import model.canvas.ICanvasUpdateListener;
+import model.canvas.ILayerUpdateListener;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.LayerFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,25 +73,32 @@ class ModelImplTest {
 
   @Test
   void setLayerVisibility() {
-    assertThrows(IllegalStateException.class, () -> model.setLayerVisibility(true));
-
+    assertThrows(IllegalStateException.class, () -> model.setLayerVisibility(0, true));
+    assertThrows(IllegalStateException.class, () -> model.setLayerVisibility(null, false));
     ILayer layer = LayerFactory.createRasterLayer(10, 10);
     model.addLayer(layer);
-    model.selectLayer(0);
 
-    assertDoesNotThrow(() -> model.setLayerVisibility(false));
+    assertDoesNotThrow(() -> model.setLayerVisibility(0, false));
+    assertDoesNotThrow(() -> model.setLayerVisibility(layer, true));
+
   }
 
   @Test
   void addCanvasUpdateListener() {
     assertThrows(NullPointerException.class, () -> model.addCanvasUpdateListener(null));
-
     ICanvasUpdateListener listener = () -> {
     };
-
     model.addCanvasUpdateListener(listener);
-
     assertThrows(IllegalArgumentException.class, () -> model.addCanvasUpdateListener(listener));
+  }
+
+  @Test
+  void addLayerUpdateListener() {
+    assertThrows(NullPointerException.class, () -> model.addLayerUpdateListener(null));
+    ILayerUpdateListener listener = () -> {
+    };
+    model.addLayerUpdateListener(listener);
+    assertThrows(IllegalArgumentException.class, () -> model.addLayerUpdateListener(listener));
   }
 
   @Test
