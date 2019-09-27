@@ -1,0 +1,102 @@
+* {
+  -fx-font-family: "Segoe UI";
+}
+
+.root {
+  -accent-color: #7727d4; /* The main color for specific components. */
+  -accent-hover-color: derive(-accent-color, -15%);
+  -accent-pressed-color: derive(-accent-color, -25%);
+  -selected-color: #AB82FF;
+
+  -background-color: #333333; /* Used for the background of panes. */
+  -background-hover-color: derive(-background-color, -10%);
+  -background-pressed-color: derive(-background-color, -50%);
+
+  -text-color: white; /* Used for text that is directly placed on something that uses the background color. */
+  -component-text-color: white; /* Used for text contained in a component (which used the accent color). */
+}
+
+/* Pane isn't used by JavaFX by default, it must be set to pane classes manually. */
+.pane {
+  -fx-background-color: -background-color;
+}
+
+.button {
+  -fx-background-color: -accent-color;
+  -fx-font-size: 12pt;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 4, 0, 1, 1);
+}
+
+.button:hover {
+  -fx-cursor: hand;
+  -fx-background-color: -accent-hover-color;
+}
+
+.button:pressed {
+  -fx-background-color: -accent-pressed-color;
+}
+
+.toggle-button {
+  -fx-background-color: -accent-color;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 4, 0, 1, 1);
+}
+
+.toggle-button:hover {
+  -fx-cursor: hand;
+  -fx-background-color: -accent-hover-color;
+}
+
+.toggle-button:pressed {
+  -fx-background-color: -accent-pressed-color;
+}
+
+.toggle-button:selected {
+  -fx-background-color: -selected-color;
+}
+
+.tooltip {
+  -fx-background-color: black;
+  -fx-text-fill: white;
+  -fx-border-color: white;
+  -fx-padding: 2pt 2pt 2pt 2pt;
+  -fx-border-radius: 2pt;
+  -fx-font-size: 12pt;
+}
+
+.label {
+  -fx-font-size: 12pt;
+  -fx-font-weight: normal;
+}
+
+.menu-bar {
+  -fx-background-color: -background-color;
+  -fx-font-size: 12pt;
+  -fx-text-fill: -text-color;
+}
+
+.menu {
+  -fx-background-color: -background-color;
+  -fx-text-fill: -text-color;
+}
+
+.menu:hover {
+  -fx-cursor: hand;
+}
+
+.menu .label {
+  -fx-text-fill: -text-color;
+}
+
+.menu-item {
+  -fx-font-size: 12pt;
+  -fx-background-color: -background-color;
+  -fx-text-fill: -text-color;
+}
+
+.menu-item:hover {
+  -fx-background-color: -background-hover-color;
+}
+
+.menu-item:pressed {
+  -fx-background-color: -background-hover-color;
+}
