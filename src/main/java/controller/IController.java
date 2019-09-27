@@ -11,4 +11,19 @@ public interface IController {
    */
   void run();
 
+  /**
+   * Sets Pencil as selectedTool in model
+   */
+  void selectPencil();
+
+  /**
+   * Sets Eraser as selectedTool in model
+   */
+  void selectEraser();
+
+  /**
+   * Sets Bucket as selectedTool in model
+   */
+  void selectBucket();
+
 }

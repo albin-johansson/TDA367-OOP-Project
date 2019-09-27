@@ -4,6 +4,7 @@ import java.awt.Color;
 import model.canvas.ICanvasUpdateListener;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
+import model.tools.ITool;
 
 /**
  * The {@code IModel} interface specifies the facade for the main model component in the Pimp
@@ -87,5 +88,7 @@ public interface IModel {
    * @return the current amount of layers in the model.
    */
   int getAmountOfLayers();
+
+  void setSelectedTool(ITool tool);
 
 }

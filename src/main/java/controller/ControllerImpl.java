@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.IModel;
+import model.tools.ToolFactory;
 import util.Resources;
 import view.IView;
 
@@ -58,5 +59,20 @@ final class ControllerImpl implements IController {
   @Override
   public void run() {
     stage.show();
+  }
+
+  @Override
+  public void selectPencil() {
+    model.setSelectedTool(ToolFactory.createPencil());
+  }
+
+  @Override
+  public void selectEraser() {
+
+  }
+
+  @Override
+  public void selectBucket() {
+
   }
 }

@@ -5,6 +5,7 @@ import model.canvas.Canvas;
 import model.canvas.ICanvasUpdateListener;
 import model.canvas.layer.ILayer;
 import model.canvas.layer.IReadOnlyLayer;
+import model.tools.ITool;
 
 /**
  * The {@code ModelImpl} class is an implementation of the {@code IModel} interface.
@@ -12,6 +13,8 @@ import model.canvas.layer.IReadOnlyLayer;
 final class ModelImpl implements IModel {
 
   private final Canvas canvas;
+
+  private ITool selectedTool;
 
   ModelImpl() {
     canvas = new Canvas();
@@ -60,5 +63,15 @@ final class ModelImpl implements IModel {
   @Override
   public int getAmountOfLayers() {
     return canvas.getAmountOfLayers();
+  }
+
+  /**
+   * Can be Null if user chooses to deselect a tool.
+   *
+   * @param selectedTool the tool that is to be selected.
+   */
+  @Override
+  public void setSelectedTool(ITool selectedTool) {
+    this.selectedTool = selectedTool;
   }
 }
