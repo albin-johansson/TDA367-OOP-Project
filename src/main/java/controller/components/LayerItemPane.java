@@ -17,6 +17,20 @@ import util.Resources;
  */
 final class LayerItemPane extends AnchorPane {
 
+  private static final Image EYE_OPEN_IMAGE;
+  private static final Image EYE_CLOSED_IMAGE;
+
+  static {
+    try {
+      URL path = (Resources.find(LayerItemPane.class, "images/eye_closed.png"));
+      EYE_CLOSED_IMAGE = new Image(path.toURI().toString());
+      path = (Resources.find(LayerItemPane.class, "images/eye_open.png"));
+      EYE_OPEN_IMAGE = new Image(path.toURI().toString());
+    } catch (Exception e) {
+     throw new RuntimeException(e);
+    }
+  }
+
   @FXML
   @SuppressWarnings("unused")
   private TextField textField;
