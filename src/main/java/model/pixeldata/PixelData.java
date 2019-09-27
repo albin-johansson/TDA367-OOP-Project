@@ -97,13 +97,13 @@ public final class PixelData implements IReadOnlyPixelData {
    * @param x the zero-indexed x coordinate of the pixel to change color.
    * @param y the zero-indexed y coordinate of the pixel to change color.
    * @param color the color to be set.
-   * @throws IndexOutOfBoundsException if the given coordinates is out of range.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   public void setPixel(int x, int y, Color color) {
     Objects.requireNonNull(color);
-    ensureInRange(x, y);
-    pixels.get(y).set(x, color);
+    if (!isBadCoordinate(x, y)) {
+      pixels.get(y).set(x, color);
+    }
   }
 
   @Override

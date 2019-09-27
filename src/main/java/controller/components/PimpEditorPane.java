@@ -1,7 +1,9 @@
 package controller.components;
 
 import controller.ControllerUtils;
+import controller.IController;
 import java.io.IOException;
+import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -27,16 +29,36 @@ public final class PimpEditorPane extends AnchorPane {
   @SuppressWarnings("unused")
   private HBox horizontalToolBar;
 
+  private final IController controller;
+
   /**
+   * @param controller the parent controller instance.
    * @throws IOException if the associated FXML file cannot be found.
+   * @throws NullPointerException if any arguments are {@code null}.
    */
-  public PimpEditorPane() throws IOException {
+  public PimpEditorPane(IController controller) throws IOException {
+    this.controller = Objects.requireNonNull(controller);
+
     ControllerUtils.makeController(this, Resources.find(getClass(), "root.fxml"));
     setStyle("-fx-background-color: gray;");
+
+    canvas.setOnMousePressed(event -> {
+      // TODO...
+    });
+
+    canvas.setOnMouseMoved(event -> {
+      // TODO...
+    });
+
+    canvas.setOnMouseReleased(event -> {
+      // TODO...
+    });
   }
 
   /**
-   * @return a refference to the graphicscontext used by the canvas
+   * Returns the graphics context used by the main canvas.
+   *
+   * @return the graphics context used by the main canvas.
    */
   public GraphicsContext getGraphics() {
     return canvas.getGraphicsContext2D();
