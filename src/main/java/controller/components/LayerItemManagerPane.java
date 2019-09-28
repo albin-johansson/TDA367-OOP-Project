@@ -32,7 +32,6 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
    */
   LayerItemManagerPane() throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_pane.fxml"));
-    setStyle("-fx-background-color: gray;");
   }
 
   /**

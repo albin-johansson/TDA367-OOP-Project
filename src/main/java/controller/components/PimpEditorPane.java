@@ -53,7 +53,6 @@ public final class PimpEditorPane extends AnchorPane {
    */
   public PimpEditorPane(IModel model, IController controller) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "root.fxml"));
-    setStyle("-fx-background-color: gray;");
     this.model = Objects.requireNonNull(model);
     this.controller = Objects.requireNonNull(controller);
 

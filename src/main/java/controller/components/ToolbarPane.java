@@ -24,7 +24,6 @@ final class ToolbarPane extends AnchorPane {
   ToolbarPane(IController controller) throws IOException {
     this.controller = Objects.requireNonNull(controller);
     ControllerUtils.makeController(this, Resources.find(getClass(), "toolbar.fxml"));
-    setStyle("-fx-background-color: magenta;");
   }
 
   @FXML

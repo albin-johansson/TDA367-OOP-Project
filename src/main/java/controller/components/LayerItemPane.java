@@ -24,9 +24,9 @@ final class LayerItemPane extends AnchorPane {
 
   static {
     try {
-      URL path = (Resources.find(LayerItemPane.class, "images/eye_closed.png"));
+      URL path = (Resources.find(LayerItemPane.class, "images/light/eye_closed.png"));
       EYE_CLOSED_IMAGE = new Image(path.toURI().toString());
-      path = (Resources.find(LayerItemPane.class, "images/eye_open.png"));
+      path = (Resources.find(LayerItemPane.class, "images/light/eye_open.png"));
       EYE_OPEN_IMAGE = new Image(path.toURI().toString());
     } catch (Exception e) {
      throw new RuntimeException(e);
@@ -56,7 +56,6 @@ final class LayerItemPane extends AnchorPane {
    */
   LayerItemPane(IModel model, IReadOnlyLayer layer) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
-    setStyle("-fx-background-color: gray;");
     this.model = Objects.requireNonNull(model);
     this.layer = Objects.requireNonNull(layer);
     updateVisibilityImage();
