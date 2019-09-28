@@ -8,13 +8,11 @@ public final class MouseStatus {
 
   private final int x;
   private final int y;
-
-  //TODO Change to ENUM, 0=None, 1=Primary, 2=Middle, 3=Secondary
-  private final int button;
+  private final int button; //TODO Change to ENUM, 0=None, 1=Primary, 2=Middle, 3=Secondary
 
   /**
-   * @param x the x coordinate of the mouse
-   * @param y the y coordinate of the mouse
+   * @param x      the x coordinate of the mouse
+   * @param y      the y coordinate of the mouse
    * @param button the button pressed
    */
   public MouseStatus(int x, int y, int button) {

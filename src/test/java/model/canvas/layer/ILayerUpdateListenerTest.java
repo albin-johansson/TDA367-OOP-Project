@@ -1,6 +1,6 @@
 package model.canvas.layer;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import model.canvas.Canvas;
 import model.canvas.layer.LayerUpdateEvent.EventType;
@@ -8,14 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ILayerUpdateListenerTest {
-  static class MockListener implements ILayerUpdateListener{
-
-    @Override
-    public void layersUpdated(LayerUpdateEvent e) {
-      action = e.getType();
-      layer = (ILayer) e.getLayer();
-    }
-  }
 
   static ILayer layer;
   static ILayer addedLayer;
@@ -23,8 +15,8 @@ class ILayerUpdateListenerTest {
   static EventType action;
 
   @BeforeEach
-  void init(){
-    addedLayer = new Raster(1,1);
+  void init() {
+    addedLayer = new Raster(1, 1);
     canvas = new Canvas();
 
     canvas.addLayerUpdateListener(new MockListener());
@@ -35,16 +27,15 @@ class ILayerUpdateListenerTest {
   }
 
   @Test
-  void testOnCreate(){
-    ILayer layer = new Raster(1,1);
+  void testOnCreate() {
+    ILayer layer = new Raster(1, 1);
     canvas.addLayer(layer);
     assertEquals(action, EventType.CREATED);
     assertEquals(ILayerUpdateListenerTest.layer, layer);
   }
 
   @Test
-  void testOnRemove(){
-
+  void testOnRemove() {
 
     canvas.removeLayer(addedLayer);
     assertEquals(action, EventType.REMOVED);
@@ -52,7 +43,7 @@ class ILayerUpdateListenerTest {
   }
 
   @Test
-  void testOnRemove2(){
+  void testOnRemove2() {
 
     canvas.removeLayer(0);
     assertEquals(action, EventType.REMOVED);
@@ -60,7 +51,7 @@ class ILayerUpdateListenerTest {
   }
 
   @Test
-  void testSelect(){
+  void testSelect() {
 
     canvas.selectLayer(0);
     assertEquals(action, EventType.SELECTED);
@@ -68,11 +59,19 @@ class ILayerUpdateListenerTest {
   }
 
   @Test
-  void testVisible(){
+  void testVisible() {
 
     canvas.setLayerVisible(0, true);
     assertEquals(action, EventType.VISIBILITY_TOGGLED);
     assertEquals(layer, addedLayer);
   }
 
+  static class MockListener implements ILayerUpdateListener {
+
+    @Override
+    public void layersUpdated(LayerUpdateEvent e) {
+      action = e.getType();
+      layer = (ILayer) e.getLayer();
+    }
+  }
 }

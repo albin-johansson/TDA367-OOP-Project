@@ -1,12 +1,9 @@
 import controller.ControllerFactory;
 import controller.IController;
-import java.awt.Color;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.IModel;
 import model.ModelFactory;
-import model.canvas.layer.ILayer;
-import model.canvas.layer.LayerFactory;
 import view.IView;
 import view.ViewFactory;
 
@@ -15,16 +12,6 @@ import view.ViewFactory;
  */
 public final class PimpApp extends Application {
 
-  @Override
-  public void start(Stage stage) {
-    IModel model = ModelFactory.createModel();
-    IView view = ViewFactory.createView(model);
-    IController controller = ControllerFactory.createController(model, view, stage);
-    model.addCanvasUpdateListener(view);
-    controller.run();
-    
-  }
-
   /**
    * Launches the application.
    *
@@ -32,6 +19,14 @@ public final class PimpApp extends Application {
    */
   public static void main(String[] args) {
     Application.launch();
+  }
 
+  @Override
+  public void start(Stage stage) {
+    IModel model = ModelFactory.createModel();
+    IView view = ViewFactory.createView(model);
+    IController controller = ControllerFactory.createController(model, view, stage);
+    model.addCanvasUpdateListener(view);
+    controller.run();
   }
 }

@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import model.canvas.layer.ILayerUpdateListener;
-import model.canvas.layer.IReadOnlyLayer;
 import model.canvas.layer.LayerUpdateEvent;
-import model.canvas.layer.LayerUpdateEvent.EventType;
 
 /**
  * The {@code LayerUpdateListenerComposite} class is a composite of instances of the {@code
@@ -24,9 +22,9 @@ final class LayerUpdateListenerComposite implements ILayerUpdateListener {
    * Adds a canvas update listener to the composite.
    *
    * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException     if any arguments are {@code null}.
    * @throws IllegalArgumentException if the supplied listener has been added to the composite
-   * previously.
+   *                                  previously.
    */
   void add(ILayerUpdateListener listener) {
     Objects.requireNonNull(listener);

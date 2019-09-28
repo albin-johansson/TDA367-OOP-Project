@@ -78,6 +78,11 @@ final class PixelImpl implements IPixel {
   }
 
   @Override
+  public IReadOnlyColor getColor() {
+    return color;
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hash(x, y, getRed(), getGreen(), getBlue());
   }
@@ -93,11 +98,6 @@ final class PixelImpl implements IPixel {
     return (pixel.getRed() == getRed()) && (pixel.getGreen() == getGreen()) && (pixel.getBlue()
         == getBlue()) && (
         pixel.getAlpha() == getAlpha());
-  }
-
-  @Override
-  public IReadOnlyColor getColor() {
-    return color;
   }
 
   @Override

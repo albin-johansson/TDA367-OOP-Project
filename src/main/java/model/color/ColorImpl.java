@@ -7,12 +7,12 @@ package model.color;
  */
 public final class ColorImpl implements IColor {
 
+  private static final int MAX_VALUE = 255;
+  private static final int MIN_VALUE = 0;
   private int red;
   private int green;
   private int blue;
   private int alpha;
-  private static final int MAX_VALUE = 255;
-  private static final int MIN_VALUE = 0;
 
   /**
    * @param red   the red component [0, 255].

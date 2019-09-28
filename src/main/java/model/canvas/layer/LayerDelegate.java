@@ -46,7 +46,7 @@ final class LayerDelegate {
    * Sets the value of the visibility property.
    *
    * @param isVisible {@code true} if the layer should be marked as visible; {@code false}
-   * otherwise.
+   *                  otherwise.
    */
   void setVisible(boolean isVisible) {
     this.isVisible = isVisible;

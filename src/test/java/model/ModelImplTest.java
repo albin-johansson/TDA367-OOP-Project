@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import model.canvas.ICanvasUpdateListener;
-import model.canvas.layer.ILayerUpdateListener;
 import model.canvas.layer.ILayer;
+import model.canvas.layer.ILayerUpdateListener;
 import model.canvas.layer.LayerFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,7 +80,6 @@ class ModelImplTest {
 
     assertDoesNotThrow(() -> model.setLayerVisibility(0, false));
     assertDoesNotThrow(() -> model.setLayerVisibility(layer, true));
-
   }
 
   @Test
@@ -120,7 +119,7 @@ class ModelImplTest {
   }
 
   @Test
-  void setSelectedTool(){
+  void setSelectedTool() {
     assertDoesNotThrow(() -> model.setSelectedTool(null));
   }
 }

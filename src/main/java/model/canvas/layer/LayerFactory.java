@@ -12,7 +12,7 @@ public final class LayerFactory {
   /**
    * Creates and returns a layer that holds basic raster data.
    *
-   * @param width the width of the raster.
+   * @param width  the width of the raster.
    * @param height the height of the raster.
    * @return a layer that holds basic raster data.
    * @throws IndexOutOfBoundsException if the supplied dimensions aren't greater than zero.
@@ -24,9 +24,9 @@ public final class LayerFactory {
   /**
    * Creates and returns a layer that is a rectangle.
    *
-   * @param x the zero-indexed x coordinate of the rectangle.
-   * @param y the zero-indexed y coordinate of the rectangle.
-   * @param width the width of the rectangle.
+   * @param x      the zero-indexed x coordinate of the rectangle.
+   * @param y      the zero-indexed y coordinate of the rectangle.
+   * @param width  the width of the rectangle.
    * @param height the height of the rectangle.
    * @return a rectangle layer.
    */

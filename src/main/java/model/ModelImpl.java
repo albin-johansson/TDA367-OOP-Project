@@ -3,8 +3,8 @@ package model;
 import java.awt.Color;
 import model.canvas.Canvas;
 import model.canvas.ICanvasUpdateListener;
-import model.canvas.layer.ILayerUpdateListener;
 import model.canvas.layer.ILayer;
+import model.canvas.layer.ILayerUpdateListener;
 import model.canvas.layer.IReadOnlyLayer;
 import model.tools.ITool;
 
@@ -14,7 +14,6 @@ import model.tools.ITool;
 final class ModelImpl implements IModel {
 
   private final Canvas canvas;
-
   private ITool selectedTool;
 
   ModelImpl() {
@@ -47,13 +46,13 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void setLayerVisibility(int layerIndex, boolean isVisible) {
-    canvas.setLayerVisible(layerIndex, isVisible);
+  public void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible) {
+    canvas.setLayerVisible(layer, isVisible);
   }
 
   @Override
-  public void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible) {
-    canvas.setLayerVisible(layer, isVisible);
+  public void setLayerVisibility(int layerIndex, boolean isVisible) {
+    canvas.setLayerVisible(layerIndex, isVisible);
   }
 
   @Override
