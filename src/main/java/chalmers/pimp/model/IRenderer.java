@@ -39,6 +39,16 @@ public interface IRenderer {
   void drawEllipse(int x, int y, int radiusX, int radiusY);
 
   /**
+   * Draws a filled ellipse.
+   *
+   * @param x       the zero-indexed x coordinate of the ellipse.
+   * @param y       the zero-indexed y coordinate of the ellipse.
+   * @param radiusX the x radius of the ellipse.
+   * @param radiusY the y radius of the ellipse.
+   */
+  void fillEllipse(int x, int y, int radiusX, int radiusY);
+
+  /**
    * Draws an image.
    *
    * @param readOnlyPixelData the image to draw.
@@ -50,16 +60,6 @@ public interface IRenderer {
    */
   void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width, int height,
       double rotation);
-
-  /**
-   * Draws a filled ellipse.
-   *
-   * @param x       the zero-indexed x coordinate of the ellipse.
-   * @param y       the zero-indexed y coordinate of the ellipse.
-   * @param radiusX the x radius of the ellipse.
-   * @param radiusY the y radius of the ellipse.
-   */
-  void fillEllipse(int x, int y, int radiusX, int radiusY);
 
   /**
    * Draws a text.
