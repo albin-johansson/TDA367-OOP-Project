@@ -1,7 +1,6 @@
 package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.MouseStatus;
-import chalmers.pimp.model.canvas.layer.ILayer;
 
 /**
  * A tool for creating and editing shapes.
@@ -29,8 +28,4 @@ public final class ShapeTool implements ITool {
 
   }
 
-  @Override
-  public void setTarget(ILayer iLayer) {
-
-  }
 }

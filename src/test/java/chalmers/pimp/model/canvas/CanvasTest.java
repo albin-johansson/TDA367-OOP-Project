@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.pixeldata.PixelData;
+import java.awt.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -148,5 +150,17 @@ class CanvasTest {
     }
 
     assertEquals(count, actualCount);
+  }
+
+  @Test
+  void setPixels(){
+    canvas.addLayer(defaultLayer);
+    canvas.selectLayer(0);
+    PixelData pixelData = new PixelData(5,5);
+
+    pixelData.setPixel(2,3, Color.GREEN);
+    canvas.setPixels(0,0, pixelData);
+
+    assertEquals(Color.GREEN, defaultLayer.getPixelData().getPixel(2,3));
   }
 }

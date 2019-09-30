@@ -1,5 +1,6 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.pixeldata.PixelData;
 import java.awt.Color;
 import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
@@ -46,6 +47,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void setPixels(int x, int y, PixelData pixelData) {
+    canvas.setPixels(x, y, pixelData);
+  }
+
+  @Override
   public void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible) {
     canvas.setLayerVisible(layer, isVisible);
   }
@@ -82,16 +88,16 @@ final class ModelImpl implements IModel {
 
   @Override
   public void selectedToolPressed(MouseStatus mouseStatus) {
-    //TODO Implement
+    selectedTool.pressed(mouseStatus);
   }
 
   @Override
   public void selectedToolDragged(MouseStatus mouseStatus) {
-    //TODO Implement
+    selectedTool.dragged(mouseStatus);
   }
 
   @Override
   public void selectedToolReleased(MouseStatus mouseStatus) {
-    //TODO Implement
+    selectedTool.released(mouseStatus);
   }
 }
