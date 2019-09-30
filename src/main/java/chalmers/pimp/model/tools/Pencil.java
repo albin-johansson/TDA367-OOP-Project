@@ -1,5 +1,7 @@
 package chalmers.pimp.model.tools;
 
+import chalmers.pimp.model.pixeldata.IPixel;
+import chalmers.pimp.model.pixeldata.PixelImpl;
 import java.awt.Color;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.canvas.layer.ILayer;
@@ -98,7 +100,11 @@ public final class Pencil implements ITool {
 
     for (int row = 0; row < width; row++) {
       for (int col = 0; col < width; col++) {
-        targetLayer.setPixel(col - radius + x, row - radius + y, color);
+        IPixel pixel = new PixelImpl(col - radius + x, row - radius + y);
+        pixel.setRed(color.getRed() / 255.0);
+        pixel.setGreen(color.getGreen() / 255.0);
+        pixel.setBlue(color.getBlue() / 255.0);
+        targetLayer.setPixel(pixel);
       }
     }
   }

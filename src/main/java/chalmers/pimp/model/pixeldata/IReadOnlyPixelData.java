@@ -9,7 +9,7 @@ public interface IReadOnlyPixelData {
    *
    * @return the matrix of colors.
    */
-  Iterable<? extends Iterable<Color>> getPixels();
+  Iterable<? extends Iterable<? extends IReadOnlyPixel>> getPixels();
 
   /**
    * Returns the color of a specific pixel. Origin is located at the top left corner.
@@ -19,7 +19,7 @@ public interface IReadOnlyPixelData {
    * @return the color of the pixel.
    * @throws IndexOutOfBoundsException if the given coordinates is out of range.
    */
-  Color getPixel(int x, int y);
+  IReadOnlyPixel getPixel(int x, int y);
 
   /**
    * Returns the width of this pixel data instance. The width is equivalent to the amount of pixels

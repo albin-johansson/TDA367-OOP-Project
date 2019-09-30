@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.pixeldata.PixelImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,7 @@ class CanvasTest {
   void setPixel() {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
-    assertThrows(NullPointerException.class, () -> canvas.setPixel(0, 0, null));
+    assertThrows(NullPointerException.class, () -> canvas.setPixel(null));
   }
 
   @Test

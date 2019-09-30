@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import chalmers.pimp.model.pixeldata.PixelImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ class RasterTest {
 
   @Test
   void setPixel() {
-    assertThrows(NullPointerException.class, () -> raster.setPixel(0, 0, null));
+    assertThrows(NullPointerException.class, () -> raster.setPixel(null));
   }
 
   @Test

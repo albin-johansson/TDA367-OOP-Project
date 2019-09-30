@@ -10,7 +10,7 @@ import chalmers.pimp.model.color.IReadOnlyColor;
  *
  * @see IPixel
  */
-final class PixelImpl implements IPixel {
+public final class PixelImpl implements IPixel {
 
   private final int x;
   private final int y;
@@ -20,7 +20,7 @@ final class PixelImpl implements IPixel {
    * @param x the x-coordinate of the pixel (the column index).
    * @param y the y-coordinate of the pixel (the row index).
    */
-  PixelImpl(int x, int y) {
+  public PixelImpl(int x, int y) {
     this.x = x;
     this.y = y;
 

@@ -1,5 +1,6 @@
 package chalmers.pimp.model.canvas;
 
+import chalmers.pimp.model.pixeldata.IPixel;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,19 +62,17 @@ public final class Canvas {
   }
 
   /**
-   * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates
-   * are zero-indexed.
+   * Sets the pixel at the pixels coordinate, in the active layer. The coordinates are
+   * zero-indexed.
    *
-   * @param x     the x-coordinate of the pixel that will be changed.
-   * @param y     the y-coordinate of the pixel that will be changed.
-   * @param color the new color of the pixel.
+   * @param pixel the pixel to be set
    * @throws IllegalStateException     if there is no active layer.
    * @throws IndexOutOfBoundsException if the specified coordinate is out-of-bounds.
    * @throws NullPointerException      if any arguments are {@code null}.
    */
-  public void setPixel(int x, int y, Color color) {
+  public void setPixel(IPixel pixel) {
     verifyActiveLayerExistence();
-    activeLayer.setPixel(x, y, color);
+    activeLayer.setPixel(pixel);
     canvasUpdateListeners.canvasUpdated();
   }
 

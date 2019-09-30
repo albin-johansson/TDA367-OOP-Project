@@ -1,5 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.pixeldata.IPixel;
 import java.awt.Color;
 
 /**
@@ -11,14 +12,12 @@ import java.awt.Color;
 public interface ILayer extends IReadOnlyLayer {
 
   /**
-   * Sets the pixel color at the specified coordinates. The coordinates are zero-indexed.
+   * Sets the pixel at the pixels coordinates. The coordinates are zero-indexed.
    *
-   * @param x     the x-coordinate of the pixel that will be changed.
-   * @param y     the y-coordinate of the pixel that will be changed.
-   * @param color the new color of the specified pixel.
+   * @param pixel the pixel to be set
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  void setPixel(int x, int y, Color color);
+  void setPixel(IPixel pixel);
 
   /**
    * Sets the value of the visible property of this layer.

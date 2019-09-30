@@ -1,5 +1,6 @@
 package chalmers.pimp.service;
 
+import chalmers.pimp.model.pixeldata.IReadOnlyPixel;
 import java.awt.Color;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
@@ -24,7 +25,7 @@ public class FXImageService {
 
     PixelWriter pw = fxImage.getPixelWriter();
 
-    for (Iterable<Color> pixelDataRow : pixelData.getPixels()) {
+    for (Iterable<? extends IReadOnlyPixel> pixelDataRow : pixelData.getPixels()) {
       setImagePixelRow(pixelDataRow, offsetY, pw);
       offsetY++;
     }
@@ -39,13 +40,13 @@ public class FXImageService {
    * @param pw           the pixelwriter of the connected fx Image
    */
   //TODO change color representation to our own.
-  private static void setImagePixelRow(Iterable<Color> pixelDataRow, int offsetY, PixelWriter pw) {
+  private static void setImagePixelRow(Iterable<? extends IReadOnlyPixel> pixelDataRow, int offsetY, PixelWriter pw) {
     int offsetX = 0;
-    for (Color c : pixelDataRow) {
+    for (IReadOnlyPixel p : pixelDataRow) {
       pw.setColor(offsetX, offsetY,
-          new javafx.scene.paint.Color(((double) c.getRed()) / 255, ((double) c.getGreen()) / 255,
-              ((double) c.getBlue()) / 255,
-              ((double) c.getAlpha())
+          new javafx.scene.paint.Color(((double) p.getRed()) / 255, ((double) p.getGreen()) / 255,
+              ((double) p.getBlue()) / 255,
+              ((double) p.getAlpha())
                   / 255)); //Casts to double to change from Swing to FX, will be changed in future.
       offsetX++;
     }

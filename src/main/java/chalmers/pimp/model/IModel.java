@@ -1,5 +1,6 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.pixeldata.IPixel;
 import java.awt.Color;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
@@ -47,17 +48,15 @@ public interface IModel {
   void selectLayer(int layerIndex);
 
   /**
-   * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates
+   * Sets the the pixel at the pixels coordinate, in the active layer. The coordinates
    * are zero-indexed.
    *
-   * @param x     the x-coordinate of the pixel that will be changed.
-   * @param y     the y-coordinate of the pixel that will be changed.
-   * @param color the new color of the pixel.
+   * @param pixel the pixel to be set
    * @throws IllegalStateException     if there is no active layer.
    * @throws IndexOutOfBoundsException if the specified coordinate is out-of-bounds.
    * @throws NullPointerException      if any arguments are {@code null}.
    */
-  void setPixel(int x, int y, Color color);
+  void setPixel(IPixel pixel);
 
   /**
    * Sets the visibility property value for the supplied layer.

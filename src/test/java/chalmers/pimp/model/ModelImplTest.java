@@ -9,6 +9,7 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.pixeldata.PixelImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -68,7 +69,7 @@ class ModelImplTest {
     model.addLayer(layer);
     model.selectLayer(0);
 
-    assertThrows(NullPointerException.class, () -> model.setPixel(0, 0, null));
+    assertThrows(NullPointerException.class, () -> model.setPixel(null));
   }
 
   @Test
