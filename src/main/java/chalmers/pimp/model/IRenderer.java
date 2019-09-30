@@ -56,10 +56,8 @@ public interface IRenderer {
    * @param y                 the zero-indexed y coordinate of the image.
    * @param width             the width of the image.
    * @param height            the height of the image.
-   * @param rotation          the rotation of the image in degrees.
    */
-  void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width, int height,
-      double rotation);
+  void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width, int height);
 
   /**
    * Draws a text.
