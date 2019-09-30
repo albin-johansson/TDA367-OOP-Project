@@ -87,14 +87,13 @@ public final class Canvas {
    */
   public void setPixels(int x, int y, PixelData pixelData) {
     verifyActiveLayerExistence();
-    int xOffset = 0;
     int yOffset = 0;
     for (Iterable<Color> row : pixelData.getPixels()) {
+      int xOffset = 0;
       for (Color color : row) {
         activeLayer.setPixel(x + xOffset++, y + yOffset, color);        
       }
       yOffset++;
-      xOffset = 0;
     }
     canvasUpdateListeners.canvasUpdated();
   }
