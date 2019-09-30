@@ -61,6 +61,7 @@ public interface IModel {
   void setPixel(int x, int y, Color color);
 
   /**
+   * Sets the color of multiple pixels in the model using the PixelData Class.
    *
    * @param x start x value of the PixelData.
    * @param y start y value of the PixelData.
