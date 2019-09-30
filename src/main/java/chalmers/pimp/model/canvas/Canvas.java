@@ -1,5 +1,6 @@
 package chalmers.pimp.model.canvas;
 
+import chalmers.pimp.model.pixeldata.PixelData;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +75,26 @@ public final class Canvas {
   public void setPixel(int x, int y, Color color) {
     verifyActiveLayerExistence();
     activeLayer.setPixel(x, y, color);
+    canvasUpdateListeners.canvasUpdated();
+  }
+
+  /**
+   * Copies the pixels from the PixelData to the layer.
+   *
+   * @param x         the x coordinate of the PixelData.
+   * @param y         the y coordinate of the PixelData.
+   * @param pixelData the pixelData to be copied.
+   */
+  public void setPixels(int x, int y, PixelData pixelData) {
+    verifyActiveLayerExistence();
+    int yOffset = 0;
+    for (Iterable<Color> row : pixelData.getPixels()) {
+      int xOffset = 0;
+      for (Color color : row) {
+        activeLayer.setPixel(x + xOffset++, y + yOffset, color);        
+      }
+      yOffset++;
+    }
     canvasUpdateListeners.canvasUpdated();
   }
 
