@@ -91,8 +91,7 @@ public final class Canvas {
     int yOffset = 0;
     for (Iterable<Color> row : pixelData.getPixels()) {
       for (Color color : row) {
-        activeLayer.setPixel(x + xOffset, y + yOffset, color);
-        xOffset++;
+        activeLayer.setPixel(x + xOffset++, y + yOffset, color);        
       }
       yOffset++;
       xOffset = 0;
