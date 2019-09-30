@@ -3,8 +3,7 @@ package chalmers.pimp.model.canvas;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
-import chalmers.pimp.model.pixeldata.PixelImpl;
-import java.awt.Color;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -90,12 +89,8 @@ public final class Canvas {
     verifyActiveLayerExistence();
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
       for (IReadOnlyPixel p : row) {
-        //TODO: Create constructor for PixelImpl which takes in an IReadOnlyPixel
-        IPixel np = new PixelImpl(p.getX() + x, p.getY() + y);
-        np.setRed(p.getRed());
-        np.setGreen(p.getGreen());
-        np.setBlue(p.getBlue());
-        activeLayer.setPixel(np);
+
+        activeLayer.setPixel(PixelFactory.createCopyWithOffset(p, x, y));
       }
     }
     canvasUpdateListeners.canvasUpdated();

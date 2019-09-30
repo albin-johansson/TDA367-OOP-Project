@@ -11,8 +11,7 @@ import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
-import chalmers.pimp.model.pixeldata.PixelImpl;
-import java.awt.Color;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -159,8 +158,7 @@ class CanvasTest {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
     PixelData pixelData = new PixelData(5, 5);
-    IPixel pixel = new PixelImpl(2, 3);
-    pixel.setGreen(1);
+    IPixel pixel = PixelFactory.createPixel(2, 3, 0, 1, 0);
 
     pixelData.setPixel(pixel);
     canvas.setPixels(0, 0, pixelData);
@@ -173,8 +171,7 @@ class CanvasTest {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
     PixelData pixelData = new PixelData(5, 5);
-    IPixel pixel = new PixelImpl(2, 3);
-    pixel.setGreen(1);
+    IPixel pixel = PixelFactory.createPixel(2, 3, 0, 1, 0);
 
     pixelData.setPixel(pixel);
     //pixelData shifted to (2,2)

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import chalmers.pimp.model.pixeldata.PixelImpl;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,7 @@ class RectangleTest {
   @Test
   void setPixel() {
     // Should not actually manipulate anything.
-    assertDoesNotThrow(() -> rectangle.setPixel(new PixelImpl(0, 0)));
+    assertDoesNotThrow(() -> rectangle.setPixel(PixelFactory.createPixel(0, 0)));
   }
 
   @Test

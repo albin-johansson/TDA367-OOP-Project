@@ -1,8 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.PixelImpl;
-import java.awt.Color;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
 
@@ -73,11 +72,7 @@ public class Rectangle implements ILayer {
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
-        IPixel pixel = new PixelImpl(col, row);
-        pixel.setRed(0xFF);
-        pixel.setGreen(0x00);
-        pixel.setBlue(0xFF);
-        pixelData.setPixel(pixel);
+        pixelData.setPixel(PixelFactory.createPixel(col, row, 1, 0, 1));
       }
     }
 
