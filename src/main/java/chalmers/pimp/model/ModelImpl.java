@@ -48,7 +48,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void setPixels(int x, int y, PixelData pixelData) {
-    canvas.setPixels(x,y,pixelData);
+    canvas.setPixels(x, y, pixelData);
   }
 
   @Override

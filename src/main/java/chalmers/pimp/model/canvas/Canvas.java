@@ -80,19 +80,19 @@ public final class Canvas {
   }
 
   /**
-   * Copies the pixels
+   * Copies the pixels from the PixelData to the layer.
    *
-   * @param x the x coordinate of the PixelData.
-   * @param y the y coordinate of the PixelData.
+   * @param x         the x coordinate of the PixelData.
+   * @param y         the y coordinate of the PixelData.
    * @param pixelData the pixelData to be copied.
    */
-  public void setPixels(int x, int y, PixelData pixelData){
+  public void setPixels(int x, int y, PixelData pixelData) {
     verifyActiveLayerExistence();
     int xOffset = 0;
     int yOffset = 0;
-    for(Iterable<Color> row : pixelData.getPixels()){
-      for(Color color : row){
-        activeLayer.setPixel(x + xOffset, y+yOffset, color);
+    for (Iterable<Color> row : pixelData.getPixels()) {
+      for (Color color : row) {
+        activeLayer.setPixel(x + xOffset, y + yOffset, color);
         xOffset++;
       }
       yOffset++;
