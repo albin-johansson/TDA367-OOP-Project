@@ -1,5 +1,6 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.pixeldata.PixelData;
 import java.awt.Color;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
@@ -58,6 +59,14 @@ public interface IModel {
    * @throws NullPointerException      if any arguments are {@code null}.
    */
   void setPixel(int x, int y, Color color);
+
+  /**
+   *
+   * @param x start x value of the PixelData.
+   * @param y start y value of the PixelData.
+   * @param pixelData the PixelData representing the pixels to be set.
+   */
+  void setPixels(int x, int y, PixelData pixelData);
 
   /**
    * Sets the visibility property value for the supplied layer.
@@ -136,4 +145,5 @@ public interface IModel {
    * @param mouseStatus the status of the mouse.
    */
   void selectedToolReleased(MouseStatus mouseStatus);
+
 }

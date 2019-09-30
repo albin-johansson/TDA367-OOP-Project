@@ -1,6 +1,7 @@
 package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.pixeldata.PixelData;
 import java.awt.Color;
 import chalmers.pimp.model.MouseStatus;
 
@@ -87,12 +88,16 @@ public final class Pencil implements ITool {
    */
   private void updateTargetsPixels(int x, int y) {
 
+    PixelData pixels = new PixelData(width,width);
 
     int radius = (int) (width / 2.0);
     for (int row = 0; row < width; row++) {
       for (int col = 0; col < width; col++) {
-        model.setPixel(col - radius + x, row - radius + y, color);
+        pixels.setPixel(col - radius, row - radius, color);
       }
     }
+
+    model.setPixels(x,y, pixels);
+
   }
 }

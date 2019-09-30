@@ -1,5 +1,6 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.pixeldata.PixelData;
 import java.awt.Color;
 import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
@@ -43,6 +44,11 @@ final class ModelImpl implements IModel {
   @Override
   public void setPixel(int x, int y, Color color) {
     canvas.setPixel(x, y, color);
+  }
+
+  @Override
+  public void setPixels(int x, int y, PixelData pixelData) {
+
   }
 
   @Override
