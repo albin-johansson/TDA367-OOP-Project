@@ -32,7 +32,7 @@ public final class PimpApp extends Application {
     model.addCanvasUpdateListener(view);
     controller.run();
 
-    model.addLayer(LayerFactory.createRasterLayer(500,500));
+    model.addLayer(LayerFactory.createRasterLayer(500, 500));
     model.selectLayer(0);
   }
 }
