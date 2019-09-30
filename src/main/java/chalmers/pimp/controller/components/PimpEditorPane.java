@@ -2,17 +2,16 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
-import java.io.IOException;
-import java.util.Objects;
-import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.util.AnchorPanes;
 import chalmers.pimp.util.Resources;
+import java.io.IOException;
+import java.util.Objects;
+import javafx.fxml.FXML;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 /**
  * The {@code PimpEditorPane} class represents the main editor pane for the Pimp application.
@@ -24,12 +23,13 @@ public final class PimpEditorPane extends AnchorPane {
   private final LayerItemManagerPane layerItemManagerPane;
   private final ToolbarPane toolbarPane;
   private final PalettePane palettePane;
-  @FXML
-  @SuppressWarnings("unused")
-  private Canvas canvas;
+  private final CanvasPane canvasPane;
   @FXML
   @SuppressWarnings("unused")
   private AnchorPane topAnchorPane;
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane centerPane;
   @FXML
   @SuppressWarnings("unused")
   private AnchorPane rightAnchorPane;
@@ -55,6 +55,10 @@ public final class PimpEditorPane extends AnchorPane {
     topAnchorPane.getChildren().add(toolbarPane);
     AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
 
+    canvasPane = new CanvasPane(controller);
+    centerPane.getChildren().add(canvasPane);
+    AnchorPanes.setAnchors(canvasPane, 0, 0, 0, 0);
+
     layerItemManagerPane = new LayerItemManagerPane();
     model.addLayerUpdateListener(layerItemManagerPane);
     rightAnchorPane.getChildren().add(layerItemManagerPane);
@@ -65,10 +69,6 @@ public final class PimpEditorPane extends AnchorPane {
     AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
 
     populateLayerItemManagerPane();
-
-    canvas.setOnMousePressed(controller::selectedToolPressed);
-    canvas.setOnMouseDragged(controller::selectedToolDragged);
-    canvas.setOnMouseReleased(controller::selectedToolReleased);
   }
 
   /**
@@ -77,12 +77,12 @@ public final class PimpEditorPane extends AnchorPane {
    * @return the graphics context used by the main canvas.
    */
   public GraphicsContext getGraphics() {
-    return canvas.getGraphicsContext2D();
+    return canvasPane.getGraphics();
   }
 
   /**
-   * Populates this PEP's LayerItemManagerPane with LayerItems based on the layers in the chalmers.pimp.model this
-   * PEP has
+   * Populates this PEP's LayerItemManagerPane with LayerItems based on the layers in the
+   * chalmers.pimp.model this PEP has
    */
   private void populateLayerItemManagerPane() {
     for (IReadOnlyLayer layer : model.getLayers()) {
@@ -91,9 +91,9 @@ public final class PimpEditorPane extends AnchorPane {
   }
 
   /**
-   * Creates the LayerItems for the chalmers.pimp.view, based on a {@code IReadOnlyLayer}
+   * Creates the LayerItems for the view, based on a {@code IReadOnlyLayer}
    *
-   * @param layer the {@code IReadOnlyLayer} that will be created as a chalmers.pimp.view component
+   * @param layer the {@code IReadOnlyLayer} that will be created as a view component
    * @return the corresponding {@code LayerItemPane} created from the {@code IReadOnlyLayer}
    */
   private LayerItemPane createLayerItemPane(IReadOnlyLayer layer) {
