@@ -21,7 +21,7 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
   private StackPane stackPane;
 
   @FXML
-  private VBox emptyLayerBox;
+  private AnchorPane emptyLayerPane;
 
   //Should the itemManager have real layers or just the view aspect?
   @FXML
@@ -34,12 +34,11 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_pane.fxml"));
     setStyle("-fx-background-color: gray;");
 
-    if (layerItemVBox.getChildren().isEmpty()) {
-      layerItemVBox.toBack();
-      System.out.println("true");
-    } else {
-      layerItemVBox.toFront();
-    }
+//    if (layerItemVBox.getChildren().isEmpty()) {
+//      emptyLayerBox.toFront();
+//    } else {
+//      emptyLayerBox.toBack();
+//    }
   }
 
   /**
@@ -52,11 +51,11 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
       LayerItemPane layerItemPane = (LayerItemPane) node;
       //TODO
     }
-    if (layerItemVBox.getChildren().isEmpty()) {
-      layerItemVBox.toBack();
-    } else {
-      layerItemVBox.toFront();
-    }
+//    if (layerItemVBox.getChildren().isEmpty()) {
+//      layerItemVBox.toBack();
+//    } else {
+//      layerItemVBox.toFront();
+//    }
   }
 
   /**

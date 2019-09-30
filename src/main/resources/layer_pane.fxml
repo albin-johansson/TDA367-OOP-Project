@@ -11,7 +11,12 @@
    <children>
       <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <VBox fx:id="layerItemVBox" alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0" />
+               </content>
+            </ScrollPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Label alignment="CENTER" text="Layer Manager" textAlignment="CENTER">
                      <font>
@@ -19,12 +24,7 @@
                      </font>
                   </Label>
                </children>
-            </VBox>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0">
-               <content>
-                  <VBox fx:id="layerItemVBox" alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0" />
-               </content>
-            </ScrollPane>
+            </AnchorPane>
          </children>
       </StackPane>
    </children>
