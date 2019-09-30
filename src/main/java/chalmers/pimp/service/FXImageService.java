@@ -8,7 +8,8 @@ import javafx.scene.image.WritableImage;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 
 /**
- * The {@code FXImageService} class is a chalmers.pimp.service which takes pixeldata and returns an FX Image
+ * The {@code FXImageService} class is a chalmers.pimp.service which takes pixeldata and returns an
+ * FX Image
  */
 public class FXImageService {
 
@@ -40,7 +41,8 @@ public class FXImageService {
    * @param pw           the pixelwriter of the connected fx Image
    */
   //TODO change color representation to our own.
-  private static void setImagePixelRow(Iterable<? extends IReadOnlyPixel> pixelDataRow, int offsetY, PixelWriter pw) {
+  private static void setImagePixelRow(Iterable<? extends IReadOnlyPixel> pixelDataRow, int offsetY,
+      PixelWriter pw) {
     int offsetX = 0;
     for (IReadOnlyPixel p : pixelDataRow) {
       pw.setColor(offsetX, offsetY,

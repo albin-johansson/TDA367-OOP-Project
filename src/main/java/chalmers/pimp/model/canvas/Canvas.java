@@ -89,7 +89,7 @@ public final class Canvas {
   public void setPixels(int x, int y, PixelData pixelData) {
     verifyActiveLayerExistence();
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
-      for (IReadOnlyPixel p: row) {
+      for (IReadOnlyPixel p : row) {
         //TODO: Create constructor for PixelImpl which takes in an IReadOnlyPixel
         IPixel np = new PixelImpl(p.getX() + x, p.getY() + y);
         np.setRed(p.getRed());

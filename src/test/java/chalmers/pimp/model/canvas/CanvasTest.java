@@ -155,31 +155,31 @@ class CanvasTest {
   }
 
   @Test
-  void setPixels(){
+  void setPixels() {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
-    PixelData pixelData = new PixelData(5,5);
-    IPixel pixel = new PixelImpl(2,3);
+    PixelData pixelData = new PixelData(5, 5);
+    IPixel pixel = new PixelImpl(2, 3);
     pixel.setGreen(1);
 
     pixelData.setPixel(pixel);
-    canvas.setPixels(0,0, pixelData);
+    canvas.setPixels(0, 0, pixelData);
 
-    assertEquals(1, defaultLayer.getPixelData().getPixel(2,3).getGreen());
+    assertEquals(1, defaultLayer.getPixelData().getPixel(2, 3).getGreen());
   }
 
   @Test
-  void setPixels2(){
+  void setPixels2() {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
-    PixelData pixelData = new PixelData(5,5);
-    IPixel pixel = new PixelImpl(2,3);
+    PixelData pixelData = new PixelData(5, 5);
+    IPixel pixel = new PixelImpl(2, 3);
     pixel.setGreen(1);
 
     pixelData.setPixel(pixel);
     //pixelData shifted to (2,2)
-    canvas.setPixels(2,2, pixelData);
+    canvas.setPixels(2, 2, pixelData);
 
-    assertEquals(1, defaultLayer.getPixelData().getPixel(4,5).getGreen());
+    assertEquals(1, defaultLayer.getPixelData().getPixel(4, 5).getGreen());
   }
 }

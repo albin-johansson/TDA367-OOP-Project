@@ -49,8 +49,8 @@ public interface IModel {
   void selectLayer(int layerIndex);
 
   /**
-   * Sets the the pixel at the pixels coordinate, in the active layer. The coordinates
-   * are zero-indexed.
+   * Sets the the pixel at the pixels coordinate, in the active layer. The coordinates are
+   * zero-indexed.
    *
    * @param pixel the pixel to be set
    * @throws IllegalStateException     if there is no active layer.

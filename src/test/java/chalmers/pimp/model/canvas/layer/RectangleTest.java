@@ -20,7 +20,7 @@ class RectangleTest {
   @Test
   void setPixel() {
     // Should not actually manipulate anything.
-    assertDoesNotThrow(() -> rectangle.setPixel(new PixelImpl(0,0)));
+    assertDoesNotThrow(() -> rectangle.setPixel(new PixelImpl(0, 0)));
   }
 
   @Test
