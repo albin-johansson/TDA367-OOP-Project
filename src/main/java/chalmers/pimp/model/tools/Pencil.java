@@ -22,6 +22,7 @@ public final class Pencil implements ITool {
    *
    * @param width the diameter of the pencil.
    * @param color the color of the pencils strokes.
+   * @param model a reference to the model.
    */
   Pencil(int width, Color color, IModel model) {
     this.width = width;
@@ -88,7 +89,7 @@ public final class Pencil implements ITool {
    */
   private void updateTargetsPixels(int x, int y) {
 
-    PixelData pixels = new PixelData(width,width);
+    PixelData pixels = new PixelData(width, width);
 
     int radius = (int) (width / 2.0);
     for (int row = 0; row < width; row++) {
@@ -97,7 +98,6 @@ public final class Pencil implements ITool {
       }
     }
 
-    model.setPixels(x,y, pixels);
-
+    model.setPixels(x, y, pixels);
   }
 }
