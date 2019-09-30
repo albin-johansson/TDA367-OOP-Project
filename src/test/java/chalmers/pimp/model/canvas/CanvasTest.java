@@ -9,12 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
-<<<<<<< HEAD
-import chalmers.pimp.model.pixeldata.PixelImpl;
-=======
+import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.pixeldata.PixelImpl;
 import java.awt.Color;
->>>>>>> dev
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -161,10 +159,27 @@ class CanvasTest {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
     PixelData pixelData = new PixelData(5,5);
+    IPixel pixel = new PixelImpl(2,3);
+    pixel.setGreen(1);
 
-    pixelData.setPixel(2,3, Color.GREEN);
+    pixelData.setPixel(pixel);
     canvas.setPixels(0,0, pixelData);
 
-    assertEquals(Color.GREEN, defaultLayer.getPixelData().getPixel(2,3));
+    assertEquals(1, defaultLayer.getPixelData().getPixel(2,3).getGreen());
+  }
+
+  @Test
+  void setPixels2(){
+    canvas.addLayer(defaultLayer);
+    canvas.selectLayer(0);
+    PixelData pixelData = new PixelData(5,5);
+    IPixel pixel = new PixelImpl(2,3);
+    pixel.setGreen(1);
+
+    pixelData.setPixel(pixel);
+    //pixelData shifted to (2,2)
+    canvas.setPixels(2,2, pixelData);
+
+    assertEquals(1, defaultLayer.getPixelData().getPixel(4,5).getGreen());
   }
 }
