@@ -1,6 +1,5 @@
 package chalmers.pimp.model.canvas;
 
-import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
 import java.awt.Color;
 import java.util.ArrayList;

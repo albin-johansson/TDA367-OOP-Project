@@ -1,7 +1,6 @@
 package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.MouseStatus;
-import chalmers.pimp.model.canvas.layer.ILayer;
 
 /**
  * A tool is a tool that manipulates a layer.
