@@ -96,7 +96,7 @@ public final class Canvas {
         xOffset++;
       }
       yOffset++;
-      x = 0;
+      xOffset = 0;
     }
     canvasUpdateListeners.canvasUpdated();
   }
