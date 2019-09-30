@@ -1,5 +1,6 @@
 package chalmers.pimp.model.tools;
 
+import chalmers.pimp.model.IModel;
 import java.awt.Color;
 
 /**
@@ -15,8 +16,8 @@ public class ToolFactory {
    * @param color the color of the pencils stroke.
    * @return a pencil.
    */
-  public static ITool createPencil(int width, Color color) {
-    return new Pencil(width, color);
+  public static ITool createPencil(int width, Color color, IModel model) {
+    return new Pencil(width, color, model);
   }
 
   /**
@@ -24,7 +25,7 @@ public class ToolFactory {
    *
    * @return a black pencil with the stroke of 2.
    */
-  public static ITool createPencil() {
-    return createPencil(2, Color.BLACK);
+  public static ITool createPencil(IModel model) {
+    return createPencil(2, Color.BLACK, model);
   }
 }

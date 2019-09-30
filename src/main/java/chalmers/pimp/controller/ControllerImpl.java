@@ -67,7 +67,7 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectPencil() {
-    model.setSelectedTool(ToolFactory.createPencil(10, Color.ORANGE));
+    model.setSelectedTool(ToolFactory.createPencil(10, Color.ORANGE, model));
   }
 
   @Override

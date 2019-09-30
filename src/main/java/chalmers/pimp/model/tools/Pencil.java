@@ -2,9 +2,10 @@ package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelImpl;
+import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.pixeldata.PixelData;
 import java.awt.Color;
 import chalmers.pimp.model.MouseStatus;
-import chalmers.pimp.model.canvas.layer.ILayer;
 
 /**
  * A pencil is a tool that updates a layers pixels.
@@ -16,17 +17,19 @@ public final class Pencil implements ITool {
    */
   private int width;
   private Color color;
-  private ILayer targetLayer;
+  private final IModel model;
 
   /**
    * Creates a pencil with the specified width and color.
    *
    * @param width the diameter of the pencil.
    * @param color the color of the pencils strokes.
+   * @param model a reference to the model.
    */
-  Pencil(int width, Color color) {
+  Pencil(int width, Color color, IModel model) {
     this.width = width;
     this.color = color;
+    this.model = model;
   }
 
   /**
@@ -79,11 +82,6 @@ public final class Pencil implements ITool {
   public void released(MouseStatus mouseStatus) {
   }
 
-  @Override
-  public void setTarget(ILayer iLayer) {
-    targetLayer = iLayer;
-  }
-
   /**
    * Updates the {@code targetLayer}'s pixels in a square of the pencils width and color. TODO: Add
    * some kind pattern for the pencil to draw.
@@ -92,20 +90,20 @@ public final class Pencil implements ITool {
    * @param y the zero-indexed y coordinate for the squares center.
    */
   private void updateTargetsPixels(int x, int y) {
-    if (targetLayer == null) {
-      return;
-    }
+
+    PixelData pixels = new PixelData(width, width);
 
     int radius = (int) (width / 2.0);
-
     for (int row = 0; row < width; row++) {
       for (int col = 0; col < width; col++) {
         IPixel pixel = new PixelImpl(col - radius + x, row - radius + y);
         pixel.setRed(color.getRed() / 255.0);
         pixel.setGreen(color.getGreen() / 255.0);
         pixel.setBlue(color.getBlue() / 255.0);
-        targetLayer.setPixel(pixel);
+        pixels.setPixel(pixel);
       }
     }
+
+    model.setPixels(x, y, pixels);
   }
 }
