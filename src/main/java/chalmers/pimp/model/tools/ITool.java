@@ -29,10 +29,4 @@ public interface ITool {
    */
   void released(MouseStatus mouseStatus);
 
-  /**
-   * Sets the tools target layer.
-   *
-   * @param iLayer the layer that the tool should target.
-   */
-  void setTarget(ILayer iLayer);
 }

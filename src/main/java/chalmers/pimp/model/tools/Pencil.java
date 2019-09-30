@@ -1,8 +1,8 @@
 package chalmers.pimp.model.tools;
 
+import chalmers.pimp.model.IModel;
 import java.awt.Color;
 import chalmers.pimp.model.MouseStatus;
-import chalmers.pimp.model.canvas.layer.ILayer;
 
 /**
  * A pencil is a tool that updates a layers pixels.
@@ -14,7 +14,7 @@ public final class Pencil implements ITool {
    */
   private int width;
   private Color color;
-  private ILayer targetLayer;
+  private final IModel model;
 
   /**
    * Creates a pencil with the specified width and color.
@@ -22,9 +22,10 @@ public final class Pencil implements ITool {
    * @param width the diameter of the pencil.
    * @param color the color of the pencils strokes.
    */
-  Pencil(int width, Color color) {
+  Pencil(int width, Color color, IModel model) {
     this.width = width;
     this.color = color;
+    this.model = model;
   }
 
   /**
@@ -77,11 +78,6 @@ public final class Pencil implements ITool {
   public void released(MouseStatus mouseStatus) {
   }
 
-  @Override
-  public void setTarget(ILayer iLayer) {
-    targetLayer = iLayer;
-  }
-
   /**
    * Updates the {@code targetLayer}'s pixels in a square of the pencils width and color. TODO: Add
    * some kind pattern for the pencil to draw.
@@ -90,15 +86,12 @@ public final class Pencil implements ITool {
    * @param y the zero-indexed y coordinate for the squares center.
    */
   private void updateTargetsPixels(int x, int y) {
-    if (targetLayer == null) {
-      return;
-    }
+
 
     int radius = (int) (width / 2.0);
-
     for (int row = 0; row < width; row++) {
       for (int col = 0; col < width; col++) {
-        targetLayer.setPixel(col - radius + x, row - radius + y, color);
+        model.setPixel(col - radius + x, row - radius + y, color);
       }
     }
   }

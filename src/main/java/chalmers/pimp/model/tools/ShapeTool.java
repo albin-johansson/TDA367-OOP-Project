@@ -29,8 +29,4 @@ public final class ShapeTool implements ITool {
 
   }
 
-  @Override
-  public void setTarget(ILayer iLayer) {
-
-  }
 }

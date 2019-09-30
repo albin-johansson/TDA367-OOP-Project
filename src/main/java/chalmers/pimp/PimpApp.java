@@ -2,6 +2,7 @@ package chalmers.pimp;
 
 import chalmers.pimp.controller.ControllerFactory;
 import chalmers.pimp.controller.IController;
+import chalmers.pimp.model.canvas.layer.LayerFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import chalmers.pimp.model.IModel;
@@ -30,5 +31,8 @@ public final class PimpApp extends Application {
     IController controller = ControllerFactory.createController(model, view, stage);
     model.addCanvasUpdateListener(view);
     controller.run();
+
+    model.addLayer(LayerFactory.createRasterLayer(500,500));
+    model.selectLayer(0);
   }
 }
