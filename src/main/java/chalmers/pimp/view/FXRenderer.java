@@ -4,6 +4,11 @@ import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 
+/**
+ * The {@code FXRenderer} is a implementation of the {@code IRenderer} interface.
+ *
+ * @see IRenderer
+ */
 public final class FXRenderer implements IRenderer {
 
   @Override
