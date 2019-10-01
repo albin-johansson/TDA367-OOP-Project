@@ -170,6 +170,37 @@ public final class Canvas {
   }
 
   /**
+   * Sets the name of a given layer.
+   *
+   * @param layer     the layer to have it's name changed.
+   * @param layerName the new name for the layer.
+   */
+  public void setLayerName(IReadOnlyLayer layer, String layerName) {
+    Objects.requireNonNull(layer);
+    for (ILayer l : layers) {
+      if (layer == l) {
+        l.setName(layerName);
+        break;
+      }
+    }
+    notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, layer));
+  }
+
+  /**
+   * Sets the name of a given indexed layer.
+   *
+   * @param layerIndex the list index for the layer.
+   * @param layerName  the new name for the layer.
+   */
+  public void setLayerName(int layerIndex, String layerName) {
+    if ((layerIndex < 0) || (layerIndex >= layers.size())) {
+      throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
+    }
+    layers.get(layerIndex).setName(layerName);
+    notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, layers.get(layerIndex)));
+  }
+
+  /**
    * Adds a canvas update listener to the canvas.
    *
    * @param listener the listener that will be added, may not be {@code null}.

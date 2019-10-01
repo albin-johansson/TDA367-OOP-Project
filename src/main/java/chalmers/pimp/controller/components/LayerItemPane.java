@@ -58,6 +58,7 @@ final class LayerItemPane extends AnchorPane {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
     this.model = Objects.requireNonNull(model);
     this.layer = Objects.requireNonNull(layer);
+    textLabel.setText(layer.getName());
     updateVisibilityImage();
   }
 

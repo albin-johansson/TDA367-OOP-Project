@@ -41,4 +41,11 @@ public interface IReadOnlyLayer {
    * @return the type of the layer.
    */
   LayerType getLayerType();
+
+  /**
+   * Returns the layer's name
+   *
+   * @return the layer's name as a {@code String}
+   */
+  String getName();
 }

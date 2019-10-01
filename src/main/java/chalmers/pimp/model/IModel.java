@@ -60,6 +60,22 @@ public interface IModel {
   void setPixel(int x, int y, Color color);
 
   /**
+   * Sets the name of a layer.
+   *
+   * @param layer     the layer to have it's name changed.
+   * @param layerName the new name for the layer.
+   */
+  void setLayerName(IReadOnlyLayer layer, String layerName);
+
+  /**
+   * Sets the name of an indexed layer.
+   *
+   * @param layerIndex the index for the layer.
+   * @param layerName  the new name for the layer.
+   */
+  void setLayerName(int layerIndex, String layerName);
+
+  /**
    * Sets the visibility property value for the supplied layer.
    *
    * @param layer     the {@code layer} which will have it's visibility changed.

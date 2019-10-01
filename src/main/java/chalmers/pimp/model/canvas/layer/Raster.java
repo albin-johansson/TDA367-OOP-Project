@@ -1,8 +1,8 @@
 package chalmers.pimp.model.canvas.layer;
 
-import java.awt.Color;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
+import java.awt.Color;
 
 /**
  * The {@code Raster} class is an implementation of the {@code ILayer} interface that represents a
@@ -44,6 +44,11 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
   }
@@ -56,6 +61,11 @@ final class Raster implements ILayer {
   @Override
   public int getY() {
     return layerDelegate.getY();
+  }
+
+  @Override
+  public String getName() {
+    return layerDelegate.getName();
   }
 
   @Override

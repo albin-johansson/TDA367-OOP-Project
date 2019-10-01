@@ -46,6 +46,16 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void setLayerName(IReadOnlyLayer layer, String layerName) {
+    canvas.setLayerName(layer, layerName);
+  }
+
+  @Override
+  public void setLayerName(int layerIndex, String layerName) {
+    canvas.setLayerName(layerIndex, layerName);
+  }
+
+  @Override
   public void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible) {
     canvas.setLayerVisible(layer, isVisible);
   }
