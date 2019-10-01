@@ -147,6 +147,6 @@ final class ControllerImpl implements IController {
 
   @Override
   public void createNewLayer() {
-    model.addLayer(LayerFactory.createRasterLayer(100, 100));
+    model.addLayer(LayerFactory.createRasterLayer(1200, 800));
   }
 }

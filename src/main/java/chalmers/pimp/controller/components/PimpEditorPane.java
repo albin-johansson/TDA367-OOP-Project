@@ -5,7 +5,6 @@ import chalmers.pimp.controller.IController;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
 import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
 import chalmers.pimp.util.AnchorPanes;
@@ -54,7 +53,6 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
     ControllerUtils.makeController(this, Resources.find(getClass(), "root.fxml"));
     this.model = Objects.requireNonNull(model);
     this.controller = Objects.requireNonNull(controller);
-    model.addLayer(LayerFactory.createRasterLayer(100, 100));
     toolbarPane = new ToolbarPane(controller);
     topAnchorPane.getChildren().add(toolbarPane);
     AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
