@@ -53,5 +53,14 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
    */
   void addLayerItemPane(LayerItemPane layerItemPane) {
     layerItemVBox.getChildren().add(layerItemPane);
+    updateEmptyLayerPane();
+  }
+
+  private void updateEmptyLayerPane() {
+    if (layerItemVBox.getChildren().isEmpty()) {
+      emptyLayerPane.toFront();
+    } else {
+      emptyLayerPane.toBack();
+    }
   }
 }
