@@ -29,7 +29,7 @@ public interface IRenderer {
   void fillRect(int x, int y, int width, int height);
 
   /**
-   * Draws a ellipse.
+   * Draws an ellipse.
    *
    * @param x       the zero-indexed x coordinate of the ellipse.
    * @param y       the zero-indexed y coordinate of the ellipse.
@@ -63,6 +63,8 @@ public interface IRenderer {
    * Draws a text.
    *
    * @param content  the string to write on the screen.
+   * @param x        the zero-indexed x coordinate.
+   * @param y        the zero-indexed y coordinate.
    * @param fontSize the size of the font in pixels.
    */
   void drawText(String content, int x, int y, int fontSize);
