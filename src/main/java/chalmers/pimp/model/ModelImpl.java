@@ -99,5 +99,12 @@ final class ModelImpl implements IModel {
   @Override
   public void selectedToolReleased(MouseStatus mouseStatus) {
     selectedTool.released(mouseStatus);
+  /**
+   * Checks if there is a active tool selected.
+   *
+   * @return true if there is a tool selected.
+   */
+  private boolean hasSelectedTool() {
+    return selectedTool != null;
   }
 }
