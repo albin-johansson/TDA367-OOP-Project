@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.service.FXImageService;
+import javafx.scene.paint.Color;
 
 /**
  * The {@code ViewImpl} class is an implementation of the {@code IView} interface.
@@ -52,6 +53,9 @@ final class ViewImpl implements IView {
 
   @Override
   public void repaint() {
+    graphics.setFill(Color.WHITE);
+    graphics.fillRect(0, 0, graphics.getCanvas().getWidth(), graphics.getCanvas().getHeight());
+
     for (IReadOnlyLayer layer : model.getLayers()) {
       paintLayer(layer);
     }
