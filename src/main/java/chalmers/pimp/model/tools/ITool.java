@@ -1,7 +1,6 @@
 package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.MouseStatus;
-import chalmers.pimp.model.canvas.layer.ILayer;
 
 /**
  * A tool is a tool that manipulates a layer.
@@ -29,10 +28,4 @@ public interface ITool {
    */
   void released(MouseStatus mouseStatus);
 
-  /**
-   * Sets the tools target layer.
-   *
-   * @param iLayer the layer that the tool should target.
-   */
-  void setTarget(ILayer iLayer);
 }

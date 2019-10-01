@@ -1,5 +1,6 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.pixeldata.PixelData;
 import java.awt.Color;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
@@ -8,8 +9,8 @@ import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.tools.ITool;
 
 /**
- * The {@code IModel} interface specifies the facade for the main chalmers.pimp.model component in the Pimp
- * application.
+ * The {@code IModel} interface specifies the facade for the main chalmers.pimp.model component in
+ * the Pimp application.
  */
 public interface IModel {
 
@@ -18,7 +19,8 @@ public interface IModel {
    *
    * @param layer the layer that will be added.
    * @throws NullPointerException     if any arguments are {@code null}.
-   * @throws IllegalArgumentException if the supplied layer has been added to the chalmers.pimp.model previously.
+   * @throws IllegalArgumentException if the supplied layer has been added to the
+   *                                  chalmers.pimp.model previously.
    */
   void addLayer(ILayer layer);
 
@@ -58,6 +60,15 @@ public interface IModel {
    * @throws NullPointerException      if any arguments are {@code null}.
    */
   void setPixel(int x, int y, Color color);
+
+  /**
+   * Sets the color of multiple pixels in the model using the PixelData Class.
+   *
+   * @param x         start x value of the PixelData.
+   * @param y         start y value of the PixelData.
+   * @param pixelData the PixelData representing the pixels to be set.
+   */
+  void setPixels(int x, int y, PixelData pixelData);
 
   /**
    * Sets the visibility property value for the supplied layer.
