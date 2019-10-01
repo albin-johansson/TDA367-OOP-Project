@@ -4,7 +4,6 @@ import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.PixelData;
-import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 
 /**
@@ -95,10 +94,6 @@ public final class Pencil implements ITool {
     int radius = (int) (diameter / 2.0);
     for (int row = 0; row < diameter; row++) {
       for (int col = 0; col < diameter; col++) {
-
-    int radius = (int) (width / 2.0);
-    for (int row = 0; row < width; row++) {
-      for (int col = 0; col < width; col++) {
         pixels.setPixel(col, row, color);
       }
     }
