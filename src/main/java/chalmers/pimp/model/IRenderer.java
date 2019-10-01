@@ -96,4 +96,18 @@ public interface IRenderer {
    * @param width the width of borders.
    */
   void setBorderWidth(int width);
+
+  /**
+   * Returns the width of the attached Canvas.
+   *
+   * @return the width of the attached Canvas.
+   */
+  int getCanvasWidth();
+
+  /**
+   * Returns the height of the attached Canvas.
+   *
+   * @return the height of the attached Canvas.
+   */
+  int getCanvasHeight();
 }
