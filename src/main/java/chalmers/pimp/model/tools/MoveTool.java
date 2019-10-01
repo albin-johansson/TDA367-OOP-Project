@@ -18,7 +18,9 @@ public class MoveTool implements ITool {
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
-
+    int xAmount = mouseStatus.getX() - startX;
+    int yAmount = mouseStatus.getY() - startY;
+    model.moveSelectedLayer(xAmount,yAmount);
   }
 
   @Override
