@@ -17,6 +17,7 @@ public final class RendererFactory {
    *
    * @param g the graphics context the renderer should draw on.
    * @return a FX renderer.
+   * @throws NullPointerException if the graphics context is null.
    */
   public static IRenderer createFXRenderer(GraphicsContext g) {
     return new FXRenderer(g);

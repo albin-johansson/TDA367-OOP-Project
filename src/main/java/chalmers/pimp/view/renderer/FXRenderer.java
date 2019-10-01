@@ -4,6 +4,7 @@ import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.service.FXImageService;
+import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -18,8 +19,14 @@ final class FXRenderer implements IRenderer {
 
   private final GraphicsContext graphicsContext;
 
+  /**
+   * Creates and returns a FX renderer.
+   *
+   * @param graphicsContext the graphics context to manipulate.
+   * @throws NullPointerException if the graphics context is null.
+   */
   FXRenderer(GraphicsContext graphicsContext) {
-    this.graphicsContext = graphicsContext;
+    this.graphicsContext = Objects.requireNonNull(graphicsContext);
   }
 
   @Override
