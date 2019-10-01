@@ -234,4 +234,15 @@ public final class Canvas {
   public Iterable<ILayer> getLayers() {
     return layers;
   }
+
+  /**
+   * Moves the layer by increasing (or decreasing) with x and y amount.
+   *
+   * @param xAmount the amount moved in dimension x.
+   * @param yAmount the amount moved in dimension y.
+   */
+  public void moveSelectedLayer(int xAmount, int yAmount){
+    activeLayer.setX(activeLayer.getX()+xAmount);
+    activeLayer.setY(activeLayer.getY()+yAmount);
+  }
 }

@@ -7,7 +7,6 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 
 /**
@@ -110,7 +109,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void moveSelectedLayer(int xAmount, int yAmount) {
-
+    canvas.moveSelectedLayer(xAmount, yAmount);
   }
 
   /**
