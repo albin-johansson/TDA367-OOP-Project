@@ -1,6 +1,9 @@
 package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
+import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -10,9 +13,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.util.Resources;
 
 /**
  * The {@code LayerItemPane} class represents a layer item in the chalmers.pimp.view.
@@ -63,8 +63,8 @@ final class LayerItemPane extends AnchorPane {
   }
 
   /**
-   * Toggles the visibility boolean connected with this layerItem's layer through the chalmers.pimp.model'a
-   * method
+   * Toggles the visibility boolean connected with this layerItem's layer through the
+   * chalmers.pimp.model's method
    */
   @FXML
   private void toggleVisibility() {
@@ -75,6 +75,45 @@ final class LayerItemPane extends AnchorPane {
       }
     }
     updateVisibilityImage();
+  }
+
+  /**
+   * Updates this layerItem's layer's name through the chalmers.pimp.model.
+   */
+  @FXML
+  private void updateLayerName() {
+    String temp = textLabel.getText();
+    if (temp == "") {
+      textLabel.setText(layer.getName());
+    } else {
+      model.setLayerName(layer, textLabel.getText());
+    }
+  }
+
+  /**
+   * Sets this layer item's associated layer as the active layer.
+   */
+  @FXML
+  private void updateActiveLayer() {
+    model.selectLayer(layer);
+    showIfLayerIsSelected();
+  }
+
+  @FXML
+  private void moveLayerBackwards() {
+    model.moveLayer(layer, -1);
+  }
+
+  @FXML
+  private void moveLayerForwards() {
+    model.moveLayer(layer, 1);
+  }
+
+  //TODO Rethink if below methods should all be private and called by single update method...
+
+  void update() {
+    updateVisibilityImage();
+    showIfLayerIsSelected();
   }
 
   /**

@@ -1,19 +1,20 @@
 package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
-import java.io.IOException;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
 import chalmers.pimp.util.Resources;
+import java.io.IOException;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 /**
- * The {@code LayerItemManagerPane} class manages the layer items in the chalmers.pimp.view. Listens to the chalmers.pimp.model
- * for updates.
+ * The {@code LayerItemManagerPane} class manages the layer items in the chalmers.pimp.view. Listens
+ * to the chalmers.pimp.model for updates.
  */
 final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListener {
 
@@ -23,7 +24,6 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
   @FXML
   private AnchorPane emptyLayerPane;
 
-  //Should the itemManager have real layers or just the chalmers.pimp.view aspect?
   @FXML
   private VBox layerItemVBox;
 
@@ -35,15 +35,50 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
   }
 
   /**
-   * The update method from the Interface {@Code} ILayerUpdateListener that updates this Managers
+   * The update method from the Interface {@Code ILayerUpdateListener} that updates this Managers
    * LayerItems
    */
   @Override
   public void layersUpdated(LayerUpdateEvent e) {
     for (Node node : layerItemVBox.getChildren()) {
       LayerItemPane layerItemPane = (LayerItemPane) node;
+      if (e.getLayer() == layerItemPane.getLayer()) {
+        switch (e.getType()) {
+          case REMOVED:
+            layerItemVBox.getChildren().removeAll(node);
+            break;
+          case VISIBILITY_TOGGLED:
+
+            break;
+          case SELECTED:
+
+            break;
+          case EDITED:
+            break;
+          case POSITION_MOVED_FORWARDS:
+            int toPos = layerItemVBox.getChildren().indexOf(layerItemPane) + 1;
+            LayerItemPane temp = (LayerItemPane) layerItemVBox.getChildren().get(toPos);
+            layerItemVBox.getChildren().set(toPos - 1, new Button());
+            layerItemVBox.getChildren().set(toPos, layerItemPane);
+            layerItemVBox.getChildren().set(toPos - 1, temp);
+            break;
+          case POSITION_MOVED_BACKWARDS:
+            toPos = layerItemVBox.getChildren().indexOf(layerItemPane) - 1;
+            temp = (LayerItemPane) layerItemVBox.getChildren().get(toPos);
+            layerItemVBox.getChildren().set(toPos + 1, new Button());
+            layerItemVBox.getChildren().set(toPos, layerItemPane);
+            layerItemVBox.getChildren().set(toPos + 1, temp);
+            break;
+        }
+        break;
+      }
       //TODO
     }
+    for (Node node : layerItemVBox.getChildren()) {
+      LayerItemPane layerItemPane = (LayerItemPane) node;
+      layerItemPane.update();
+    }
+    updateEmptyLayerPane();
   }
 
   /**

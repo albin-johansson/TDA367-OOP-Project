@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="75.0"
-  prefWidth="200.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane"
-  xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="200.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT"
-      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+    <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
       <children>
-        <Label fx:id="textLabel" text="Layer">
+        <Label fx:id="textLabel" onInputMethodTextChanged="#updateLayerName" text="Layer">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#moveLayerBackwards" text="^" />
+                  <Button mnemonicParsing="false" onAction="#moveLayerForwards" text="v" />
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </VBox>
       </children>
     </HBox>
-    <HBox alignment="CENTER_RIGHT" layoutX="450.0" layoutY="-2.0" AnchorPane.bottomAnchor="0.0"
-      AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+    <HBox alignment="CENTER_RIGHT" layoutX="450.0" layoutY="-2.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
       <children>
-        <ToggleButton fx:id="toggleButton" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT"
-          onAction="#toggleVisibility" selected="true">
+            <Button mnemonicParsing="false" onAction="#updateActiveLayer" text="AL" />
+        <ToggleButton fx:id="toggleButton" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#toggleVisibility" selected="true">
           <graphic>
-            <ImageView fx:id="imageView" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
-              preserveRatio="true"/>
+            <ImageView fx:id="imageView" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
           </graphic>
           <tooltip>
-            <Tooltip text="Toggle visibility for this layer"/>
+            <Tooltip text="Toggle visibility for this layer" />
           </tooltip>
         </ToggleButton>
       </children>

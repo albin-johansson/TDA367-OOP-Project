@@ -1,12 +1,12 @@
 package chalmers.pimp.model;
 
-import java.awt.Color;
 import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.tools.ITool;
+import java.awt.Color;
 
 /**
  * The {@code ModelImpl} class is an implementation of the {@code IModel} interface.
@@ -43,6 +43,11 @@ final class ModelImpl implements IModel {
   @Override
   public void selectLayer(int layerIndex) {
     canvas.selectLayer(layerIndex);
+  }
+
+  @Override
+  public void moveLayer(IReadOnlyLayer layer, int steps) {
+    canvas.moveLayer(layer, steps);
   }
 
   @Override

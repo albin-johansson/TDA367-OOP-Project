@@ -1,15 +1,15 @@
 package chalmers.pimp.model;
 
-import java.awt.Color;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.tools.ITool;
+import java.awt.Color;
 
 /**
- * The {@code IModel} interface specifies the facade for the main chalmers.pimp.model component in the Pimp
- * application.
+ * The {@code IModel} interface specifies the facade for the main chalmers.pimp.model component in
+ * the Pimp application.
  */
 public interface IModel {
 
@@ -18,7 +18,8 @@ public interface IModel {
    *
    * @param layer the layer that will be added.
    * @throws NullPointerException     if any arguments are {@code null}.
-   * @throws IllegalArgumentException if the supplied layer has been added to the chalmers.pimp.model previously.
+   * @throws IllegalArgumentException if the supplied layer has been added to the
+   *                                  chalmers.pimp.model previously.
    */
   void addLayer(ILayer layer);
 
@@ -53,6 +54,15 @@ public interface IModel {
    * @throws IllegalArgumentException if the supplied index isn't associated with a layer.
    */
   void selectLayer(int layerIndex);
+
+  /**
+   * Moves the supplied layer {@code steps} in the list, were negative number moves the layer back
+   * (and vice versa).
+   *
+   * @param layer the layer to be moved.
+   * @param steps the number of steps
+   */
+  void moveLayer(IReadOnlyLayer layer, int steps);
 
   /**
    * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates

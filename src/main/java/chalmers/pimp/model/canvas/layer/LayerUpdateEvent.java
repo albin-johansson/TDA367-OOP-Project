@@ -7,6 +7,7 @@ public final class LayerUpdateEvent {
 
   private final IReadOnlyLayer layer;
   private final EventType type;
+
   /**
    * Gives ILayerUpdateListeners information about the event which occurred
    *
@@ -44,7 +45,8 @@ public final class LayerUpdateEvent {
     REMOVED,
     EDITED,
     SELECTED,
-    POSITION_CHANGED,
+    POSITION_MOVED_FORWARDS,
+    POSITION_MOVED_BACKWARDS,
     VISIBILITY_TOGGLED
   }
 }

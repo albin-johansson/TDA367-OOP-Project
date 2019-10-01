@@ -1,14 +1,14 @@
 package chalmers.pimp.model.canvas;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
 import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * The {@code Canvas} class is responsible for handling layers.
@@ -187,6 +187,40 @@ public final class Canvas {
       throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
     }
     notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layers.remove(layerIndex)));
+  }
+
+  /**
+   * Moves the supplied layer {@code steps} in the list, were negative number moves the layer back
+   * (and vice versa).
+   *
+   * @param layer the layer to be moved.
+   * @param steps the number of steps
+   */
+  public void moveLayer(IReadOnlyLayer layer, int steps) {
+    if (getAmountOfLayers() < 2) {
+      return;
+    }
+    verifyLayerExistence(layer);
+    ILayer temp = null;
+    ILayer layerToMove = null;
+    int index = 0;
+    for (ILayer l : layers) {
+      if (layer == l) {
+        layerToMove = l;
+        if (index + steps < layers.size() && index + steps > -1) {
+          temp = layers.get(index + steps);
+          layers.set(index + steps, layerToMove);
+          layers.set(index, temp);
+          if (steps > 0) {
+            notifyAllListeners(new LayerUpdateEvent(EventType.POSITION_MOVED_FORWARDS, layer));
+          } else {
+            notifyAllListeners(new LayerUpdateEvent(EventType.POSITION_MOVED_BACKWARDS, layer));
+          }
+        }
+        break;
+      }
+      index++;
+    }
   }
 
   /**
