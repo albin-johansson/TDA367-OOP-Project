@@ -81,6 +81,16 @@ final class FXRenderer implements IRenderer {
     graphicsContext.setLineWidth(width);
   }
 
+  @Override
+  public int getCanvasWidth() {
+    return (int) graphicsContext.getCanvas().getWidth();
+  }
+
+  @Override
+  public int getCanvasHeight() {
+    return (int) graphicsContext.getCanvas().getHeight();
+  }
+
   /**
    * TODO: Replace with service when implemented.
    */

@@ -74,7 +74,8 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectEraser() {
-
+    Color color = new Color(0, 0, 0, 0);
+    model.setSelectedTool(ToolFactory.createPencil(10, color, model));
   }
 
   @Override
