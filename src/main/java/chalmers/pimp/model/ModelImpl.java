@@ -1,10 +1,13 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.pixeldata.IPixel;
+import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 import java.awt.Color;
 
@@ -51,8 +54,13 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void setPixel(int x, int y, Color color) {
-    canvas.setPixel(x, y, color);
+  public void setPixel(IPixel pixel) {
+    canvas.setPixel(pixel);
+  }
+
+  @Override
+  public void setPixels(int x, int y, PixelData pixelData) {
+    canvas.setPixels(x, y, pixelData);
   }
 
   @Override
@@ -107,16 +115,31 @@ final class ModelImpl implements IModel {
 
   @Override
   public void selectedToolPressed(MouseStatus mouseStatus) {
-    //TODO Implement
+    if (hasSelectedTool()) {
+      selectedTool.pressed(mouseStatus);
+    }
   }
 
   @Override
   public void selectedToolDragged(MouseStatus mouseStatus) {
-    //TODO Implement
+    if (hasSelectedTool()) {
+      selectedTool.dragged(mouseStatus);
+    }
   }
 
   @Override
   public void selectedToolReleased(MouseStatus mouseStatus) {
-    //TODO Implement
+    if (hasSelectedTool()) {
+      selectedTool.released(mouseStatus);
+    }
+  }
+
+  /**
+   * Checks if there is a active tool selected.
+   *
+   * @return true if there is a tool selected.
+   */
+  private boolean hasSelectedTool() {
+    return selectedTool != null;
   }
 }

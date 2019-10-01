@@ -1,11 +1,17 @@
 package chalmers.pimp.view;
 
+import chalmers.pimp.model.IDrawable;
+import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.IRenderer;
+import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.ColorImpl;
+import chalmers.pimp.view.renderer.RendererFactory;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.service.FXImageService;
+import chalmers.pimp.service.PixelDataToFXService;
 
 /**
  * The {@code ViewImpl} class is an implementation of the {@code IView} interface.
@@ -13,7 +19,7 @@ import chalmers.pimp.service.FXImageService;
 final class ViewImpl implements IView {
 
   private final IModel model;
-  private GraphicsContext graphics;
+  private IRenderer renderer;
 
   /**
    * @param model the associated chalmers.pimp.model instance.
@@ -28,32 +34,18 @@ final class ViewImpl implements IView {
     repaint();
   }
 
-  /**
-   * Paints a layer by fetching an JavaFX Image of the pixeldata and drawing on the GraphicContext.
-   *
-   * @param layer the layer the method is supposed to draw
-   * @throws NullPointerException if layer = null
-   */
-  private void paintLayer(IReadOnlyLayer layer) {
-    final int xPos = layer.getX();
-    final int yPos = layer.getY();
-
-    Image image = FXImageService.getFXImage(layer.getPixelData());
-
-    graphics.drawImage(image, xPos, yPos);
-  }
-
-  //TODO Change color to pixelData interface to gain abstraction
-
   @Override
-  public void setGraphics(GraphicsContext graphics) {
-    this.graphics = graphics;
+  public void setRendererGraphics(GraphicsContext graphics) {
+    renderer = RendererFactory.createFXRenderer(graphics);
   }
 
   @Override
   public void repaint() {
-    for (IReadOnlyLayer layer : model.getLayers()) {
-      paintLayer(layer);
+    renderer.setFillColor(ColorFactory.createColor(255,255,255,255));
+    renderer.fillRect(0,0, renderer.getCanvasWidth(), renderer.getCanvasHeight());
+
+    for (IDrawable drawable : model.getLayers()) {
+      drawable.draw(renderer);
     }
   }
 }

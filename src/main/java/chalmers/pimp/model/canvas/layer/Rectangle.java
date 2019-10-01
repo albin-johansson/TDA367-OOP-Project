@@ -1,8 +1,12 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.IRenderer;
+import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
-import java.awt.Color;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 
 /**
  * The {@code Rectangle} class is an implementation of the {@code ILayer} interface that represents
@@ -14,6 +18,7 @@ public class Rectangle implements ILayer {
   private final LayerDelegate layerDelegate;
   private int width;
   private int height;
+  private final IColor color;
 
   /**
    * Creates a rectangle.
@@ -29,10 +34,11 @@ public class Rectangle implements ILayer {
     layerDelegate.setY(y);
     this.width = width;
     this.height = height;
+    color = ColorFactory.createColor(255, 137, 243);
   }
 
   @Override
-  public void setPixel(int x, int y, Color color) {
+  public void setPixel(IPixel pixel) {
   }
 
   @Override
@@ -81,7 +87,7 @@ public class Rectangle implements ILayer {
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
-        pixelData.setPixel(col, row, Color.MAGENTA);
+        pixelData.setPixel(PixelFactory.createPixel(col, row, 1, 0, 1));
       }
     }
 
@@ -91,5 +97,12 @@ public class Rectangle implements ILayer {
   @Override
   public LayerType getLayerType() {
     return layerType;
+  }
+
+  @Override
+  public void draw(IRenderer renderer) {
+    renderer.setFillColor(color);
+    renderer.setBorderColor(color);
+    renderer.fillRect(getX(), getY(), width, height);
   }
 }

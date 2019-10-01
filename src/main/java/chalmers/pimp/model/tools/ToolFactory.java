@@ -1,6 +1,8 @@
 package chalmers.pimp.model.tools;
 
-import java.awt.Color;
+import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.IColor;
 
 /**
  * The {@code ToolFactory} class is a factory for creating instances of the {@code ITool}
@@ -9,14 +11,14 @@ import java.awt.Color;
 public class ToolFactory {
 
   /**
-   * Creates and returns a pencil with the desired width and color.
+   * Creates and returns a pencil with the desired diameter and color.
    *
-   * @param width the diameter of the pencils stroke.
-   * @param color the color of the pencils stroke.
-   * @return a pencil.
+   * @param diameter the diameter of the pencil.
+   * @param color    the color of the pencil.
+   * @return a tool that represents a pencil.
    */
-  public static ITool createPencil(int width, Color color) {
-    return new Pencil(width, color);
+  public static ITool createPencil(int diameter, IColor color, IModel model) {
+    return new Pencil(diameter, color, model);
   }
 
   /**
@@ -24,7 +26,7 @@ public class ToolFactory {
    *
    * @return a black pencil with the stroke of 2.
    */
-  public static ITool createPencil() {
-    return createPencil(2, Color.BLACK);
+  public static ITool createPencil(IModel model) {
+    return createPencil(2, ColorFactory.createColor(0, 0, 0), model);
   }
 }

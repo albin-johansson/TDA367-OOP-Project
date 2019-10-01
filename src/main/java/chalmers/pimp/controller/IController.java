@@ -19,7 +19,7 @@ public interface IController {
   void selectPencil();
 
   /**
-   * Sets Eraser as selectedTool in chalmers.pimp.model
+   * Sets a Transparent Pencil as selectedTool in chalmers.pimp.model
    */
   void selectEraser();
 

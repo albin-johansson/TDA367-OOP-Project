@@ -1,5 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.pixeldata.IPixel;
+import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
 import java.awt.Color;
@@ -24,8 +26,8 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public void setPixel(int x, int y, Color color) {
-    pixelData.setPixel(x, y, color);
+  public void setPixel(IPixel pixel) {
+    pixelData.setPixel(pixel);
   }
 
   @Override
@@ -76,5 +78,10 @@ final class Raster implements ILayer {
   @Override
   public LayerType getLayerType() {
     return layerType;
+  }
+
+  @Override
+  public void draw(IRenderer renderer) {
+    renderer.drawImage(pixelData, getX(), getY(), pixelData.getWidth(), pixelData.getHeight());
   }
 }

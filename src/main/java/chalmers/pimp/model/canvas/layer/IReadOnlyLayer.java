@@ -1,11 +1,12 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.IDrawable;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 
 /**
  * The {@code IReadOnlyLayer} interface specifies the basic read-only methods for layers.
  */
-public interface IReadOnlyLayer {
+public interface IReadOnlyLayer extends IDrawable {
 
   /**
    * Indicates whether or not the layer is visible.

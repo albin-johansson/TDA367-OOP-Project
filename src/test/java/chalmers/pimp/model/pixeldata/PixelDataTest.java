@@ -25,11 +25,12 @@ class PixelDataTest {
 
   @Test
   void setPixelTest() {
-    assertThrows(NullPointerException.class, () -> pixelData.setPixel(0, 0, null));
+    assertThrows(NullPointerException.class, () -> pixelData.setPixel(null));
 
-    pixelData.setPixel(0, 0, Color.BLACK);
-    Color firstPixel = pixelData.getPixel(0, 0);
-    assertEquals(firstPixel.getRGB(), Color.BLACK.getRGB());
+    IPixel pixel = new PixelImpl(0, 0);
+    pixelData.setPixel(pixel);
+    IReadOnlyPixel firstPixel = pixelData.getPixel(0, 0);
+    assertEquals(firstPixel, pixel);
   }
 
   @Test

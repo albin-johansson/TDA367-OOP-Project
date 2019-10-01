@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.pixeldata.IPixel;
+import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +39,7 @@ class CanvasTest {
   void setPixel() {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
-    assertThrows(NullPointerException.class, () -> canvas.setPixel(0, 0, null));
+    assertThrows(NullPointerException.class, () -> canvas.setPixel(null));
   }
 
   @Test
@@ -148,5 +151,32 @@ class CanvasTest {
     }
 
     assertEquals(count, actualCount);
+  }
+
+  @Test
+  void setPixels() {
+    canvas.addLayer(defaultLayer);
+    canvas.selectLayer(0);
+    PixelData pixelData = new PixelData(5, 5);
+    IPixel pixel = PixelFactory.createPixel(2, 3, 0, 1, 0);
+
+    pixelData.setPixel(pixel);
+    canvas.setPixels(0, 0, pixelData);
+
+    assertEquals(1, defaultLayer.getPixelData().getPixel(2, 3).getColor().getGreenPercentage());
+  }
+
+  @Test
+  void setPixels2() {
+    canvas.addLayer(defaultLayer);
+    canvas.selectLayer(0);
+    PixelData pixelData = new PixelData(5, 5);
+    IPixel pixel = PixelFactory.createPixel(2, 3, 0, 1, 0);
+
+    pixelData.setPixel(pixel);
+    //pixelData shifted to (2,2)
+    canvas.setPixels(2, 2, pixelData);
+
+    assertEquals(1, defaultLayer.getPixelData().getPixel(4, 5).getColor().getGreenPercentage());
   }
 }

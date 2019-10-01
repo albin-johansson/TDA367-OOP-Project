@@ -1,5 +1,7 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.pixeldata.IPixel;
+import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
@@ -68,14 +70,21 @@ public interface IModel {
    * Sets the color of the pixel at the specified coordinate, in the active layer. The coordinates
    * are zero-indexed.
    *
-   * @param x     the x-coordinate of the pixel that will be changed.
-   * @param y     the y-coordinate of the pixel that will be changed.
-   * @param color the new color of the pixel.
+   * @param pixel the pixel to be set
    * @throws IllegalStateException     if there is no active layer.
    * @throws IndexOutOfBoundsException if the specified coordinate is out-of-bounds.
    * @throws NullPointerException      if any arguments are {@code null}.
    */
-  void setPixel(int x, int y, Color color);
+  void setPixel(IPixel pixel);
+
+  /**
+   * Sets the color of multiple pixels in the model using the PixelData Class.
+   *
+   * @param x         start x value of the PixelData.
+   * @param y         start y value of the PixelData.
+   * @param pixelData the PixelData representing the pixels to be set.
+   */
+  void setPixels(int x, int y, PixelData pixelData);
 
   /**
    * Sets the name of a layer.

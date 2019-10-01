@@ -1,21 +1,21 @@
-package chalmers.pimp.service.image;
+package chalmers.pimp.service;
 
 import java.io.IOException;
 import javafx.scene.image.Image;
 
 /**
- * This chalmers.pimp.service loads images
+ * The {@code ImageImportService} class is capable of importing JavaFX images.
  */
-public final class ImageService {
+public final class ImageImportService {
 
-  private ImageService() {
+  private ImageImportService() {
   }
 
   /**
-   * Imports an image from the specified path
+   * Imports an image from the specified path.
    *
-   * @param path the full path to the specified image
-   * @return an javafx.scene.image.Image
+   * @param path the path to the desired image.
+   * @return a javafx image.
    */
   public static Image importImage(String path) throws IOException {
     try {
