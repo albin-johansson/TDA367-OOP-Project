@@ -1,0 +1,105 @@
+package chalmers.pimp.model.command;
+
+import chalmers.pimp.model.IChangeable;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Objects;
+
+/**
+ * The {@code CommandManager} class is responsible for handling instances of the {@link IChangeable}
+ * interface and tracking them in undo and redo stacks.
+ */
+public final class CommandManager implements IChangeable {
+
+  /**
+   * The maximum amount of commands in either the undo or redo stack.
+   */
+  private static final int THRESHOLD = 45;
+
+  private final Deque<ICommand> undoDeque;
+  private final Deque<ICommand> redoDeque;
+
+  public CommandManager() {
+    undoDeque = new ArrayDeque<>(THRESHOLD);
+    redoDeque = new ArrayDeque<>(THRESHOLD);
+  }
+
+  /**
+   * Ensures that the supplied deque doesn't supercede the value of {@link
+   * CommandManager#THRESHOLD}.
+   *
+   * @param deque the deque that will be checked.
+   * @throws NullPointerException if any arguments are {@code null}.
+   */
+  private void ensureSize(Deque<?> deque) {
+    Objects.requireNonNull(deque);
+    while (deque.size() > THRESHOLD) {
+      deque.removeLast();
+    }
+  }
+
+  /**
+   * Adds the supplied command to the command manager.
+   *
+   * @param command the command that will be added.
+   * @throws NullPointerException if any arguments are {@code null}.
+   */
+  public void insertCommand(ICommand command) {
+    Objects.requireNonNull(command);
+    ensureSize(undoDeque);
+    undoDeque.push(command);
+  }
+
+  /**
+   * Adds the supplied command to the command manager and executes it.
+   *
+   * @param command the command that will be added and executed.
+   * @throws NullPointerException if any arguments are {@code null}.
+   */
+  public void insertCommandAndExecute(ICommand command) {
+    insertCommand(command);
+    command.execute();
+
+    // TODO test clearing the redo stack after this
+  }
+
+  /**
+   * Indicates whether or not there is an undoable command.
+   *
+   * @return {@code true} if there is an undoable command; {@code false} otherwise.
+   */
+  public boolean isUndoable() {
+    return !undoDeque.isEmpty();
+  }
+
+  /**
+   * Indicates whether or not there is an redoable command.
+   *
+   * @return {@code true} if there is an redoable command; {@code false} otherwise.
+   */
+  public boolean isRedoable() {
+    return !redoDeque.isEmpty();
+  }
+
+  @Override
+  public void undo() {
+    if (isUndoable()) {
+      ICommand command = undoDeque.pop();
+      command.revert();
+
+      redoDeque.push(command);
+      ensureSize(redoDeque);
+    }
+  }
+
+  @Override
+  public void redo() {
+    if (isRedoable()) {
+      ICommand command = redoDeque.pop();
+      command.execute();
+
+      undoDeque.push(command);
+      ensureSize(undoDeque);
+    }
+  }
+}
