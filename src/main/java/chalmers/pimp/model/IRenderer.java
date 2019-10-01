@@ -62,12 +62,10 @@ public interface IRenderer {
   /**
    * Draws a text.
    *
-   * @param content  the
+   * @param content  the string to write on the screen.
    * @param fontSize the size of the font in pixels.
-   * @param rotation the rotation of the text.
-   * @param color    the color of the text.
    */
-  void drawText(String content, int fontSize, double rotation, IColor color);
+  void drawText(String content, int x, int y, int fontSize);
 
   /**
    * Sets the rotation.
