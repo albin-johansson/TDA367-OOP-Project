@@ -1,7 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.IRenderer;
-import java.awt.Color;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
 
@@ -25,8 +25,8 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public void setPixel(int x, int y, Color color) {
-    pixelData.setPixel(x, y, color);
+  public void setPixel(IPixel pixel) {
+    pixelData.setPixel(pixel);
   }
 
   @Override

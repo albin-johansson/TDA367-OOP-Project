@@ -1,5 +1,7 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.pixeldata.IPixel;
+import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
@@ -7,7 +9,6 @@ import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
-import java.awt.Color;
 
 /**
  * The {@code ModelImpl} class is an implementation of the {@code IModel} interface.
@@ -42,8 +43,8 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void setPixel(int x, int y, Color color) {
-    canvas.setPixel(x, y, color);
+  public void setPixel(IPixel pixel) {
+    canvas.setPixel(pixel);
   }
 
   @Override

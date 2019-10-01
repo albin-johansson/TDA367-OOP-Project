@@ -18,7 +18,7 @@ class RasterTest {
 
   @Test
   void setPixel() {
-    assertThrows(NullPointerException.class, () -> raster.setPixel(0, 0, null));
+    assertThrows(NullPointerException.class, () -> raster.setPixel(null));
   }
 
   @Test

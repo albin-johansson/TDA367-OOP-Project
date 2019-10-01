@@ -1,7 +1,14 @@
 package chalmers.pimp.controller;
 
 import chalmers.pimp.controller.components.PimpEditorPane;
-import java.awt.Color;
+import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.tools.ITool;
+import chalmers.pimp.model.tools.ToolFactory;
+import chalmers.pimp.util.Resources;
+import chalmers.pimp.view.IView;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.scene.Scene;
@@ -9,11 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.MouseStatus;
-import chalmers.pimp.model.tools.ToolFactory;
-import chalmers.pimp.util.Resources;
-import chalmers.pimp.view.IView;
 
 /**
  * The {@code ControllerImpl} class is an implementation of the {@code IController} interface.
@@ -67,12 +69,13 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectPencil() {
-    model.setSelectedTool(ToolFactory.createPencil(10, Color.ORANGE, model));
+    ITool pencil = ToolFactory.createPencil(10, ColorFactory.createColor(255, 100, 50, 255), model);
+    model.setSelectedTool(pencil);
   }
 
   @Override
   public void selectEraser() {
-    Color color = new Color(0, 0, 0, 0);
+    IColor color = ColorFactory.createColor(0, 0, 0, 0);
     model.setSelectedTool(ToolFactory.createPencil(10, color, model));
   }
 

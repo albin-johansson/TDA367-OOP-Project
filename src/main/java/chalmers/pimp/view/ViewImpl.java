@@ -8,6 +8,10 @@ import chalmers.pimp.model.color.ColorImpl;
 import chalmers.pimp.view.renderer.RendererFactory;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.service.PixelDataToFXService;
 
 /**
  * The {@code ViewImpl} class is an implementation of the {@code IView} interface.

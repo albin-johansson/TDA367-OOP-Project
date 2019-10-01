@@ -68,7 +68,7 @@ class ModelImplTest {
     model.addLayer(layer);
     model.selectLayer(0);
 
-    assertThrows(NullPointerException.class, () -> model.setPixel(0, 0, null));
+    assertThrows(NullPointerException.class, () -> model.setPixel(null));
   }
 
   @Test

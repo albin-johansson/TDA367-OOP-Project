@@ -3,9 +3,10 @@ package chalmers.pimp.model.canvas.layer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
-import java.awt.Color;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 
 /**
  * The {@code Rectangle} class is an implementation of the {@code ILayer} interface that represents
@@ -37,7 +38,7 @@ public class Rectangle implements ILayer {
   }
 
   @Override
-  public void setPixel(int x, int y, Color color) {
+  public void setPixel(IPixel pixel) {
   }
 
   @Override
@@ -76,7 +77,7 @@ public class Rectangle implements ILayer {
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
-        pixelData.setPixel(col, row, Color.MAGENTA);
+        pixelData.setPixel(PixelFactory.createPixel(col, row, 1, 0, 1));
       }
     }
 
