@@ -1,17 +1,17 @@
 package chalmers.pimp.model.canvas;
 
-import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixel;
-import chalmers.pimp.model.pixeldata.PixelData;
-import chalmers.pimp.model.pixeldata.PixelFactory;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
 import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
+import chalmers.pimp.model.pixeldata.IPixel;
+import chalmers.pimp.model.pixeldata.IReadOnlyPixel;
+import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.PixelFactory;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * The {@code Canvas} class is responsible for handling layers.
@@ -83,14 +83,13 @@ public final class Canvas {
    *
    * @param x         the x coordinate of the PixelData.
    * @param y         the y coordinate of the PixelData.
-   * @param pixelData the pixelData to be copied.
+   * @param pixelData the pixel data to be copied.
    */
-  public void setPixels(int x, int y, PixelData pixelData) {
+  public void setPixels(int x, int y, IReadOnlyPixelData pixelData) {
     verifyActiveLayerExistence();
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
       for (IReadOnlyPixel p : row) {
-
-        activeLayer.setPixel(PixelFactory.createPixel(p, x, y));
+        activeLayer.setPixel(PixelFactory.createPixelWithOffset(p, x, y));
       }
     }
     canvasUpdateListeners.canvasUpdated();

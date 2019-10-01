@@ -3,7 +3,9 @@ package chalmers.pimp.model.tools;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 
 /**
@@ -88,13 +90,14 @@ public final class Pencil implements ITool {
    * @param y the zero-indexed y coordinate for the squares center.
    */
   private void updateTargetsPixels(int x, int y) {
-
     PixelData pixels = new PixelData(diameter, diameter);
 
     int radius = (int) (diameter / 2.0);
     for (int row = 0; row < diameter; row++) {
       for (int col = 0; col < diameter; col++) {
-        pixels.setPixel(col, row, color);
+//        System.out.println("Row: " + row + ", Col: " + col + ", Color: " + color);
+        IPixel pixel = PixelFactory.createPixel(col, row, color);
+        pixels.setPixel(pixel);
       }
     }
 

@@ -4,6 +4,7 @@ import chalmers.pimp.controller.components.PimpEditorPane;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
 import chalmers.pimp.util.Resources;
@@ -68,13 +69,13 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectPencil() {
-    ITool pencil = ToolFactory.createPencil(10, ColorFactory.createColor(255, 100, 50), model);
+    ITool pencil = ToolFactory.createPencil(10, ColorFactory.createColor(255, 100, 50, 255), model);
     model.setSelectedTool(pencil);
   }
 
   @Override
   public void selectEraser() {
-    Color color = new Color(0, 0, 0, 0);
+    IColor color = ColorFactory.createColor(0, 0, 0, 0);
     model.setSelectedTool(ToolFactory.createPencil(10, color, model));
   }
 
