@@ -7,7 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
  * The {@code RendererFactory} class is a factory for creating instances of the {@code IRenderer}
  * interface.
  */
-public class RendererFactory {
+public final class RendererFactory {
 
   private RendererFactory() {
   }
