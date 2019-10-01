@@ -1,4 +1,4 @@
-package chalmers.pimp.view;
+package chalmers.pimp.view.renderer;
 
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.IColor;
@@ -74,6 +74,9 @@ final class FXRenderer implements IRenderer {
     graphicsContext.setLineWidth(width);
   }
 
+  /**
+   * TODO: Replace with service when implemented.
+   */
   private Paint toPaint(IColor color) {
     return Color.color(color.getRedPercentage(), color.getGreenPercentage(),
         color.getBluePercentage());
