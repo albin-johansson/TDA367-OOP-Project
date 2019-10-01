@@ -87,4 +87,21 @@ final class LayerItemPane extends AnchorPane {
       imageView.setImage(EYE_CLOSED_IMAGE);
     }
   }
+
+  private void showIfLayerIsSelected() {
+    if (layer == model.getActiveLayer()) {
+      this.setStyle("-fx-background-color: GREY;");
+    } else {
+      this.setStyle("");
+    }
+  }
+
+  /**
+   * Returns the {@code IReadOnlyLayer} that this LayerItem represents.
+   *
+   * @return the layer this LayerItem represents.
+   */
+  IReadOnlyLayer getLayer() {
+    return layer;
+  }
 }
