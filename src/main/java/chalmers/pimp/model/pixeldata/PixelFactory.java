@@ -13,6 +13,17 @@ public final class PixelFactory {
   }
 
   /**
+   * Creates and returns a copy of the supplied pixel.
+   *
+   * @param pixel the pixel that will be copied.
+   * @return a copy of the supplied pixel.
+   * @throws NullPointerException if the supplied pixel is {@code null}.
+   */
+  public static IPixel createPixel(IReadOnlyPixel pixel) {
+    return new PixelImpl(pixel);
+  }
+
+  /**
    * Creates and returns a pixel with the supplied coordinates.
    *
    * @param x x coordinate

@@ -9,6 +9,7 @@ import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IReadOnlyColor;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("MagicNumber")
 class PixelFactoryTest {
 
   @Test
@@ -24,7 +25,16 @@ class PixelFactoryTest {
   }
 
   @Test
-  @SuppressWarnings("MagicNumber")
+  void createPixelCopy() {
+    assertThrows(NullPointerException.class, () -> PixelFactory.createPixel(null));
+
+    IPixel original = PixelFactory.createPixel(12, 93, 184, 12, 200);
+    IPixel copy = PixelFactory.createPixel(original);
+
+    assertEquals(original, copy);
+  }
+
+  @Test
   void createPixel1() {
     assertDoesNotThrow(() -> PixelFactory.createPixel(0, 0, -0.1, 0.0, 0.0));
     assertDoesNotThrow(() -> PixelFactory.createPixel(0, 0, 0.0, -0.8, 0.0));
