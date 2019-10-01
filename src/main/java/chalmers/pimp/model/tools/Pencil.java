@@ -94,10 +94,10 @@ public final class Pencil implements ITool {
     int radius = (int) (width / 2.0);
     for (int row = 0; row < width; row++) {
       for (int col = 0; col < width; col++) {
-        pixels.setPixel(col - radius, row - radius, color);
+        pixels.setPixel(col, row, color);
       }
     }
 
-    model.setPixels(x, y, pixels);
+    model.setPixels(x - radius, y - radius, pixels);
   }
 }

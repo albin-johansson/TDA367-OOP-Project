@@ -96,4 +96,18 @@ public interface IRenderer {
    * @param width the width of borders.
    */
   void setBorderWidth(int width);
+
+  /**
+   * Returns the width of the rendering target.
+   *
+   * @return the width of the rendering target.
+   */
+  int getCanvasWidth();
+
+  /**
+   * Returns the height of the rendering target.
+   *
+   * @return the height of the rendering target.
+   */
+  int getCanvasHeight();
 }
