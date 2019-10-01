@@ -3,8 +3,8 @@ package chalmers.pimp.controller;
 import javafx.scene.input.MouseEvent;
 
 /**
- * The {@code IController} interface specifies the facade for the chalmers.pimp.controller component in the MVC
- * architecture that the Pimp application uses.
+ * The {@code IController} interface specifies the facade for the chalmers.pimp.controller component
+ * in the MVC architecture that the Pimp application uses.
  */
 public interface IController {
 
@@ -48,4 +48,9 @@ public interface IController {
    * @param mouseEvent the associated mouseEvent.
    */
   void selectedToolReleased(MouseEvent mouseEvent);
+
+  /**
+   * Creates a new raster layer.
+   */
+  void createNewLayer();
 }
