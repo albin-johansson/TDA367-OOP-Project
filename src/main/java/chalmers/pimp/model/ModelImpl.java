@@ -108,6 +108,11 @@ final class ModelImpl implements IModel {
     }
   }
 
+  @Override
+  public void moveSelectedLayer(int xAmount, int yAmount) {
+
+  }
+
   /**
    * Checks if there is a active tool selected.
    *
