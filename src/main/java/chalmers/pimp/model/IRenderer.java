@@ -98,16 +98,16 @@ public interface IRenderer {
   void setBorderWidth(int width);
 
   /**
-   * Returns the width of the attached Canvas.
+   * Returns the width of the rendering target.
    *
-   * @return the width of the attached Canvas.
+   * @return the width of the rendering target.
    */
   int getCanvasWidth();
 
   /**
-   * Returns the height of the attached Canvas.
+   * Returns the height of the rendering target.
    *
-   * @return the height of the attached Canvas.
+   * @return the height of the rendering target.
    */
   int getCanvasHeight();
 }
