@@ -3,6 +3,7 @@ package chalmers.pimp.view;
 import chalmers.pimp.model.IDrawable;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.IRenderer;
+import chalmers.pimp.view.renderer.RendererFactory;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -29,7 +30,7 @@ final class ViewImpl implements IView {
 
   @Override
   public void setRendererGraphics(GraphicsContext graphics) {
-    renderer = new FXRenderer(graphics);
+    renderer = RendererFactory.createFXRenderer(graphics);
   }
 
   @Override
