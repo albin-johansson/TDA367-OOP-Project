@@ -199,13 +199,17 @@ public final class Canvas {
     canvasUpdateListeners.canvasUpdated();
   }
 
-  /**
-   * Returns the current amount of layers in the canvas.
-   *
-   * @return the current amount of layers in the canvas.
-   */
   public int getAmountOfLayers() {
     return layers.size();
+  }
+
+  /**
+   * Returns the current active layer.
+   *
+   * @return the current active layer.
+   */
+  public IReadOnlyLayer getActiveLayer() {
+    return activeLayer;
   }
 
   /**

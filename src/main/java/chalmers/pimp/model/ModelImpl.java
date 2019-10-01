@@ -76,6 +76,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public IReadOnlyLayer getActiveLayer() {
+    return canvas.getActiveLayer();
+  }
+
+  @Override
   public void setSelectedTool(ITool selectedTool) {
     this.selectedTool = selectedTool;
   }

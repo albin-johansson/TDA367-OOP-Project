@@ -110,6 +110,13 @@ public interface IModel {
   int getAmountOfLayers();
 
   /**
+   * Returns the current amount of layers in the canvas.
+   *
+   * @return the current amount of layers in the canvas.
+   */
+  IReadOnlyLayer getActiveLayer();
+
+  /**
    * Can be Null if user chooses to deselect a tool.
    *
    * @param tool the tool to be selected.
