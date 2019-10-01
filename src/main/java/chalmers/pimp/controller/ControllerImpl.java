@@ -72,8 +72,8 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectEraser() {
-    Color color = new Color(0,0,0,0);
-    model.setSelectedTool(ToolFactory.createPencil(10,color, model));
+    Color color = new Color(0, 0, 0, 0);
+    model.setSelectedTool(ToolFactory.createPencil(10, color, model));
   }
 
   @Override
@@ -107,7 +107,8 @@ final class ControllerImpl implements IController {
   }
 
   /**
-   * Converts the button pressed to an int representation to reduce chalmers.pimp.model dependency of JavaFX
+   * Converts the button pressed to an int representation to reduce chalmers.pimp.model dependency
+   * of JavaFX
    *
    * @param mouseButton the fx ENUM that tells which button has been pressed
    * @return an int representation
