@@ -1,7 +1,5 @@
 package chalmers.pimp.model.pixeldata;
 
-import chalmers.pimp.model.color.IReadOnlyColor;
-
 /**
  * The {@code IPixel} interface specifies objects that represent a pixel.
  */
