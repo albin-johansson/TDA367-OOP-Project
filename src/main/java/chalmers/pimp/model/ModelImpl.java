@@ -1,13 +1,13 @@
 package chalmers.pimp.model;
 
-import chalmers.pimp.model.pixeldata.PixelData;
-import java.awt.Color;
 import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
+import java.awt.Color;
 
 /**
  * The {@code ModelImpl} class is an implementation of the {@code IModel} interface.
@@ -88,16 +88,31 @@ final class ModelImpl implements IModel {
 
   @Override
   public void selectedToolPressed(MouseStatus mouseStatus) {
-    selectedTool.pressed(mouseStatus);
+    if (hasSelectedTool()) {
+      selectedTool.pressed(mouseStatus);
+    }
   }
 
   @Override
   public void selectedToolDragged(MouseStatus mouseStatus) {
-    selectedTool.dragged(mouseStatus);
+    if (hasSelectedTool()) {
+      selectedTool.dragged(mouseStatus);
+    }
   }
 
   @Override
   public void selectedToolReleased(MouseStatus mouseStatus) {
-    selectedTool.released(mouseStatus);
+    if (hasSelectedTool()) {
+      selectedTool.released(mouseStatus);
+    }
+  }
+
+  /**
+   * Checks if there is a active tool selected.
+   *
+   * @return true if there is a tool selected.
+   */
+  private boolean hasSelectedTool() {
+    return selectedTool != null;
   }
 }
