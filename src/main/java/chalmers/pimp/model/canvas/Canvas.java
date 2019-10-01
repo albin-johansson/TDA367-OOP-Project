@@ -90,7 +90,7 @@ public final class Canvas {
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
       for (IReadOnlyPixel p : row) {
 
-        activeLayer.setPixel(PixelFactory.createCopyWithOffset(p, x, y));
+        activeLayer.setPixel(PixelFactory.createPixel(p, x, y));
       }
     }
     canvasUpdateListeners.canvasUpdated();

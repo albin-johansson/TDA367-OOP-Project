@@ -1,5 +1,7 @@
 package chalmers.pimp.model.pixeldata;
 
+import chalmers.pimp.model.color.IReadOnlyColor;
+
 public class PixelFactory {
 
   /**
@@ -24,7 +26,7 @@ public class PixelFactory {
    * @return the created IPixel
    */
   public static IPixel createPixel(int x, int y, double r, double g, double b) {
-    IPixel pixel = createPixel(x, y);
+    IPixel pixel = new PixelImpl(x, y);
     pixel.setRed(r);
     pixel.setGreen(g);
     pixel.setBlue(b);
@@ -32,17 +34,22 @@ public class PixelFactory {
   }
 
   /**
-   * Creates a clone of pixel with the same color and but with coordinates offset from the original
-   * pixel
+   * Creates a copy of the supplied pixel, that has coordinates that are offset by the specified
+   * amount.
    *
-   * @param pixel   the pixel to be cloned
-   * @param xOffset the offset in x-coordinate
-   * @param yOffset the offset in y-coordinate
-   * @return A new IPixel with the coordinates (pixel.x + xOffset, pixel.y + yOffset)
+   * @param pixel the pixel that will be copied.
+   * @param dx    the x-axis offset.
+   * @param dy    the y-axis offset.
+   * @return a copy of the supplied pixel, that has coordinates that are offset by the specified
+   * amount.
    */
-  public static IPixel createCopyWithOffset(IReadOnlyPixel pixel, int xOffset, int yOffset) {
-    IPixel newPixel = createPixel(pixel.getX() + xOffset, pixel.getY() + yOffset, pixel.getRed(),
-        pixel.getGreen(), pixel.getBlue());
-    return newPixel;
+  public static IPixel createPixel(IReadOnlyPixel pixel, int dx, int dy) {
+    IPixel result = new PixelImpl(pixel.getX() + dx, pixel.getY() + dy);
+    IReadOnlyColor color = pixel.getColor();
+    result.setRed(color.getRed());
+    result.setGreen(color.getGreen());
+    result.setBlue(color.getBlue());
+    result.setAlpha(color.getAlpha());
+    return result;
   }
 }

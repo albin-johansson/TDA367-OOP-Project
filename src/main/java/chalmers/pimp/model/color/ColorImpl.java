@@ -1,5 +1,7 @@
 package chalmers.pimp.model.color;
 
+import java.util.Objects;
+
 /**
  * The {@code ColorImp} class is an implementation of the {@code IColor} interface.
  *
@@ -52,6 +54,27 @@ public final class ColorImpl implements IColor {
     } else {
       return Math.max(min, val);
     }
+  }
+
+  /**
+   * Returns the percentage of the color.
+   *
+   * @param val the color component.
+   * @return the percentage of the color.
+   */
+  private double getPercentage(int val) {
+    return (val / (double) MAX_VALUE);
+  }
+
+  /**
+   * Converts a percentage between [0, 1] to a value between [0, 255]. An input of 0.5 would return
+   * what 50% of 255 is.
+   *
+   * @param percentage the percentage between [0, 1].
+   * @return a int in the range [0, 255]
+   */
+  private int convertPercentage(double percentage) {
+    return (int) (MAX_VALUE * getClosestPercentage(percentage));
   }
 
   @Override
@@ -107,17 +130,6 @@ public final class ColorImpl implements IColor {
     alpha = convertPercentage(percentageAlpha);
   }
 
-  /**
-   * Converts a percentage between [0, 1] to a value between [0, 255]. An input of 0.5 would return
-   * what 50% of 255 is.
-   *
-   * @param percentage the percentage between [0, 1].
-   * @return a int in the range [0, 255]
-   */
-  private int convertPercentage(double percentage) {
-    return (int) (MAX_VALUE * getClosestPercentage(percentage));
-  }
-
   @Override
   public int getRed() {
     return red;
@@ -158,13 +170,32 @@ public final class ColorImpl implements IColor {
     return getPercentage(alpha);
   }
 
-  /**
-   * Returns the percentage of the color.
-   *
-   * @param val the color component.
-   * @return the percentage of the color.
-   */
-  private double getPercentage(int val) {
-    return (val / (double) MAX_VALUE);
+  @Override
+  public int hashCode() {
+    return Objects.hash(red, green, blue, alpha);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof IReadOnlyColor)) {
+      return false;
+    }
+    if (obj == this) {
+      return true;
+    }
+
+    var c = (IReadOnlyColor) obj;
+
+    return (c.getRed() == red)
+        && (c.getGreen() == green)
+        && (c.getBlue() == blue)
+        && (c.getAlpha() == alpha);
+  }
+
+  @Override
+  public String toString() {
+    String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
+    String state = "Red: " + red + ", Green: " + green + ", Blue: " + blue + ", Alpha: " + alpha;
+    return "(" + id + " | " + state + ")";
   }
 }

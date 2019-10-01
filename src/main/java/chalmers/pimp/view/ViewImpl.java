@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.service.FXImageService;
+import chalmers.pimp.service.PixelDataToFXService;
 
 /**
  * The {@code ViewImpl} class is an implementation of the {@code IView} interface.
@@ -38,7 +38,7 @@ final class ViewImpl implements IView {
     final int xPos = layer.getX();
     final int yPos = layer.getY();
 
-    Image image = FXImageService.getFXImage(layer.getPixelData());
+    Image image = PixelDataToFXService.getFXImage(layer.getPixelData());
 
     graphics.drawImage(image, xPos, yPos);
   }

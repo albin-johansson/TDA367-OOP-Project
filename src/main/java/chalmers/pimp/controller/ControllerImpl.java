@@ -1,7 +1,13 @@
 package chalmers.pimp.controller;
 
 import chalmers.pimp.controller.components.PimpEditorPane;
-import java.awt.Color;
+import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.tools.ITool;
+import chalmers.pimp.model.tools.ToolFactory;
+import chalmers.pimp.util.Resources;
+import chalmers.pimp.view.IView;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.scene.Scene;
@@ -9,11 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.MouseStatus;
-import chalmers.pimp.model.tools.ToolFactory;
-import chalmers.pimp.util.Resources;
-import chalmers.pimp.view.IView;
 
 /**
  * The {@code ControllerImpl} class is an implementation of the {@code IController} interface.
@@ -67,7 +68,8 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectPencil() {
-    model.setSelectedTool(ToolFactory.createPencil(10, Color.ORANGE, model));
+    ITool pencil = ToolFactory.createPencil(10, ColorFactory.createColor(255, 100, 50), model);
+    model.setSelectedTool(pencil);
   }
 
   @Override
@@ -106,7 +108,8 @@ final class ControllerImpl implements IController {
   }
 
   /**
-   * Converts the button pressed to an int representation to reduce chalmers.pimp.model dependency of JavaFX
+   * Converts the button pressed to an int representation to reduce chalmers.pimp.model dependency
+   * of JavaFX
    *
    * @param mouseButton the fx ENUM that tells which button has been pressed
    * @return an int representation

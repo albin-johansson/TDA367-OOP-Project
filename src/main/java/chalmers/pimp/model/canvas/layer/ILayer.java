@@ -1,7 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.pixeldata.IPixel;
-import java.awt.Color;
 
 /**
  * The {@code ILayer} interface specifies objects that represent some sort of layer. This interface

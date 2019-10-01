@@ -1,7 +1,5 @@
 package chalmers.pimp.model.pixeldata;
 
-import java.awt.Color;
-
 public interface IReadOnlyPixelData {
 
   /**

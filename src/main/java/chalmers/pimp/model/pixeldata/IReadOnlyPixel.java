@@ -19,35 +19,6 @@ public interface IReadOnlyPixel {
   int getY();
 
   /**
-   * Returns the value of the red component of this pixel. By default this property is set to 0.
-   *
-   * @return the value of the red component of this pixel, in the range [0, 1].
-   */
-  double getRed();
-
-  /**
-   * Returns the value of the green component of this pixel. By default this property is set to 0.
-   *
-   * @return the value of the green component of this pixel, in the range [0, 1].
-   */
-  double getGreen();
-
-  /**
-   * Returns the value of the blue component of this pixel. By default this property is set to 0.
-   *
-   * @return the value of the blue component of this pixel, in the range [0, 1].
-   */
-  double getBlue();
-
-  /**
-   * Returns the value of the alpha (transparency) component of this pixel. By default this property
-   * is set to 1.
-   *
-   * @return the value of the alpha component of this pixel, in the range [0, 1].
-   */
-  double getAlpha();
-
-  /**
    * Indicates whether or not the supplied object is considered "equal" to this object. The
    * following statements must be true in order to qualify the objects as equal:
    * <ul>

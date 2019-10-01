@@ -1,7 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.pixeldata.IPixel;
-import java.awt.Color;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
 

@@ -163,7 +163,7 @@ class CanvasTest {
     pixelData.setPixel(pixel);
     canvas.setPixels(0, 0, pixelData);
 
-    assertEquals(1, defaultLayer.getPixelData().getPixel(2, 3).getGreen());
+    assertEquals(1, defaultLayer.getPixelData().getPixel(2, 3).getColor().getGreenPercentage());
   }
 
   @Test
@@ -177,6 +177,6 @@ class CanvasTest {
     //pixelData shifted to (2,2)
     canvas.setPixels(2, 2, pixelData);
 
-    assertEquals(1, defaultLayer.getPixelData().getPixel(4, 5).getGreen());
+    assertEquals(1, defaultLayer.getPixelData().getPixel(4, 5).getColor().getGreenPercentage());
   }
 }
