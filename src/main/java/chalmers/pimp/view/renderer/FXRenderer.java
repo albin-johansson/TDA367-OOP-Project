@@ -3,7 +3,7 @@ package chalmers.pimp.view.renderer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
-import chalmers.pimp.service.FXImageService;
+import chalmers.pimp.service.PixelDataToFXService;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -50,7 +50,7 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width, int height) {
-    Image image = FXImageService.getFXImage(readOnlyPixelData);
+    Image image = PixelDataToFXService.getFXImage(readOnlyPixelData);
     graphicsContext.drawImage(image, x, y);
   }
 

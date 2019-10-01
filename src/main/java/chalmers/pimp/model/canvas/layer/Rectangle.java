@@ -3,8 +3,10 @@ package chalmers.pimp.model.canvas.layer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 
 /**
  * The {@code Rectangle} class is an implementation of the {@code ILayer} interface that represents
