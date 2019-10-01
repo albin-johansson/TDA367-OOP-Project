@@ -109,6 +109,26 @@ public final class Canvas {
   }
 
   /**
+   * Selects the supplied layer.
+   *
+   * @param layer the supplied layer that will be made active.
+   * @throws IllegalArgumentException if the supplied layer isn't associated with a layer.
+   */
+  public void selectLayer(IReadOnlyLayer layer) {
+    verifyLayerExistence(layer);
+    ILayer temp = null;
+    for (ILayer l : layers) {
+      if (layer == l) {
+        temp = l;
+        activeLayer = l;
+        break;
+      }
+    }
+    Objects.requireNonNull(temp); //TODO Bad fix, remind me later
+    layerUpdateListeners.layersUpdated(new LayerUpdateEvent(EventType.SELECTED, activeLayer));
+  }
+
+  /**
    * Selects the layer associated with the specified index (it's made active). The layer index is
    * zero-indexed.
    *

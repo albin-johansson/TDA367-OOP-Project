@@ -36,6 +36,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void selectLayer(IReadOnlyLayer layer) {
+    canvas.selectLayer(layer);
+  }
+
+  @Override
   public void selectLayer(int layerIndex) {
     canvas.selectLayer(layerIndex);
   }

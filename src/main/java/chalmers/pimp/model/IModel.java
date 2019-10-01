@@ -39,6 +39,14 @@ public interface IModel {
   void removeLayer(int layerIndex);
 
   /**
+   * Selects the supplied layer.
+   *
+   * @param layer the supplied layer that will be made active.
+   * @throws IllegalArgumentException if the supplied layer isn't associated with a layer.
+   */
+  void selectLayer(IReadOnlyLayer layer);
+
+  /**
    * Selects the layer associated with the specified index.
    *
    * @param layerIndex the index associated with the layer that will be made active.
