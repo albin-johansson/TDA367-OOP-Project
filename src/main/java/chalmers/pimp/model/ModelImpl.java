@@ -19,6 +19,7 @@ import java.util.Objects;
 final class ModelImpl implements IModel {
 
   private final CommandManager commandManager;
+  private final UndoRedoListenerComposite undoRedoListeners;
   private Canvas canvas;
   private Stroke stroke;
   private ITool selectedTool;
@@ -26,9 +27,30 @@ final class ModelImpl implements IModel {
   ModelImpl() {
     canvas = new Canvas();
     commandManager = new CommandManager();
+    undoRedoListeners = new UndoRedoListenerComposite();
 
     stroke = null;
     selectedTool = null;
+  }
+
+  private void notifyUndoRedoListeners() {
+    var event = new UndoRedoEvent();
+
+    boolean isUndoable = commandManager.isUndoable();
+    boolean isRedoable = commandManager.isRedoable();
+
+    event.setUndoable(isUndoable);
+    event.setRedoable(isRedoable);
+
+    if (isUndoable) {
+      event.setUndoCommandName(commandManager.getUndoCommandName());
+    }
+
+    if (isRedoable) {
+      event.setRedoCommandName(commandManager.getRedoCommandName());
+    }
+
+    undoRedoListeners.undoRedoStateChanged(event);
   }
 
   /**
@@ -39,7 +61,7 @@ final class ModelImpl implements IModel {
   private boolean hasSelectedTool() {
     return selectedTool != null;
   }
-  
+
   @Override
   public void startStroke(IPixel pixel, int diameter) {
     Objects.requireNonNull(pixel);
@@ -121,6 +143,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void addUndoRedoListener(IUndoRedoListener listener) {
+    undoRedoListeners.add(listener);
+  }
+
+  @Override
   public void addLayerUpdateListener(ILayerUpdateListener listener) {
     canvas.addLayerUpdateListener(listener);
   }
@@ -159,6 +186,7 @@ final class ModelImpl implements IModel {
     if (hasSelectedTool()) {
       selectedTool.released(mouseStatus);
     }
+    notifyUndoRedoListeners();
   }
 
   @Override
@@ -169,12 +197,13 @@ final class ModelImpl implements IModel {
   @Override
   public void undo() {
     commandManager.undo();
+    notifyUndoRedoListeners();
   }
 
   @Override
   public void redo() {
     commandManager.redo();
-  
+    notifyUndoRedoListeners();
   }
 
   @Override

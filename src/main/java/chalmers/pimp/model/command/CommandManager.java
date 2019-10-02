@@ -80,6 +80,24 @@ public final class CommandManager implements IChangeable {
     return !redoDeque.isEmpty();
   }
 
+  /**
+   * Returns the name of the next undoable command.
+   *
+   * @return the name of the next undoable command, or {@code null} if there is no undoable command.
+   */
+  public String getUndoCommandName() {
+    return (undoDeque.size() >= 1) ? undoDeque.peek().getName() : null;
+  }
+
+  /**
+   * Returns the name of the next redoable command.
+   *
+   * @return the name of the next redoable command, or {@code null} if there is no redoable command.
+   */
+  public String getRedoCommandName() {
+    return (redoDeque.size() >= 1) ? redoDeque.peek().getName() : null;
+  }
+
   @Override
   public void undo() {
     if (isUndoable()) {

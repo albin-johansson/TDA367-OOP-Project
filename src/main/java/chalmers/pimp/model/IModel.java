@@ -124,10 +124,17 @@ public interface IModel extends IChangeable {
    * Adds a canvas update listener to the chalmers.pimp.model.
    *
    * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException     if any arguments are {@code null}.
-   * @throws IllegalArgumentException if the supplied listener has been added previously.
+   * @throws NullPointerException if any arguments are {@code null}.
    */
   void addCanvasUpdateListener(ICanvasUpdateListener listener);
+
+  /**
+   * Adds a undo/redo listener to the model.
+   *
+   * @param listener the listener that will be added, may not be {@code null}.
+   * @throws NullPointerException if the supplied listener is {@code null}.
+   */
+  void addUndoRedoListener(IUndoRedoListener listener);
 
   /**
    * Adds a layer update listener to the chalmers.pimp.model.
@@ -186,7 +193,7 @@ public interface IModel extends IChangeable {
    * @return a snap shot of the current state of the model.
    */
   ModelMemento createSnapShot();
-  
+
   /**
    * Moves the active layer by x- and y-amount.
    *
