@@ -32,7 +32,7 @@ final class ToolbarPane extends AnchorPane {
   }
 
   @FXML
-  private void importImage() {
+  private void openImageChooser() {
     controller.openImageChooser();
   }
 }
