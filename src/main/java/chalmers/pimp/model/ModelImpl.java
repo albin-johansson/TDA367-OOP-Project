@@ -33,6 +33,9 @@ final class ModelImpl implements IModel {
     selectedTool = null;
   }
 
+  /**
+   * Notifies all registered undo/redo listeners.
+   */
   private void notifyUndoRedoListeners() {
     var event = new UndoRedoEvent();
 
