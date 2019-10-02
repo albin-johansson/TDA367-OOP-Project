@@ -130,7 +130,7 @@ final class ControllerImpl implements IController {
         return;
       }
 
-      model.addLayer(LayerFactory.createPixelLayer(pixelData));
+      model.addLayer(LayerFactory.createRasterLayer(pixelData));
     } catch (Exception e) {
       System.err.println("Failed to import image! Exception: " + e);
     }

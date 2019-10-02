@@ -24,6 +24,18 @@ public final class LayerFactory {
   }
 
   /**
+   * Creates and returns a raster layer that holds basic raster data. The created layer is based on
+   * the supplied pixel data.
+   *
+   * @param pixelData the pixel data which holds the data that will be copied.
+   * @return a layer that holds raster data, copied from the supplied pixel data instance.
+   * @throws NullPointerException if the supplied pixel data is {@code null}.
+   */
+  public static ILayer createRasterLayer(PixelData pixelData) {
+    return new Raster(pixelData);
+  }
+
+  /**
    * Creates and returns a layer that is a rectangle.
    *
    * @param x      the zero-indexed x coordinate of the rectangle.
@@ -34,15 +46,5 @@ public final class LayerFactory {
    */
   public static ILayer createRectangle(int x, int y, int width, int height) {
     return new Rectangle(x, y, width, height);
-  }
-
-  /**
-   * Creating a pixel-based layer from pixelData
-   *
-   * @param pixelData the pixelData that the layer will use
-   * @return a pixel-based layer
-   */
-  public static ILayer createPixelLayer(PixelData pixelData) {
-    return new Raster(pixelData);
   }
 }
