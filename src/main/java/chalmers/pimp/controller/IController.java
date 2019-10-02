@@ -39,6 +39,11 @@ public interface IController {
   void redo();
 
   /**
+   * Sets the MoveTool as selected tool in model.
+   */
+  void selectMoveTool();
+
+  /**
    * Tells the chalmers.pimp.model that the selected tool has been pressed.
    *
    * @param mouseEvent the associated mouseEvent

@@ -39,7 +39,7 @@ final class ModelImpl implements IModel {
   private boolean hasSelectedTool() {
     return selectedTool != null;
   }
-
+  
   @Override
   public void startStroke(IPixel pixel, int diameter) {
     Objects.requireNonNull(pixel);
@@ -174,5 +174,11 @@ final class ModelImpl implements IModel {
   @Override
   public void redo() {
     commandManager.redo();
+  
+  }
+
+  @Override
+  public void moveSelectedLayer(int xAmount, int yAmount) {
+    canvas.moveSelectedLayer(xAmount, yAmount);
   }
 }

@@ -186,4 +186,12 @@ public interface IModel extends IChangeable {
    * @return a snap shot of the current state of the model.
    */
   ModelMemento createSnapShot();
+  
+  /**
+   * Moves the active layer by x- and y-amount.
+   *
+   * @param xAmount the amount moved in dimension x.
+   * @param yAmount the amount moved in dimension y.
+   */
+  void moveSelectedLayer(int xAmount, int yAmount);
 }
