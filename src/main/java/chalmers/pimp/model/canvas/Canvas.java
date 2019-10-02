@@ -182,6 +182,9 @@ public final class Canvas {
     }
 
     layers.add(layer);
+    if (activeLayer == null) {
+      activeLayer = layer;
+    }
     notifyAllListeners(new LayerUpdateEvent(EventType.CREATED, layer));
   }
 
