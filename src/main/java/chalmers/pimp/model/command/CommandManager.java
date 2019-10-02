@@ -52,17 +52,6 @@ public final class CommandManager implements IChangeable {
   }
 
   /**
-   * Adds the supplied command to the command manager and executes it.
-   *
-   * @param command the command that will be added and executed.
-   * @throws NullPointerException if any arguments are {@code null}.
-   */
-  public void insertCommandAndExecute(ICommand command) {
-    insertCommand(command);
-    command.execute();
-  }
-
-  /**
    * Indicates whether or not there is an undoable command.
    *
    * @return {@code true} if there is an undoable command; {@code false} otherwise.

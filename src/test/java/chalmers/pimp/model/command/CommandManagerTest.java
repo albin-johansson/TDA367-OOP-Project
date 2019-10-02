@@ -30,17 +30,6 @@ class CommandManagerTest {
   }
 
   @Test
-  void insertCommandAndExecute() {
-    assertThrows(NullPointerException.class, () -> commandManager.insertCommandAndExecute(null));
-
-    // The command should be executed
-    final int before = command.getExecutedAmount();
-    final int expected = before + 1;
-    commandManager.insertCommandAndExecute(command);
-    assertEquals(expected, command.getExecutedAmount());
-  }
-
-  @Test
   void isUndoable() {
     assertFalse(commandManager.isUndoable());
 
