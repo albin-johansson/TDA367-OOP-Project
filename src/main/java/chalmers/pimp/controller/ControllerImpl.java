@@ -85,6 +85,11 @@ final class ControllerImpl implements IController {
   }
 
   @Override
+  public void selectMoveTool() {
+    model.setSelectedTool(ToolFactory.createMoveTool(model));
+  }
+
+  @Override
   public void selectedToolPressed(MouseEvent mouseEvent) {
 
     MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),

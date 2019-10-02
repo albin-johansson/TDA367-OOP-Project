@@ -40,4 +40,9 @@ final class PalettePane extends AnchorPane {
   private void selectBucket() {
     controller.selectBucket();
   }
+
+  @FXML
+  private void selectMoveTool() {
+    controller.selectMoveTool();
+  }
 }
