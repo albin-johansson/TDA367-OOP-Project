@@ -157,7 +157,7 @@ final class ControllerImpl implements IController {
       case SECONDARY:
         return 3;
       default:
-        throw new IllegalStateException("Invalid mouse button value!");
+        throw new IllegalStateException("Invalid mouse button value: " + mouseButton);
     }
   }
 }
