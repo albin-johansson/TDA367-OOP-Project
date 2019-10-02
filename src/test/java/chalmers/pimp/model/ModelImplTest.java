@@ -88,7 +88,7 @@ class ModelImplTest {
     ICanvasUpdateListener listener = () -> {
     };
     model.addCanvasUpdateListener(listener);
-    assertThrows(IllegalArgumentException.class, () -> model.addCanvasUpdateListener(listener));
+    assertDoesNotThrow(() -> model.addCanvasUpdateListener(listener));
   }
 
   @Test
@@ -97,7 +97,7 @@ class ModelImplTest {
     ILayerUpdateListener listener = (e) -> {
     };
     model.addLayerUpdateListener(listener);
-    assertThrows(IllegalArgumentException.class, () -> model.addLayerUpdateListener(listener));
+    assertDoesNotThrow(() -> model.addLayerUpdateListener(listener));
   }
 
   @Test
