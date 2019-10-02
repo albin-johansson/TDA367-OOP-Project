@@ -85,6 +85,18 @@ final class ControllerImpl implements IController {
   }
 
   @Override
+  public void undo() {
+    model.undo();
+    view.repaint();
+  }
+
+  @Override
+  public void redo() {
+    model.redo();
+    view.repaint();
+  }
+
+  @Override
   public void selectedToolPressed(MouseEvent mouseEvent) {
 
     MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),

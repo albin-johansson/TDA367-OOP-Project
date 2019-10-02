@@ -2,12 +2,12 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
+import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import chalmers.pimp.util.Resources;
 
 /**
  * The {@code ToolbarPane} class represents the top pane in the Pimp application.
@@ -24,6 +24,16 @@ final class ToolbarPane extends AnchorPane {
   ToolbarPane(IController controller) throws IOException {
     this.controller = Objects.requireNonNull(controller);
     ControllerUtils.makeController(this, Resources.find(getClass(), "toolbar.fxml"));
+  }
+
+  @FXML
+  private void undo() {
+    controller.undo();
+  }
+
+  @FXML
+  private void redo() {
+    controller.redo();
   }
 
   @FXML

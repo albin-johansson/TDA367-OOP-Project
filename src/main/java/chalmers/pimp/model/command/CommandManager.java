@@ -39,7 +39,7 @@ public final class CommandManager implements IChangeable {
   }
 
   /**
-   * Adds the supplied command to the command manager.
+   * Adds the supplied command to the command manager. Invoking this method clears the redo stack.
    *
    * @param command the command that will be added.
    * @throws NullPointerException if any arguments are {@code null}.
@@ -48,6 +48,7 @@ public final class CommandManager implements IChangeable {
     Objects.requireNonNull(command);
     ensureSize(undoDeque);
     undoDeque.push(command);
+    redoDeque.clear();
   }
 
   /**
@@ -59,8 +60,6 @@ public final class CommandManager implements IChangeable {
   public void insertCommandAndExecute(ICommand command) {
     insertCommand(command);
     command.execute();
-
-    // TODO test clearing the redo stack after this
   }
 
   /**

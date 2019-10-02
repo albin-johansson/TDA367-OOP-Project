@@ -31,6 +31,42 @@ public final class Canvas {
   }
 
   /**
+   * Creates a copy of the supplied canvas.
+   *
+   * @param canvas the canvas that will be copied.
+   * @throws NullPointerException if the supplied canvas is {@code null}.
+   */
+  public Canvas(Canvas canvas) {
+    Objects.requireNonNull(canvas);
+    canvasUpdateListeners = new CanvasUpdateListenerComposite();
+    for (ICanvasUpdateListener listener : canvas.canvasUpdateListeners) {
+      canvasUpdateListeners.add(listener);
+    }
+
+    layerUpdateListeners = new LayerUpdateListenerComposite();
+    for (ILayerUpdateListener listener : canvas.layerUpdateListeners) {
+      layerUpdateListeners.add(listener);
+    }
+
+    // FIXME ugly way to obtain active layer id, add layer ID to each layer?
+    int id = 0;
+    for (ILayer layer : canvas.layers) {
+      if (layer == canvas.activeLayer) {
+        break;
+      } else {
+        ++id;
+      }
+    }
+
+    layers = new ArrayList<>(canvas.layers.size());
+    for (ILayer layer : canvas.layers) {
+      layers.add(layer.copy());
+    }
+
+    selectLayer(id);
+  }
+
+  /**
    * Verifies that there is an active layer. If that isn't the case, an exception is thrown.
    *
    * @throws IllegalStateException if there is no active layer.
@@ -233,5 +269,12 @@ public final class Canvas {
    */
   public Iterable<ILayer> getLayers() {
     return layers;
+  }
+
+  @Override
+  public String toString() {
+    String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
+    String state = "Active layer: " + activeLayer + ", #layers: " + layers.size();
+    return "(" + id + " | " + state + ")";
   }
 }

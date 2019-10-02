@@ -1,5 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.ICopiable;
 import chalmers.pimp.model.pixeldata.IPixel;
 
 /**
@@ -8,12 +9,12 @@ import chalmers.pimp.model.pixeldata.IPixel;
  *
  * @see IReadOnlyLayer
  */
-public interface ILayer extends IReadOnlyLayer {
+public interface ILayer extends IReadOnlyLayer, ICopiable<ILayer> {
 
   /**
-   * Sets the color of a pixel specified by a specific coordinate. The coordinates are based on
-   * the provided pixels coordinates and the color on the provided pixels color.
-   * 
+   * Sets the color of a pixel specified by a specific coordinate. The coordinates are based on the
+   * provided pixels coordinates and the color on the provided pixels color.
+   *
    * @param pixel the pixel to be set
    * @throws NullPointerException if any arguments are {@code null}.
    */
