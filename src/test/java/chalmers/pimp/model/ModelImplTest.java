@@ -39,12 +39,12 @@ class ModelImplTest {
 
     ILayer nonAddedLayer = LayerFactory.createRasterLayer(10, 10);
 
-    assertDoesNotThrow(() -> model.removeLayer(nonAddedLayer));
+    assertThrows(IllegalStateException.class,() -> model.removeLayer(nonAddedLayer));
   }
 
   @Test
   void removeLayerByIndex() {
-    assertThrows(IllegalArgumentException.class, () -> model.removeLayer(-1));
+    assertThrows(IllegalStateException.class, () -> model.removeLayer(-1));
 
     ILayer layer = LayerFactory.createRasterLayer(10, 10);
     model.addLayer(layer); // 0
@@ -169,7 +169,7 @@ class ModelImplTest {
     assertEquals(nameToBe, layer.getName());
     final String temp2 = null;
     assertThrows(NullPointerException.class, () -> model.setLayerName(layer, temp2));
-    assertThrows(IllegalStateException.class, () -> model.setLayerName(null, temp));
+    assertThrows(NullPointerException.class, () -> model.setLayerName(null, temp));
   }
 
   @Test
@@ -189,7 +189,7 @@ class ModelImplTest {
   @Test
   void setLayerVisibility() {
     assertThrows(IllegalStateException.class, () -> model.setLayerVisibility(0, true));
-    assertThrows(IllegalStateException.class, () -> model.setLayerVisibility(null, false));
+    assertThrows(NullPointerException.class, () -> model.setLayerVisibility(null, false));
     ILayer layer = LayerFactory.createRasterLayer(10, 10);
     model.addLayer(layer);
 

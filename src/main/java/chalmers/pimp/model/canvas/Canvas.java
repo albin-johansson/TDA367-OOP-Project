@@ -45,8 +45,10 @@ public final class Canvas {
    * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
    *
    * @throws IllegalStateException if there is no active layer.
+   * @throws NullPointerException if the supplied layerIndex is null;
    */
   private void verifyIndexedLayerExistence(int layerIndex) {
+    Objects.requireNonNull(layerIndex);
     if (layerIndex < 0 || layerIndex >= layers.size()) {
       throw new IllegalStateException("Indexed layer does not exist!");
     }
@@ -56,6 +58,7 @@ public final class Canvas {
    * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
    *
    * @throws IllegalStateException if there is no supplied layer.
+   * @throws NullPointerException if the supplied layer is null;
    */
   private void verifyLayerExistence(IReadOnlyLayer layer) {
     if (layer != null) {
@@ -64,8 +67,10 @@ public final class Canvas {
           return;
         }
       }
+    }else{
+      throw new NullPointerException("Supplied layer is null!");
     }
-    throw new IllegalStateException("Layer does not exist in model or is null!");
+    throw new IllegalStateException("Supplied layer does not exist in model!");
   }
 
   /**
@@ -226,7 +231,7 @@ public final class Canvas {
 
     if (getAmountOfLayers() != 1) {
       if (layerIndex == 0) {
-        activeLayer = layers.get(0);
+        activeLayer = layers.get(1);
       } else {
         activeLayer = layers.get(layerIndex - 1);
       }
