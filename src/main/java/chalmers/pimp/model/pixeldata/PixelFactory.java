@@ -44,9 +44,8 @@ public final class PixelFactory {
   }
 
   /**
-   * Creates and returns a pixel instance with the coordinates and color values. The closest legal
-   * value is used if any of the color values are outside the [0, 1] range. The created pixel is
-   * fully opaque.
+   * Creates and returns a pixel instance with the specified coordinates and color values. The
+   * closest legal value is used if any of the color values are outside the [0, 1] range.
    *
    * @param x     the x-coordinate of the pixel.
    * @param y     the y-coordinate of the pixel.
