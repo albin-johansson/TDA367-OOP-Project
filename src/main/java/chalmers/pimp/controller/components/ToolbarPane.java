@@ -2,6 +2,8 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
+import chalmers.pimp.model.IUndoRedoListener;
+import chalmers.pimp.model.UndoRedoEvent;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.util.Objects;
@@ -12,9 +14,9 @@ import javafx.scene.layout.AnchorPane;
 /**
  * The {@code ToolbarPane} class represents the top pane in the Pimp application.
  */
-final class ToolbarPane extends AnchorPane {
+final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
 
-  private final IController controller; // TODO use this with menu item actions
+  private final IController controller;
 
   /**
    * @param controller the associated chalmers.pimp.controller instance.
@@ -39,5 +41,10 @@ final class ToolbarPane extends AnchorPane {
   @FXML
   private void exit() {
     Platform.exit();
+  }
+
+  @Override
+  public void undoRedoStateChanged(UndoRedoEvent event) {
+    // TODO implement later (in order to avoid FXML merging)
   }
 }
