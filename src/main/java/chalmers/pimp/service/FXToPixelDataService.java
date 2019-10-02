@@ -1,11 +1,13 @@
 package chalmers.pimp.service;
 
-import chalmers.pimp.model.pixeldata.IPixel;
+import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
+import javafx.scene.paint.Color;
 
 /**
  * The {@code FXToPixelDataService} class is a service for converting JavaFX images to pixel data
@@ -53,43 +55,16 @@ public final class FXToPixelDataService {
     Objects.requireNonNull(pixelData);
     Objects.requireNonNull(reader);
     for (int col = 0; col < imageWidth; col++) {
-      IPixel pixel = createPixel(col, rowIndex, reader.getArgb(col, rowIndex));
-      pixelData.setPixel(pixel);
+
+      Color fxColor = reader.getColor(col, rowIndex);
+
+      IColor color = ColorFactory.createColor();
+      color.setPercentageRed(fxColor.getRed());
+      color.setPercentageGreen(fxColor.getGreen());
+      color.setPercentageBlue(fxColor.getBlue());
+      color.setPercentageAlpha(fxColor.getOpacity());
+
+      pixelData.setPixel(PixelFactory.createPixel(col, rowIndex, color));
     }
-  }
-
-  /**
-   * Creates and returns a pixel based on the supplied coordinates and ARGB color mask.
-   *
-   * @param x    the x-coordinate of the pixel.
-   * @param y    the y-coordinate of the pixel.
-   * @param argb the integer that serves as a mask for the ARGB color.
-   * @return a pixel instance.
-   */
-  private static IPixel createPixel(int x, int y, int argb) {
-    double[] colorArray = convertARGBToArray(argb);
-    double red = colorArray[0];
-    double green = colorArray[1];
-    double blue = colorArray[2];
-    double alpha = colorArray[3];
-    return PixelFactory.createPixel(x, y, red, green, blue, alpha);
-  }
-
-  /**
-   * Converts the supplied ARGB-formatted integer to an array of doubles that represent each color
-   * component (red, green, blue and alpha).
-   *
-   * @param argb the integer that contains the color information, according to ARGB format.
-   * @return an array of doubles that contains values in the range [0, 1].
-   */
-  private static double[] convertARGBToArray(int argb) {
-    var result = new double[4];
-
-    for (int i = 0; i < 4; i++) {
-      result[i] = (argb & 0xFF) / 255.0;
-      argb >>= 8;
-    }
-
-    return result;
   }
 }
