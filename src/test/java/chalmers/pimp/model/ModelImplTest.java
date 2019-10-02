@@ -122,4 +122,20 @@ class ModelImplTest {
   void setSelectedTool() {
     assertDoesNotThrow(() -> model.setSelectedTool(null));
   }
+
+  @Test
+  void moveSelectedLayer() {
+    ILayer layer = LayerFactory.createRectangle(20, 15, 500, 70);
+    model.addLayer(layer);
+
+    model.selectLayer(0);
+
+    assertEquals(20, layer.getX());
+    assertEquals(15, layer.getY());
+
+    model.moveSelectedLayer(15, 10);
+
+    assertEquals(35, layer.getX());
+    assertEquals(25, layer.getY());
+  }
 }

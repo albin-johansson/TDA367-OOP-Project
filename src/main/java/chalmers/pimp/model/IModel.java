@@ -145,4 +145,12 @@ public interface IModel {
    * @param mouseStatus the status of the mouse.
    */
   void selectedToolReleased(MouseStatus mouseStatus);
+
+  /**
+   * Moves the active layer by x- and y-amount.
+   *
+   * @param xAmount the amount moved in dimension x.
+   * @param yAmount the amount moved in dimension y.
+   */
+  void moveSelectedLayer(int xAmount, int yAmount);
 }

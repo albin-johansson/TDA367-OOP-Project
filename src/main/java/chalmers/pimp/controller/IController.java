@@ -3,8 +3,8 @@ package chalmers.pimp.controller;
 import javafx.scene.input.MouseEvent;
 
 /**
- * The {@code IController} interface specifies the facade for the chalmers.pimp.controller component in the MVC
- * architecture that the Pimp application uses.
+ * The {@code IController} interface specifies the facade for the chalmers.pimp.controller component
+ * in the MVC architecture that the Pimp application uses.
  */
 public interface IController {
 
@@ -27,6 +27,11 @@ public interface IController {
    * Sets Bucket as selectedTool in chalmers.pimp.model
    */
   void selectBucket();
+
+  /**
+   * Sets the MoveTool as selected tool in chalmers.pimp.model
+   */
+  void selectMoveTool();
 
   /**
    * Tells the chalmers.pimp.model that the selected tool has been pressed.
