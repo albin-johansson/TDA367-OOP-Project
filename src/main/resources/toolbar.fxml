@@ -30,6 +30,17 @@
                     </ImageView>
                   </graphic>
                 </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#openImageChooser" text="Import Image">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/light/open_folder.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">

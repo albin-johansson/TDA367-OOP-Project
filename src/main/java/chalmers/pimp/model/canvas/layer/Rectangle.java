@@ -76,7 +76,7 @@ final class Rectangle implements ILayer {
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
-        pixelData.setPixel(PixelFactory.createPixel(col, row, 1, 0, 1));
+        pixelData.setPixel(PixelFactory.createPixel(col, row, 1, 0, 1, 1));
       }
     }
 

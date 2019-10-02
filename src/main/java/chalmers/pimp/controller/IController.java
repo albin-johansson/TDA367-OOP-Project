@@ -63,4 +63,10 @@ public interface IController {
    * @param mouseEvent the associated mouseEvent.
    */
   void selectedToolReleased(MouseEvent mouseEvent);
+
+  /**
+   * Opens a file chooser dialog, which allows the user to import an image. If an image is selected,
+   * it's injected into the model.
+   */
+  void openImageChooser();
 }

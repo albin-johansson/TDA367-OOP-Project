@@ -43,6 +43,11 @@ final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
     Platform.exit();
   }
 
+  @FXML
+  private void openImageChooser() {
+    controller.openImageChooser();
+  }
+
   @Override
   public void undoRedoStateChanged(UndoRedoEvent event) {
     // TODO implement later (in order to avoid FXML merging)
