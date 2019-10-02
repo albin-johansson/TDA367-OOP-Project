@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.canvas.Canvas;
-import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,15 +26,18 @@ class StrokeTest {
   @Test
   void updatePixels() {
     assertThrows(NullPointerException.class, () -> stroke.updatePixels(null, null));
+    assertThrows(NullPointerException.class,
+        () -> stroke.updatePixels(ModelFactory.createModel(), null));
+  }
 
-//    IPixel pixel = PixelFactory.createPixel(10, 20);
-//    IModel model = ModelFactory.createModel();
-//    model.addLayer(LayerFactory.createRasterLayer(100, 100));
-//    model.selectLayer(0);
-//
-//    stroke.add(model, pixel);
+  @Test
+  void add() {
+    assertThrows(NullPointerException.class, () -> stroke.add(null));
 
-//    assertEquals(pixel, stroke.getPixels().iterator().next());
+    IPixel pixel = PixelFactory.createPixel(0, 0);
+    stroke.add(pixel);
+
+    assertEquals(pixel, stroke.getPixels().iterator().next());
   }
 
   @Test

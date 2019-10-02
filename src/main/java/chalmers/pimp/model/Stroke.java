@@ -64,18 +64,6 @@ public final class Stroke {
     model.setPixels(pixel.getX() - radius, pixel.getY() - radius, pixels);
   }
 
-//  /**
-//   * Adds the supplied pixel to the stroke and updates the state of the pixels in the model.
-//   *
-//   * @param model the associated model instance, used for updating the actual pixels.
-//   * @param pixel the pixel that will be added.
-//   * @throws NullPointerException if any arguments are {@code null}.
-//   */
-//  public void update(IModel model, IPixel pixel) {
-//    add(PixelFactory.createPixel(pixel));
-//    updatePixels(model, pixel);
-//  }
-
   /**
    * Returns the model memento associated with this stroke.
    *
