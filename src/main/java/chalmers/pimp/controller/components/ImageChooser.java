@@ -75,7 +75,7 @@ public class ImageChooser {
     }
 
     ILayer newLayer = LayerFactory.createPixelLayer(
-        FXToPixelDataService.getImage(image));
+        FXToPixelDataService.createPixelDataCopy(image));
 
     return newLayer;
   }
