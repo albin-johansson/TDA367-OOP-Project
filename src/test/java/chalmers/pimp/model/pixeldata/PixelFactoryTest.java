@@ -26,23 +26,25 @@ class PixelFactoryTest {
   @Test
   @SuppressWarnings("MagicNumber")
   void createPixel1() {
-    assertDoesNotThrow(() -> PixelFactory.createPixel(0, 0, -0.1, 0.0, 0.0));
-    assertDoesNotThrow(() -> PixelFactory.createPixel(0, 0, 0.0, -0.8, 0.0));
-    assertDoesNotThrow(() -> PixelFactory.createPixel(0, 0, 0.0, 0.0, 1.1));
+    assertDoesNotThrow(() -> PixelFactory.createPixel(0, 0, -0.1, 0.0, 0.0, 1));
+    assertDoesNotThrow(() -> PixelFactory.createPixel(0, 0, 0.0, -0.8, 0.0, 1));
+    assertDoesNotThrow(() -> PixelFactory.createPixel(0, 0, 0.0, 0.0, 1.1, 1));
 
     final int x = 819;
     final int y = 423;
     final double red = 0.8;
     final double green = 0.1;
     final double blue = 0.3;
+    final double alpha = 1;
 
-    IPixel pixel = PixelFactory.createPixel(x, y, red, green, blue);
+    IPixel pixel = PixelFactory.createPixel(x, y, red, green, blue, alpha);
 
     assertEquals(x, pixel.getX());
     assertEquals(y, pixel.getY());
     assertEquals(red, pixel.getColor().getRedPercentage(), 0.01);
     assertEquals(green, pixel.getColor().getGreenPercentage(), 0.01);
     assertEquals(blue, pixel.getColor().getBluePercentage(), 0.01);
+    assertEquals(alpha, pixel.getColor().getAlphaPercentage(), 0.01);
     assertEquals(1, pixel.getColor().getAlphaPercentage(), 0.01); // should be opaque
   }
 

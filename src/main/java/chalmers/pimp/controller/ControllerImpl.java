@@ -1,10 +1,13 @@
 package chalmers.pimp.controller;
 
+import chalmers.pimp.controller.components.ImageChooser;
 import chalmers.pimp.controller.components.PimpEditorPane;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
 import chalmers.pimp.util.Resources;
@@ -37,7 +40,7 @@ final class ControllerImpl implements IController {
     this.view = Objects.requireNonNull(view);
     this.stage = Objects.requireNonNull(stage);
 
-    PimpEditorPane pane = new PimpEditorPane(model, this);
+    var pane = new PimpEditorPane(model, this);
     view.setRendererGraphics(pane.getGraphics());
 
     prepareStage(new Scene(pane, 800, 600));
@@ -55,11 +58,24 @@ final class ControllerImpl implements IController {
     stage.setMaximized(true);
     stage.setTitle("PIMP - Professional Image Manipulation Program");
     try {
-      Image icon = new Image(Resources.find(getClass(), "images/pimp_icon.png").toURI().toString());
+      var icon = new Image(Resources.find(getClass(), "images/pimp_icon.png").toURI().toString());
       stage.getIcons().add(icon);
     } catch (Exception e) {
-      e.printStackTrace();
+      System.err.println("Failed to load PIMP icon! Exception: " + e);
     }
+  }
+
+  /**
+   * Creates and returns a mouse status instance that describes the supplied mouse event.
+   *
+   * @param event the mouse event that will be "copied".
+   * @return a mouse status instance that describes the supplied mouse event.
+   * @throws NullPointerException if the supplied mouse event is {@code null}.
+   */
+  private MouseStatus createMouseStatus(MouseEvent event) {
+    Objects.requireNonNull(event);
+    int buttonID = fxButtonToInt(event.getButton());
+    return new MouseStatus((int) event.getX(), (int) event.getY(), buttonID);
   }
 
   @Override
@@ -91,58 +107,57 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectedToolPressed(MouseEvent mouseEvent) {
-
-    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
-        fxButtonToInt(mouseEvent.getButton()));
-
-    model.selectedToolPressed(status);
+    model.selectedToolPressed(createMouseStatus(mouseEvent));
   }
 
   @Override
   public void selectedToolDragged(MouseEvent mouseEvent) {
-    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
-        fxButtonToInt(mouseEvent.getButton()));
-
-    model.selectedToolDragged(status);
+    model.selectedToolDragged(createMouseStatus(mouseEvent));
   }
 
   @Override
   public void selectedToolReleased(MouseEvent mouseEvent) {
-    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
-        fxButtonToInt(mouseEvent.getButton()));
+    model.selectedToolReleased(createMouseStatus(mouseEvent));
+  }
 
-    model.selectedToolReleased(status);
+  @Override
+  public void openImageChooser() {
+    try {
+      var imageChooser = new ImageChooser();
+
+      PixelData pixelData = imageChooser.openDialog(stage);
+      if (pixelData == null) {
+        return;
+      }
+
+      model.addLayer(LayerFactory.createRasterLayer(pixelData));
+    } catch (Exception e) {
+      System.err.println("Failed to import image! Exception: " + e);
+    }
   }
 
   /**
-   * Converts the button pressed to an int representation to reduce chalmers.pimp.model dependency
-   * of JavaFX
+   * Converts the button pressed to an integer representation.
    *
-   * @param mouseButton the fx ENUM that tells which button has been pressed
-   * @return an int representation
-   * @throws IllegalStateException if mouseButton is not a MouseButton Enum
+   * @param mouseButton the enum value that describes the mouse button.
+   * @return an int representation of the supplied enum value.
+   * @throws IllegalStateException if the supplied value isn't supported.
+   * @throws NullPointerException  if the supplied value is {@code null}.
    */
-  //TODO Change int representation to ENUM when updated in Model
   private int fxButtonToInt(MouseButton mouseButton) {
-    int output = 0;
+    //TODO Change int representation to ENUM when updated in Model
+    Objects.requireNonNull(mouseButton);
     switch (mouseButton) {
       case NONE:
-        output = 0;
-        break;
+        return 0;
       case PRIMARY:
-        output = 1;
-        break;
+        return 1;
       case MIDDLE:
-        output = 2;
-        break;
+        return 2;
       case SECONDARY:
-        output = 3;
-        break;
+        return 3;
       default:
-        throw new IllegalStateException(
-            "Mousebutton must be either NONE, PRIMARY, MIDDLE or SECONDARY");
+        throw new IllegalStateException("Invalid mouse button value: " + mouseButton);
     }
-
-    return output;
   }
 }

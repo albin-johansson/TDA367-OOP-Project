@@ -1,9 +1,10 @@
 package chalmers.pimp.model.canvas.layer;
 
-import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.IRenderer;
+import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
+import java.util.Objects;
 
 /**
  * The {@code Raster} class is an implementation of the {@code ILayer} interface that represents a
@@ -22,6 +23,17 @@ final class Raster implements ILayer {
   Raster(int width, int height) {
     layerDelegate = new LayerDelegate();
     pixelData = new PixelData(width, height);
+  }
+
+  /**
+   * Creates a raster that is a copy of the supplied pixel data.
+   *
+   * @param pixelData the pixel data that will be copied.
+   * @throws NullPointerException if the supplied pixel data is {@code null}.
+   */
+  Raster(PixelData pixelData) {
+    this.pixelData = Objects.requireNonNull(pixelData);
+    layerDelegate = new LayerDelegate();
   }
 
   @Override
