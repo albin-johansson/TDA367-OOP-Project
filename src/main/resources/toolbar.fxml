@@ -45,7 +45,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#undo" text="Undo">
+                        <MenuItem fx:id="undoMenuItem" disable="true" mnemonicParsing="false" onAction="#undo" text="Undo N/A">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
@@ -57,9 +57,9 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#redo" text="Redo">
+                        <MenuItem fx:id="redoMenuItem" disable="true" mnemonicParsing="false" onAction="#redo" text="Redo N/A">
                            <accelerator>
-                              <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                              <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
@@ -80,7 +80,7 @@
         </MenuBar>
         <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="200.0" spacing="10.0">
           <children>
-            <Button mnemonicParsing="false" onAction="#undo">
+            <Button fx:id="undoButton" disable="true" mnemonicParsing="false" onAction="#undo">
               <graphic>
                 <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -92,7 +92,7 @@
                 <Tooltip text="Undo" />
               </tooltip>
             </Button>
-            <Button mnemonicParsing="false" onAction="#redo">
+            <Button fx:id="redoButton" disable="true" mnemonicParsing="false" onAction="#redo">
               <graphic>
                 <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                   <image>

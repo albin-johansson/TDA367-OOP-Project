@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.Objects;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -17,6 +19,18 @@ import javafx.scene.layout.AnchorPane;
 final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
 
   private final IController controller;
+  @FXML
+  @SuppressWarnings("unused")
+  private MenuItem undoMenuItem;
+  @FXML
+  @SuppressWarnings("unused")
+  private MenuItem redoMenuItem;
+  @FXML
+  @SuppressWarnings("unused")
+  private Button undoButton;
+  @FXML
+  @SuppressWarnings("unused")
+  private Button redoButton;
 
   /**
    * @param controller the associated chalmers.pimp.controller instance.
@@ -50,6 +64,13 @@ final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
 
   @Override
   public void undoRedoStateChanged(UndoRedoEvent event) {
-    // TODO implement later (in order to avoid FXML merging)
+    undoButton.setDisable(!event.isUndoable());
+    redoButton.setDisable(!event.isRedoable());
+
+    undoMenuItem.setDisable(!event.isUndoable());
+    redoMenuItem.setDisable(!event.isRedoable());
+
+    undoMenuItem.setText("Undo " + event.getUndoCommandName());
+    redoMenuItem.setText("Redo " + event.getRedoCommandName());
   }
 }
