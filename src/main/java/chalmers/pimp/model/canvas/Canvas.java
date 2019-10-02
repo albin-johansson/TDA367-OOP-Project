@@ -256,7 +256,8 @@ public final class Canvas {
    * @param layerName the new name for the layer.
    */
   public void setLayerName(IReadOnlyLayer layer, String layerName) {
-    Objects.requireNonNull(layer);
+    verifyLayerExistence(layer);
+    Objects.requireNonNull(layerName);
     for (ILayer l : layers) {
       if (layer == l) {
         l.setName(layerName);
@@ -273,9 +274,8 @@ public final class Canvas {
    * @param layerName  the new name for the layer.
    */
   public void setLayerName(int layerIndex, String layerName) {
-    if ((layerIndex < 0) || (layerIndex >= layers.size())) {
-      throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
-    }
+    verifyIndexedLayerExistence(layerIndex);
+    Objects.requireNonNull(layerName);
     layers.get(layerIndex).setName(layerName);
     notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, layers.get(layerIndex)));
   }
