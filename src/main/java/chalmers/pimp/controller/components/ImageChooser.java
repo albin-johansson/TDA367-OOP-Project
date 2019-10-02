@@ -44,7 +44,7 @@ public final class ImageChooser {
       return null;
     }
 
-    Image image = ImageImportService.importImage(file.getPath());
+    Image image = ImageImportService.importImage(file);
     return FXToPixelDataService.createPixelDataCopy(image);
   }
 }
