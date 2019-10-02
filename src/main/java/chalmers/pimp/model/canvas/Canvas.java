@@ -48,7 +48,6 @@ public final class Canvas {
    * @throws NullPointerException if the supplied layerIndex is null;
    */
   private void verifyIndexedLayerExistence(int layerIndex) {
-    Objects.requireNonNull(layerIndex);
     if (layerIndex < 0 || layerIndex >= layers.size()) {
       throw new IllegalStateException("Indexed layer does not exist!");
     }
