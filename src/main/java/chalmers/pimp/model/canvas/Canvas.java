@@ -55,12 +55,17 @@ public final class Canvas {
   /**
    * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
    *
-   * @throws IllegalStateException if there is no active layer.
+   * @throws IllegalStateException if there is no supplied layer.
    */
   private void verifyLayerExistence(IReadOnlyLayer layer) {
-    if (layer == null) {
-      throw new IllegalStateException("Layer does not exist!");
+    if (layer != null) {
+      for (IReadOnlyLayer l : layers) {
+        if (l == layer) {
+          return;
+        }
+      }
     }
+    throw new IllegalStateException("Layer does not exist in model or is null!");
   }
 
   /**
