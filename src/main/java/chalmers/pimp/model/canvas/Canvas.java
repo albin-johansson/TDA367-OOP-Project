@@ -196,7 +196,8 @@ public final class Canvas {
    * @throws NullPointerException if any arguments are {@code null}.
    */
   public void removeLayer(ILayer layer) {
-    Objects.requireNonNull(layer);
+    verifyLayerExistence((IReadOnlyLayer)layer);
+    switchActiveLayerIfRemoved(layers.indexOf(layer));
     layers.remove(layer);
     notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layer));
   }
@@ -209,10 +210,29 @@ public final class Canvas {
    * @throws IllegalArgumentException if the specified index isn't associated with a layer.
    */
   public void removeLayer(int layerIndex) {
-    if ((layerIndex < 0) || (layerIndex >= layers.size())) {
-      throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
-    }
+    verifyIndexedLayerExistence(layerIndex);
+    switchActiveLayerIfRemoved(layerIndex);
     notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layers.remove(layerIndex)));
+  }
+
+  /**
+   * If the supplied indexed layer is the current active layer, switch to another active layer or set to null.
+   * @param layerIndex the supplied indexed layer to no longer have as active layer.
+   */
+  private void switchActiveLayerIfRemoved(int layerIndex) {
+    if (activeLayer != layers.get(layerIndex)) {
+      return;
+    }
+
+    if (getAmountOfLayers() != 1) {
+      if (layerIndex == 0) {
+        activeLayer = layers.get(0);
+      } else {
+        activeLayer = layers.get(layerIndex - 1);
+      }
+    } else {
+      activeLayer = null;
+    }
   }
 
   /**
