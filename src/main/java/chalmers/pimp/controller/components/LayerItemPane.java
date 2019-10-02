@@ -111,6 +111,9 @@ final class LayerItemPane extends AnchorPane {
 
   //TODO Rethink if below methods should all be private and called by single update method...
 
+  /**
+   * Updates this pane, runs all related private methods.
+   */
   void update() {
     updateVisibilityImage();
     showIfLayerIsSelected();
@@ -128,6 +131,10 @@ final class LayerItemPane extends AnchorPane {
     }
   }
 
+  /**
+   * Sets the style for this {@code LayerItemPane} to Gray if the corresponding Layer is active.
+   * Reverts to CSS default otherwise.
+   */
   private void showIfLayerIsSelected() {
     if (layer == model.getActiveLayer()) {
       this.setStyle("-fx-background-color: GREY;");
