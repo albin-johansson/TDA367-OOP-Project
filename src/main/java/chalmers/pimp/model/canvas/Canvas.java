@@ -45,7 +45,7 @@ public final class Canvas {
    * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
    *
    * @throws IllegalStateException if there is no active layer.
-   * @throws NullPointerException if the supplied layerIndex is null;
+   * @throws NullPointerException  if the supplied layerIndex is null;
    */
   private void verifyIndexedLayerExistence(int layerIndex) {
     if (layerIndex < 0 || layerIndex >= layers.size()) {
@@ -57,7 +57,7 @@ public final class Canvas {
    * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
    *
    * @throws IllegalStateException if there is no supplied layer.
-   * @throws NullPointerException if the supplied layer is null;
+   * @throws NullPointerException  if the supplied layer is null;
    */
   private void verifyLayerExistence(IReadOnlyLayer layer) {
     if (layer != null) {
@@ -66,7 +66,7 @@ public final class Canvas {
           return;
         }
       }
-    }else{
+    } else {
       throw new NullPointerException("Supplied layer is null!");
     }
     throw new IllegalStateException("Supplied layer does not exist in model!");
@@ -200,7 +200,7 @@ public final class Canvas {
    * @throws NullPointerException if any arguments are {@code null}.
    */
   public void removeLayer(ILayer layer) {
-    verifyLayerExistence((IReadOnlyLayer)layer);
+    verifyLayerExistence((IReadOnlyLayer) layer);
     switchActiveLayerIfRemoved(layers.indexOf(layer));
     layers.remove(layer);
     notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layer));
@@ -220,7 +220,9 @@ public final class Canvas {
   }
 
   /**
-   * If the supplied indexed layer is the current active layer, switch to another active layer or set to null.
+   * If the supplied indexed layer is the current active layer, switch to another active layer or
+   * set to null.
+   *
    * @param layerIndex the supplied indexed layer to no longer have as active layer.
    */
   private void switchActiveLayerIfRemoved(int layerIndex) {
@@ -325,6 +327,11 @@ public final class Canvas {
     canvasUpdateListeners.canvasUpdated();
   }
 
+  /**
+   * Returns the amount of layers in this canvas's layers list.
+   *
+   * @return the number of layers.
+   */
   public int getAmountOfLayers() {
     return layers.size();
   }
