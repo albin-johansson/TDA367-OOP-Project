@@ -30,4 +30,9 @@ final class ToolbarPane extends AnchorPane {
   private void exit() {
     Platform.exit();
   }
+
+  @FXML
+  private void importImage() {
+    controller.importImage();
+  }
 }

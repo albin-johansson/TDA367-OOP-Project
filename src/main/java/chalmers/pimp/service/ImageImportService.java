@@ -19,7 +19,7 @@ public final class ImageImportService {
    */
   public static Image importImage(String path) throws IOException {
     try {
-      return new Image("file://" + path, true);
+      return new Image("file://" + path, false);
     } catch (Exception e) {
       throw new IOException("The image at file://" + path + " was not found.");
     }

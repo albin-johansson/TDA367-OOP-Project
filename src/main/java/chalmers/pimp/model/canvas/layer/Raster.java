@@ -24,6 +24,14 @@ final class Raster implements ILayer {
     pixelData = new PixelData(width, height);
   }
 
+  /**
+   * @param pixelData the pixelData that the raster will use
+   */
+  Raster(PixelData pixelData) {
+    layerDelegate = new LayerDelegate();
+    this.pixelData = pixelData;
+  }
+
   @Override
   public void setPixel(IPixel pixel) {
     pixelData.setPixel(pixel);

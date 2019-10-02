@@ -53,14 +53,16 @@ public final class PixelFactory {
    * @param red   the amount of red in the range [0,1].
    * @param green the amount of green in the range [0,1].
    * @param blue  the amount of blue in the range [0,1].
+   * @param alpha the alpha channel in the range [0, 1].
    * @return the created IPixel
    */
-  public static IPixel createPixel(int x, int y, double red, double green, double blue) {
+  public static IPixel createPixel(int x, int y, double red, double green, double blue,
+      double alpha) {
     IPixel pixel = new PixelImpl(x, y);
     pixel.setRed(red);
     pixel.setGreen(green);
     pixel.setBlue(blue);
-    pixel.setAlpha(1);
+    pixel.setAlpha(alpha);
     return pixel;
   }
 

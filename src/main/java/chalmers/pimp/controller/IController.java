@@ -1,10 +1,11 @@
 package chalmers.pimp.controller;
 
+import chalmers.pimp.model.canvas.layer.ILayer;
 import javafx.scene.input.MouseEvent;
 
 /**
- * The {@code IController} interface specifies the facade for the chalmers.pimp.controller component in the MVC
- * architecture that the Pimp application uses.
+ * The {@code IController} interface specifies the facade for the chalmers.pimp.controller component
+ * in the MVC architecture that the Pimp application uses.
  */
 public interface IController {
 
@@ -48,4 +49,9 @@ public interface IController {
    * @param mouseEvent the associated mouseEvent.
    */
   void selectedToolReleased(MouseEvent mouseEvent);
+
+  /**
+   * Opens a file chooser window for the user to select an image which is imported as a new layer
+   */
+  void importImage();
 }

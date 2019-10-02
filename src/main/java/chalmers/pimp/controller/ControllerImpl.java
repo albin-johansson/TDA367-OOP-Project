@@ -1,8 +1,10 @@
 package chalmers.pimp.controller;
 
+import chalmers.pimp.controller.components.ImageChooser;
 import chalmers.pimp.controller.components.PimpEditorPane;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.tools.ITool;
@@ -107,6 +109,17 @@ final class ControllerImpl implements IController {
         fxButtonToInt(mouseEvent.getButton()));
 
     model.selectedToolReleased(status);
+  }
+
+  @Override
+  public void importImage() {
+    ImageChooser imageChooser = new ImageChooser();
+    ILayer image = imageChooser.show(stage);
+    if (image == null) {
+      return;
+    }
+
+    model.addLayer(image);
   }
 
   /**

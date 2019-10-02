@@ -1,5 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.pixeldata.PixelData;
+
 /**
  * The {@code LayerFactory} class is a factory for creating instances of the {@code ILayer}
  * interface.
@@ -32,5 +34,15 @@ public final class LayerFactory {
    */
   public static ILayer createRectangle(int x, int y, int width, int height) {
     return new Rectangle(x, y, width, height);
+  }
+
+  /**
+   * Creating a pixel-based layer from pixelData
+   *
+   * @param pixelData the pixelData that the layer will use
+   * @return a pixel-based layer
+   */
+  public static ILayer createPixelLayer(PixelData pixelData) {
+    return new Raster(pixelData);
   }
 }
