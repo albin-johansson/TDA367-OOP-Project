@@ -244,5 +244,6 @@ public final class Canvas {
   public void moveSelectedLayer(int xAmount, int yAmount){
     activeLayer.setX(activeLayer.getX()+xAmount);
     activeLayer.setY(activeLayer.getY()+yAmount);
+    canvasUpdateListeners.canvasUpdated();
   }
 }

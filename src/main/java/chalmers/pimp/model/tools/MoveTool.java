@@ -21,6 +21,8 @@ public class MoveTool implements ITool {
     int xAmount = mouseStatus.getX() - startX;
     int yAmount = mouseStatus.getY() - startY;
     model.moveSelectedLayer(xAmount,yAmount);
+    startX = mouseStatus.getX();
+    startY = mouseStatus.getY();
   }
 
   @Override
@@ -31,6 +33,8 @@ public class MoveTool implements ITool {
 
   @Override
   public void released(MouseStatus mouseStatus) {
-
+    int xAmount = mouseStatus.getX() - startX;
+    int yAmount = mouseStatus.getY() - startY;
+    model.moveSelectedLayer(xAmount,yAmount);
   }
 }
