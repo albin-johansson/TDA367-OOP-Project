@@ -1,6 +1,5 @@
 package chalmers.pimp.controller;
 
-import chalmers.pimp.model.canvas.layer.ILayer;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -51,7 +50,8 @@ public interface IController {
   void selectedToolReleased(MouseEvent mouseEvent);
 
   /**
-   * Opens a file chooser window for the user to select an image which is imported as a new layer
+   * Opens a file chooser dialog, which allows the user to import an image. If an image is selected,
+   * it's injected into the model.
    */
-  void importImage();
+  void openImageChooser();
 }

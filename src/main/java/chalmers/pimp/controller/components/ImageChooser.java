@@ -1,82 +1,50 @@
 package chalmers.pimp.controller.components;
 
-import chalmers.pimp.model.canvas.layer.ILayer;
-import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.service.FXToPixelDataService;
 import chalmers.pimp.service.ImageImportService;
 import java.io.File;
 import java.io.IOException;
-import javafx.collections.ObservableList;
+import java.util.Objects;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
 
 /**
- * This component allows the user to select an image
+ * The {@code ImageChooser} class represents a file chooser which enables the user to import a
+ * pre-existing image. The currently supported file formats are JPG and PNG.
  */
-public class ImageChooser {
+public final class ImageChooser {
 
-  FileChooser fileChooser;
+  private final FileChooser fileChooser;
 
-  /**
-   * Sets the default configuration of fileChooser
-   */
   public ImageChooser() {
     fileChooser = new FileChooser();
+    fileChooser.setTitle("Import Image");
 
-    setTitle("Choose file to import");
-    getExtensionFilters().addAll(
-        new ExtensionFilter("JPG", "*.jpg"),
-        new ExtensionFilter("PNG", "*.png"),
-        new ExtensionFilter("All images", "*.*")
-    );
+    var filter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png");
+    fileChooser.getExtensionFilters().add(filter);
   }
 
   /**
-   * Sets the title of the file chooser window
+   * Attempts to let the user choose an existing image and subsequently import it.
    *
-   * @param title the specified title
+   * @param window the parent window that will contain the dialog.
+   * @return a pixel data instance, that represents the existing image; {@code null} if no file was
+   * selected.
+   * @throws IOException          if an image cannot be loaded.
+   * @throws NullPointerException if the supplied window is {@code null}.
    */
-  public void setTitle(String title) {
-    fileChooser.setTitle(title);
-  }
-
-  /**
-   * Returns a list of choosable filters of extension
-   *
-   * @return the list of extension filters
-   */
-  public ObservableList<ExtensionFilter> getExtensionFilters() {
-    return fileChooser.getExtensionFilters();
-  }
-
-  /**
-   * Shows the file chooser for the user
-   *
-   * @param window the window to show the chooser on
-   * @return returns an ILayer containing the image selected, if no image was selected it returns
-   * null
-   */
-  public ILayer show(Window window) {
-    Image image;
+  public PixelData openDialog(Window window) throws IOException {
+    Objects.requireNonNull(window);
 
     File file = fileChooser.showOpenDialog(window);
     if (file == null) {
+      System.out.println("No image file was selected!");
       return null;
     }
 
-    try {
-      image = ImageImportService
-          .importImage(file.getPath());
-    } catch (IOException e) {
-      System.out.println("Failed to load selected file");
-      return null;
-    }
-
-    ILayer newLayer = LayerFactory.createPixelLayer(
-        FXToPixelDataService.createPixelDataCopy(image));
-
-    return newLayer;
+    Image image = ImageImportService.importImage(file.getPath());
+    return FXToPixelDataService.createPixelDataCopy(image);
   }
 }
