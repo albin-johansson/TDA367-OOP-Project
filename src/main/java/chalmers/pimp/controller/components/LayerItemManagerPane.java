@@ -48,27 +48,19 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
             layerItemVBox.getChildren().removeAll(node);
             break;
           case VISIBILITY_TOGGLED:
-
             break;
           case SELECTED:
-
             break;
           case EDITED:
             break;
           case POSITION_MOVED_FORWARDS:
-            int toPos = layerItemVBox.getChildren().indexOf(layerItemPane) + 1;
-            LayerItemPane temp = (LayerItemPane) layerItemVBox.getChildren().get(toPos);
-            layerItemVBox.getChildren().set(toPos - 1, new Button());
-            layerItemVBox.getChildren().set(toPos, layerItemPane);
-            layerItemVBox.getChildren().set(toPos - 1, temp);
+            moveLayerItemPane(layerItemPane, 1);
             break;
           case POSITION_MOVED_BACKWARDS:
-            toPos = layerItemVBox.getChildren().indexOf(layerItemPane) - 1;
-            temp = (LayerItemPane) layerItemVBox.getChildren().get(toPos);
-            layerItemVBox.getChildren().set(toPos + 1, new Button());
-            layerItemVBox.getChildren().set(toPos, layerItemPane);
-            layerItemVBox.getChildren().set(toPos + 1, temp);
+            moveLayerItemPane(layerItemPane, -1);
             break;
+          default:
+            throw new IllegalStateException();
         }
         break;
       }
@@ -79,6 +71,21 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
       layerItemPane.update();
     }
     updateEmptyLayerPane();
+  }
+
+  /**
+   * Method to move LayerItemPanes in this managers VBox forward or backwards {@code Steps}. Forward
+   * is a positive number and backwards a negative number.
+   *
+   * @param layerItemPane the {@code LayerItemPane} to be moved.
+   * @param steps         the number of steps, positive forwards and negative means backwards.
+   */
+  private void moveLayerItemPane(LayerItemPane layerItemPane, int steps) {
+    int toPos = layerItemVBox.getChildren().indexOf(layerItemPane) + steps;
+    LayerItemPane temp = (LayerItemPane) layerItemVBox.getChildren().get(toPos);
+    layerItemVBox.getChildren().set(toPos - steps, new Button());
+    layerItemVBox.getChildren().set(toPos, layerItemPane);
+    layerItemVBox.getChildren().set(toPos - steps, temp);
   }
 
   /**
