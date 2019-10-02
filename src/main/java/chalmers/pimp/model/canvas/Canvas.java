@@ -251,25 +251,16 @@ public final class Canvas {
       return;
     }
     verifyLayerExistence(layer);
-    ILayer temp = null;
-    ILayer layerToMove = null;
-    int index = 0;
-    for (ILayer l : layers) {
-      if (layer == l) {
-        layerToMove = l;
-        if (index + steps < layers.size() && index + steps > -1) {
-          temp = layers.get(index + steps);
-          layers.set(index + steps, layerToMove);
-          layers.set(index, temp);
-          if (steps > 0) {
-            notifyAllListeners(new LayerUpdateEvent(EventType.POSITION_MOVED_FORWARDS, layer));
-          } else {
-            notifyAllListeners(new LayerUpdateEvent(EventType.POSITION_MOVED_BACKWARDS, layer));
-          }
-        }
-        break;
+    int layerIndex = layers.indexOf(layer);
+    if (layerIndex + steps < layers.size() && layerIndex + steps > -1) {
+      ILayer temp = layers.get(layerIndex + steps);
+      layers.set(layerIndex + steps, layers.get(layerIndex));
+      layers.set(layerIndex, temp);
+      if (steps > 0) {
+        notifyAllListeners(new LayerUpdateEvent(EventType.POSITION_MOVED_FORWARDS, layer));
+      } else {
+        notifyAllListeners(new LayerUpdateEvent(EventType.POSITION_MOVED_BACKWARDS, layer));
       }
-      index++;
     }
   }
 
