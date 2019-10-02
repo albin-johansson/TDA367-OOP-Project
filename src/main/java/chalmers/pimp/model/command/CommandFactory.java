@@ -12,6 +12,14 @@ public final class CommandFactory {
   private CommandFactory() {
   }
 
+  /**
+   * Creates and returns a command that represents the action of performing a stroke on the canvas.
+   *
+   * @param model  the associated model instance.
+   * @param stroke the associated stroke instance.
+   * @return a command that represents the action of performing a stroke on the canvas.
+   * @throws NullPointerException if any arguments are {@code null}.
+   */
   public static ICommand createStrokeCommand(IModel model, Stroke stroke) {
     return new StrokeCommand(model, stroke);
   }
