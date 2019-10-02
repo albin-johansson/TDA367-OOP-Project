@@ -28,7 +28,7 @@ class PixelFactoryTest {
   void createPixelCopy() {
     assertThrows(NullPointerException.class, () -> PixelFactory.createPixel(null));
 
-    IPixel original = PixelFactory.createPixel(12, 93, 184, 12, 200);
+    IPixel original = PixelFactory.createPixel(12, 93, 0.4, 0.8, 0.1, 1);
     IPixel copy = PixelFactory.createPixel(original);
 
     assertEquals(original, copy);
