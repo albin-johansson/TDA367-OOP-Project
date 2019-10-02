@@ -98,6 +98,10 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
     updateEmptyLayerPane();
   }
 
+  /**
+   * Checks if the {@code layerItemVBox} is empty and moves the {@code emptyLayerPane} accordingly.
+   * When empty, toFront, and vice-versa.
+   */
   private void updateEmptyLayerPane() {
     if (layerItemVBox.getChildren().isEmpty()) {
       emptyLayerPane.toFront();
