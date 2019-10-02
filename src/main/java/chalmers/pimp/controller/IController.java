@@ -29,6 +29,11 @@ public interface IController {
   void selectBucket();
 
   /**
+   * Sets the MoveTool as selected tool in chalmers.pimp.model
+   */
+  void selectMoveTool();
+
+  /**
    * Tells the chalmers.pimp.model that the selected tool has been pressed.
    *
    * @param mouseEvent the associated mouseEvent
