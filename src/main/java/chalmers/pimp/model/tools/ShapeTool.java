@@ -51,4 +51,32 @@ public final class ShapeTool implements ITool {
     ILayer layer = LayerFactory.createRectangle(originX, originY, width, height);
     model.addLayer(layer);
   }
+
+  /**
+   * Returns the origin point of the rectangle based on the first point the rectangle was created at
+   * and the current position of the mouse. The closest one to the origin will be classified as the
+   * origin point.
+   *
+   * @param mouseStatus information about the mouse.
+   * @return the new origin point of the rectangle.
+   */
+  private IReadOnlyPoint getOriginPoint(MouseStatus mouseStatus) {
+    int originX = Math.min(x, mouseStatus.getX());
+    int originY = Math.min(y, mouseStatus.getY());
+    return new Point(originX, originY);
+  }
+
+  /**
+   * Returns the max point of the rectangle based on the first point the rectangle was created at
+   * and the current position of the mouse. The point furthest away from the origin will be
+   * classified as the max point.
+   *
+   * @param mouseStatus information about the mouse.
+   * @return the new origin point of the rectangle.
+   */
+  private IReadOnlyPoint getMaxPoint(MouseStatus mouseStatus) {
+    int maxX = Math.max(x, mouseStatus.getX());
+    int maxY = Math.max(y, mouseStatus.getY());
+    return new Point(maxX, maxY);
+  }
 }
