@@ -45,8 +45,7 @@ public final class LayerUpdateEvent {
     REMOVED,
     EDITED,
     SELECTED,
-    POSITION_MOVED_FORWARDS,
-    POSITION_MOVED_BACKWARDS,
+    LAYER_ORDER_CHANGED,
     VISIBILITY_TOGGLED
   }
 }
