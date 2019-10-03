@@ -113,6 +113,12 @@ final class ControllerImpl implements IController {
   }
 
   @Override
+  public void selectRectangleTool() {
+    ITool rectangleTool = ToolFactory.createShapeTool(model);
+    model.setSelectedTool(rectangleTool);
+  }
+
+  @Override
   public void selectMoveTool() {
     model.setSelectedTool(ToolFactory.createMoveTool(model));
   }

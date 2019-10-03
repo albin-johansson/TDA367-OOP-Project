@@ -29,6 +29,11 @@ public interface IController {
   void selectBucket();
 
   /**
+   * Sets the rectangle tool as the selectedTool in model
+   */
+  void selectRectangleTool();
+
+  /**
    * Undoes the previously executed command. This method has no effect if there is nothing to undo.
    */
   void undo();
