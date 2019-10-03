@@ -5,12 +5,14 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
+import chalmers.pimp.model.tools.ToolFactory;
 import java.util.Objects;
 
 /**
@@ -30,7 +32,7 @@ final class ModelImpl implements IModel {
     undoRedoListeners = new UndoRedoListenerComposite();
 
     stroke = null;
-    selectedTool = null;
+    selectedTool = ToolFactory.createPencil(2, ColorFactory.createColor(0xFF, 0, 0xFF), this);
   }
 
   /**
@@ -97,7 +99,6 @@ final class ModelImpl implements IModel {
   @Override
   public void addLayer(ILayer layer) {
     canvas.addLayer(layer);
-
   }
 
   @Override
