@@ -12,13 +12,22 @@ import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
 import chalmers.pimp.util.Resources;
 import chalmers.pimp.view.IView;
+import java.awt.image.RenderedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  * The {@code ControllerImpl} class is an implementation of the {@code IController} interface.
@@ -28,6 +37,7 @@ final class ControllerImpl implements IController {
   private final IModel model;
   private final IView view;
   private final Stage stage;
+  private final PimpEditorPane pane;
 
   /**
    * @param model the associated chalmers.pimp.model instance.
@@ -40,7 +50,7 @@ final class ControllerImpl implements IController {
     this.view = Objects.requireNonNull(view);
     this.stage = Objects.requireNonNull(stage);
 
-    var pane = new PimpEditorPane(model, this);
+    this.pane = new PimpEditorPane(model, this);
     view.setRendererGraphics(pane.getGraphics());
 
     prepareStage(new Scene(pane, 800, 600));
@@ -109,7 +119,7 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectBucket() {
-
+    exportImage();
   }
 
   @Override
@@ -145,6 +155,32 @@ final class ControllerImpl implements IController {
       model.addLayer(LayerFactory.createRasterLayer(pixelData));
     } catch (Exception e) {
       System.err.println("Failed to import image! Exception: " + e);
+    }
+  }
+
+  private void exportImage() {
+    FileChooser fileChooser = new FileChooser();
+
+    //Set extension filter
+    fileChooser.getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));
+    fileChooser.getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("jpg files (*.jpg)", "*.jpg"));
+
+    //Prompt user to select a file
+    File file = fileChooser.showSaveDialog(null);
+
+    if (file != null) {
+      try {
+        //Pad the capture area
+        WritableImage image = pane.getGraphics().getCanvas()
+            .snapshot(new SnapshotParameters(), null);
+        RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
+        //Write the snapshot to the chosen file
+        ImageIO.write(renderedImage, "png", file);
+      } catch (IOException ex) {
+        ex.printStackTrace();
+      }
     }
   }
 
