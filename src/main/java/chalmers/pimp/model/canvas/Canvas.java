@@ -125,7 +125,8 @@ public final class Canvas {
     verifyActiveLayerExistence();
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
       for (IReadOnlyPixel p : row) {
-        activeLayer.setPixel(PixelFactory.createPixelWithOffset(p, x, y));
+        activeLayer.setPixel(
+            PixelFactory.createPixelWithOffset(p, x - activeLayer.getX(), y - activeLayer.getY()));
       }
     }
     canvasUpdateListeners.canvasUpdated();
