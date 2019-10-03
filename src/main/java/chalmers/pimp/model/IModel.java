@@ -1,11 +1,11 @@
 package chalmers.pimp.model;
 
-import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.pixeldata.IPixel;
+import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 
 /**
@@ -145,4 +145,13 @@ public interface IModel {
    * @param mouseStatus the status of the mouse.
    */
   void selectedToolReleased(MouseStatus mouseStatus);
+
+  /**
+   * Replaces a layer of a specific index with a new layer. Does nothing if there is no layer on the
+   * specified index.
+   *
+   * @param index the index of the layer to change.
+   * @param layer the new layer.
+   */
+  void replaceLayer(int index, ILayer layer);
 }

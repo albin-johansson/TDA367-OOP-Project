@@ -1,12 +1,11 @@
 package chalmers.pimp.model;
 
-import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 
@@ -106,6 +105,16 @@ final class ModelImpl implements IModel {
     if (hasSelectedTool()) {
       selectedTool.released(mouseStatus);
     }
+  }
+
+  @Override
+  public void replaceLayer(int index, ILayer layer) {
+    if (canvas.getAmountOfLayers() <= index) {
+      return;
+    }
+
+    canvas.addLayer(index, layer);
+    canvas.removeLayer(index + 1);
   }
 
   /**
