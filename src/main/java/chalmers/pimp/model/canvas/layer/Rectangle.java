@@ -101,8 +101,10 @@ public class Rectangle implements ILayer {
 
   @Override
   public void draw(IRenderer renderer) {
-    renderer.setFillColor(color);
-    renderer.setBorderColor(color);
-    renderer.fillRect(getX(), getY(), width, height);
+    if (isVisible()) {
+      renderer.setFillColor(color);
+      renderer.setBorderColor(color);
+      renderer.fillRect(getX(), getY(), width, height);
+    }
   }
 }
