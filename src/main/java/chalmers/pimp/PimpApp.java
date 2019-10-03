@@ -2,13 +2,13 @@ package chalmers.pimp;
 
 import chalmers.pimp.controller.ControllerFactory;
 import chalmers.pimp.controller.IController;
-import chalmers.pimp.model.canvas.layer.LayerFactory;
-import javafx.application.Application;
-import javafx.stage.Stage;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.ModelFactory;
+import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.view.IView;
 import chalmers.pimp.view.ViewFactory;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 /**
  * The {@code chalmers.pimp.PimpApp} class represents the entry point for the Pimp application.

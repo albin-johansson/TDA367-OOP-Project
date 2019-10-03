@@ -1,9 +1,9 @@
 package chalmers.pimp.controller;
 
-import java.io.IOException;
-import javafx.stage.Stage;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.view.IView;
+import java.io.IOException;
+import javafx.stage.Stage;
 
 /**
  * The {@code ControllerFactory} class is a factory for creating instances of the {@code

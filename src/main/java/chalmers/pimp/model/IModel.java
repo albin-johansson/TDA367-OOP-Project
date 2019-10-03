@@ -69,12 +69,29 @@ public interface IModel extends IChangeable {
   void removeLayer(int layerIndex);
 
   /**
+   * Selects the supplied layer.
+   *
+   * @param layer the supplied layer that will be made active.
+   * @throws IllegalArgumentException if the supplied layer isn't associated with a layer.
+   */
+  void selectLayer(IReadOnlyLayer layer);
+
+  /**
    * Selects the layer associated with the specified index.
    *
    * @param layerIndex the index associated with the layer that will be made active.
    * @throws IllegalArgumentException if the supplied index isn't associated with a layer.
    */
   void selectLayer(int layerIndex);
+
+  /**
+   * Moves the supplied layer {@code steps} in the list, were negative number moves the layer back
+   * (and vice versa).
+   *
+   * @param layer the layer to be moved.
+   * @param steps the number of steps
+   */
+  void moveLayer(IReadOnlyLayer layer, int steps);
 
   /**
    * Restores the state of the model to the one that is represented by the supplied memento object.
@@ -103,6 +120,22 @@ public interface IModel extends IChangeable {
    * @param pixelData the PixelData representing the pixels to be set.
    */
   void setPixels(int x, int y, PixelData pixelData);
+
+  /**
+   * Sets the name of a layer.
+   *
+   * @param layer     the layer to have it's name changed.
+   * @param layerName the new name for the layer.
+   */
+  void setLayerName(IReadOnlyLayer layer, String layerName);
+
+  /**
+   * Sets the name of an indexed layer.
+   *
+   * @param layerIndex the index for the layer.
+   * @param layerName  the new name for the layer.
+   */
+  void setLayerName(int layerIndex, String layerName);
 
   /**
    * Sets the visibility property value for the supplied layer.
@@ -162,6 +195,13 @@ public interface IModel extends IChangeable {
    * @return the current amount of layers in the chalmers.pimp.model.
    */
   int getAmountOfLayers();
+
+  /**
+   * Returns the current amount of layers in the canvas.
+   *
+   * @return the current amount of layers in the canvas.
+   */
+  IReadOnlyLayer getActiveLayer();
 
   /**
    * Can be Null if user chooses to deselect a tool.

@@ -65,4 +65,20 @@ class RasterTest {
   void getLayerType() {
     assertEquals(LayerType.RASTER, raster.getLayerType());
   }
+
+  @Test
+  void setName() {
+    final String setName = "name";
+    raster.setName(setName);
+    assertEquals(setName, raster.getName());
+  }
+
+  @Test
+  void getName() {
+    assertNotNull(raster.getName());
+
+    final String setName = "name";
+    raster.setName(setName);
+    assertEquals(setName, raster.getName());
+  }
 }
