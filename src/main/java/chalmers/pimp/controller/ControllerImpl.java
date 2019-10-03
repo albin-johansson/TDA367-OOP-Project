@@ -119,7 +119,7 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectBucket() {
-    exportImage();
+
   }
 
   @Override
@@ -158,25 +158,23 @@ final class ControllerImpl implements IController {
     }
   }
 
-  private void exportImage() {
+  @Override
+  public void exportImage() {
     FileChooser fileChooser = new FileChooser();
-
-    //Set extension filter
+    
     fileChooser.getExtensionFilters()
         .add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));
     fileChooser.getExtensionFilters()
         .add(new FileChooser.ExtensionFilter("jpg files (*.jpg)", "*.jpg"));
 
-    //Prompt user to select a file
     File file = fileChooser.showSaveDialog(null);
 
     if (file != null) {
       try {
-        //Pad the capture area
         WritableImage image = pane.getGraphics().getCanvas()
             .snapshot(new SnapshotParameters(), null);
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
-        //Write the snapshot to the chosen file
+
         ImageIO.write(renderedImage, "png", file);
       } catch (IOException ex) {
         ex.printStackTrace();

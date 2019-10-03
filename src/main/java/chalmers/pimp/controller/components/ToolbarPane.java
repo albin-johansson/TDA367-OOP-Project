@@ -62,6 +62,11 @@ final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
     controller.openImageChooser();
   }
 
+  @FXML
+  private void exportImage(){
+    controller.exportImage();
+  }
+
   @Override
   public void undoRedoStateChanged(UndoRedoEvent event) {
     undoButton.setDisable(!event.isUndoable());
