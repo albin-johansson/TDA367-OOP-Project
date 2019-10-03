@@ -21,7 +21,6 @@ import java.util.Objects;
 final class ModelImpl implements IModel {
 
   private final CommandManager commandManager;
-  private final UndoRedoListenerComposite undoRedoListeners;
   private Canvas canvas;
   private Stroke stroke;
   private ITool selectedTool;
@@ -29,33 +28,9 @@ final class ModelImpl implements IModel {
   ModelImpl() {
     canvas = new Canvas();
     commandManager = new CommandManager();
-    undoRedoListeners = new UndoRedoListenerComposite();
 
     stroke = null;
     selectedTool = null;
-  }
-
-  /**
-   * Notifies all registered undo/redo listeners.
-   */
-  private void notifyUndoRedoListeners() {
-    var event = new UndoRedoEvent();
-
-    boolean isUndoable = commandManager.isUndoable();
-    boolean isRedoable = commandManager.isRedoable();
-
-    event.setUndoable(isUndoable);
-    event.setRedoable(isRedoable);
-
-    if (isUndoable) {
-      event.setUndoCommandName(commandManager.getUndoCommandName());
-    }
-
-    if (isRedoable) {
-      event.setRedoCommandName(commandManager.getRedoCommandName());
-    }
-
-    undoRedoListeners.undoRedoStateChanged(event);
   }
 
   /**
@@ -102,7 +77,6 @@ final class ModelImpl implements IModel {
     addLayerCmd.execute();
 
     commandManager.insertCommand(addLayerCmd);
-    notifyUndoRedoListeners();
   }
 
   @Override
@@ -173,7 +147,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void addUndoRedoListener(IUndoRedoListener listener) {
-    undoRedoListeners.add(listener);
+    commandManager.addUndoRedoListener(listener);
   }
 
   @Override
@@ -225,7 +199,6 @@ final class ModelImpl implements IModel {
     if (hasSelectedTool()) {
       selectedTool.released(mouseStatus);
     }
-    notifyUndoRedoListeners();
   }
 
   @Override
@@ -237,13 +210,15 @@ final class ModelImpl implements IModel {
   @Override
   public void undo() {
     commandManager.undo();
-    notifyUndoRedoListeners();
+
+    canvas.notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, canvas.getActiveLayer()));
   }
 
   @Override
   public void redo() {
     commandManager.redo();
-    notifyUndoRedoListeners();
+
+    canvas.notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, canvas.getActiveLayer()));
   }
 
   @Override

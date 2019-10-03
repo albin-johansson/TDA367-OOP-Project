@@ -3,7 +3,7 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
 import chalmers.pimp.model.IUndoRedoListener;
-import chalmers.pimp.model.UndoRedoEvent;
+import chalmers.pimp.model.command.UndoRedoEvent;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.util.Objects;

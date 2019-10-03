@@ -362,7 +362,7 @@ public final class Canvas {
   /**
    * Notifies the listeners for this Canvas
    */
-  private void notifyAllListeners(LayerUpdateEvent e) {
+  public void notifyAllListeners(LayerUpdateEvent e) {
     layerUpdateListeners.layersUpdated(e);
     canvasUpdateListeners.canvasUpdated();
   }
