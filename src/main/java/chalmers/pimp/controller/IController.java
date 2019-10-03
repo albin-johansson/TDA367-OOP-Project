@@ -74,4 +74,9 @@ public interface IController {
    * it's injected into the model.
    */
   void openImageChooser();
+
+  /**
+   * Opens file chooser save dialog and allows you to save the Image.
+   */
+  void exportImage();
 }
