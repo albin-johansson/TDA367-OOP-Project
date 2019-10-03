@@ -204,4 +204,9 @@ final class ControllerImpl implements IController {
         throw new IllegalStateException("Invalid mouse button value: " + mouseButton);
     }
   }
+
+  @Override
+  public void createNewLayer() {
+    model.addLayer(LayerFactory.createRasterLayer(1200, 800));
+  }
 }
