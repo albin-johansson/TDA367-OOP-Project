@@ -109,11 +109,6 @@ final class Rectangle implements ILayer {
   }
 
   @Override
-  public LayerType getLayerType() {
-    return LayerType.SHAPE;
-  }
-
-  @Override
   public void draw(IRenderer renderer) {
     if (isVisible()) {
       renderer.setFillColor(color);

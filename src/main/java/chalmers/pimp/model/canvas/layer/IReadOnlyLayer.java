@@ -38,13 +38,6 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
   IReadOnlyPixelData getPixelData();
 
   /**
-   * Returns the type of the layer.
-   *
-   * @return the type of the layer.
-   */
-  LayerType getLayerType();
-
-  /**
    * Returns the layer's name
    *
    * @return the layer's name as a {@code String}

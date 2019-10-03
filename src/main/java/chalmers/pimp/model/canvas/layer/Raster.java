@@ -103,11 +103,6 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public LayerType getLayerType() {
-    return LayerType.RASTER;
-  }
-
-  @Override
   public void draw(IRenderer renderer) {
     if (isVisible()) {
       renderer.drawImage(pixelData, getX(), getY(), pixelData.getWidth(), pixelData.getHeight());
