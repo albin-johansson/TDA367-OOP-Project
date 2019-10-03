@@ -36,11 +36,6 @@ final class MoveCommand implements ICommand {
   }
 
   @Override
-  public void setMemento(ModelMemento memento) {
-    modelMemento = memento;
-  }
-
-  @Override
   public String getName() {
     return "Move Layer";
   }
