@@ -33,7 +33,7 @@ public final class PixelData implements IReadOnlyPixelData {
    */
   public PixelData(int width, int height) {
     if ((width <= 0) || (width > MAX_WIDTH) || (height <= 0) || (height > MAX_HEIGHT)) {
-      throw new IndexOutOfBoundsException("Width and height must be greater than zero.");
+      throw new IndexOutOfBoundsException("Bad dimensions: (" + width + "x" + height + ")");
     } else {
       pixels = createPixelDataMatrix(width, height);
     }

@@ -12,13 +12,12 @@ import chalmers.pimp.model.pixeldata.PixelFactory;
  * The {@code Rectangle} class is an implementation of the {@code ILayer} interface that represents
  * a rectangle.
  */
-public class Rectangle implements ILayer {
+final class Rectangle implements ILayer {
 
-  private static final LayerType layerType = LayerType.SHAPE;
   private final LayerDelegate layerDelegate;
-  private int width;
-  private int height;
-  private final IColor color;
+  private final int width;
+  private final int height;
+  private IColor color;
 
   /**
    * Creates a rectangle.
@@ -34,7 +33,7 @@ public class Rectangle implements ILayer {
     layerDelegate.setY(y);
     this.width = width;
     this.height = height;
-    color = ColorFactory.createColor(255, 137, 243);
+    color = ColorFactory.createColor(255, 137, 243); // FIXME
   }
 
   @Override
@@ -77,7 +76,7 @@ public class Rectangle implements ILayer {
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
-        pixelData.setPixel(PixelFactory.createPixel(col, row, 1, 0, 1));
+        pixelData.setPixel(PixelFactory.createPixel(col, row, 1, 0, 1, 1));
       }
     }
 
@@ -86,7 +85,7 @@ public class Rectangle implements ILayer {
 
   @Override
   public LayerType getLayerType() {
-    return layerType;
+    return LayerType.SHAPE;
   }
 
   @Override
@@ -94,5 +93,13 @@ public class Rectangle implements ILayer {
     renderer.setFillColor(color);
     renderer.setBorderColor(color);
     renderer.fillRect(getX(), getY(), width, height);
+  }
+
+  @Override
+  public ILayer copy() {
+    var copy = new Rectangle(getX(), getY(), width, height);
+    copy.color = ColorFactory.createColor(color);
+    copy.setVisible(isVisible());
+    return copy;
   }
 }

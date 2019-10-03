@@ -43,6 +43,7 @@ public final class ColorFactory {
    * @return a color specified by the given color components and no transparency.
    */
   public static IColor createColor(int red, int green, int blue) {
+    // FIXME isn't it better to assume that the user wants an opaque color when calling this method?
     return new ColorImpl(red, green, blue, 1);
   }
 

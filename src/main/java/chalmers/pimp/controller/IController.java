@@ -3,8 +3,8 @@ package chalmers.pimp.controller;
 import javafx.scene.input.MouseEvent;
 
 /**
- * The {@code IController} interface specifies the facade for the chalmers.pimp.controller component in the MVC
- * architecture that the Pimp application uses.
+ * The {@code IController} interface specifies the facade for the chalmers.pimp.controller component
+ * in the MVC architecture that the Pimp application uses.
  */
 public interface IController {
 
@@ -29,6 +29,21 @@ public interface IController {
   void selectBucket();
 
   /**
+   * Undoes the previously executed command. This method has no effect if there is nothing to undo.
+   */
+  void undo();
+
+  /**
+   * Redoes the previously undone command. This method has no effect if there is nothing to redo.
+   */
+  void redo();
+
+  /**
+   * Sets the MoveTool as selected tool in model.
+   */
+  void selectMoveTool();
+
+  /**
    * Tells the chalmers.pimp.model that the selected tool has been pressed.
    *
    * @param mouseEvent the associated mouseEvent
@@ -48,4 +63,10 @@ public interface IController {
    * @param mouseEvent the associated mouseEvent.
    */
   void selectedToolReleased(MouseEvent mouseEvent);
+
+  /**
+   * Opens a file chooser dialog, which allows the user to import an image. If an image is selected,
+   * it's injected into the model.
+   */
+  void openImageChooser();
 }

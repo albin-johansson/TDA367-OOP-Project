@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,24 @@ class PixelImplTest {
   @BeforeEach
   private void setUp() {
     pixel = new PixelImpl(X, Y);
+  }
+
+  @Test
+  @SuppressWarnings("all")
+  void copyCtor() {
+    assertThrows(NullPointerException.class, () -> new PixelImpl(null));
+
+    var copy = new PixelImpl(pixel);
+
+    assertTrue(pixel.equals(copy));
+
+    assertEquals(X, copy.getX());
+    assertEquals(Y, copy.getY());
+
+    assertEquals(pixel.getColor().getRed(), copy.getColor().getRed());
+    assertEquals(pixel.getColor().getGreen(), copy.getColor().getGreen());
+    assertEquals(pixel.getColor().getBlue(), copy.getColor().getBlue());
+    assertEquals(pixel.getColor().getAlpha(), copy.getColor().getAlpha());
   }
 
   @Test

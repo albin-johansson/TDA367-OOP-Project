@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * A tool for creating and editing shapes.
  */
-public final class ShapeTool implements ITool {
+final class ShapeTool implements ITool {
 
   private int x;
   private int y;

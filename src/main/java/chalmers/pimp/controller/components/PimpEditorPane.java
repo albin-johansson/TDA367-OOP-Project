@@ -11,7 +11,6 @@ import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 
 /**
  * The {@code PimpEditorPane} class represents the main editor pane for the Pimp application.
@@ -36,9 +35,6 @@ public final class PimpEditorPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private AnchorPane leftAnchorPane;
-  @FXML
-  @SuppressWarnings("unused")
-  private HBox horizontalToolBar;
 
   /**
    * @param model      the associated chalmers.pimp.model instance.
@@ -54,6 +50,7 @@ public final class PimpEditorPane extends AnchorPane {
     toolbarPane = new ToolbarPane(controller);
     topAnchorPane.getChildren().add(toolbarPane);
     AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
+    model.addUndoRedoListener(toolbarPane);
 
     canvasPane = new CanvasPane(controller);
     centerPane.getChildren().add(canvasPane);
