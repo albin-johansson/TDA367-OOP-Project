@@ -100,12 +100,12 @@ final class LayerItemPane extends AnchorPane {
   }
 
   @FXML
-  private void moveLayerBackwards() {
+  private void decreaseZIndex() {
     model.moveLayer(layer, -1);
   }
 
   @FXML
-  private void moveLayerForwards() {
+  private void increaseZIndex() {
     model.moveLayer(layer, 1);
   }
 

@@ -22,8 +22,8 @@
         </Label>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#moveLayerBackwards" text="^" />
-                  <Button mnemonicParsing="false" onAction="#moveLayerForwards" text="v" />
+                  <Button mnemonicParsing="false" onAction="#increaseZIndex" text="^" />
+                  <Button mnemonicParsing="false" onAction="#decreaseZIndex" text="v" />
                </children>
                <HBox.margin>
                   <Insets />
