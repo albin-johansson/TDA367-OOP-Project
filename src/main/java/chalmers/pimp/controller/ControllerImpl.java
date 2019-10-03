@@ -48,7 +48,7 @@ final class ControllerImpl implements IController {
     this.view = Objects.requireNonNull(view);
     this.stage = Objects.requireNonNull(stage);
 
-    this.pane = new PimpEditorPane(model, this);
+    pane = new PimpEditorPane(model, this);
     view.setRendererGraphics(pane.getGraphics());
 
     prepareStage(new Scene(pane, 800, 600));
