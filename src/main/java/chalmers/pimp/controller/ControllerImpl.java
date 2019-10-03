@@ -84,6 +84,18 @@ final class ControllerImpl implements IController {
   }
 
   @Override
+  public void undo() {
+    model.undo();
+    view.repaint();
+  }
+
+  @Override
+  public void redo() {
+    model.redo();
+    view.repaint();
+  }
+
+  @Override
   public void selectPencil() {
     ITool pencil = ToolFactory.createPencil(10, ColorFactory.createColor(255, 100, 50, 255), model);
     model.setSelectedTool(pencil);

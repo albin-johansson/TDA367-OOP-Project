@@ -29,7 +29,17 @@ public interface IController {
   void selectBucket();
 
   /**
-   * Sets the MoveTool as selected tool in chalmers.pimp.model
+   * Undoes the previously executed command. This method has no effect if there is nothing to undo.
+   */
+  void undo();
+
+  /**
+   * Redoes the previously undone command. This method has no effect if there is nothing to redo.
+   */
+  void redo();
+
+  /**
+   * Sets the MoveTool as selected tool in model.
    */
   void selectMoveTool();
 

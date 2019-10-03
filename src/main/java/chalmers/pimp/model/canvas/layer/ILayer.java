@@ -11,9 +11,9 @@ import chalmers.pimp.model.pixeldata.IPixel;
 public interface ILayer extends IReadOnlyLayer {
 
   /**
-   * Sets the color of a pixel specified by a specific coordinate. The coordinates are based on
-   * the provided pixels coordinates and the color on the provided pixels color.
-   * 
+   * Sets the color of a pixel specified by a specific coordinate. The coordinates are based on the
+   * provided pixels coordinates and the color on the provided pixels color.
+   *
    * @param pixel the pixel to be set
    * @throws NullPointerException if any arguments are {@code null}.
    */
