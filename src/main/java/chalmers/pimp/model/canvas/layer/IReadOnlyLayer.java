@@ -49,4 +49,10 @@ public interface IReadOnlyLayer extends IDrawable {
    * @return the layer's name as a {@code String}
    */
   String getName();
+
+  /**
+   * Returns the layer's depth index, 0 as furthest back.
+   * @return the depth index.
+   */
+  int getDepthIndex();
 }

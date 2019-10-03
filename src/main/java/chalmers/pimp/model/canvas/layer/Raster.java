@@ -50,6 +50,11 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
   }
@@ -67,6 +72,11 @@ final class Raster implements ILayer {
   @Override
   public String getName() {
     return layerDelegate.getName();
+  }
+
+  @Override
+  public int getDepthIndex() {
+    return layerDelegate.getDepthIndex();
   }
 
   @Override

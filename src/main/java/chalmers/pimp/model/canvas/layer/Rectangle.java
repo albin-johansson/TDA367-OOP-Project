@@ -62,6 +62,11 @@ public class Rectangle implements ILayer {
   }
 
   @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
   }
@@ -79,6 +84,11 @@ public class Rectangle implements ILayer {
   @Override
   public String getName() {
     return layerDelegate.getName();
+  }
+
+  @Override
+  public int getDepthIndex() {
+    return layerDelegate.getDepthIndex();
   }
 
   @Override

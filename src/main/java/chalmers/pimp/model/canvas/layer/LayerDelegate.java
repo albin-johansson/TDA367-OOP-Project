@@ -18,6 +18,7 @@ final class LayerDelegate {
   private int x;
   private int y;
   private String name;
+  private int depthIndex;
 
   LayerDelegate() {
     isVisible = DEFAULT_VISIBILITY_VALUE;
@@ -98,5 +99,23 @@ final class LayerDelegate {
    */
   String getName() {
     return name;
+  }
+
+  /**
+   * Returns the depth index for this layer.
+   *
+   * @return the depth index.
+   */
+  int getDepthIndex() {
+    return depthIndex;
+  }
+
+  /**
+   * Sets the depth index for this layer.
+   *
+   * @param depthIndex the new depth index.
+   */
+  void setDepthIndex(int depthIndex){
+    this.depthIndex = depthIndex;
   }
 }
