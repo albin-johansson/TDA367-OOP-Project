@@ -1,7 +1,9 @@
 package chalmers.pimp.model.command;
 
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.Stroke;
+import chalmers.pimp.model.canvas.layer.ILayer;
 
 /**
  * The {@code CommandFactory} class is a factory for creating instances of the {@link ICommand}
@@ -22,5 +24,13 @@ public final class CommandFactory {
    */
   public static ICommand createStrokeCommand(IModel model, Stroke stroke) {
     return new StrokeCommand(model, stroke);
+  }
+
+  public static ICommand createMoveCommand(IModel model, int associatedLayerDepth, int dx, int dy, ModelMemento modelMemento) {
+    return new MoveCommand(model, associatedLayerDepth, dx, dy, modelMemento);
+  }
+
+  public static ICommand createAddLayerCommand(IModel model, ILayer layer) {
+    return new AddLayerCommand(model, layer);
   }
 }

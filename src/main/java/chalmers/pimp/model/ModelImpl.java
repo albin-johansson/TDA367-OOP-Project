@@ -5,6 +5,7 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
@@ -96,8 +97,11 @@ final class ModelImpl implements IModel {
 
   @Override
   public void addLayer(ILayer layer) {
-    canvas.addLayer(layer);
+    ICommand addLayerCmd = CommandFactory.createAddLayerCommand(this, layer);
+    addLayerCmd.execute();
 
+    commandManager.insertCommand(addLayerCmd);
+    notifyUndoRedoListeners();
   }
 
   @Override
@@ -157,6 +161,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void addCommand(ICommand command) {
+    commandManager.insertCommand(command);
+  }
+
+  @Override
   public Iterable<? extends IReadOnlyLayer> getLayers() {
     return canvas.getLayers();
   }
@@ -174,6 +183,10 @@ final class ModelImpl implements IModel {
   @Override
   public void selectedToolPressed(MouseStatus mouseStatus) {
     if (hasSelectedTool()) {
+
+      ILayer layer = LayerFactory.createRasterLayer(100, 100);
+      canvas.addLayer(layer);
+      canvas.selectLayer(0);
       selectedTool.pressed(mouseStatus);
     }
   }
@@ -195,7 +208,8 @@ final class ModelImpl implements IModel {
 
   @Override
   public ModelMemento createSnapShot() {
-    return new ModelMemento(new Canvas(canvas));
+    var canvasCopy = new Canvas(canvas);
+    return new ModelMemento(canvasCopy);
   }
 
   @Override
@@ -213,5 +227,10 @@ final class ModelImpl implements IModel {
   @Override
   public void moveSelectedLayer(int xAmount, int yAmount) {
     canvas.moveSelectedLayer(xAmount, yAmount);
+  }
+
+  @Override
+  public Canvas getCanvas() {
+    return canvas;
   }
 }

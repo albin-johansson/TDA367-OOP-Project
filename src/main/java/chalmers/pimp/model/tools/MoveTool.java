@@ -1,7 +1,10 @@
 package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.command.CommandFactory;
+import chalmers.pimp.model.command.ICommand;
 import java.util.Objects;
 
 /**
@@ -9,9 +12,10 @@ import java.util.Objects;
  */
 final class MoveTool implements ITool {
 
-  private int startX;
-  private int startY;
+  private int prevX;
+  private int prevY;
   private final IModel model;
+  private ModelMemento startModelMemento;
 
   /**
    * Creates a moveTool with no initial startX and startY values.
@@ -24,24 +28,31 @@ final class MoveTool implements ITool {
   }
 
   @Override
-  public void dragged(MouseStatus mouseStatus) {
-    int xAmount = mouseStatus.getX() - startX;
-    int yAmount = mouseStatus.getY() - startY;
-    model.moveSelectedLayer(xAmount, yAmount);
-    startX = mouseStatus.getX();
-    startY = mouseStatus.getY();
+  public void pressed(MouseStatus mouseStatus) {
+    startModelMemento = model.createSnapShot();
+
+    prevX = mouseStatus.getX();
+    prevY = mouseStatus.getY();
   }
 
   @Override
-  public void pressed(MouseStatus mouseStatus) {
-    startX = mouseStatus.getX();
-    startY = mouseStatus.getY();
+  public void dragged(MouseStatus mouseStatus) {
+    int dx = mouseStatus.getX() - prevX;
+    int dy = mouseStatus.getY() - prevY;
+    model.moveSelectedLayer(dx, dy);
+    prevX = mouseStatus.getX();
+    prevY = mouseStatus.getY();
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
-    int xAmount = mouseStatus.getX() - startX;
-    int yAmount = mouseStatus.getY() - startY;
-    model.moveSelectedLayer(xAmount, yAmount);
+    int dx = mouseStatus.getX() - prevX;
+    int dy = mouseStatus.getY() - prevY;
+    model.moveSelectedLayer(dx, dy);
+
+    // FIXME hard coded layer index
+    ICommand command = CommandFactory.createMoveCommand(model, 0, dx, dy, startModelMemento);
+
+    model.addCommand(command);
   }
 }

@@ -1,9 +1,11 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
@@ -145,6 +147,8 @@ public interface IModel extends IChangeable {
    */
   void addLayerUpdateListener(ILayerUpdateListener listener);
 
+  void addCommand(ICommand command);
+
   /**
    * Returns all of the layers in the chalmers.pimp.model.
    *
@@ -201,4 +205,6 @@ public interface IModel extends IChangeable {
    * @param yAmount the amount moved in dimension y.
    */
   void moveSelectedLayer(int xAmount, int yAmount);
+
+  Canvas getCanvas();
 }
