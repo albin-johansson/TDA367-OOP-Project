@@ -1,9 +1,10 @@
 package chalmers.pimp.model.tools;
 
+import static chalmers.pimp.model.command.CommandFactory.createMoveCommand;
+
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.MouseStatus;
-import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.ICommand;
 import java.util.Objects;
 
@@ -12,6 +13,8 @@ import java.util.Objects;
  */
 final class MoveTool implements ITool {
 
+  private int totalDeltaX;
+  private int totalDeltaY;
   private int prevX;
   private int prevY;
   private final IModel model;
@@ -37,22 +40,23 @@ final class MoveTool implements ITool {
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
-    int dx = mouseStatus.getX() - prevX;
-    int dy = mouseStatus.getY() - prevY;
+    final int dx = mouseStatus.getX() - prevX;
+    final int dy = mouseStatus.getY() - prevY;
     model.moveSelectedLayer(dx, dy);
+
     prevX = mouseStatus.getX();
     prevY = mouseStatus.getY();
+
+    totalDeltaX += dx;
+    totalDeltaY += dy;
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
-    int dx = mouseStatus.getX() - prevX;
-    int dy = mouseStatus.getY() - prevY;
-    model.moveSelectedLayer(dx, dy);
+    int layerIndex = model.getActiveLayer().getDepthIndex();
+    ICommand cmd = createMoveCommand(model, layerIndex, totalDeltaX, totalDeltaY,
+        startModelMemento);
 
-    // FIXME hard coded layer index
-    ICommand command = CommandFactory.createMoveCommand(model, 0, dx, dy, startModelMemento);
-
-    model.addCommand(command);
+    model.addCommand(cmd);
   }
 }
