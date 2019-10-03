@@ -203,7 +203,7 @@ class ModelImplTest {
     ICanvasUpdateListener listener = () -> {
     };
     model.addCanvasUpdateListener(listener);
-    assertThrows(IllegalArgumentException.class, () -> model.addCanvasUpdateListener(listener));
+    assertDoesNotThrow(() -> model.addCanvasUpdateListener(listener));
   }
 
   @Test
@@ -212,7 +212,7 @@ class ModelImplTest {
     ILayerUpdateListener listener = (e) -> {
     };
     model.addLayerUpdateListener(listener);
-    assertThrows(IllegalArgumentException.class, () -> model.addLayerUpdateListener(listener));
+    assertDoesNotThrow(() -> model.addLayerUpdateListener(listener));
   }
 
   @Test
@@ -244,5 +244,21 @@ class ModelImplTest {
   @Test
   void setSelectedTool() {
     assertDoesNotThrow(() -> model.setSelectedTool(null));
+  }
+
+  @Test
+  void moveSelectedLayer() {
+    ILayer layer = LayerFactory.createRectangle(20, 15, 500, 70);
+    model.addLayer(layer);
+
+    model.selectLayer(0);
+
+    assertEquals(20, layer.getX());
+    assertEquals(15, layer.getY());
+
+    model.moveSelectedLayer(15, 10);
+
+    assertEquals(35, layer.getX());
+    assertEquals(25, layer.getY());
   }
 }

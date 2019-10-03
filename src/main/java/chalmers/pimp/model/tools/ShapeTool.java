@@ -5,7 +5,7 @@ import chalmers.pimp.model.MouseStatus;
 /**
  * A tool for creating and editing shapes.
  */
-public final class ShapeTool implements ITool {
+final class ShapeTool implements ITool {
 
   /**
    * Creates and returns a shape tool.
@@ -27,5 +27,4 @@ public final class ShapeTool implements ITool {
   public void released(MouseStatus mouseStatus) {
 
   }
-
 }

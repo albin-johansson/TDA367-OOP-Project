@@ -27,6 +27,19 @@ final class PixelImpl implements IPixel {
     color = ColorFactory.createColor();
   }
 
+  /**
+   * Creates a copy of the supplied pixel.
+   *
+   * @param pixel the pixel that will be copied.
+   * @throws NullPointerException if the supplied pixel is {@code null}.
+   */
+  PixelImpl(IReadOnlyPixel pixel) {
+    Objects.requireNonNull(pixel);
+    x = pixel.getX();
+    y = pixel.getY();
+    color = ColorFactory.createColor(pixel.getColor());
+  }
+
   @Override
   public int getX() {
     return x;

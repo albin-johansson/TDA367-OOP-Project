@@ -165,7 +165,7 @@ class CanvasTest {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
     PixelData pixelData = new PixelData(5, 5);
-    IPixel pixel = PixelFactory.createPixel(2, 3, 0, 1, 0);
+    IPixel pixel = PixelFactory.createPixel(2, 3, 0, 1, 0, 1);
 
     pixelData.setPixel(pixel);
     canvas.setPixels(0, 0, pixelData);
@@ -178,7 +178,7 @@ class CanvasTest {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
     PixelData pixelData = new PixelData(5, 5);
-    IPixel pixel = PixelFactory.createPixel(2, 3, 0, 1, 0);
+    IPixel pixel = PixelFactory.createPixel(2, 3, 0, 1, 0, 1);
 
     pixelData.setPixel(pixel);
     //pixelData shifted to (2,2)

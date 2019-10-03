@@ -8,7 +8,10 @@ import chalmers.pimp.model.color.IColor;
  * The {@code ToolFactory} class is a factory for creating instances of the {@code ITool}
  * interface.
  */
-public class ToolFactory {
+public final class ToolFactory {
+
+  private ToolFactory() {
+  }
 
   /**
    * Creates and returns a pencil with the desired diameter and color.
@@ -27,6 +30,16 @@ public class ToolFactory {
    * @return a black pencil with the stroke of 2.
    */
   public static ITool createPencil(IModel model) {
-    return createPencil(2, ColorFactory.createColor(0, 0, 0), model);
+    return createPencil(2, ColorFactory.createColor(0, 0, 0, 255), model);
+  }
+
+  /**
+   * Creates and returns a MoveTool.
+   *
+   * @param model a reference to the Model.
+   * @return a MoveTool with no startX or startY.
+   */
+  public static ITool createMoveTool(IModel model){
+    return new MoveTool(model);
   }
 }
