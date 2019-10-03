@@ -53,17 +53,8 @@ public final class Canvas {
       layers.add(layer.copy());
     }
 
-    // FIXME ugly way to obtain active layer id, add layer ID to each layer?
-    int id = 0;
-    for (ILayer layer : canvas.layers) {
-      if (layer == canvas.activeLayer) {
-
-        selectLayer(id);
-
-        break;
-      } else {
-        ++id;
-      }
+    if ((canvas.activeLayer != null) && !layers.isEmpty()) {
+      selectLayer(canvas.activeLayer.getDepthIndex());
     }
   }
 
