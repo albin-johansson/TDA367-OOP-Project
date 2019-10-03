@@ -39,7 +39,7 @@ public final class ToolFactory {
    * @param model a reference to the Model.
    * @return a MoveTool with no startX or startY.
    */
-  public static ITool createMoveTool(IModel model){
+  public static ITool createMoveTool(IModel model) {
     return new MoveTool(model);
   }
 }
