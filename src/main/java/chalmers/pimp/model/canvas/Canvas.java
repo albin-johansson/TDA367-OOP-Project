@@ -48,22 +48,23 @@ public final class Canvas {
       layerUpdateListeners.add(listener);
     }
 
-    // FIXME ugly way to obtain active layer id, add layer ID to each layer?
-    int id = 0;
-    for (ILayer layer : canvas.layers) {
-      if (layer == canvas.activeLayer) {
-        break;
-      } else {
-        ++id;
-      }
-    }
-
     layers = new ArrayList<>(canvas.layers.size());
     for (ILayer layer : canvas.layers) {
       layers.add(layer.copy());
     }
 
-    selectLayer(id);
+    // FIXME ugly way to obtain active layer id, add layer ID to each layer?
+    int id = 0;
+    for (ILayer layer : canvas.layers) {
+      if (layer == canvas.activeLayer) {
+
+        selectLayer(id);
+
+        break;
+      } else {
+        ++id;
+      }
+    }
   }
 
   /**
