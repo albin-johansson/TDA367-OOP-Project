@@ -70,6 +70,16 @@ public final class Canvas {
   }
 
   /**
+   * Sets all the layer's depth index in this Canvas
+   */
+  private void setLayersDepthIndex() {
+    int index = 0;
+    for (ILayer l : layers) {
+      l.setDepthIndex(index++);
+    }
+  }
+
+  /**
    * Sets the pixel at the pixels coordinate, in the active layer. The coordinates are
    * zero-indexed.
    *
@@ -186,6 +196,7 @@ public final class Canvas {
     if (activeLayer == null) {
       activeLayer = layer;
     }
+    setLayersDepthIndex();
     notifyAllListeners(new LayerUpdateEvent(EventType.CREATED, layer));
   }
 
@@ -201,6 +212,7 @@ public final class Canvas {
     switchActiveLayerIfRemoved(layers.indexOf(layer));
     layers.remove(layer);
     notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layer));
+    setLayersDepthIndex();
   }
 
   /**
@@ -214,6 +226,7 @@ public final class Canvas {
     verifyIndexedLayerExistence(layerIndex);
     switchActiveLayerIfRemoved(layerIndex);
     notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layers.remove(layerIndex)));
+    setLayersDepthIndex();
   }
 
   /**
