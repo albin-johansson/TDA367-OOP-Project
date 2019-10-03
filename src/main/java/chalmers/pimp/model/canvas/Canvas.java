@@ -253,26 +253,27 @@ public final class Canvas {
 
   /**
    * Moves the supplied layer {@code steps} in the list, were negative number moves the layer back
-   * (and vice versa).
+   * (and vice versa). "Back" gives it a smaller index (a smaller z index).
    *
-   * @param layer the layer to be moved.
-   * @param steps the number of steps
+   * @param layer  the layer to be moved.
+   * @param deltaZ the number of steps to change its z value.
+   * @throws IllegalStateException if the supplied layer doesn't exist in the model.
+   * @throws NullPointerException  if the supplied layer is null.
    */
-  public void moveLayer(IReadOnlyLayer layer, int steps) {
+  public void moveLayer(IReadOnlyLayer layer, int deltaZ) {
+    verifyLayerExistence(layer);
     if (getAmountOfLayers() < 2) {
       return;
     }
-    verifyLayerExistence(layer);
-    int layerIndex = layers.indexOf(layer);
-    if (layerIndex + steps < layers.size() && layerIndex + steps > -1) {
-      ILayer temp = layers.get(layerIndex + steps);
-      layers.set(layerIndex + steps, layers.get(layerIndex));
-      layers.set(layerIndex, temp);
-      if (steps > 0) {
-        notifyAllListeners(new LayerUpdateEvent(EventType.POSITION_MOVED_FORWARDS, layer));
-      } else {
-        notifyAllListeners(new LayerUpdateEvent(EventType.POSITION_MOVED_BACKWARDS, layer));
-      }
+
+    boolean tooLarge = layer.getDepthIndex() + deltaZ >= layers.size();
+    boolean tooSmall = layer.getDepthIndex() + deltaZ <= -1;
+
+    if (!tooLarge && !tooSmall) {
+      layers.add(layer.getDepthIndex() + deltaZ, layers.remove(layer.getDepthIndex()));
+
+      setLayersDepthIndex();
+      notifyAllListeners(new LayerUpdateEvent(EventType.LAYER_ORDER_CHANGED, layer));
     }
   }
 
