@@ -6,8 +6,6 @@ import chalmers.pimp.model.pixeldata.IReadOnlyPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
-import chalmers.pimp.model.pixeldata.PixelData;
 import java.util.Objects;
 
 /**

@@ -97,6 +97,7 @@ final class ModelImpl implements IModel {
   @Override
   public void addLayer(ILayer layer) {
     canvas.addLayer(layer);
+
   }
 
   @Override
