@@ -99,6 +99,9 @@ final class Rectangle implements ILayer {
   public ILayer copy() {
     var copy = new Rectangle(getX(), getY(), width, height);
     copy.color = ColorFactory.createColor(color);
+
+    copy.setX(getX());
+    copy.setY(getY());
     copy.setVisible(isVisible());
     return copy;
   }
