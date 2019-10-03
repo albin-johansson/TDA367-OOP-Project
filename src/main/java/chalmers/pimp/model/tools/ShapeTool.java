@@ -79,4 +79,21 @@ public final class ShapeTool implements ITool {
     int maxY = Math.max(y, mouseStatus.getY());
     return new Point(maxX, maxY);
   }
+
+  /**
+   * Creates and returns a rectangle based on the origin point of the rectangle and the current
+   * position of the mouse.
+   *
+   * @param mouseStatus the current mouse status.
+   * @return a rectangle.
+   */
+  private ILayer createRect(MouseStatus mouseStatus) {
+    IReadOnlyPoint originPoint = getOriginPoint(mouseStatus);
+    IReadOnlyPoint maxPoint = getMaxPoint(mouseStatus);
+
+    int width = maxPoint.getX() - originPoint.getX();
+    int height = maxPoint.getY() - originPoint.getY();
+
+    return LayerFactory.createRectangle(originPoint.getX(), originPoint.getY(), width, height);
+  }
 }
