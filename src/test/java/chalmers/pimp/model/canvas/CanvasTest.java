@@ -2,7 +2,6 @@ package chalmers.pimp.model.canvas;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -90,7 +89,7 @@ class CanvasTest {
     assertNotSame((IReadOnlyLayer) defaultLayer, canvas.getActiveLayer());
 
     // Should not allow removing non-existent layers
-    assertThrows(IllegalStateException.class,() -> canvas.removeLayer(defaultLayer));
+    assertThrows(IllegalStateException.class, () -> canvas.removeLayer(defaultLayer));
 
     for (ILayer layer : canvas.getLayers()) {
       assertNotEquals(layer, defaultLayer);

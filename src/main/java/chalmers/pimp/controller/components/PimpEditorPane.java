@@ -105,7 +105,9 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
   }
 
   /**
-   * Will only act if {@code EventType} is CREATED, and will then create a new LayerItemPane with the supplied layer
+   * Will only act if {@code EventType} is CREATED, and will then create a new LayerItemPane with
+   * the supplied layer
+   *
    * @param e the {@code LayerUpdateEvent} which houses the EventType and associated Layer
    */
   @Override

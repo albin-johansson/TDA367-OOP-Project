@@ -7,7 +7,6 @@ import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
-import java.awt.Color;
 
 /**
  * The {@code IModel} interface specifies the facade for the main chalmers.pimp.model component in

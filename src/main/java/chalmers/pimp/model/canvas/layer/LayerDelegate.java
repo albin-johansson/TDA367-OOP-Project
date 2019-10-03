@@ -115,7 +115,7 @@ final class LayerDelegate {
    *
    * @param depthIndex the new depth index.
    */
-  void setDepthIndex(int depthIndex){
+  void setDepthIndex(int depthIndex) {
     this.depthIndex = depthIndex;
   }
 }

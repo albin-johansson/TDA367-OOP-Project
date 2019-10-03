@@ -245,7 +245,7 @@ public final class Canvas {
    * @throws NullPointerException if any arguments are {@code null}.
    */
   public void removeLayer(ILayer layer) {
-    verifyLayerExistence((IReadOnlyLayer) layer);
+    verifyLayerExistence(layer);
     switchActiveLayerIfRemoved(layers.indexOf(layer));
     layers.remove(layer);
     notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layer));

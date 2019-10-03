@@ -53,6 +53,7 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
 
   /**
    * Returns the layer's depth index, 0 as furthest back.
+   *
    * @return the depth index.
    */
   int getDepthIndex();
