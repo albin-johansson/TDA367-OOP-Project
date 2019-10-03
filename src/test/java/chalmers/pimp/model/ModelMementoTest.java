@@ -1,5 +1,6 @@
 package chalmers.pimp.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.canvas.Canvas;
