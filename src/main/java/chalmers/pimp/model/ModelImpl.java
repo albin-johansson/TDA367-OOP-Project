@@ -5,7 +5,8 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
+import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
 import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
@@ -208,10 +209,6 @@ final class ModelImpl implements IModel {
   @Override
   public void selectedToolPressed(MouseStatus mouseStatus) {
     if (hasSelectedTool()) {
-
-      ILayer layer = LayerFactory.createRasterLayer(100, 100);
-      canvas.addLayer(layer);
-      canvas.selectLayer(0);
       selectedTool.pressed(mouseStatus);
     }
   }

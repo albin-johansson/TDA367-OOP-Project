@@ -2,6 +2,8 @@ package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelFactory;
@@ -37,6 +39,10 @@ final class Pencil implements ITool {
 
   @Override
   public void pressed(MouseStatus mouseStatus) {
+    ILayer layer = LayerFactory.createRasterLayer(400, 400);
+    model.addLayer(layer);
+    model.selectLayer(layer.getDepthIndex());
+
     IPixel pixel = PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color);
     model.startStroke(pixel, diameter);
   }
