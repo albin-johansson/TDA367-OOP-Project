@@ -46,6 +46,11 @@ final class Rectangle implements ILayer {
   }
 
   @Override
+  public void move(int dx, int dy) {
+    layerDelegate.move(dx, dy);
+  }
+
+  @Override
   public void setX(int x) {
     layerDelegate.setX(x);
   }

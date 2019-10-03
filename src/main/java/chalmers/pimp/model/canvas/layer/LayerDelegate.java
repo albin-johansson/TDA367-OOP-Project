@@ -42,6 +42,11 @@ final class LayerDelegate {
     this.y = y;
   }
 
+  void move(int dx, int dy) {
+    x += dx;
+    y += dy;
+  }
+
   /**
    * Sets the value of the visibility property.
    *

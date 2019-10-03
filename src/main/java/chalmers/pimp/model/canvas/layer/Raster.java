@@ -48,6 +48,11 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public void move(int dx, int dy) {
+    layerDelegate.move(dx, dy);
+  }
+
+  @Override
   public void setX(int x) {
     layerDelegate.setX(x);
   }

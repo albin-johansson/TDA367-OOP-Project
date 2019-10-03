@@ -278,8 +278,7 @@ public final class Canvas {
    * @param yAmount the amount moved in dimension y.
    */
   public void moveSelectedLayer(int xAmount, int yAmount) {
-    activeLayer.setX(activeLayer.getX() + xAmount);
-    activeLayer.setY(activeLayer.getY() + yAmount);
+    activeLayer.move(xAmount, yAmount);
     canvasUpdateListeners.canvasUpdated();
   }
 
