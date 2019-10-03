@@ -234,4 +234,16 @@ public final class Canvas {
   public Iterable<ILayer> getLayers() {
     return layers;
   }
+
+  /**
+   * Inserts a layer at a specific index. Index 0 will insert the layer on index 0 and everything
+   * else will get "pushed back".
+   *
+   * @param index the specific index on which to insert the new layer on.
+   * @param layer the layer to be inserted.
+   * @throws IndexOutOfBoundsException if the provided index is out of bounds.
+   */
+  public void addLayer(int index, ILayer layer) {
+    layers.add(index, layer);
+  }
 }
