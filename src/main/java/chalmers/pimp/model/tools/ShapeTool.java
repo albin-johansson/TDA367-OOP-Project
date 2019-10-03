@@ -4,6 +4,8 @@ import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.point.IReadOnlyPoint;
+import chalmers.pimp.model.point.Point;
 import java.util.Objects;
 
 /**
@@ -27,29 +29,22 @@ public final class ShapeTool implements ITool {
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
+    ILayer rect = createRect(mouseStatus);
+    model.replaceLayer(1, rect); // TODO: Use a better index solution.
   }
 
   @Override
   public void pressed(MouseStatus mouseStatus) {
     x = mouseStatus.getX();
     y = mouseStatus.getY();
+    ILayer rect = LayerFactory.createRectangle(x, y, 10, 10);
+    model.addLayer(rect);
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
-    int mouseX = mouseStatus.getX();
-    int mouseY = mouseStatus.getY();
-
-    int originX = Math.min(x, mouseX);
-    int originY = Math.min(y, mouseY);
-    int maxX = Math.max(x, mouseX);
-    int maxY = Math.max(y, mouseY);
-
-    int width = maxX - originX;
-    int height = maxY - originY;
-
-    ILayer layer = LayerFactory.createRectangle(originX, originY, width, height);
-    model.addLayer(layer);
+    ILayer rect = createRect(mouseStatus);
+    model.replaceLayer(1, rect); // TODO: Use a better index solution.
   }
 
   /**
