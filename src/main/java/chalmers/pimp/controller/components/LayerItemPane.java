@@ -137,7 +137,7 @@ final class LayerItemPane extends AnchorPane {
    */
   private void showIfLayerIsSelected() {
     if (layer == model.getActiveLayer()) {
-      this.setStyle("-fx-background-color: GREY;");
+      this.setStyle("-fx-background-color: -selected-color");
     } else {
       this.setStyle("");
     }
