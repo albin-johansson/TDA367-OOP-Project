@@ -7,7 +7,6 @@ import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -40,34 +39,38 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
    */
   @Override
   public void layersUpdated(LayerUpdateEvent e) {
+    LayerItemPane layerItemPane = null;
     for (Node node : layerItemVBox.getChildren()) {
-      LayerItemPane layerItemPane = (LayerItemPane) node;
-      if (e.getLayer() == layerItemPane.getLayer()) {
-        switch (e.getType()) {
-          case REMOVED:
-            layerItemVBox.getChildren().removeAll(node);
-            break;
-          case VISIBILITY_TOGGLED:
-            break;
-          case SELECTED:
-            break;
-          case EDITED:
-            break;
-          case POSITION_MOVED_FORWARDS:
-            moveLayerItemPane(layerItemPane, 1);
-            break;
-          case POSITION_MOVED_BACKWARDS:
-            moveLayerItemPane(layerItemPane, -1);
-            break;
-          default:
-            throw new IllegalStateException();
-        }
+      LayerItemPane temp = (LayerItemPane) node;
+      if (e.getLayer() == temp.getLayer()) {
+        layerItemPane = temp;
         break;
       }
-      //TODO
     }
+    if (layerItemPane == null) {
+      return;
+    }
+
+    switch (e.getType()) {
+      case REMOVED:
+        layerItemVBox.getChildren().removeAll(layerItemPane);
+        break;
+      case VISIBILITY_TOGGLED:
+        break;
+      case SELECTED:
+        break;
+      case EDITED:
+        break;
+      case LAYER_ORDER_CHANGED:
+        updateLayerOrder();
+        break;
+      default:
+        throw new IllegalStateException();
+    }
+    //TODO
+
     for (Node node : layerItemVBox.getChildren()) {
-      LayerItemPane layerItemPane = (LayerItemPane) node;
+      layerItemPane = (LayerItemPane) node;
       layerItemPane.update();
     }
     updateEmptyLayerPane();
@@ -82,10 +85,26 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
    */
   private void moveLayerItemPane(LayerItemPane layerItemPane, int steps) {
     int toPos = layerItemVBox.getChildren().indexOf(layerItemPane) + steps;
-    LayerItemPane temp = (LayerItemPane) layerItemVBox.getChildren().get(toPos);
-    layerItemVBox.getChildren().set(toPos - steps, new Button());
-    layerItemVBox.getChildren().set(toPos, layerItemPane);
-    layerItemVBox.getChildren().set(toPos - steps, temp);
+    layerItemVBox.getChildren().remove(layerItemPane);
+    layerItemVBox.getChildren().add(toPos, layerItemPane);
+  }
+
+  /**
+   * Updates the order of the LayerItemPanes to represent the order in the model.
+   */
+  private void updateLayerOrder() {
+    int listSize = layerItemVBox.getChildren().size();
+    LayerItemPane[] layerItemPaneList = new LayerItemPane[listSize];
+    LayerItemPane layerItemPane;
+    for (Node node : layerItemVBox.getChildren()) {
+      layerItemPane = (LayerItemPane) node;
+      layerItemPaneList[layerItemPane.getLayer().getDepthIndex()] = layerItemPane;
+    }
+    layerItemVBox.getChildren().clear();
+    for (LayerItemPane l: layerItemPaneList) {
+      addLayerItemPane(l);
+    }
+//    layerItemVBox.getChildren().addAll(layerItemPaneList);
   }
 
   /**
@@ -94,7 +113,7 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
    * @param layerItemPane the layerItemPane to add to the VBox for display
    */
   void addLayerItemPane(LayerItemPane layerItemPane) {
-    layerItemVBox.getChildren().add(layerItemPane);
+    layerItemVBox.getChildren().add(0, layerItemPane);
     updateEmptyLayerPane();
   }
 
