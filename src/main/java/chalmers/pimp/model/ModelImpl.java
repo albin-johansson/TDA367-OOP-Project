@@ -112,8 +112,18 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void selectLayer(IReadOnlyLayer layer) {
+    canvas.selectLayer(layer);
+  }
+
+  @Override
   public void selectLayer(int layerIndex) {
     canvas.selectLayer(layerIndex);
+  }
+
+  @Override
+  public void moveLayer(IReadOnlyLayer layer, int steps) {
+    canvas.moveLayer(layer, steps);
   }
 
   @Override
@@ -130,6 +140,16 @@ final class ModelImpl implements IModel {
   @Override
   public void setPixels(int x, int y, PixelData pixelData) {
     canvas.setPixels(x, y, pixelData);
+  }
+
+  @Override
+  public void setLayerName(IReadOnlyLayer layer, String layerName) {
+    canvas.setLayerName(layer, layerName);
+  }
+
+  @Override
+  public void setLayerName(int layerIndex, String layerName) {
+    canvas.setLayerName(layerIndex, layerName);
   }
 
   @Override
@@ -165,6 +185,11 @@ final class ModelImpl implements IModel {
   @Override
   public int getAmountOfLayers() {
     return canvas.getAmountOfLayers();
+  }
+
+  @Override
+  public IReadOnlyLayer getActiveLayer() {
+    return canvas.getActiveLayer();
   }
 
   @Override

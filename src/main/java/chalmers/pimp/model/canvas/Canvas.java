@@ -81,6 +81,7 @@ public final class Canvas {
    * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
    *
    * @throws IllegalStateException if there is no active layer.
+   * @throws NullPointerException  if the supplied layerIndex is null;
    */
   private void verifyIndexedLayerExistence(int layerIndex) {
     if (layerIndex < 0 || layerIndex >= layers.size()) {
@@ -91,11 +92,26 @@ public final class Canvas {
   /**
    * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
    *
-   * @throws IllegalStateException if there is no active layer.
+   * @throws IllegalStateException if the supplied layer doesn't exist in the model.
+   * @throws NullPointerException  if the supplied layer is null.
    */
   private void verifyLayerExistence(IReadOnlyLayer layer) {
-    if (layer == null) {
-      throw new IllegalStateException("Layer does not exist!");
+    Objects.requireNonNull(layer);
+    for (IReadOnlyLayer l : layers) {
+      if (l == layer) {
+        return;
+      }
+    }
+    throw new IllegalStateException("Supplied layer does not exist in model!");
+  }
+
+  /**
+   * Sets all the layer's depth index in this Canvas
+   */
+  private void setLayersDepthIndex() {
+    int index = 0;
+    for (ILayer l : layers) {
+      l.setDepthIndex(index++);
     }
   }
 
@@ -125,7 +141,8 @@ public final class Canvas {
     verifyActiveLayerExistence();
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
       for (IReadOnlyPixel p : row) {
-        activeLayer.setPixel(PixelFactory.createPixelWithOffset(p, x, y));
+        activeLayer.setPixel(
+            PixelFactory.createPixelWithOffset(p, x - activeLayer.getX(), y - activeLayer.getY()));
       }
     }
     canvasUpdateListeners.canvasUpdated();
@@ -163,6 +180,26 @@ public final class Canvas {
   }
 
   /**
+   * Selects the supplied layer.
+   *
+   * @param layer the supplied layer that will be made active.
+   * @throws IllegalArgumentException if the supplied layer isn't associated with a layer.
+   */
+  public void selectLayer(IReadOnlyLayer layer) {
+    verifyLayerExistence(layer);
+    ILayer temp = null;
+    for (ILayer l : layers) {
+      if (layer == l) {
+        temp = l;
+        activeLayer = l;
+        break;
+      }
+    }
+    Objects.requireNonNull(temp); //TODO Bad fix, remind me later
+    layerUpdateListeners.layersUpdated(new LayerUpdateEvent(EventType.SELECTED, activeLayer));
+  }
+
+  /**
    * Selects the layer associated with the specified index (it's made active). The layer index is
    * zero-indexed.
    *
@@ -193,6 +230,10 @@ public final class Canvas {
     }
 
     layers.add(layer);
+    if (activeLayer == null) {
+      activeLayer = layer;
+    }
+    setLayersDepthIndex();
     notifyAllListeners(new LayerUpdateEvent(EventType.CREATED, layer));
   }
 
@@ -204,9 +245,11 @@ public final class Canvas {
    * @throws NullPointerException if any arguments are {@code null}.
    */
   public void removeLayer(ILayer layer) {
-    Objects.requireNonNull(layer);
+    verifyLayerExistence(layer);
+    switchActiveLayerIfRemoved(layers.indexOf(layer));
     layers.remove(layer);
     notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layer));
+    setLayersDepthIndex();
   }
 
   /**
@@ -217,10 +260,89 @@ public final class Canvas {
    * @throws IllegalArgumentException if the specified index isn't associated with a layer.
    */
   public void removeLayer(int layerIndex) {
-    if ((layerIndex < 0) || (layerIndex >= layers.size())) {
-      throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
-    }
+    verifyIndexedLayerExistence(layerIndex);
+    switchActiveLayerIfRemoved(layerIndex);
     notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layers.remove(layerIndex)));
+    setLayersDepthIndex();
+  }
+
+  /**
+   * If the supplied indexed layer is the current active layer, switch to another active layer or
+   * set to null.
+   *
+   * @param layerIndex the supplied indexed layer to no longer have as active layer.
+   */
+  private void switchActiveLayerIfRemoved(int layerIndex) {
+    if (activeLayer != layers.get(layerIndex)) {
+      return;
+    }
+
+    if (getAmountOfLayers() != 1) {
+      if (layerIndex == 0) {
+        activeLayer = layers.get(1);
+      } else {
+        activeLayer = layers.get(layerIndex - 1);
+      }
+    } else {
+      activeLayer = null;
+    }
+  }
+
+  /**
+   * Moves the supplied layer {@code steps} in the list, were negative number moves the layer back
+   * (and vice versa). "Back" gives it a smaller index (a smaller z index).
+   *
+   * @param layer  the layer to be moved.
+   * @param deltaZ the number of steps to change its z value.
+   * @throws IllegalStateException if the supplied layer doesn't exist in the model.
+   * @throws NullPointerException  if the supplied layer is null.
+   */
+  public void moveLayer(IReadOnlyLayer layer, int deltaZ) {
+    verifyLayerExistence(layer);
+    if (getAmountOfLayers() < 2) {
+      return;
+    }
+
+    boolean tooLarge = layer.getDepthIndex() + deltaZ >= layers.size();
+    boolean tooSmall = layer.getDepthIndex() + deltaZ <= -1;
+
+    if (!tooLarge && !tooSmall) {
+      layers.add(layer.getDepthIndex() + deltaZ, layers.remove(layer.getDepthIndex()));
+
+      setLayersDepthIndex();
+      notifyAllListeners(new LayerUpdateEvent(EventType.LAYER_ORDER_CHANGED, layer));
+    }
+  }
+
+  /**
+   * Sets the name of a given layer.
+   *
+   * @param layer     the layer to have it's name changed.
+   * @param layerName the new name for the layer.
+   */
+  public void setLayerName(IReadOnlyLayer layer, String layerName) {
+    verifyLayerExistence(layer);
+    Objects.requireNonNull(layerName);
+    for (ILayer l : layers) {
+      if (layer == l) {
+        l.setName(layerName);
+        break;
+      }
+    }
+    notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, layer));
+  }
+
+  /**
+   * Sets the name of a given indexed layer.
+   *
+   * @param layerIndex the list index for the layer.
+   * @param layerName  the new name for the layer.
+   */
+  public void setLayerName(int layerIndex, String layerName) {
+    verifyIndexedLayerExistence(layerIndex);
+    Objects.requireNonNull(layerName);
+    layers.get(layerIndex).setName(layerName);
+    notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, layers.get(layerIndex)));
   }
 
   /**
@@ -254,12 +376,21 @@ public final class Canvas {
   }
 
   /**
-   * Returns the current amount of layers in the canvas.
+   * Returns the amount of layers in this canvas's layers list.
    *
-   * @return the current amount of layers in the canvas.
+   * @return the number of layers.
    */
   public int getAmountOfLayers() {
     return layers.size();
+  }
+
+  /**
+   * Returns the current active layer.
+   *
+   * @return the current active layer.
+   */
+  public IReadOnlyLayer getActiveLayer() {
+    return activeLayer;
   }
 
   /**

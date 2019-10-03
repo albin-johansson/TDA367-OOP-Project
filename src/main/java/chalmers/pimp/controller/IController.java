@@ -70,6 +70,11 @@ public interface IController {
   void selectedToolReleased(MouseEvent mouseEvent);
 
   /**
+   * Creates a new raster layer.
+   */
+  void createNewLayer();
+
+  /**
    * Opens a file chooser dialog, which allows the user to import an image. If an image is selected,
    * it's injected into the model.
    */
