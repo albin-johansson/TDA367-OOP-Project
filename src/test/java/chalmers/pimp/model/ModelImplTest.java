@@ -39,7 +39,7 @@ class ModelImplTest {
 
     ILayer nonAddedLayer = LayerFactory.createRasterLayer(10, 10);
 
-    assertThrows(IllegalStateException.class,() -> model.removeLayer(nonAddedLayer));
+    assertThrows(IllegalStateException.class, () -> model.removeLayer(nonAddedLayer));
   }
 
   @Test
@@ -90,55 +90,55 @@ class ModelImplTest {
     for (IReadOnlyLayer l : model.getLayers()) {
       switch (index) {
         case 0:
-          assertEquals(l, (IReadOnlyLayer) layer1);
+          assertEquals(l, layer1);
           break;
         case 1:
-          assertEquals(l, (IReadOnlyLayer) layer2);
+          assertEquals(l, layer2);
           break;
         case 2:
-          assertEquals(l, (IReadOnlyLayer) layer3);
+          assertEquals(l, layer3);
           break;
       }
       index++;
     }
 
     //Try to move back layer backwards and front layer forwards, should not change anything
-    model.moveLayer((IReadOnlyLayer) layer1, -1);
-    model.moveLayer((IReadOnlyLayer) layer3, 1);
+    model.moveLayer(layer1, -1);
+    model.moveLayer(layer3, 1);
     //Move middle layer "zero" steps
-    model.moveLayer((IReadOnlyLayer) layer2, 0);
+    model.moveLayer(layer2, 0);
 
     //Assert order 1,2,3
     index = 0;
     for (IReadOnlyLayer l : model.getLayers()) {
       switch (index) {
         case 0:
-          assertEquals(l, (IReadOnlyLayer) layer1);
+          assertEquals(l, layer1);
           break;
         case 1:
-          assertEquals(l, (IReadOnlyLayer) layer2);
+          assertEquals(l, layer2);
           break;
         case 2:
-          assertEquals(l, (IReadOnlyLayer) layer3);
+          assertEquals(l, layer3);
           break;
       }
       index++;
     }
 
     //Move back layer forwards, then front layer backwards. Each one step.
-    model.moveLayer((IReadOnlyLayer) layer1, 1);
-    model.moveLayer((IReadOnlyLayer) layer3, -1);
+    model.moveLayer(layer1, 1);
+    model.moveLayer(layer3, -1);
     //Assert order 2,3,1
     for (IReadOnlyLayer l : model.getLayers()) {
       switch (index) {
         case 0:
-          assertEquals(l, (IReadOnlyLayer) layer2);
+          assertEquals(l, layer2);
           break;
         case 1:
-          assertEquals(l, (IReadOnlyLayer) layer3);
+          assertEquals(l, layer3);
           break;
         case 2:
-          assertEquals(l, (IReadOnlyLayer) layer1);
+          assertEquals(l, layer1);
           break;
       }
       index++;

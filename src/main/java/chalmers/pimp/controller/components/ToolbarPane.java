@@ -62,8 +62,7 @@ final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
     controller.createNewLayer();
   }
 
-
-
+  @FXML
   private void openImageChooser() {
     controller.openImageChooser();
   }

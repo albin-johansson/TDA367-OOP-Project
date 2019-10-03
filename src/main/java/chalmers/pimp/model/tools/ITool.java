@@ -27,5 +27,4 @@ public interface ITool {
    * @param mouseStatus the status of the mouse including necessary information.
    */
   void released(MouseStatus mouseStatus);
-
 }

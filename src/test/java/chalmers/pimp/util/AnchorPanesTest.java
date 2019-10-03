@@ -1,9 +1,7 @@
 package chalmers.pimp.util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import javafx.scene.layout.AnchorPane;
 import org.junit.jupiter.api.Test;
 
 class AnchorPanesTest {

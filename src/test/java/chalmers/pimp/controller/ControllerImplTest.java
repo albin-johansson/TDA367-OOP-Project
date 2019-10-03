@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.ModelFactory;
-import org.junit.jupiter.api.Test;
 import chalmers.pimp.view.IView;
 import chalmers.pimp.view.ViewFactory;
+import org.junit.jupiter.api.Test;
 
 class ControllerImplTest {
 

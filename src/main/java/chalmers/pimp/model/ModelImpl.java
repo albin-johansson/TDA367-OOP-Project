@@ -97,7 +97,6 @@ final class ModelImpl implements IModel {
   @Override
   public void addLayer(ILayer layer) {
     canvas.addLayer(layer);
-
   }
 
   @Override
@@ -124,6 +123,7 @@ final class ModelImpl implements IModel {
   public void moveLayer(IReadOnlyLayer layer, int steps) {
     canvas.moveLayer(layer, steps);
   }
+
   @Override
   public void restore(ModelMemento memento) {
     canvas = memento.getCanvas();

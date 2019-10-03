@@ -47,7 +47,7 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
         break;
       }
     }
-    if (layerItemPane == null) {
+    if (layerItemPane == null || e == null) {
       return;
     }
 
@@ -64,8 +64,10 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
       case LAYER_ORDER_CHANGED:
         updateLayerOrder();
         break;
+      case CREATED:
+        break;
       default:
-        throw new IllegalStateException();
+        throw new IllegalStateException("" + e.getType());
     }
     //TODO
 
@@ -101,7 +103,7 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
       layerItemPaneList[layerItemPane.getLayer().getDepthIndex()] = layerItemPane;
     }
     layerItemVBox.getChildren().clear();
-    for (LayerItemPane l: layerItemPaneList) {
+    for (LayerItemPane l : layerItemPaneList) {
       addLayerItemPane(l);
     }
 //    layerItemVBox.getChildren().addAll(layerItemPaneList);
