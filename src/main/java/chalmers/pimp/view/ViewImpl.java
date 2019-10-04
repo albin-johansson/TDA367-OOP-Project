@@ -30,8 +30,8 @@ final class ViewImpl implements IView {
   }
 
   @Override
-  public void setRendererGraphics(GraphicsContext graphics) {
-    renderer = RendererFactory.createFXRenderer(graphics);
+  public void setRenderer(IRenderer renderer) {
+    this.renderer = Objects.requireNonNull(renderer);
   }
 
   @Override
