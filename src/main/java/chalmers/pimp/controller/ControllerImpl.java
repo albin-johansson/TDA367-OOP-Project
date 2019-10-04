@@ -3,6 +3,7 @@ package chalmers.pimp.controller;
 import chalmers.pimp.controller.components.ImageChooser;
 import chalmers.pimp.controller.components.PimpEditorPane;
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.color.ColorFactory;
@@ -12,6 +13,7 @@ import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
 import chalmers.pimp.util.Resources;
 import chalmers.pimp.view.IView;
+import chalmers.pimp.view.renderer.RendererFactory;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.scene.Scene;
@@ -41,7 +43,9 @@ final class ControllerImpl implements IController {
     this.stage = Objects.requireNonNull(stage);
 
     var pane = new PimpEditorPane(model, this);
-    view.setRendererGraphics(pane.getGraphics());
+    IRenderer renderer = RendererFactory.createFXRenderer(pane.getGraphics());
+    view.setRenderer(renderer);
+    model.setRenderer(renderer);
 
     prepareStage(new Scene(pane, 800, 600));
   }
