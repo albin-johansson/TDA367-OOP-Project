@@ -84,15 +84,15 @@ public class Doodle implements ILayer {
     }
 
     if (pixels.size() == 1) {
-      int x = pixels.get(0).getX();
-      int y = pixels.get(0).getY();
+      int x = pixels.get(0).getX() + getX();
+      int y = pixels.get(0).getY() + getY();
       renderer.drawLine(x, y, x, y);
       return;
     }
 
     for (int i = 1; i < pixels.size(); i++) {
-      renderer.drawLine(pixels.get(i).getX(), pixels.get(i).getY(), pixels.get(i - 1).getX(),
-          pixels.get(i - 1).getY());
+      renderer.drawLine(pixels.get(i).getX() + getX(), pixels.get(i).getY() + getY(),
+          pixels.get(i - 1).getX() + getX(), pixels.get(i - 1).getY() + getY());
     }
   }
 }

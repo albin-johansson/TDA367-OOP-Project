@@ -47,4 +47,12 @@ public final class LayerFactory {
   public static ILayer createRectangle(int x, int y, int width, int height) {
     return new Rectangle(x, y, width, height);
   }
+
+  /**
+   * Creates and returns a layer that is a doodle
+   * @return
+   */
+  public static ILayer createDoodle(){
+    return new Doodle();
+  }
 }
