@@ -6,7 +6,9 @@ import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.point.IReadOnlyPoint;
 import chalmers.pimp.model.point.Point;
+import chalmers.pimp.model.point.PointFactory;
 import java.util.Objects;
+import javafx.scene.input.MouseEvent;
 
 /**
  * A tool for creating and editing shapes.
@@ -59,7 +61,7 @@ final class ShapeTool implements ITool {
   private IReadOnlyPoint getOriginPoint(MouseStatus mouseStatus) {
     int originX = Math.min(x, mouseStatus.getX());
     int originY = Math.min(y, mouseStatus.getY());
-    return new Point(originX, originY);
+    return PointFactory.createPoint(originX, originY);
   }
 
   /**
@@ -73,7 +75,7 @@ final class ShapeTool implements ITool {
   private IReadOnlyPoint getMaxPoint(MouseStatus mouseStatus) {
     int maxX = Math.max(x, mouseStatus.getX());
     int maxY = Math.max(y, mouseStatus.getY());
-    return new Point(maxX, maxY);
+    return PointFactory.createPoint(maxX, maxY);
   }
 
   /**

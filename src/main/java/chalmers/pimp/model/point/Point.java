@@ -14,7 +14,7 @@ public final class Point implements IPoint {
    * @param x the x coordinate.
    * @param y the y coordinate.
    */
-  public Point(int x, int y) {
+  Point(int x, int y) {
     this.x = x;
     this.y = y;
   }
