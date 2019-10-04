@@ -23,7 +23,7 @@ final class LayerDelegate {
     isVisible = DEFAULT_VISIBILITY_VALUE;
     x = 0;
     y = 0;
-    this.name = "";
+    name = "";
   }
 
   /**
