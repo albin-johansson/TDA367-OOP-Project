@@ -70,6 +70,16 @@ public interface IRenderer {
   void drawText(String content, int x, int y, int fontSize);
 
   /**
+   * Draws a line from point (x1, y1) to point (x2, y2)
+   *
+   * @param x1 first point x-coordinate
+   * @param y1 first point y-coordinate
+   * @param x2 second point x-coordinate
+   * @param y2 second point y-coordinate
+   */
+  void drawLine(int x1, int y1, int x2, int y2);
+
+  /**
    * Sets the rotation.
    *
    * @param rotation the rotation in degrees.

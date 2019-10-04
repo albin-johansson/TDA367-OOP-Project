@@ -6,5 +6,6 @@ package chalmers.pimp.model.canvas.layer;
 public enum LayerType {
   RASTER,
   TEXT,
-  SHAPE
+  SHAPE,
+  DOODLE
 }
