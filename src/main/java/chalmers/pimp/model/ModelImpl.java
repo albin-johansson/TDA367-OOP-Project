@@ -25,14 +25,20 @@ final class ModelImpl implements IModel {
   private Canvas canvas;
   private Stroke stroke;
   private ITool selectedTool;
+  private IRenderer renderer;
 
-  ModelImpl() {
+  /**
+   * @param renderer the specific renderer.
+   * @throws NullPointerException if the supplied renderer is {@code null}.
+   */
+  ModelImpl(IRenderer renderer) {
     canvas = new Canvas();
     commandManager = new CommandManager();
     undoRedoListeners = new UndoRedoListenerComposite();
 
     stroke = null;
     selectedTool = ToolFactory.createPencil(2, ColorFactory.createColor(0xFF, 0, 0xFF), this);
+    this.renderer = Objects.requireNonNull(renderer);
   }
 
   /**
@@ -248,5 +254,15 @@ final class ModelImpl implements IModel {
   @Override
   public void moveSelectedLayer(int xAmount, int yAmount) {
     canvas.moveSelectedLayer(xAmount, yAmount);
+  }
+
+  @Override
+  public IRenderer getRenderer() {
+    return renderer;
+  }
+
+  @Override
+  public void setRenderer(IRenderer renderer) {
+    this.renderer = Objects.requireNonNull(renderer);
   }
 }
