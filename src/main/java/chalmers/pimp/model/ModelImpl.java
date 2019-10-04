@@ -78,11 +78,13 @@ final class ModelImpl implements IModel {
     addLayerCmd.execute();
 
     commandManager.insertCommand(addLayerCmd);
+    notifyAllCanvasUpdateListeners();
   }
 
   @Override
   public void removeLayer(ILayer layer) {
-    canvas.removeLayer(layer);
+    canvas.removeLayer(layer); // TODO replace with command
+    notifyAllCanvasUpdateListeners();
   }
 
   @Override
