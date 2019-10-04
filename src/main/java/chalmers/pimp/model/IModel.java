@@ -2,8 +2,8 @@ package chalmers.pimp.model;
 
 import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
+import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
@@ -193,18 +193,6 @@ public interface IModel extends IChangeable {
    */
   Iterable<? extends IReadOnlyLayer> getLayers();
 
-  /**
-   * Returns the current amount of layers in the chalmers.pimp.model.
-   *
-   * @return the current amount of layers in the chalmers.pimp.model.
-   */
-  int getAmountOfLayers();
-
-  /**
-   * Returns the current amount of layers in the canvas.
-   *
-   * @return the current amount of layers in the canvas.
-   */
   IReadOnlyLayer getActiveLayer();
 
   /**

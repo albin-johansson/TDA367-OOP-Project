@@ -2,11 +2,9 @@ package chalmers.pimp.model;
 
 import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
+import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
-import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
 import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
@@ -101,7 +99,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void moveLayer(IReadOnlyLayer layer, int steps) {
-    canvas.moveLayer(layer, steps);
+    canvas.changeDepthIndex(layer, steps);
   }
 
   @Override
@@ -142,12 +140,12 @@ final class ModelImpl implements IModel {
 
   @Override
   public void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible) {
-    canvas.setLayerVisible(layer, isVisible);
+    canvas.setLayerVisibility(layer, isVisible);
   }
 
   @Override
   public void setLayerVisibility(int layerIndex, boolean isVisible) {
-    canvas.setLayerVisible(layerIndex, isVisible);
+    canvas.setLayerVisibility(layerIndex, isVisible);
   }
 
   @Override
@@ -173,11 +171,6 @@ final class ModelImpl implements IModel {
   @Override
   public Iterable<? extends IReadOnlyLayer> getLayers() {
     return canvas.getLayers();
-  }
-
-  @Override
-  public int getAmountOfLayers() {
-    return canvas.getAmountOfLayers();
   }
 
   @Override
@@ -221,14 +214,16 @@ final class ModelImpl implements IModel {
   public void undo() {
     commandManager.undo();
 
-    canvas.notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, canvas.getActiveLayer()));
+    canvas.notifyLayerUpdateListeners();
+    canvas.notifyCanvasUpdateListeners();
   }
 
   @Override
   public void redo() {
     commandManager.redo();
 
-    canvas.notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, canvas.getActiveLayer()));
+    canvas.notifyLayerUpdateListeners();
+    canvas.notifyCanvasUpdateListeners();
   }
 
   @Override

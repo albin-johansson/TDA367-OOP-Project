@@ -1,4 +1,6 @@
-package chalmers.pimp.model.canvas.layer;
+package chalmers.pimp.model.canvas;
+
+import chalmers.pimp.model.canvas.LayerUpdateEvent;
 
 /**
  * The {@code ILayerUpdateListener} interface specifies object that may listen for updates of the

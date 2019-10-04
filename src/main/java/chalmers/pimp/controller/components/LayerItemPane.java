@@ -48,6 +48,7 @@ final class LayerItemPane extends AnchorPane {
 
   private final IModel model;
   private final IReadOnlyLayer layer;
+  private final int associatedLayerIndex;
 
   /**
    * @param model an reference to the {@code IModel}.
@@ -60,28 +61,23 @@ final class LayerItemPane extends AnchorPane {
     this.model = Objects.requireNonNull(model);
     this.layer = Objects.requireNonNull(layer);
     textLabel.setText(layer.getName());
+
+    associatedLayerIndex = layer.getDepthIndex();
+
     updateVisibilityImage();
+    updateSelectionState();
   }
 
-  /**
-   * Toggles the visibility boolean connected with this layerItem's layer through the
-   * chalmers.pimp.model's method
-   */
   @FXML
+  @SuppressWarnings("unused")
   private void toggleVisibility() {
-    for (IReadOnlyLayer l : model.getLayers()) {
-      if (layer.equals(l)) {
-        model.setLayerVisibility(l, toggleButton.isSelected());
-        break;
-      }
-    }
+    model.setLayerVisibility(associatedLayerIndex, toggleButton.isSelected());
     updateVisibilityImage();
+//    updateVisibilityImage();
   }
 
-  /**
-   * Updates this layerItem's layer's name through the chalmers.pimp.model.
-   */
   @FXML
+  @SuppressWarnings("unused")
   private void updateLayerName() {
     String temp = textLabel.getText();
     if (temp.isEmpty()) {
@@ -91,39 +87,28 @@ final class LayerItemPane extends AnchorPane {
     }
   }
 
-  /**
-   * Sets this layer item's associated layer as the active layer.
-   */
   @FXML
+  @SuppressWarnings("unused")
   private void updateActiveLayer() {
-    model.selectLayer(layer.getDepthIndex());
-    showIfLayerIsSelected();
+    model.selectLayer(associatedLayerIndex);
+    updateSelectionState();
+//    showIfLayerIsSelected();
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void decreaseZIndex() {
     model.moveLayer(layer, -1);
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void increaseZIndex() {
     model.moveLayer(layer, 1);
   }
 
   //TODO Rethink if below methods should all be private and called by single update method...
 
-  /**
-   * Updates this pane, runs all related private methods.
-   */
-  void update() {
-    updateVisibilityImage();
-    showIfLayerIsSelected();
-  }
-
-  /**
-   * Updates the image used on the visibility button based on "this" layers visibility in the
-   * chalmers.pimp.model.
-   */
   private void updateVisibilityImage() {
     if (layer.isVisible()) {
       imageView.setImage(EYE_OPEN_IMAGE);
@@ -132,24 +117,15 @@ final class LayerItemPane extends AnchorPane {
     }
   }
 
-  /**
-   * Sets the style for this {@code LayerItemPane} to Gray if the corresponding Layer is active.
-   * Reverts to CSS default otherwise.
-   */
-  private void showIfLayerIsSelected() {
-    if (layer == model.getActiveLayer()) {
-      setStyle("-fx-background-color: -selected-color");
+  private void updateSelectionState() {
+    if (model.getActiveLayer() == null) {
+      return;
+    }
+
+    if (associatedLayerIndex == model.getActiveLayer().getDepthIndex()) {
+      setStyle("-fx-background-color: -selected-color;");
     } else {
       setStyle("");
     }
-  }
-
-  /**
-   * Returns the {@code IReadOnlyLayer} that this LayerItem represents.
-   *
-   * @return the layer this LayerItem represents.
-   */
-  IReadOnlyLayer getLayer() {
-    return layer;
   }
 }

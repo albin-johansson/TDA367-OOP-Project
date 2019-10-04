@@ -3,10 +3,6 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
 import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
-import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
-import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
 import chalmers.pimp.util.AnchorPanes;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
@@ -18,13 +14,8 @@ import javafx.scene.layout.AnchorPane;
 /**
  * The {@code PimpEditorPane} class represents the main editor pane for the Pimp application.
  */
-public final class PimpEditorPane extends AnchorPane implements ILayerUpdateListener {
+public final class PimpEditorPane extends AnchorPane {
 
-  private final IModel model;
-  private final IController controller;
-  private final LayerItemManagerPane layerItemManagerPane;
-  private final ToolbarPane toolbarPane;
-  private final PalettePane palettePane;
   private final CanvasPane canvasPane;
   @FXML
   @SuppressWarnings("unused")
@@ -47,9 +38,10 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
    */
   public PimpEditorPane(IModel model, IController controller) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "root.fxml"));
-    this.model = Objects.requireNonNull(model);
-    this.controller = Objects.requireNonNull(controller);
-    toolbarPane = new ToolbarPane(controller);
+    Objects.requireNonNull(model);
+    Objects.requireNonNull(controller);
+
+    var toolbarPane = new ToolbarPane(controller);
     topAnchorPane.getChildren().add(toolbarPane);
     AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
     model.addUndoRedoListener(toolbarPane);
@@ -58,17 +50,16 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
     centerPane.getChildren().add(canvasPane);
     AnchorPanes.setAnchors(canvasPane, 0, 0, 0, 0);
 
-    layerItemManagerPane = new LayerItemManagerPane();
+    var layerItemManagerPane = new LayerItemContainerPane(model);
     model.addLayerUpdateListener(layerItemManagerPane);
-    model.addLayerUpdateListener(this);
     rightAnchorPane.getChildren().add(layerItemManagerPane);
     AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
 
-    palettePane = new PalettePane(controller);
+    var palettePane = new PalettePane(controller);
     leftAnchorPane.getChildren().add(palettePane);
     AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
 
-    populateLayerItemManagerPane();
+//    populateLayerItemManagerPane();
   }
 
   /**
@@ -80,40 +71,27 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
     return canvasPane.getGraphics();
   }
 
-  /**
-   * Populates this PEP's LayerItemManagerPane with LayerItems based on the layers in the
-   * chalmers.pimp.model this PEP has
-   */
-  private void populateLayerItemManagerPane() {
-    for (IReadOnlyLayer layer : model.getLayers()) {
-      layerItemManagerPane.addLayerItemPane(createLayerItemPane(layer));
-    }
-  }
+//  /**
+//   * Populates this PEP's LayerItemManagerPane with LayerItems based on the layers in the
+//   * chalmers.pimp.model this PEP has
+//   */
+//  private void populateLayerItemManagerPane() {
+//    for (IReadOnlyLayer layer : model.getLayers()) {
+//      layerItemManagerPane.addLayerItemPane(createLayerItemPane(layer));
+//    }
+//  }
 
-  /**
-   * Creates the LayerItems for the view, based on a {@code IReadOnlyLayer}
-   *
-   * @param layer the {@code IReadOnlyLayer} that will be created as a view component
-   * @return the corresponding {@code LayerItemPane} created from the {@code IReadOnlyLayer}
-   */
-  private LayerItemPane createLayerItemPane(IReadOnlyLayer layer) {
-    try {
-      return new LayerItemPane(model, layer);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  /**
-   * Will only act if {@code EventType} is CREATED, and will then create a new LayerItemPane with
-   * the supplied layer
-   *
-   * @param e the {@code LayerUpdateEvent} which houses the EventType and associated Layer
-   */
-  @Override
-  public void layersUpdated(LayerUpdateEvent e) {
-    if (e.getType() == EventType.CREATED) {
-      layerItemManagerPane.addLayerItemPane(createLayerItemPane(e.getLayer()));
-    }
-  }
+//  /**
+//   * Creates the LayerItems for the view, based on a {@code IReadOnlyLayer}
+//   *
+//   * @param layer the {@code IReadOnlyLayer} that will be created as a view component
+//   * @return the corresponding {@code LayerItemPane} created from the {@code IReadOnlyLayer}
+//   */
+//  private LayerItemPane createLayerItemPane(IReadOnlyLayer layer) {
+//    try {
+//      return new LayerItemPane(model, layer);
+//    } catch (Exception e) {
+//      throw new RuntimeException(e);
+//    }
+//  }
 }

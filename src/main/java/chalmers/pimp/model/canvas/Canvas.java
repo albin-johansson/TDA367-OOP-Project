@@ -1,16 +1,9 @@
 package chalmers.pimp.model.canvas;
 
 import chalmers.pimp.model.canvas.layer.ILayer;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
-import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
-import chalmers.pimp.model.pixeldata.PixelFactory;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,15 +12,11 @@ import java.util.Objects;
 public final class Canvas {
 
   private final CanvasUpdateListenerComposite canvasUpdateListeners;
-  private final LayerUpdateListenerComposite layerUpdateListeners;
-  private final List<ILayer> layers;
-  private ILayer activeLayer;
+  private final LayerManager layerManager;
 
   public Canvas() {
     canvasUpdateListeners = new CanvasUpdateListenerComposite();
-    layerUpdateListeners = new LayerUpdateListenerComposite();
-    layers = new ArrayList<>(20);
-    activeLayer = null;
+    layerManager = new LayerManager();
   }
 
   /**
@@ -38,73 +27,16 @@ public final class Canvas {
    */
   public Canvas(Canvas canvas) {
     Objects.requireNonNull(canvas);
-    canvasUpdateListeners = new CanvasUpdateListenerComposite();
-    for (ICanvasUpdateListener listener : canvas.canvasUpdateListeners) {
-      canvasUpdateListeners.add(listener);
-    }
-
-    layerUpdateListeners = new LayerUpdateListenerComposite();
-    for (ILayerUpdateListener listener : canvas.layerUpdateListeners) {
-      layerUpdateListeners.add(listener);
-    }
-
-    layers = new ArrayList<>(canvas.layers.size());
-    for (ILayer layer : canvas.layers) {
-      layers.add(layer.copy());
-    }
-
-    if ((canvas.activeLayer != null) && !layers.isEmpty()) {
-      selectLayer(canvas.activeLayer.getDepthIndex());
-    }
+    canvasUpdateListeners = new CanvasUpdateListenerComposite(canvas.canvasUpdateListeners);
+    layerManager = new LayerManager(canvas.layerManager);
   }
 
-  /**
-   * Verifies that there is an active layer. If that isn't the case, an exception is thrown.
-   *
-   * @throws IllegalStateException if there is no active layer.
-   */
-  private void verifyActiveLayerExistence() {
-    if (activeLayer == null) {
-      throw new IllegalStateException("No available active layer!");
-    }
+  public void notifyLayerUpdateListeners() {
+    layerManager.notifyListeners();
   }
 
-  /**
-   * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
-   *
-   * @throws IllegalStateException if there is no active layer.
-   * @throws NullPointerException  if the supplied layerIndex is null;
-   */
-  private void verifyIndexedLayerExistence(int layerIndex) {
-    if (layerIndex < 0 || layerIndex >= layers.size()) {
-      throw new IllegalStateException("Indexed layer does not exist!");
-    }
-  }
-
-  /**
-   * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
-   *
-   * @throws IllegalStateException if the supplied layer doesn't exist in the model.
-   * @throws NullPointerException  if the supplied layer is null.
-   */
-  private void verifyLayerExistence(IReadOnlyLayer layer) {
-    Objects.requireNonNull(layer);
-    for (IReadOnlyLayer l : layers) {
-      if (l == layer) {
-        return;
-      }
-    }
-    throw new IllegalStateException("Supplied layer does not exist in model!");
-  }
-
-  /**
-   * Sets all the layer's depth index in this Canvas
-   */
-  private void setLayersDepthIndex() {
-    int index = 0;
-    for (ILayer l : layers) {
-      l.setDepthIndex(index++);
-    }
+  public void notifyCanvasUpdateListeners() {
+    canvasUpdateListeners.canvasUpdated();
   }
 
   /**
@@ -117,8 +49,7 @@ public final class Canvas {
    * @throws NullPointerException      if any arguments are {@code null}.
    */
   public void setPixel(IPixel pixel) {
-    verifyActiveLayerExistence();
-    activeLayer.setPixel(pixel);
+    layerManager.setActiveLayerPixel(pixel);
     canvasUpdateListeners.canvasUpdated();
   }
 
@@ -130,65 +61,23 @@ public final class Canvas {
    * @param pixelData the pixel data to be copied.
    */
   public void setPixels(int x, int y, IReadOnlyPixelData pixelData) {
-    verifyActiveLayerExistence();
-    for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
-      for (IReadOnlyPixel p : row) {
-        activeLayer.setPixel(
-            PixelFactory.createPixelWithOffset(p, x - activeLayer.getX(), y - activeLayer.getY()));
-      }
-    }
+    layerManager.setActiveLayerPixels(x, y, pixelData);
     canvasUpdateListeners.canvasUpdated();
   }
 
-  /**
-   * Sets the visibility property value for the supplied layer.
-   *
-   * @param isVisible {@code true} if the supplied layer should be visible; {@code false}
-   *                  otherwise.
-   * @throws IllegalStateException if there is no supplied layer.
-   */
-  public void setLayerVisible(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
-    verifyLayerExistence(readOnlyLayer);
-    for (ILayer layer : layers) {
-      if (readOnlyLayer == layer) {
-        layer.setVisible(isVisible);
-        break;
-      }
-    }
-    notifyAllListeners(new LayerUpdateEvent(EventType.VISIBILITY_TOGGLED, activeLayer));
+  @Deprecated
+  public void setLayerVisibility(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
+    layerManager.setLayerVisibility(readOnlyLayer.getDepthIndex(), isVisible);
+    canvasUpdateListeners.canvasUpdated();
   }
 
-  /**
-   * Sets the visibility property value for the supplied indexed layer.
-   *
-   * @param isVisible {@code true} if the supplied indexed layer should be visible; {@code false}
-   *                  otherwise.
-   * @throws IllegalStateException if there is supplied indexed layer.
-   */
-  public void setLayerVisible(int layerIndex, boolean isVisible) {
-    verifyIndexedLayerExistence(layerIndex);
-    layers.get(layerIndex).setVisible(isVisible);
-    notifyAllListeners(new LayerUpdateEvent(EventType.VISIBILITY_TOGGLED, layers.get(layerIndex)));
+  public void setLayerVisibility(int layerIndex, boolean isVisible) {
+    layerManager.setLayerVisibility(layerIndex, isVisible);
   }
 
-  /**
-   * Selects the supplied layer.
-   *
-   * @param layer the supplied layer that will be made active.
-   * @throws IllegalArgumentException if the supplied layer isn't associated with a layer.
-   */
+  @Deprecated
   public void selectLayer(IReadOnlyLayer layer) {
-    verifyLayerExistence(layer);
-    ILayer temp = null;
-    for (ILayer l : layers) {
-      if (layer == l) {
-        temp = l;
-        activeLayer = l;
-        break;
-      }
-    }
-    Objects.requireNonNull(temp); //TODO Bad fix, remind me later
-    layerUpdateListeners.layersUpdated(new LayerUpdateEvent(EventType.SELECTED, activeLayer));
+    layerManager.selectLayer(layer.getDepthIndex());
   }
 
   /**
@@ -199,12 +88,7 @@ public final class Canvas {
    * @throws IllegalArgumentException if the supplied index isn't associated with a layer.
    */
   public void selectLayer(int layerIndex) {
-    if ((layerIndex < 0) || (layerIndex >= layers.size())) {
-      throw new IllegalArgumentException("Invalid layer index: " + layerIndex);
-    } else {
-      activeLayer = layers.get(layerIndex);
-    }
-    layerUpdateListeners.layersUpdated(new LayerUpdateEvent(EventType.SELECTED, activeLayer));
+    layerManager.selectLayer(layerIndex);
   }
 
   /**
@@ -215,18 +99,7 @@ public final class Canvas {
    * @throws IllegalArgumentException if the supplied layer is already present in the canvas.
    */
   public void addLayer(ILayer layer) {
-    Objects.requireNonNull(layer);
-
-    if (layers.contains(layer)) {
-      throw new IllegalArgumentException("Attempted to add the same layer multiple times!");
-    }
-
-    layers.add(layer);
-    if (activeLayer == null) {
-      activeLayer = layer;
-    }
-    setLayersDepthIndex();
-    notifyAllListeners(new LayerUpdateEvent(EventType.CREATED, layer));
+    layerManager.addLayer(layer);
   }
 
   /**
@@ -236,12 +109,8 @@ public final class Canvas {
    * @param layer the layer that will be removed, may not be {@code null}.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  public void removeLayer(ILayer layer) {
-    verifyLayerExistence(layer);
-    switchActiveLayerIfRemoved(layers.indexOf(layer));
-    layers.remove(layer);
-    notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layer));
-    setLayersDepthIndex();
+  public void removeLayer(IReadOnlyLayer layer) {
+    layerManager.removeLayer(layer);
   }
 
   /**
@@ -252,32 +121,7 @@ public final class Canvas {
    * @throws IllegalArgumentException if the specified index isn't associated with a layer.
    */
   public void removeLayer(int layerIndex) {
-    verifyIndexedLayerExistence(layerIndex);
-    switchActiveLayerIfRemoved(layerIndex);
-    notifyAllListeners(new LayerUpdateEvent(EventType.REMOVED, layers.remove(layerIndex)));
-    setLayersDepthIndex();
-  }
-
-  /**
-   * If the supplied indexed layer is the current active layer, switch to another active layer or
-   * set to null.
-   *
-   * @param layerIndex the supplied indexed layer to no longer have as active layer.
-   */
-  private void switchActiveLayerIfRemoved(int layerIndex) {
-    if (activeLayer != layers.get(layerIndex)) {
-      return;
-    }
-
-    if (getAmountOfLayers() != 1) {
-      if (layerIndex == 0) {
-        activeLayer = layers.get(1);
-      } else {
-        activeLayer = layers.get(layerIndex - 1);
-      }
-    } else {
-      activeLayer = null;
-    }
+    layerManager.removeLayer(layerIndex);
   }
 
   /**
@@ -289,21 +133,8 @@ public final class Canvas {
    * @throws IllegalStateException if the supplied layer doesn't exist in the model.
    * @throws NullPointerException  if the supplied layer is null.
    */
-  public void moveLayer(IReadOnlyLayer layer, int deltaZ) {
-    verifyLayerExistence(layer);
-    if (getAmountOfLayers() < 2) {
-      return;
-    }
-
-    boolean tooLarge = layer.getDepthIndex() + deltaZ >= layers.size();
-    boolean tooSmall = layer.getDepthIndex() + deltaZ <= -1;
-
-    if (!tooLarge && !tooSmall) {
-      layers.add(layer.getDepthIndex() + deltaZ, layers.remove(layer.getDepthIndex()));
-
-      setLayersDepthIndex();
-      notifyAllListeners(new LayerUpdateEvent(EventType.LAYER_ORDER_CHANGED, layer));
-    }
+  public void changeDepthIndex(IReadOnlyLayer layer, int deltaZ) {
+    layerManager.changeDepthIndex(layer, deltaZ);
   }
 
   /**
@@ -312,29 +143,13 @@ public final class Canvas {
    * @param layer     the layer to have it's name changed.
    * @param layerName the new name for the layer.
    */
+  @Deprecated
   public void setLayerName(IReadOnlyLayer layer, String layerName) {
-    verifyLayerExistence(layer);
-    Objects.requireNonNull(layerName);
-    for (ILayer l : layers) {
-      if (layer == l) {
-        l.setName(layerName);
-        break;
-      }
-    }
-    notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, layer));
+    layerManager.setLayerName(layer.getDepthIndex(), layerName);
   }
 
-  /**
-   * Sets the name of a given indexed layer.
-   *
-   * @param layerIndex the list index for the layer.
-   * @param layerName  the new name for the layer.
-   */
   public void setLayerName(int layerIndex, String layerName) {
-    verifyIndexedLayerExistence(layerIndex);
-    Objects.requireNonNull(layerName);
-    layers.get(layerIndex).setName(layerName);
-    notifyAllListeners(new LayerUpdateEvent(EventType.EDITED, layers.get(layerIndex)));
+    layerManager.setLayerName(layerIndex, layerName);
   }
 
   /**
@@ -348,23 +163,17 @@ public final class Canvas {
     canvasUpdateListeners.add(listener);
   }
 
-  /**
-   * Adds a layer update listener to the canvas.
-   *
-   * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException     if any arguments are {@code null}.
-   * @throws IllegalArgumentException if the supplied listener has been added previously.
-   */
   public void addLayerUpdateListener(ILayerUpdateListener listener) {
-    layerUpdateListeners.add(listener);
+    layerManager.addLayerUpdateListener(listener);
+//    layerUpdateListeners.add(listener);
   }
 
-  /**
-   * Notifies the listeners for this Canvas
-   */
-  public void notifyAllListeners(LayerUpdateEvent e) {
-    layerUpdateListeners.layersUpdated(e);
-    canvasUpdateListeners.canvasUpdated();
+  public void setLayerX(int x) {
+    layerManager.setActiveLayerX(x);
+  }
+
+  public void setLayerY(int y) {
+    layerManager.setActiveLayerY(y);
   }
 
   /**
@@ -373,7 +182,7 @@ public final class Canvas {
    * @return the number of layers.
    */
   public int getAmountOfLayers() {
-    return layers.size();
+    return layerManager.getAmountOfLayers();
   }
 
   /**
@@ -382,7 +191,7 @@ public final class Canvas {
    * @return the current active layer.
    */
   public IReadOnlyLayer getActiveLayer() {
-    return activeLayer;
+    return layerManager.getActiveLayer();
   }
 
   /**
@@ -390,8 +199,8 @@ public final class Canvas {
    *
    * @return all of the layers present in the canvas.
    */
-  public Iterable<ILayer> getLayers() {
-    return layers;
+  public Iterable<? extends IReadOnlyLayer> getLayers() {
+    return layerManager.getLayers();
   }
 
   /**
@@ -401,22 +210,14 @@ public final class Canvas {
    * @param yAmount the amount moved in dimension y.
    */
   public void moveSelectedLayer(int xAmount, int yAmount) {
-    activeLayer.move(xAmount, yAmount);
+    layerManager.moveActiveLayer(xAmount, yAmount);
     canvasUpdateListeners.canvasUpdated();
   }
 
   @Override
   public String toString() {
     String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
-    String state = "Active layer: " + activeLayer + ", #layers: " + layers.size();
+    String state = "Layer manager: " + layerManager;
     return "(" + id + " | " + state + ")";
-  }
-
-  public void setLayerX(int x) {
-    activeLayer.setX(x);
-  }
-
-  public void setLayerY(int y) {
-    activeLayer.setY(y);
   }
 }
