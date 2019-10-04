@@ -45,4 +45,9 @@ final class PalettePane extends AnchorPane {
   private void selectMoveTool() {
     controller.selectMoveTool();
   }
+
+  @FXML
+  private void selectRectangleTool() {
+    controller.selectRectangleTool();
+  }
 }
