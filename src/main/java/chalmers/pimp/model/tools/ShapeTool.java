@@ -16,7 +16,7 @@ final class ShapeTool implements ITool {
   private int x;
   private int y;
   private IModel model;
-  private ILayer currentRectangle;
+  private ILayer currentShape;
 
   /**
    * Creates and returns a shape tool.
@@ -30,22 +30,21 @@ final class ShapeTool implements ITool {
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
-    ILayer rect = createRect(mouseStatus);
-    model.replaceLayer(1, rect); // TODO: Use a better index solution.
+    ILayer newShape = createRect(mouseStatus);
+    newShape.draw(model.getRenderer());
   }
 
   @Override
   public void pressed(MouseStatus mouseStatus) {
     x = mouseStatus.getX();
     y = mouseStatus.getY();
-    ILayer rect = LayerFactory.createRectangle(x, y, 0, 0);
-    model.addLayer(rect);
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
-    ILayer rect = createRect(mouseStatus);
-    model.replaceLayer(1, rect); // TODO: Use a better index solution.
+    ILayer newShape = createRect(mouseStatus);
+    model.addLayer(newShape);
+    model.selectLayer(newShape.getDepthIndex());
   }
 
   /**
