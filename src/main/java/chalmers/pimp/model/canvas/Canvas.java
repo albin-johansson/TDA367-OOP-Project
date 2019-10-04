@@ -376,6 +376,13 @@ public final class Canvas {
   }
 
   /**
+   * Notifies all the canvas listeners.
+   */
+  public void notifyAllCanvasListeners() {
+    canvasUpdateListeners.canvasUpdated();
+  }
+
+  /**
    * Returns the amount of layers in this canvas's layers list.
    *
    * @return the number of layers.

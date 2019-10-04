@@ -265,4 +265,9 @@ public interface IModel extends IChangeable {
    * @throws NullPointerException if the supplied renderer is {@code null}.
    */
   void setRenderer(IRenderer renderer);
+
+  /**
+   * Notifies all canvas update listeners.
+   */
+  void notifyAllCanvasUpdateListeners();
 }

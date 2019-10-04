@@ -260,4 +260,9 @@ final class ModelImpl implements IModel {
   public void setRenderer(IRenderer renderer) {
     this.renderer = Objects.requireNonNull(renderer);
   }
+
+  @Override
+  public void notifyAllCanvasUpdateListeners() {
+    canvas.notifyAllCanvasListeners();
+  }
 }
