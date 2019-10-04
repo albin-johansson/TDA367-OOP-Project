@@ -207,14 +207,6 @@ final class ModelImpl implements IModel {
     }
   }
 
-//  @Override
-//  public void replaceLayer(int index, ILayer layer) {
-//    if (canvas.layerExists(index)) {
-//      canvas.addLayer(index, layer);
-//      canvas.removeLayer(index + 1);
-//    }
-//  }
-
   @Override
   public ModelMemento createSnapShot() {
     var canvasCopy = new Canvas(canvas);
