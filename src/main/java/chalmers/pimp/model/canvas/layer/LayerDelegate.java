@@ -13,7 +13,6 @@ final class LayerDelegate {
    * The default value for the visibility property.
    */
   static final boolean DEFAULT_VISIBILITY_VALUE = true;
-  static int layerIndex = 1;
   private boolean isVisible;
   private int x;
   private int y;
@@ -24,7 +23,7 @@ final class LayerDelegate {
     isVisible = DEFAULT_VISIBILITY_VALUE;
     x = 0;
     y = 0;
-    name = "Layer: " + layerIndex++;
+    this.name = "";
   }
 
   /**
