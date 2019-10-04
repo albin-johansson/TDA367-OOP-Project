@@ -26,7 +26,7 @@ final class ModelImpl implements IModel {
   private Stroke stroke;
   private ITool selectedTool;
   private IRenderer renderer;
-  
+
   ModelImpl() {
     canvas = new Canvas();
     commandManager = new CommandManager();
@@ -222,7 +222,9 @@ final class ModelImpl implements IModel {
 
   @Override
   public void replaceLayer(int index, ILayer layer) {
-    if (canvas.getAmountOfLayers() <= index) {
+    boolean tooSmall = index < 0;
+    boolean tooLarge = index >= (canvas.getAmountOfLayers() - 1);
+    if (tooSmall || tooLarge) {
       return;
     }
 
