@@ -12,18 +12,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * The {@code LayerItemManagerPane} class manages the layer items in the chalmers.pimp.view. Listens
- * to the chalmers.pimp.model for updates.
+ * The {@code LayerItemManagerPane} class manages the layer items in the. Listens to the model for
+ * updates.
  */
 final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListener {
 
   @FXML
+  @SuppressWarnings("unused")
   private StackPane stackPane;
-
   @FXML
+  @SuppressWarnings("unused")
   private AnchorPane emptyLayerPane;
-
   @FXML
+  @SuppressWarnings("unused")
   private VBox layerItemVBox;
 
   /**
@@ -34,7 +35,7 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
   }
 
   /**
-   * The update method from the Interface {@Code ILayerUpdateListener} that updates this Managers
+   * The update method from the Interface {@code ILayerUpdateListener} that updates this Managers
    * LayerItems
    */
   @Override
@@ -47,7 +48,7 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
         break;
       }
     }
-    if (layerItemPane == null || e == null) {
+    if (layerItemPane == null) {
       return;
     }
 
@@ -78,30 +79,31 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
     updateEmptyLayerPane();
   }
 
-  /**
-   * Method to move LayerItemPanes in this managers VBox forward or backwards {@code Steps}. Forward
-   * is a positive number and backwards a negative number.
-   *
-   * @param layerItemPane the {@code LayerItemPane} to be moved.
-   * @param steps         the number of steps, positive forwards and negative means backwards.
-   */
-  private void moveLayerItemPane(LayerItemPane layerItemPane, int steps) {
-    int toPos = layerItemVBox.getChildren().indexOf(layerItemPane) + steps;
-    layerItemVBox.getChildren().remove(layerItemPane);
-    layerItemVBox.getChildren().add(toPos, layerItemPane);
-  }
+//  /**
+//   * Method to move LayerItemPanes in this managers VBox forward or backwards {@code Steps}. Forward
+//   * is a positive number and backwards a negative number.
+//   *
+//   * @param layerItemPane the {@code LayerItemPane} to be moved.
+//   * @param steps         the number of steps, positive forwards and negative means backwards.
+//   */
+//  private void moveLayerItemPane(LayerItemPane layerItemPane, int steps) {
+//    int toPos = layerItemVBox.getChildren().indexOf(layerItemPane) + steps;
+//    layerItemVBox.getChildren().remove(layerItemPane);
+//    layerItemVBox.getChildren().add(toPos, layerItemPane);
+//  }
 
   /**
    * Updates the order of the LayerItemPanes to represent the order in the model.
    */
   private void updateLayerOrder() {
     int listSize = layerItemVBox.getChildren().size();
-    LayerItemPane[] layerItemPaneList = new LayerItemPane[listSize];
-    LayerItemPane layerItemPane;
+    var layerItemPaneList = new LayerItemPane[listSize];
+
     for (Node node : layerItemVBox.getChildren()) {
-      layerItemPane = (LayerItemPane) node;
+      LayerItemPane layerItemPane = (LayerItemPane) node;
       layerItemPaneList[layerItemPane.getLayer().getDepthIndex()] = layerItemPane;
     }
+
     layerItemVBox.getChildren().clear();
     for (LayerItemPane l : layerItemPaneList) {
       addLayerItemPane(l);

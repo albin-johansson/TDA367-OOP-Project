@@ -24,9 +24,10 @@ final class LayerItemPane extends AnchorPane {
 
   static {
     try {
-      URL path = (Resources.find(LayerItemPane.class, "images/light/eye_closed.png"));
+      URL path = Resources.find(LayerItemPane.class, "images/light/eye_closed.png");
       EYE_CLOSED_IMAGE = new Image(path.toURI().toString());
-      path = (Resources.find(LayerItemPane.class, "images/light/eye_open.png"));
+
+      path = Resources.find(LayerItemPane.class, "images/light/eye_open.png");
       EYE_OPEN_IMAGE = new Image(path.toURI().toString());
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -45,8 +46,8 @@ final class LayerItemPane extends AnchorPane {
   @SuppressWarnings("unused")
   private ImageView imageView;
 
-  private IModel model;
-  private IReadOnlyLayer layer;
+  private final IModel model;
+  private final IReadOnlyLayer layer;
 
   /**
    * @param model an reference to the {@code IModel}.
@@ -83,7 +84,7 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   private void updateLayerName() {
     String temp = textLabel.getText();
-    if (temp == "") {
+    if (temp.isEmpty()) {
       textLabel.setText(layer.getName());
     } else {
       model.setLayerName(layer, textLabel.getText());
@@ -95,7 +96,7 @@ final class LayerItemPane extends AnchorPane {
    */
   @FXML
   private void updateActiveLayer() {
-    model.selectLayer(layer);
+    model.selectLayer(layer.getDepthIndex());
     showIfLayerIsSelected();
   }
 
@@ -137,9 +138,9 @@ final class LayerItemPane extends AnchorPane {
    */
   private void showIfLayerIsSelected() {
     if (layer == model.getActiveLayer()) {
-      this.setStyle("-fx-background-color: -selected-color");
+      setStyle("-fx-background-color: -selected-color");
     } else {
-      this.setStyle("");
+      setStyle("");
     }
   }
 

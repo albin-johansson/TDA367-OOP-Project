@@ -159,7 +159,7 @@ final class ControllerImpl implements IController {
   @Override
   public void exportImage() {
     FileChooser fileChooser = new FileChooser();
-    
+
     fileChooser.getExtensionFilters()
         .add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));
     fileChooser.getExtensionFilters()
