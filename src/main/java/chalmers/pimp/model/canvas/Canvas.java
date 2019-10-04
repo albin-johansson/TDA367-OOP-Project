@@ -244,7 +244,7 @@ public final class Canvas {
    * @param layer the layer that will be removed, may not be {@code null}.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  public void removeLayer(ILayer layer) {
+  public void removeLayer(IReadOnlyLayer layer) {
     verifyLayerExistence(layer);
     switchActiveLayerIfRemoved(layers.indexOf(layer));
     layers.remove(layer);

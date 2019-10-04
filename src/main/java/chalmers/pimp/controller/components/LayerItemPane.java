@@ -109,6 +109,11 @@ final class LayerItemPane extends AnchorPane {
     model.moveLayer(layer, 1);
   }
 
+  @FXML
+  private void removeLayer(){
+    model.removeLayer(layer);
+  }
+
   //TODO Rethink if below methods should all be private and called by single update method...
 
   /**
