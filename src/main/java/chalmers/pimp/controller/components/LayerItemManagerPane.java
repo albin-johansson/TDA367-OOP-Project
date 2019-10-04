@@ -115,9 +115,11 @@ final class LayerItemManagerPane extends AnchorPane implements ILayerUpdateListe
    * @param layerItemPane the layerItemPane to add to the VBox for display
    */
   void addLayerItemPane(LayerItemPane layerItemPane) {
+    layerItemPane.setTypeIcon();
     layerItemVBox.getChildren().add(0, layerItemPane);
     updateEmptyLayerPane();
   }
+
 
   /**
    * Checks if the {@code layerItemVBox} is empty and moves the {@code emptyLayerPane} accordingly.

@@ -16,11 +16,6 @@
   <children>
     <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
       <children>
-        <Label fx:id="textLabel" onInputMethodTextChanged="#updateLayerName" text="Layer">
-          <font>
-            <Font size="24.0" />
-          </font>
-        </Label>
             <VBox>
                <children>
                   <Button mnemonicParsing="false" onAction="#increaseZIndex">
@@ -56,8 +51,28 @@
                   <Insets />
                </HBox.margin>
                <padding>
-                  <Insets left="10.0" />
+                  <Insets left="5.0" />
                </padding>
+            </VBox>
+            <VBox alignment="TOP_CENTER">
+               <children>
+              <Label fx:id="textLabel" onInputMethodTextChanged="#updateLayerName" text="Layer">
+                <font>
+                  <Font size="24.0" />
+                </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+              </Label>
+                  <ImageView fx:id="layerTypeIcon" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/light/image.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
             </VBox>
             <VBox>
                <children>
@@ -89,7 +104,7 @@
                   </Button>
                </children>
                <HBox.margin>
-                  <Insets left="40.0" right="10.0" />
+                  <Insets left="20.0" right="10.0" />
                </HBox.margin>
             </VBox>
       </children>
