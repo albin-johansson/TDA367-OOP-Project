@@ -32,4 +32,14 @@ public final class ToolFactory {
   public static ITool createMoveTool(IModel model) {
     return new MoveTool(model);
   }
+
+  /**
+   * Creates and returns a shape tool.
+   *
+   * @param model a reference to the model
+   * @return a shape tool that appends rectangles.
+   */
+  public static ITool createShapeTool(IModel model) {
+    return new ShapeTool(model);
+  }
 }

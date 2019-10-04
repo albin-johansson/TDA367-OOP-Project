@@ -38,6 +38,54 @@ public final class Canvas {
   public void notifyCanvasUpdateListeners() {
     canvasUpdateListeners.canvasUpdated();
   }
+//  /**
+//   * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
+//   *
+//   * @throws IllegalStateException if there is no active layer.
+//   * @throws NullPointerException  if the supplied layerIndex is null;
+//   */
+//  private void verifyIndexedLayerExistence(int layerIndex) {
+//    if (layerIndex < 0 || layerIndex >= layers.size()) {
+//      throw new IllegalStateException("Indexed layer does not exist!");
+//    }
+//  }
+
+//  /**
+//   * Checks if a layer exists.
+//   *
+//   * @return true if there is a layer on the specified index, false otherwise.
+//   */
+//  public boolean layerExists(int i) {
+//    boolean tooSmall = i < 0;
+//    boolean tooLarge = i > (getAmountOfLayers() - 1);
+//    return !tooSmall && !tooLarge;
+//  }
+//
+//  /**
+//   * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
+//   *
+//   * @throws IllegalStateException if the supplied layer doesn't exist in the model.
+//   * @throws NullPointerException  if the supplied layer is null.
+//   */
+//  private void verifyLayerExistence(IReadOnlyLayer layer) {
+//    Objects.requireNonNull(layer);
+//    for (IReadOnlyLayer l : layers) {
+//      if (l == layer) {
+//        return;
+//      }
+//    }
+//    throw new IllegalStateException("Supplied layer does not exist in model!");
+//  }
+//
+//  /**
+//   * Sets all the layer's depth index in this Canvas
+//   */
+//  private void setLayersDepthIndex() {
+//    int index = 0;
+//    for (ILayer l : layers) {
+//      l.setDepthIndex(index++);
+//    }
+//  }
 
   /**
    * Sets the pixel at the pixels coordinate, in the active layer. The coordinates are
@@ -177,6 +225,13 @@ public final class Canvas {
   }
 
   /**
+   * Notifies all the canvas listeners.
+   */
+  public void notifyAllCanvasListeners() {
+    canvasUpdateListeners.canvasUpdated();
+  }
+
+  /**
    * Returns the amount of layers in this canvas's layers list.
    *
    * @return the number of layers.
@@ -201,6 +256,19 @@ public final class Canvas {
    */
   public Iterable<? extends IReadOnlyLayer> getLayers() {
     return layerManager.getLayers();
+  }
+
+  /**
+   * Inserts a layer at a specific index. Index 0 will insert the layer on index 0 and everything
+   * else will get "pushed back".
+   *
+   * @param index the specific index on which to insert the new layer on.
+   * @param layer the layer to be inserted.
+   * @throws IndexOutOfBoundsException if the provided index is out of bounds.
+   */
+  public void addLayer(int index, ILayer layer) {
+
+//    layers.add(index, layer);
   }
 
   /**

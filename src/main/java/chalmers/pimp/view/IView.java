@@ -1,7 +1,7 @@
 package chalmers.pimp.view;
 
+import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
-import javafx.scene.canvas.GraphicsContext;
 
 /**
  * The {@code IView} interface specifies the main chalmers.pimp.view component in the Pimp
@@ -10,9 +10,10 @@ import javafx.scene.canvas.GraphicsContext;
 public interface IView extends ICanvasUpdateListener {
 
   /**
-   * @param graphics the graphicscontext the chalmers.pimp.view should manipulate
+   * @param renderer the specific renderer the view should use.
+   * @throws NullPointerException if the provided renderer is {@code null}.
    */
-  void setRendererGraphics(GraphicsContext graphics);
+  void setRenderer(IRenderer renderer);
 
   /**
    * Tells the View to repaint itself

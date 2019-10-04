@@ -23,6 +23,7 @@ final class Raster implements ILayer {
    */
   Raster(int width, int height) {
     layerDelegate = new LayerDelegate();
+    layerDelegate.setName("Raster");
     pixelData = new PixelData(width, height);
   }
 

@@ -223,6 +223,15 @@ public interface IModel extends IChangeable {
    */
   void selectedToolReleased(MouseStatus mouseStatus);
 
+//  /**
+//   * Replaces a layer of a specific index with a new layer. Does nothing if there is no layer on the
+//   * specified index.
+//   *
+//   * @param index the index of the layer to change.
+//   * @param layer the new layer.
+//   */
+//  void replaceLayer(int index, ILayer layer);
+
   /**
    * Creates a snap shot of the current state of the model.
    *
@@ -239,4 +248,24 @@ public interface IModel extends IChangeable {
   void moveSelectedLayer(int xAmount, int yAmount);
 
   Canvas getCanvas();
+  
+  /**
+   * Returns the models renderer.
+   *
+   * @return the models renderer.
+   */
+  IRenderer getRenderer();
+
+  /**
+   * Sets the models renderer.
+   *
+   * @param renderer the specific renderer implementation.
+   * @throws NullPointerException if the supplied renderer is {@code null}.
+   */
+  void setRenderer(IRenderer renderer);
+
+  /**
+   * Notifies all canvas update listeners.
+   */
+  void notifyAllCanvasUpdateListeners();
 }

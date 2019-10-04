@@ -33,6 +33,10 @@ final class Rectangle implements ILayer {
     layerDelegate.setY(y);
     this.width = width;
     this.height = height;
+
+    // OBVIOUSLY not a good solution. Just a fun easter egg :)
+    layerDelegate.setName((width == height) ? "Square" : "Rectangle");
+
     color = ColorFactory.createColor(255, 137, 243); // FIXME
   }
 
