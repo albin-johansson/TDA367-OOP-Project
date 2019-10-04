@@ -170,7 +170,7 @@ final class LayerItemPane extends AnchorPane {
     String path;
     switch (layer.getLayerType()) {
       case SHAPE:
-        path = "images/light/rectangle.png";
+        path = "images/light/rectangle_type.png";
         break;
       case RASTER:
         path = "images/light/image.png";
