@@ -50,7 +50,7 @@ final class ControllerImpl implements IController {
     this.view = Objects.requireNonNull(view);
     this.stage = Objects.requireNonNull(stage);
 
-    var pane = new PimpEditorPane(model, this);
+    pane = new PimpEditorPane(model, this);
     IRenderer renderer = RendererFactory.createFXRenderer(pane.getGraphics());
     view.setRenderer(renderer);
     model.setRenderer(renderer);
@@ -169,7 +169,7 @@ final class ControllerImpl implements IController {
   @Override
   public void exportImage() {
     FileChooser fileChooser = new FileChooser();
-    
+
     fileChooser.getExtensionFilters()
         .add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));
     fileChooser.getExtensionFilters()
