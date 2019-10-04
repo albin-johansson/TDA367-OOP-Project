@@ -5,13 +5,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="200.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root id="layer-item" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#updateActiveLayer" prefHeight="75.0" prefWidth="200.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -20,28 +21,77 @@
             <Font size="24.0" />
           </font>
         </Label>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox>
                <children>
-                  <Button mnemonicParsing="false" onAction="#increaseZIndex" text="^" />
-                  <Button mnemonicParsing="false" onAction="#decreaseZIndex" text="v" />
+                  <Button mnemonicParsing="false" onAction="#increaseZIndex">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/light/arrow_up.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="4.0" top="4.0" />
+                     </VBox.margin>
+                     <tooltip>
+                        <Tooltip text="Moves the layer forward" />
+                     </tooltip></Button>
+                  <Button mnemonicParsing="false" onAction="#decreaseZIndex" prefHeight="32.0" prefWidth="36.0">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/light/arrow_down.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="4.0" />
+                     </VBox.margin>
+                     <tooltip>
+                        <Tooltip text="Moves the layer backwards" />
+                     </tooltip></Button>
                </children>
                <HBox.margin>
                   <Insets />
                </HBox.margin>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </VBox>
-      </children>
-    </HBox>
-    <HBox alignment="CENTER_RIGHT" layoutX="450.0" layoutY="-2.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
-      <children>
-            <Button mnemonicParsing="false" onAction="#updateActiveLayer" text="AL" />
-        <ToggleButton fx:id="toggleButton" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#toggleVisibility" selected="true">
-          <graphic>
-            <ImageView fx:id="imageView" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
-          </graphic>
-          <tooltip>
-            <Tooltip text="Toggle visibility for this layer" />
-          </tooltip>
-        </ToggleButton>
+            <VBox>
+               <children>
+              <ToggleButton fx:id="toggleButton" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#toggleVisibility" prefHeight="32.0" prefWidth="42.0" selected="true">
+                <graphic>
+                  <ImageView fx:id="imageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                </graphic>
+                <tooltip>
+                  <Tooltip text="Toggle visibility for this layer" />
+                </tooltip>
+                     <VBox.margin>
+                        <Insets bottom="4.0" top="4.0" />
+                     </VBox.margin>
+              </ToggleButton>
+                  <Button mnemonicParsing="false" onAction="#increaseZIndex">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/light/trash.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="4.0" />
+                     </VBox.margin>
+                     <tooltip>
+                        <Tooltip text="Deletes the layer" />
+                     </tooltip>
+                  </Button>
+               </children>
+               <HBox.margin>
+                  <Insets left="40.0" right="10.0" />
+               </HBox.margin>
+            </VBox>
       </children>
     </HBox>
   </children>
