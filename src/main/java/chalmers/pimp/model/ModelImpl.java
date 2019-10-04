@@ -26,19 +26,14 @@ final class ModelImpl implements IModel {
   private Stroke stroke;
   private ITool selectedTool;
   private IRenderer renderer;
-
-  /**
-   * @param renderer the specific renderer.
-   * @throws NullPointerException if the supplied renderer is {@code null}.
-   */
-  ModelImpl(IRenderer renderer) {
+  
+  ModelImpl() {
     canvas = new Canvas();
     commandManager = new CommandManager();
     undoRedoListeners = new UndoRedoListenerComposite();
 
     stroke = null;
     selectedTool = ToolFactory.createPencil(2, ColorFactory.createColor(0xFF, 0, 0xFF), this);
-    this.renderer = Objects.requireNonNull(renderer);
   }
 
   /**
