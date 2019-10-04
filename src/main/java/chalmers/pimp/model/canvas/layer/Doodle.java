@@ -7,6 +7,9 @@ import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A layer which has a list of points and draws straight lines between the points.
+ */
 public class Doodle implements ILayer {
 
   private final List<IPixel> pixels;
