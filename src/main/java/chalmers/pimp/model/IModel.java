@@ -93,6 +93,10 @@ public interface IModel extends IChangeable {
    */
   void moveLayer(IReadOnlyLayer layer, int steps);
 
+  void setLayerX(int x);
+
+  void setLayerY(int y);
+
   /**
    * Restores the state of the model to the one that is represented by the supplied memento object.
    *

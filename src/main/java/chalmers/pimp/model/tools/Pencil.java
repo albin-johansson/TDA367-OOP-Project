@@ -2,8 +2,6 @@ package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
-import chalmers.pimp.model.canvas.layer.ILayer;
-import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelFactory;
@@ -34,22 +32,24 @@ final class Pencil implements ITool {
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
-    model.updateStroke(PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color));
+    if (model.getActiveLayer() != null) {
+      model.updateStroke(PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color));
+    }
   }
 
   @Override
   public void pressed(MouseStatus mouseStatus) {
-    ILayer layer = LayerFactory.createRasterLayer(400, 400);
-    model.addLayer(layer);
-    model.selectLayer(layer.getDepthIndex());
-
-    IPixel pixel = PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color);
-    model.startStroke(pixel, diameter);
+    if (model.getActiveLayer() != null) {
+      IPixel pixel = PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color);
+      model.startStroke(pixel, diameter);
+    }
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
-    model.endStroke(PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color));
+    if (model.getActiveLayer() != null) {
+      model.endStroke(PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color));
+    }
   }
 
   // TODO: Add some kind pattern for the pencil to draw.

@@ -13,8 +13,6 @@ import java.util.Objects;
  */
 final class MoveTool implements ITool {
 
-  private int totalDeltaX;
-  private int totalDeltaY;
   private int prevX;
   private int prevY;
   private final IModel model;
@@ -46,17 +44,15 @@ final class MoveTool implements ITool {
 
     prevX = mouseStatus.getX();
     prevY = mouseStatus.getY();
-
-    totalDeltaX += dx;
-    totalDeltaY += dy;
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
     int layerIndex = model.getActiveLayer().getDepthIndex();
-    ICommand cmd = createMoveCommand(model, layerIndex, totalDeltaX, totalDeltaY,
-        startModelMemento);
+    int x = model.getActiveLayer().getX();
+    int y = model.getActiveLayer().getY();
 
+    ICommand cmd = createMoveCommand(model, layerIndex, x, y, startModelMemento);
     model.addCommand(cmd);
   }
 }

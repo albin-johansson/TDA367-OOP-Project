@@ -105,6 +105,16 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void setLayerX(int x) {
+    canvas.setLayerX(x);
+  }
+
+  @Override
+  public void setLayerY(int y) {
+    canvas.setLayerY(y);
+  }
+
+  @Override
   public void restore(ModelMemento memento) {
     canvas = memento.getCanvas();
     // TODO...

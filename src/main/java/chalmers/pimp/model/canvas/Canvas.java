@@ -411,4 +411,12 @@ public final class Canvas {
     String state = "Active layer: " + activeLayer + ", #layers: " + layers.size();
     return "(" + id + " | " + state + ")";
   }
+
+  public void setLayerX(int x) {
+    activeLayer.setX(x);
+  }
+
+  public void setLayerY(int y) {
+    activeLayer.setY(y);
+  }
 }
