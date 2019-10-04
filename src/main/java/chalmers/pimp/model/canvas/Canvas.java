@@ -90,6 +90,17 @@ public final class Canvas {
   }
 
   /**
+   * Checks if a layer exists.
+   *
+   * @return true if there is a layer on the specified index, false otherwise.
+   */
+  public boolean layerExists(int i) {
+    boolean tooSmall = i < 0;
+    boolean tooLarge = i > (getAmountOfLayers() - 1);
+    return !tooSmall && !tooLarge;
+  }
+
+  /**
    * Verifies that there is supplied layer. If that isn't the case, an exception is thrown.
    *
    * @throws IllegalStateException if the supplied layer doesn't exist in the model.

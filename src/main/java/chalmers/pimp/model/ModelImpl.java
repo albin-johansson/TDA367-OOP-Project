@@ -222,14 +222,10 @@ final class ModelImpl implements IModel {
 
   @Override
   public void replaceLayer(int index, ILayer layer) {
-    boolean tooSmall = index < 0;
-    boolean tooLarge = index >= (canvas.getAmountOfLayers() - 1);
-    if (tooSmall || tooLarge) {
-      return;
+    if (canvas.layerExists(index)) {
+      canvas.addLayer(index, layer);
+      canvas.removeLayer(index + 1);
     }
-
-    canvas.addLayer(index, layer);
-    canvas.removeLayer(index + 1);
   }
 
   public ModelMemento createSnapShot() {
