@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * A layer which has a list of points and draws straight lines between the points.
  */
-public class Doodle implements ILayer {
+final class Doodle implements ILayer {
 
   private final List<IPixel> pixels;
   private final LayerDelegate layerDelegate;
@@ -41,6 +41,16 @@ public class Doodle implements ILayer {
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
   }
@@ -64,6 +74,16 @@ public class Doodle implements ILayer {
   @Override
   public LayerType getLayerType() {
     return LayerType.DOODLE;
+  }
+
+  @Override
+  public String getName() {
+    return null;
+  }
+
+  @Override
+  public int getDepthIndex() {
+    return 0;
   }
 
   @Override
