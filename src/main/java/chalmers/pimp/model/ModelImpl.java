@@ -103,7 +103,7 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void removeLayer(ILayer layer) {
+  public void removeLayer(IReadOnlyLayer layer) {
     canvas.removeLayer(layer);
   }
 

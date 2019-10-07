@@ -53,10 +53,10 @@ public interface IModel extends IChangeable {
   /**
    * Removes the specified layer from the chalmers.pimp.model.
    *
-   * @param layer the layer that will be removed.
+   * @param IReadOnlyLayer the layer that will be removed.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  void removeLayer(ILayer layer);
+  void removeLayer(IReadOnlyLayer layer);
 
   /**
    * Removes the layer associated with the specified index. The layer index is zero-indexed.

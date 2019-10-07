@@ -129,3 +129,7 @@
   -fx-cursor: default;
   -fx-background-color: -background-color;
 }
+
+#layer-item{
+  -fx-background-color: #4e4e4e;
+}

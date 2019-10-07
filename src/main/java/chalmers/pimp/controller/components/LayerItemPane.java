@@ -3,6 +3,7 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.canvas.layer.LayerType;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.net.URL;
@@ -44,6 +45,9 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private ImageView imageView;
+
+  @FXML
+  private ImageView layerTypeIcon;
 
   private IModel model;
   private IReadOnlyLayer layer;
@@ -109,6 +113,11 @@ final class LayerItemPane extends AnchorPane {
     model.moveLayer(layer, 1);
   }
 
+  @FXML
+  private void removeLayer() {
+    model.removeLayer(layer);
+  }
+
   //TODO Rethink if below methods should all be private and called by single update method...
 
   /**
@@ -150,5 +159,21 @@ final class LayerItemPane extends AnchorPane {
    */
   IReadOnlyLayer getLayer() {
     return layer;
+  }
+
+  /**
+   * Sets the icon on the LayerItemPane to match that of the LayerType. Using String interpolation.
+   */
+  void setTypeIcon() {
+
+    //TODO Fix themes
+    String path = "images/light/" + layer.getLayerType().name().toLowerCase()
+        + ".png";
+
+    try {
+      layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
+    } catch (Exception e) {
+      System.err.println("Failed to load layerTypeIcon icon! Exception: " + e);
+    }
   }
 }
