@@ -58,8 +58,6 @@ final class LayerManager {
       layer.setDepthIndex(i);
       i++;
     }
-//    var event = new LayerUpdateEvent(layers, layers.size());
-//    layerUpdateListeners.layersUpdated(event);
   }
 
   /**
@@ -89,6 +87,10 @@ final class LayerManager {
     return null;
   }
 
+  /**
+   * Notifies all registered layer update listeners. Beware that this method doesn't trigger a very
+   * informative event.
+   */
   void notifyListeners() {
     layerUpdateListeners.layersUpdated(new LayerUpdateEvent(layers, layers.size()));
   }
@@ -104,16 +106,27 @@ final class LayerManager {
     layerUpdateListeners.add(listener);
   }
 
+  /**
+   * Changes the depth index (the z-value) of the supplied layer with the supplied offset. This
+   * method has no effect if the supplied offset is zero or if the supplied layer isn't registered
+   * in the layer manager.
+   *
+   * @param layer  the layer that will be moved, may not be {@code null}.
+   * @param deltaZ the z-axis offset.
+   * @throws NullPointerException if the supplied layer is {@code null}.
+   */
   void changeDepthIndex(IReadOnlyLayer layer, int deltaZ) {
+    Objects.requireNonNull(layer);
     if (deltaZ == 0) {
       return;
     }
 
     ILayer match = findMatch(layer);
-    if ((match != null) /*&& (getAmountOfLayers() > 2)*/) {
+    if (match != null) {
 
-      if ((match.getDepthIndex() == 0) && (deltaZ < 0)
-          || (match.getDepthIndex() == layers.size() - 1) && (deltaZ > 0)) {
+      boolean movingFirstLayerBack = (match.getDepthIndex() == 0) && (deltaZ < 0);
+      boolean movingLastLayerForward = (match.getDepthIndex() == layers.size() - 1) && (deltaZ > 0);
+      if (movingFirstLayerBack || movingLastLayerForward) {
         return;
       }
 
@@ -167,6 +180,12 @@ final class LayerManager {
     }
   }
 
+  /**
+   * Updates the active layer after the removal of the supplied layer. This method changes the
+   * active layer
+   *
+   * @param removed
+   */
   private void updateActiveLayerAfterRemoval(IReadOnlyLayer removed) {
     if (inBounds(removed.getDepthIndex() - 1)) {
       activeLayer = layers.get(removed.getDepthIndex() - 1);
@@ -211,6 +230,12 @@ final class LayerManager {
     }
   }
 
+  /**
+   * Sets a pixel value in the active layer.
+   *
+   * @param pixel the pixel that will be set in the active layer.
+   * @throws NullPointerException if the supplied pixel is {@code null}.
+   */
   void setActiveLayerPixel(IPixel pixel) {
     Objects.requireNonNull(pixel);
     if (activeLayer != null) {
@@ -218,6 +243,15 @@ final class LayerManager {
     }
   }
 
+  /**
+   * Sets a group of pixels in the active layer. This method has no effect if there isn't an active
+   * layer.
+   *
+   * @param x         the start x-coordinate.
+   * @param y         the start y-coordinate.
+   * @param pixelData the pixel data that contains all of the pixels.
+   * @throws NullPointerException if the supplied pixel data is {@code null}.
+   */
   void setActiveLayerPixels(int x, int y, IReadOnlyPixelData pixelData) {
     Objects.requireNonNull(pixelData);
 
