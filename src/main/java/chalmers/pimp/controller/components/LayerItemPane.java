@@ -162,15 +162,14 @@ final class LayerItemPane extends AnchorPane {
   }
 
   /**
-   * Sets the icon on the LayerItemPane to match that of the LayerType.
-   *
+   * Sets the icon on the LayerItemPane to match that of the LayerType. Using String interpolation.
    */
   void setTypeIcon() {
 
     //TODO Fix themes
     String path = "images/light/" + layer.getLayerType().name().toLowerCase()
         + ".png";
-    
+
     try {
       layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
     } catch (Exception e) {
