@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root id="layer-item" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#updateActiveLayer" prefHeight="75.0" prefWidth="200.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root id="layer-item" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#updateActiveLayer" prefHeight="75.0" prefWidth="225.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -54,9 +54,9 @@
                   <Insets left="5.0" />
                </padding>
             </VBox>
-            <VBox alignment="TOP_CENTER">
+            <VBox alignment="TOP_CENTER" prefWidth="76.0">
                <children>
-              <Label fx:id="textLabel" onInputMethodTextChanged="#updateLayerName" text="Layer">
+              <Label fx:id="textLabel" onInputMethodTextChanged="#updateLayerName" text="Rectangle">
                 <font>
                   <Font size="24.0" />
                 </font>
@@ -66,7 +66,7 @@
               </Label>
                   <ImageView fx:id="layerTypeIcon" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/light/image.png" />
+                        <Image url="@images/light/raster.png" />
                      </image>
                   </ImageView>
                </children>
