@@ -164,20 +164,13 @@ final class LayerItemPane extends AnchorPane {
   /**
    * Sets the icon on the LayerItemPane to match that of the LayerType.
    *
-   * @throws IllegalStateException if no matching LayerType was found.
    */
   void setTypeIcon() {
-    String path;
-    switch (layer.getLayerType()) {
-      case SHAPE:
-        path = "images/light/rectangle_type.png";
-        break;
-      case RASTER:
-        path = "images/light/image.png";
-        break;
-      default:
-        throw (new IllegalStateException("LayerType not found"));
-    }
+
+    //TODO Fix themes
+    String path = "images/light/" + layer.getLayerType().name().toLowerCase()
+        + ".png";
+    
     try {
       layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
     } catch (Exception e) {
