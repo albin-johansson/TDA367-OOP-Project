@@ -23,6 +23,7 @@ final class Raster implements ILayer {
    */
   Raster(int width, int height) {
     layerDelegate = new LayerDelegate();
+    layerDelegate.setName("Raster");
     pixelData = new PixelData(width, height);
   }
 
@@ -58,6 +59,16 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
   }
@@ -73,6 +84,16 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public String getName() {
+    return layerDelegate.getName();
+  }
+
+  @Override
+  public int getDepthIndex() {
+    return layerDelegate.getDepthIndex();
+  }
+
+  @Override
   public IReadOnlyPixelData getPixelData() {
     return pixelData;
   }
@@ -84,7 +105,9 @@ final class Raster implements ILayer {
 
   @Override
   public void draw(IRenderer renderer) {
-    renderer.drawImage(pixelData, getX(), getY(), pixelData.getWidth(), pixelData.getHeight());
+    if (isVisible()) {
+      renderer.drawImage(pixelData, getX(), getY(), pixelData.getWidth(), pixelData.getHeight());
+    }
   }
 
   @Override

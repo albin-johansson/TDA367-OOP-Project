@@ -2,11 +2,11 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
+import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import chalmers.pimp.util.Resources;
 
 /**
  * The {@code PalettePane} class represents the pane that holds the buttons for the various mouse
@@ -44,5 +44,10 @@ final class PalettePane extends AnchorPane {
   @FXML
   private void selectMoveTool() {
     controller.selectMoveTool();
+  }
+
+  @FXML
+  private void selectRectangleTool() {
+    controller.selectRectangleTool();
   }
 }

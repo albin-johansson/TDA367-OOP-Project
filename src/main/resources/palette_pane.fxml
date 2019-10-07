@@ -61,7 +61,19 @@
                   </ImageView>
                </graphic>
                <tooltip>
-                  <Tooltip text="Bucket Tool" />
+                  <Tooltip text="Move Tool" />
+               </tooltip>
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" onAction="#selectRectangleTool" toggleGroup="$palette">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/light/rectangle.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Rectangle Tool" />
                </tooltip>
             </ToggleButton>
       </children>

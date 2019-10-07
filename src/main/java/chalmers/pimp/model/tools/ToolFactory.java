@@ -27,6 +27,7 @@ public final class ToolFactory {
   /**
    * Creates and returns a black pencil with the stroke diameter of 2.
    *
+   * @param model a reference to the model.
    * @return a black pencil with the stroke of 2.
    */
   public static ITool createPencil(IModel model) {
@@ -39,7 +40,17 @@ public final class ToolFactory {
    * @param model a reference to the Model.
    * @return a MoveTool with no startX or startY.
    */
-  public static ITool createMoveTool(IModel model){
+  public static ITool createMoveTool(IModel model) {
     return new MoveTool(model);
+  }
+
+  /**
+   * Creates and returns a shape tool.
+   *
+   * @param model a reference to the model
+   * @return a shape tool that appends rectangles.
+   */
+  public static ITool createShapeTool(IModel model) {
+    return new ShapeTool(model);
   }
 }

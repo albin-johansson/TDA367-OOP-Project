@@ -29,6 +29,11 @@ public interface IController {
   void selectBucket();
 
   /**
+   * Sets the rectangle tool as the selectedTool in model
+   */
+  void selectRectangleTool();
+
+  /**
    * Undoes the previously executed command. This method has no effect if there is nothing to undo.
    */
   void undo();
@@ -65,8 +70,18 @@ public interface IController {
   void selectedToolReleased(MouseEvent mouseEvent);
 
   /**
+   * Creates a new raster layer.
+   */
+  void createNewLayer();
+
+  /**
    * Opens a file chooser dialog, which allows the user to import an image. If an image is selected,
    * it's injected into the model.
    */
   void openImageChooser();
+
+  /**
+   * Opens file chooser save dialog and allows you to save the Image.
+   */
+  void exportImage();
 }

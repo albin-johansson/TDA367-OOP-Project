@@ -39,4 +39,18 @@ public interface ILayer extends IReadOnlyLayer {
    * @param y the new y-coordinate of the layer.
    */
   void setY(int y);
+
+  /**
+   * Sets the name of the layer.
+   *
+   * @param name the name of the layer.
+   */
+  void setName(String name);
+
+  /**
+   * Sets the depth index for this layer.
+   *
+   * @param depthIndex the new depth index.
+   */
+  void setDepthIndex(int depthIndex);
 }

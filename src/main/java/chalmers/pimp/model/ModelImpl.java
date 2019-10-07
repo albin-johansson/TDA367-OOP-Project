@@ -5,12 +5,14 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
+import chalmers.pimp.model.tools.ToolFactory;
 import java.util.Objects;
 
 /**
@@ -23,6 +25,7 @@ final class ModelImpl implements IModel {
   private Canvas canvas;
   private Stroke stroke;
   private ITool selectedTool;
+  private IRenderer renderer;
 
   ModelImpl() {
     canvas = new Canvas();
@@ -30,7 +33,7 @@ final class ModelImpl implements IModel {
     undoRedoListeners = new UndoRedoListenerComposite();
 
     stroke = null;
-    selectedTool = null;
+    selectedTool = ToolFactory.createPencil(2, ColorFactory.createColor(0xFF, 0, 0xFF), this);
   }
 
   /**
@@ -97,7 +100,6 @@ final class ModelImpl implements IModel {
   @Override
   public void addLayer(ILayer layer) {
     canvas.addLayer(layer);
-
   }
 
   @Override
@@ -111,8 +113,18 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void selectLayer(IReadOnlyLayer layer) {
+    canvas.selectLayer(layer);
+  }
+
+  @Override
   public void selectLayer(int layerIndex) {
     canvas.selectLayer(layerIndex);
+  }
+
+  @Override
+  public void moveLayer(IReadOnlyLayer layer, int steps) {
+    canvas.moveLayer(layer, steps);
   }
 
   @Override
@@ -129,6 +141,16 @@ final class ModelImpl implements IModel {
   @Override
   public void setPixels(int x, int y, PixelData pixelData) {
     canvas.setPixels(x, y, pixelData);
+  }
+
+  @Override
+  public void setLayerName(IReadOnlyLayer layer, String layerName) {
+    canvas.setLayerName(layer, layerName);
+  }
+
+  @Override
+  public void setLayerName(int layerIndex, String layerName) {
+    canvas.setLayerName(layerIndex, layerName);
   }
 
   @Override
@@ -167,6 +189,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public IReadOnlyLayer getActiveLayer() {
+    return canvas.getActiveLayer();
+  }
+
+  @Override
   public void setSelectedTool(ITool selectedTool) {
     this.selectedTool = selectedTool;
   }
@@ -194,6 +221,13 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void replaceLayer(int index, ILayer layer) {
+    if (canvas.layerExists(index)) {
+      canvas.addLayer(index, layer);
+      canvas.removeLayer(index + 1);
+    }
+  }
+
   public ModelMemento createSnapShot() {
     return new ModelMemento(new Canvas(canvas));
   }
@@ -213,5 +247,20 @@ final class ModelImpl implements IModel {
   @Override
   public void moveSelectedLayer(int xAmount, int yAmount) {
     canvas.moveSelectedLayer(xAmount, yAmount);
+  }
+
+  @Override
+  public IRenderer getRenderer() {
+    return renderer;
+  }
+
+  @Override
+  public void setRenderer(IRenderer renderer) {
+    this.renderer = Objects.requireNonNull(renderer);
+  }
+
+  @Override
+  public void notifyAllCanvasUpdateListeners() {
+    canvas.notifyAllCanvasListeners();
   }
 }

@@ -3,7 +3,10 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
+import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
 import chalmers.pimp.util.AnchorPanes;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
@@ -15,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * The {@code PimpEditorPane} class represents the main editor pane for the Pimp application.
  */
-public final class PimpEditorPane extends AnchorPane {
+public final class PimpEditorPane extends AnchorPane implements ILayerUpdateListener {
 
   private final IModel model;
   private final IController controller;
@@ -46,7 +49,6 @@ public final class PimpEditorPane extends AnchorPane {
     ControllerUtils.makeController(this, Resources.find(getClass(), "root.fxml"));
     this.model = Objects.requireNonNull(model);
     this.controller = Objects.requireNonNull(controller);
-
     toolbarPane = new ToolbarPane(controller);
     topAnchorPane.getChildren().add(toolbarPane);
     AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
@@ -58,6 +60,7 @@ public final class PimpEditorPane extends AnchorPane {
 
     layerItemManagerPane = new LayerItemManagerPane();
     model.addLayerUpdateListener(layerItemManagerPane);
+    model.addLayerUpdateListener(this);
     rightAnchorPane.getChildren().add(layerItemManagerPane);
     AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
 
@@ -98,6 +101,19 @@ public final class PimpEditorPane extends AnchorPane {
       return new LayerItemPane(model, layer);
     } catch (Exception e) {
       throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * Will only act if {@code EventType} is CREATED, and will then create a new LayerItemPane with
+   * the supplied layer
+   *
+   * @param e the {@code LayerUpdateEvent} which houses the EventType and associated Layer
+   */
+  @Override
+  public void layersUpdated(LayerUpdateEvent e) {
+    if (e.getType() == EventType.CREATED) {
+      layerItemManagerPane.addLayerItemPane(createLayerItemPane(e.getLayer()));
     }
   }
 }

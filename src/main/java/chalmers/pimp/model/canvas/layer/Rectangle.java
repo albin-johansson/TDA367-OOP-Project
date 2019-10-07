@@ -33,6 +33,10 @@ final class Rectangle implements ILayer {
     layerDelegate.setY(y);
     this.width = width;
     this.height = height;
+
+    // OBVIOUSLY not a good solution. Just a fun easter egg :)
+    layerDelegate.setName((width == height) ? "Square" : "Rectangle");
+
     color = ColorFactory.createColor(255, 137, 243); // FIXME
   }
 
@@ -56,6 +60,16 @@ final class Rectangle implements ILayer {
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
   }
@@ -68,6 +82,16 @@ final class Rectangle implements ILayer {
   @Override
   public int getY() {
     return layerDelegate.getY();
+  }
+
+  @Override
+  public String getName() {
+    return layerDelegate.getName();
+  }
+
+  @Override
+  public int getDepthIndex() {
+    return layerDelegate.getDepthIndex();
   }
 
   @Override
@@ -90,9 +114,11 @@ final class Rectangle implements ILayer {
 
   @Override
   public void draw(IRenderer renderer) {
-    renderer.setFillColor(color);
-    renderer.setBorderColor(color);
-    renderer.fillRect(getX(), getY(), width, height);
+    if (isVisible()) {
+      renderer.setFillColor(color);
+      renderer.setBorderColor(color);
+      renderer.fillRect(getX(), getY(), width, height);
+    }
   }
 
   @Override

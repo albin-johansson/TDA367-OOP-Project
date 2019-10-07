@@ -66,4 +66,20 @@ class RectangleTest {
   void getLayerType() {
     assertEquals(LayerType.SHAPE, rectangle.getLayerType());
   }
+
+  @Test
+  void setName() {
+    final String setName = "name";
+    rectangle.setName(setName);
+    assertEquals(setName, rectangle.getName());
+  }
+
+  @Test
+  void getName() {
+    assertNotNull(rectangle.getName());
+
+    final String setName = "name";
+    rectangle.setName(setName);
+    assertEquals(setName, rectangle.getName());
+  }
 }

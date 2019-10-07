@@ -32,6 +32,18 @@
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#exportImage" text="Export Image">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/light/save.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
                 <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit">
                   <graphic>
                     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
@@ -104,6 +116,18 @@
                 <Tooltip text="Redo" />
               </tooltip>
             </Button>
+                  <Button mnemonicParsing="false" onAction="#createNewLayer">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/light/eye_open.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Create new layer" />
+                     </tooltip>
+                  </Button>
           </children>
           <padding>
             <Insets left="10.0" />

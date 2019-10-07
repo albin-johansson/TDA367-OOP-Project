@@ -13,15 +13,17 @@ final class LayerDelegate {
    * The default value for the visibility property.
    */
   static final boolean DEFAULT_VISIBILITY_VALUE = true;
-
   private boolean isVisible;
   private int x;
   private int y;
+  private String name;
+  private int depthIndex;
 
   LayerDelegate() {
     isVisible = DEFAULT_VISIBILITY_VALUE;
     x = 0;
     y = 0;
+    name = "";
   }
 
   /**
@@ -40,6 +42,15 @@ final class LayerDelegate {
    */
   void setY(int y) {
     this.y = y;
+  }
+
+  /**
+   * Sets the name of the layer.
+   *
+   * @param name the new name of the layer.
+   */
+  void setName(String name) {
+    this.name = name;
   }
 
   /**
@@ -78,5 +89,32 @@ final class LayerDelegate {
    */
   int getY() {
     return y;
+  }
+
+  /**
+   * Returns the name of the layer.
+   *
+   * @return the name of the layer as a {@code String}
+   */
+  String getName() {
+    return name;
+  }
+
+  /**
+   * Returns the depth index for this layer.
+   *
+   * @return the depth index.
+   */
+  int getDepthIndex() {
+    return depthIndex;
+  }
+
+  /**
+   * Sets the depth index for this layer.
+   *
+   * @param depthIndex the new depth index.
+   */
+  void setDepthIndex(int depthIndex) {
+    this.depthIndex = depthIndex;
   }
 }
