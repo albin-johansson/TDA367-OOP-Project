@@ -53,7 +53,7 @@ final class LayerItemContainerPane extends AnchorPane implements ILayerUpdateLis
     for (IReadOnlyLayer layer : event.getLayers()) {
       try {
         var layerItemPane = new LayerItemPane(model, layer);
-        layerItemVBox.getChildren().add(layerItemPane);
+        layerItemVBox.getChildren().add(0, layerItemPane);
       } catch (Exception e) {
         System.out.println("Failed to create layer item pane! Exception: " + e);
       }
