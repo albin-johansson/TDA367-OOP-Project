@@ -6,6 +6,10 @@ import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import java.util.Objects;
 
+/**
+ * The {@code AddLayerCommand} class is an implementation of {@code ICommand} that represents the
+ * action of adding a layer to the canvas.
+ */
 final class AddLayerCommand implements ICommand {
 
   private final IMementoTarget<ModelMemento> mementoTarget;
@@ -13,6 +17,12 @@ final class AddLayerCommand implements ICommand {
   private final ILayer layer;
   private ModelMemento modelMemento;
 
+  /**
+   * @param canvas        the associated canvas instance.
+   * @param mementoTarget the memento target.
+   * @param layer         the layer that will be added.
+   * @throws NullPointerException if any references are {@code null}.
+   */
   AddLayerCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, ILayer layer) {
     this.canvas = Objects.requireNonNull(canvas);
     this.mementoTarget = Objects.requireNonNull(mementoTarget);

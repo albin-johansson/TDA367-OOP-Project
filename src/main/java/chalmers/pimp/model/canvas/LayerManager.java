@@ -115,7 +115,7 @@ final class LayerManager {
    * @param deltaZ the z-axis offset.
    * @throws NullPointerException if the supplied layer is {@code null}.
    */
-  void changeDepthIndex(IReadOnlyLayer layer, int deltaZ) {
+  void changeDepthIndex(IReadOnlyLayer layer, int deltaZ) { // FIXME probably broken
     Objects.requireNonNull(layer);
     if (deltaZ == 0) {
       return;
@@ -187,7 +187,7 @@ final class LayerManager {
    * @param removed the layer that was removed.
    * @throws NullPointerException if the supplied layer is {@code null}.
    */
-  private void updateActiveLayerAfterRemoval(IReadOnlyLayer removed) {
+  private void updateActiveLayerAfterRemoval(IReadOnlyLayer removed) { // FIXME probably broken
     Objects.requireNonNull(removed);
     if (inBounds(removed.getDepthIndex() - 1)) {
       activeLayer = layers.get(removed.getDepthIndex() - 1);
@@ -341,6 +341,22 @@ final class LayerManager {
    */
   int getAmountOfLayers() {
     return layers.size();
+  }
+
+  /**
+   * Indicates whether or not the layer associated with the supplied index is visible. This method
+   * has no effect if the supplied index is out-of-bounds.
+   *
+   * @param layerIndex the layer index of the layer that will be checked.
+   * @return {@code true} if the layer associated with the supplied index is visible; {@code false}
+   * otherwise.
+   */
+  boolean isLayerVisible(int layerIndex) { // TODO test
+    if (inBounds(layerIndex)) {
+      return layers.get(layerIndex).isVisible();
+    } else {
+      return false;
+    }
   }
 
   /**

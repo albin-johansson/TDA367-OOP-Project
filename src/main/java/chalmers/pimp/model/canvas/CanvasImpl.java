@@ -56,16 +56,19 @@ final class CanvasImpl implements ICanvas {
   @Override
   public void addLayer(ILayer layer) {
     layerManager.addLayer(layer);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public void removeLayer(IReadOnlyLayer layer) {
     layerManager.removeLayer(layer);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public void removeLayer(int layerIndex) {
     layerManager.removeLayer(layerIndex);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
@@ -93,24 +96,25 @@ final class CanvasImpl implements ICanvas {
   @Override
   public void setActiveLayerPixel(IPixel pixel) {
     layerManager.setActiveLayerPixel(pixel);
-    canvasUpdateListeners.canvasUpdated();
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public void setActiveLayerPixels(int x, int y, IReadOnlyPixelData pixelData) {
     layerManager.setActiveLayerPixels(x, y, pixelData);
-    canvasUpdateListeners.canvasUpdated();
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public void setLayerVisibility(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
     layerManager.setLayerVisibility(readOnlyLayer.getDepthIndex(), isVisible);
-    canvasUpdateListeners.canvasUpdated();
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public void setLayerVisibility(int layerIndex, boolean isVisible) {
     layerManager.setLayerVisibility(layerIndex, isVisible);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
@@ -126,16 +130,23 @@ final class CanvasImpl implements ICanvas {
   @Override
   public void setActiveLayerX(int x) {
     layerManager.setActiveLayerX(x);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public void setActiveLayerY(int y) {
     layerManager.setActiveLayerY(y);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public int getAmountOfLayers() {
     return layerManager.getAmountOfLayers();
+  }
+
+  @Override
+  public boolean isLayerVisible(int layerIndex) {
+    return layerManager.isLayerVisible(layerIndex);
   }
 
   @Override
@@ -152,6 +163,9 @@ final class CanvasImpl implements ICanvas {
   public void restore(CanvasMemento memento) {
     Objects.requireNonNull(memento);
     layerManager = memento.getLayerManager();
+
+    notifyCanvasUpdateListeners();
+    notifyLayerUpdateListeners();
   }
 
   @Override

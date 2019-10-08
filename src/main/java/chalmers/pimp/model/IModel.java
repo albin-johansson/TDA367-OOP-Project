@@ -223,6 +223,8 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    */
   void setRenderer(IRenderer renderer);
 
+  boolean isLayerVisible(int layerIndex);
+
   /**
    * Returns the models renderer.
    *

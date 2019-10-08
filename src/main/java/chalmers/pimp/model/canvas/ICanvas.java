@@ -173,6 +173,8 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    */
   int getAmountOfLayers();
 
+  boolean isLayerVisible(int layerIndex);
+
   /**
    * Returns the currently active layer.
    *

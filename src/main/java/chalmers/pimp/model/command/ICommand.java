@@ -3,6 +3,8 @@ package chalmers.pimp.model.command;
 /**
  * The {@code ICommand} interface specifies objects that represent some sort of executable and
  * revertable command.
+ *
+ * @see CommandFactory
  */
 public interface ICommand {
 

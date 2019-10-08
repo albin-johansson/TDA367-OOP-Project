@@ -15,7 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * The {@code LayerItemPane} class represents a layer item in the chalmers.pimp.view.
+ * The {@code LayerItemPane} class represents a "layer item pane", which contains information about
+ * a specific layer in the model.
  */
 final class LayerItemPane extends AnchorPane {
 
@@ -47,33 +48,56 @@ final class LayerItemPane extends AnchorPane {
   private ImageView imageView;
 
   private final IModel model;
-  private final IReadOnlyLayer layer;
+  private final IReadOnlyLayer layer; // TODO remove
   private final int associatedLayerIndex;
 
   /**
-   * @param model an reference to the {@code IModel}.
-   * @param layer the layer this {@code LayerItem} represents.
+   * @param model the associated model instance.
+   * @param layer the layer the created layer item pane will represent.
    * @throws IOException          if the associated FXML file cannot be found.
-   * @throws NullPointerException if the IReadOnlyLayer argument is null.
+   * @throws NullPointerException if any references are {@code null}.
    */
   LayerItemPane(IModel model, IReadOnlyLayer layer) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
     this.model = Objects.requireNonNull(model);
     this.layer = Objects.requireNonNull(layer);
-    textLabel.setText(layer.getName());
 
+    textLabel.setText(layer.getName());
     associatedLayerIndex = layer.getDepthIndex();
 
-    updateVisibilityImage();
-    updateSelectionState();
+    updateVisibilityHint();
+    updateSelectionHint();
+  }
+
+  /**
+   * Updates the state of the visibility hint. This is used to indicate whether or not the
+   * associated layer is visible.
+   */
+  private void updateVisibilityHint() {
+    if (layer.isVisible()) {
+      imageView.setImage(EYE_OPEN_IMAGE);
+    } else {
+      imageView.setImage(EYE_CLOSED_IMAGE);
+    }
+  }
+
+  /**
+   * Updates the state of the selection "hint" AKA the background color of the layer item pane. This
+   * is used to indicate which layer item pane represents the active layer.
+   */
+  private void updateSelectionHint() {
+    if (model.isLayerVisible(associatedLayerIndex)) {
+      setStyle("-fx-background-color: -selected-color;");
+    } else {
+      setStyle("");
+    }
   }
 
   @FXML
   @SuppressWarnings("unused")
   private void toggleVisibility() {
     model.setLayerVisibility(associatedLayerIndex, toggleButton.isSelected());
-    updateVisibilityImage();
-//    updateVisibilityImage();
+    updateVisibilityHint();
   }
 
   @FXML
@@ -91,8 +115,7 @@ final class LayerItemPane extends AnchorPane {
   @SuppressWarnings("unused")
   private void updateActiveLayer() {
     model.selectLayer(associatedLayerIndex);
-    updateSelectionState();
-//    showIfLayerIsSelected();
+    updateSelectionHint();
   }
 
   @FXML
@@ -105,27 +128,5 @@ final class LayerItemPane extends AnchorPane {
   @SuppressWarnings("unused")
   private void increaseZIndex() {
     model.moveLayer(layer, 1);
-  }
-
-  //TODO Rethink if below methods should all be private and called by single update method...
-
-  private void updateVisibilityImage() {
-    if (layer.isVisible()) {
-      imageView.setImage(EYE_OPEN_IMAGE);
-    } else {
-      imageView.setImage(EYE_CLOSED_IMAGE);
-    }
-  }
-
-  private void updateSelectionState() {
-    if (model.getActiveLayer() == null) {
-      return;
-    }
-
-    if (associatedLayerIndex == model.getActiveLayer().getDepthIndex()) {
-      setStyle("-fx-background-color: -selected-color;");
-    } else {
-      setStyle("");
-    }
   }
 }

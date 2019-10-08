@@ -141,7 +141,6 @@ final class ModelImpl implements IModel {
   @Override
   public void removeLayer(ILayer layer) {
     canvas.removeLayer(layer); // TODO replace with command
-    notifyCanvasUpdateListeners();
   }
 
   @Override
@@ -228,6 +227,11 @@ final class ModelImpl implements IModel {
   @Override
   public void setRenderer(IRenderer renderer) {
     this.renderer = Objects.requireNonNull(renderer);
+  }
+
+  @Override
+  public boolean isLayerVisible(int layerIndex) {
+    return canvas.isLayerVisible(layerIndex);
   }
 
   @Override
