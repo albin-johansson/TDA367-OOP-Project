@@ -4,7 +4,6 @@ import chalmers.pimp.controller.ControllerFactory;
 import chalmers.pimp.controller.IController;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.ModelFactory;
-import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.view.IView;
 import chalmers.pimp.view.ViewFactory;
 import javafx.application.Application;
@@ -33,7 +32,5 @@ public final class PimpApp extends Application {
     controller.run();
 
     view.repaint();
-//    model.addLayer(LayerFactory.createRasterLayer(500, 500));
-//    model.selectLayer(0);
   }
 }

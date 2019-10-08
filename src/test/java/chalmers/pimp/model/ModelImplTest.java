@@ -156,7 +156,7 @@ class ModelImplTest {
     model.addLayer(layer);
     model.selectLayer(0);
 
-    assertThrows(NullPointerException.class, () -> model.setPixel(null));
+    assertThrows(NullPointerException.class, () -> model.setActiveLayerPixel(null));
   }
 
   @Test
@@ -257,7 +257,7 @@ class ModelImplTest {
     assertEquals(20, layer.getX());
     assertEquals(15, layer.getY());
 
-    model.moveSelectedLayer(15, 10);
+    model.moveActiveLayer(15, 10);
 
     assertEquals(35, layer.getX());
     assertEquals(25, layer.getY());

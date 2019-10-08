@@ -5,10 +5,8 @@ import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.point.IReadOnlyPoint;
-import chalmers.pimp.model.point.Point;
 import chalmers.pimp.model.point.PointFactory;
 import java.util.Objects;
-import javafx.scene.input.MouseEvent;
 
 /**
  * A tool for creating and editing shapes.
@@ -32,7 +30,7 @@ final class ShapeTool implements ITool {
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
-    model.notifyAllCanvasUpdateListeners();
+    model.notifyCanvasUpdateListeners();
     ILayer newShape = createRect(mouseStatus);
     newShape.draw(model.getRenderer());
   }

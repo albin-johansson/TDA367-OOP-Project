@@ -184,9 +184,11 @@ final class LayerManager {
    * Updates the active layer after the removal of the supplied layer. This method changes the
    * active layer
    *
-   * @param removed
+   * @param removed the layer that was removed.
+   * @throws NullPointerException if the supplied layer is {@code null}.
    */
   private void updateActiveLayerAfterRemoval(IReadOnlyLayer removed) {
+    Objects.requireNonNull(removed);
     if (inBounds(removed.getDepthIndex() - 1)) {
       activeLayer = layers.get(removed.getDepthIndex() - 1);
     } else if (inBounds(removed.getDepthIndex() + 1)) {
@@ -212,7 +214,7 @@ final class LayerManager {
     ILayer match = findMatch(layer);
     if (match != null) {
       removeLayer(match.getDepthIndex());
-      updateActiveLayerAfterRemoval(match);
+      updateActiveLayerAfterRemoval(match); // TODO should only be done after removing active layer
     }
   }
 

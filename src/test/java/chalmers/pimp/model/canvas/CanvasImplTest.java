@@ -39,7 +39,7 @@ class CanvasImplTest {
   void setPixel() {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
-    assertThrows(NullPointerException.class, () -> canvas.setPixel(null));
+    assertThrows(NullPointerException.class, () -> canvas.setActiveLayerPixel(null));
   }
 
   @Test
@@ -166,7 +166,7 @@ class CanvasImplTest {
     IPixel pixel = PixelFactory.createPixel(2, 3, 0, 1, 0, 1);
 
     pixelData.setPixel(pixel);
-    canvas.setPixels(0, 0, pixelData);
+    canvas.setActiveLayerPixels(0, 0, pixelData);
 
     assertEquals(1, defaultLayer.getPixelData().getPixel(2, 3).getColor().getGreenPercentage());
   }
@@ -180,7 +180,7 @@ class CanvasImplTest {
 
     pixelData.setPixel(pixel);
     //pixelData shifted to (2,2)
-    canvas.setPixels(2, 2, pixelData);
+    canvas.setActiveLayerPixels(2, 2, pixelData);
 
     assertEquals(1, defaultLayer.getPixelData().getPixel(4, 5).getColor().getGreenPercentage());
   }

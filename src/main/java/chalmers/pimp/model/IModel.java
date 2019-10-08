@@ -14,6 +14,36 @@ import chalmers.pimp.model.tools.ITool;
  */
 public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
 
+  /**
+   * Notifies all canvas update listeners.
+   */
+  void notifyCanvasUpdateListeners();
+
+  /**
+   * Adds a canvas update listener to the chalmers.pimp.model.
+   *
+   * @param listener the listener that will be added, may not be {@code null}.
+   * @throws NullPointerException if any arguments are {@code null}.
+   */
+  void addCanvasUpdateListener(ICanvasUpdateListener listener);
+
+  /**
+   * Adds a undo/redo listener to the model.
+   *
+   * @param listener the listener that will be added, may not be {@code null}.
+   * @throws NullPointerException if the supplied listener is {@code null}.
+   */
+  void addUndoRedoListener(IUndoRedoListener listener);
+
+  /**
+   * Adds a layer update listener to the chalmers.pimp.model.
+   *
+   * @param listener the listener that will be added, may not be {@code null}.
+   * @throws NullPointerException     if any arguments are {@code null}.
+   * @throws IllegalArgumentException if the supplied listener has been added previously.
+   */
+  void addLayerUpdateListener(ILayerUpdateListener listener);
+
   void startMovingLayer(int x, int y);
 
   void updateMovingLayer(int x, int y);
@@ -104,7 +134,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * @throws IndexOutOfBoundsException if the specified coordinate is out-of-bounds.
    * @throws NullPointerException      if any arguments are {@code null}.
    */
-  void setPixel(IPixel pixel);
+  void setActiveLayerPixel(IPixel pixel);
 
   /**
    * Sets the color of multiple pixels in the model using the PixelData Class.
@@ -113,7 +143,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * @param y         start y value of the PixelData.
    * @param pixelData the PixelData representing the pixels to be set.
    */
-  void setPixels(int x, int y, PixelData pixelData);
+  void setActiveLayerPixels(int x, int y, PixelData pixelData);
 
   /**
    * Sets the name of a layer.
@@ -150,36 +180,12 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void setLayerVisibility(int layerIndex, boolean isVisible);
 
   /**
-   * Adds a canvas update listener to the chalmers.pimp.model.
+   * Moves the active layer by x- and y-amount.
    *
-   * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @param dx the amount moved in dimension x.
+   * @param dy the amount moved in dimension y.
    */
-  void addCanvasUpdateListener(ICanvasUpdateListener listener);
-
-  /**
-   * Adds a undo/redo listener to the model.
-   *
-   * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException if the supplied listener is {@code null}.
-   */
-  void addUndoRedoListener(IUndoRedoListener listener);
-
-  /**
-   * Adds a layer update listener to the chalmers.pimp.model.
-   *
-   * @param listener the listener that will be added, may not be {@code null}.
-   * @throws NullPointerException     if any arguments are {@code null}.
-   * @throws IllegalArgumentException if the supplied listener has been added previously.
-   */
-  void addLayerUpdateListener(ILayerUpdateListener listener);
-
-  /**
-   * Returns all of the layers in the chalmers.pimp.model.
-   *
-   * @return all of the layers in the chalmers.pimp.model.
-   */
-  Iterable<? extends IReadOnlyLayer> getLayers();
+  void moveActiveLayer(int dx, int dy);
 
   /**
    * Can be Null if user chooses to deselect a tool.
@@ -210,14 +216,6 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void selectedToolReleased(MouseStatus mouseStatus);
 
   /**
-   * Moves the active layer by x- and y-amount.
-   *
-   * @param xAmount the amount moved in dimension x.
-   * @param yAmount the amount moved in dimension y.
-   */
-  void moveSelectedLayer(int xAmount, int yAmount);
-
-  /**
    * Sets the models renderer.
    *
    * @param renderer the specific renderer implementation.
@@ -226,16 +224,23 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void setRenderer(IRenderer renderer);
 
   /**
-   * Notifies all canvas update listeners.
-   */
-  void notifyAllCanvasUpdateListeners();
-
-  /**
    * Returns the models renderer.
    *
    * @return the models renderer.
    */
   IRenderer getRenderer();
 
+  /**
+   * Returns the currently active layer.
+   *
+   * @return the currentyl active layer; {@code null} otherwise.
+   */
   IReadOnlyLayer getActiveLayer();
+
+  /**
+   * Returns all of the layers in the model.
+   *
+   * @return all of the layers in the model.
+   */
+  Iterable<? extends IReadOnlyLayer> getLayers();
 }

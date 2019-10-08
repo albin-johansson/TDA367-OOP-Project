@@ -62,7 +62,7 @@ public final class Stroke {
     }
 
     int radius = (int) (diameter / 2.0);
-    model.setPixels(pixel.getX() - radius, pixel.getY() - radius, pixels);
+    model.setActiveLayerPixels(pixel.getX() - radius, pixel.getY() - radius, pixels);
   }
 
   /**

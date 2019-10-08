@@ -49,6 +49,26 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void notifyCanvasUpdateListeners() {
+    canvas.notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public void addCanvasUpdateListener(ICanvasUpdateListener listener) {
+    canvas.addCanvasUpdateListener(listener);
+  }
+
+  @Override
+  public void addUndoRedoListener(IUndoRedoListener listener) {
+    commandManager.addUndoRedoListener(listener);
+  }
+
+  @Override
+  public void addLayerUpdateListener(ILayerUpdateListener listener) {
+    canvas.addLayerUpdateListener(listener);
+  }
+
+  @Override
   public void startMovingLayer(int x, int y) {
     layerMovement = new LayerMovement();
     layerMovement.start(x, y, createSnapShot());
@@ -61,7 +81,7 @@ final class ModelImpl implements IModel {
     }
 
     layerMovement.update(x, y);
-    moveSelectedLayer(layerMovement.getDx(), layerMovement.getDy());
+    moveActiveLayer(layerMovement.getDx(), layerMovement.getDy());
   }
 
   @Override
@@ -92,7 +112,7 @@ final class ModelImpl implements IModel {
     if (stroke != null) {
       stroke.add(pixel);
       stroke.updatePixels(canvas, pixel);
-      notifyAllCanvasUpdateListeners();
+      notifyCanvasUpdateListeners();
     }
   }
 
@@ -115,13 +135,13 @@ final class ModelImpl implements IModel {
     addLayerCmd.execute();
 
     commandManager.insertCommand(addLayerCmd);
-    notifyAllCanvasUpdateListeners();
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public void removeLayer(ILayer layer) {
     canvas.removeLayer(layer); // TODO replace with command
-    notifyAllCanvasUpdateListeners();
+    notifyCanvasUpdateListeners();
   }
 
   @Override
@@ -145,13 +165,13 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void setPixel(IPixel pixel) {
-    canvas.setPixel(pixel);
+  public void setActiveLayerPixel(IPixel pixel) {
+    canvas.setActiveLayerPixel(pixel);
   }
 
   @Override
-  public void setPixels(int x, int y, PixelData pixelData) {
-    canvas.setPixels(x, y, pixelData);
+  public void setActiveLayerPixels(int x, int y, PixelData pixelData) {
+    canvas.setActiveLayerPixels(x, y, pixelData);
   }
 
   @Override
@@ -175,23 +195,8 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void addCanvasUpdateListener(ICanvasUpdateListener listener) {
-    canvas.addCanvasUpdateListener(listener);
-  }
-
-  @Override
-  public void addUndoRedoListener(IUndoRedoListener listener) {
-    commandManager.addUndoRedoListener(listener);
-  }
-
-  @Override
-  public void addLayerUpdateListener(ILayerUpdateListener listener) {
-    canvas.addLayerUpdateListener(listener);
-  }
-
-  @Override
-  public Iterable<? extends IReadOnlyLayer> getLayers() {
-    return canvas.getLayers();
+  public void moveActiveLayer(int dx, int dy) {
+    canvas.moveActiveLayer(dx, dy);
   }
 
   @Override
@@ -221,18 +226,8 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void moveSelectedLayer(int xAmount, int yAmount) {
-    canvas.moveActiveLayer(xAmount, yAmount);
-  }
-
-  @Override
   public void setRenderer(IRenderer renderer) {
     this.renderer = Objects.requireNonNull(renderer);
-  }
-
-  @Override
-  public void notifyAllCanvasUpdateListeners() {
-    canvas.notifyCanvasUpdateListeners();
   }
 
   @Override
@@ -243,6 +238,11 @@ final class ModelImpl implements IModel {
   @Override
   public IReadOnlyLayer getActiveLayer() {
     return canvas.getActiveLayer();
+  }
+
+  @Override
+  public Iterable<? extends IReadOnlyLayer> getLayers() {
+    return canvas.getLayers();
   }
 
   @Override
