@@ -1,13 +1,5 @@
 package chalmers.pimp.model.canvas.layer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import chalmers.pimp.model.canvas.Canvas;
-import chalmers.pimp.model.canvas.ILayerUpdateListener;
-import chalmers.pimp.model.canvas.LayerUpdateEvent;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 class ILayerUpdateListenerTest {
 
 //  private static ILayer layer;
