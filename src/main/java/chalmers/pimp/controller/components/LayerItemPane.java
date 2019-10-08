@@ -9,16 +9,26 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 
 /**
  * The {@code LayerItemPane} class represents a layer item in the chalmers.pimp.view.
  */
 final class LayerItemPane extends AnchorPane {
+
+  @FXML
+  private AnchorPane rootPane;
 
   private static final Image EYE_OPEN_IMAGE;
   private static final Image EYE_CLOSED_IMAGE;
@@ -64,6 +74,68 @@ final class LayerItemPane extends AnchorPane {
     this.layer = Objects.requireNonNull(layer);
     textLabel.setText(layer.getName());
     updateVisibilityImage();
+
+    addDragEventHandler();
+    addDragOverEventHandler();
+    addDropEventHandler();
+  }
+
+  /**
+   * Adds the drag EventHandler
+   */
+  private void addDragEventHandler(){
+    rootPane.setOnDragDetected((MouseEvent e)->{
+      //We want the textArea to be dragged. Could also be copied.
+      Dragboard db = rootPane.startDragAndDrop(TransferMode.MOVE);
+      model.selectLayer(layer);
+      // Put a string on a dragboard as an identifier
+      ClipboardContent content = new ClipboardContent();
+      content.putString(String.valueOf(layer.getDepthIndex()));
+      db.setContent(content);
+
+      //Consume the event
+      e.consume();
+    });
+
+  }
+
+  /**
+   * adds the drag over EventHandler
+   */
+  private void addDragOverEventHandler(){
+    rootPane.addEventHandler(DragEvent.DRAG_OVER, (DragEvent event) -> {
+      if (event.getGestureSource() != rootPane
+          && event.getDragboard().hasString()) {
+        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+      }
+      event.consume();
+    });
+  }
+
+  /**
+   * adds the drop EventHandler
+   */
+  private void addDropEventHandler(){
+    rootPane.addEventHandler(DragEvent.DRAG_DROPPED, (DragEvent event) -> {
+      //Get the dragboard back
+      Dragboard db = event.getDragboard();
+
+      boolean success = false;
+      //Could have some more thorough checks of course.
+      if (db.hasString()) {
+        int originDepth = Integer.parseInt(db.getString());
+        System.out.println("dropped");
+
+
+        model.moveLayer(model.getActiveLayer(), layer.getDepthIndex() - originDepth );
+
+
+        success = true;
+      }
+      //Complete and consume the event.
+      event.setDropCompleted(success);
+      event.consume();
+    });
   }
 
   /**
