@@ -16,7 +16,11 @@ import javafx.scene.layout.AnchorPane;
 
 /**
  * The {@code LayerItemPane} class represents a "layer item pane", which contains information about
- * a specific layer in the model.
+ * a specific layer in the model. Instances of this class are designed to be "disposed" upon layer
+ * model updates. In other words, instances of the {@code LayerItemPane} class are meant to be
+ * short-lived.
+ *
+ * @see LayerItemContainerPane
  */
 final class LayerItemPane extends AnchorPane {
 
@@ -66,15 +70,10 @@ final class LayerItemPane extends AnchorPane {
     textLabel.setText(layer.getName());
     associatedLayerIndex = layer.getDepthIndex();
 
-    updateVisibilityHint();
-    updateSelectionHint();
-  }
+    if (model.getActiveLayer().getDepthIndex() == associatedLayerIndex) {
+      setStyle("-fx-background-color: -selected-color;");
+    }
 
-  /**
-   * Updates the state of the visibility hint. This is used to indicate whether or not the
-   * associated layer is visible.
-   */
-  private void updateVisibilityHint() {
     if (layer.isVisible()) {
       imageView.setImage(EYE_OPEN_IMAGE);
     } else {
@@ -82,47 +81,22 @@ final class LayerItemPane extends AnchorPane {
     }
   }
 
-  /**
-   * Updates the state of the selection "hint" AKA the background color of the layer item pane. This
-   * is used to indicate which layer item pane represents the active layer.
-   */
-  private void updateSelectionHint() {
-    if (model.isLayerVisible(associatedLayerIndex)) {
-      setStyle("-fx-background-color: -selected-color;");
-    } else {
-      setStyle("");
-    }
-  }
-
-  /**
-   * Returns the {@code IReadOnlyLayer} that this LayerItem represents.
-   *
-   * @return the layer this LayerItem represents.
-   */
-  IReadOnlyLayer getLayer() {
-    return layer;
-  }
-
-  /**
-   * Sets the icon on the LayerItemPane to match that of the LayerType. Using String interpolation.
-   */
-  void setTypeIcon() {
-
-    //TODO Fix themes
-    String path = "images/light/" + layer.getLayerType().name().toLowerCase() + ".png";
-
-    try {
-      layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
-    } catch (Exception e) {
-      System.err.println("Failed to load layerTypeIcon icon! Exception: " + e);
-    }
-  }
+//  void setTypeIcon() {
+//
+//    //TODO Fix themes
+//    String path = "images/light/" + layer.getLayerType().name().toLowerCase() + ".png";
+//
+//    try {
+//      layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
+//    } catch (Exception e) {
+//      System.err.println("Failed to load layerTypeIcon icon! Exception: " + e);
+//    }
+//  }
 
   @FXML
   @SuppressWarnings("unused")
   private void toggleVisibility() {
     model.setLayerVisibility(associatedLayerIndex, toggleButton.isSelected());
-    updateVisibilityHint();
   }
 
   @FXML
@@ -140,7 +114,6 @@ final class LayerItemPane extends AnchorPane {
   @SuppressWarnings("unused")
   private void updateActiveLayer() {
     model.selectLayer(associatedLayerIndex);
-    updateSelectionHint();
   }
 
   @FXML
@@ -156,6 +129,7 @@ final class LayerItemPane extends AnchorPane {
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void removeLayer() {
     model.removeLayer(layer);
   }
