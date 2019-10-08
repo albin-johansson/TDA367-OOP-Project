@@ -86,7 +86,7 @@ final class ControllerImpl implements IController {
    */
   private MouseStatus createMouseStatus(MouseEvent event) {
     Objects.requireNonNull(event);
-    int buttonID = fxButtonToInt(event.getButton());
+    MouseStatus.MouseButton buttonID = fxToMouseStatusButton(event.getButton());
     return new MouseStatus((int) event.getX(), (int) event.getY(), buttonID);
   }
 
@@ -191,25 +191,24 @@ final class ControllerImpl implements IController {
   }
 
   /**
-   * Converts the button pressed to an integer representation.
+   * Converts the button pressed to an MouseStatus MouseButton representation.
    *
-   * @param mouseButton the enum value that describes the mouse button.
-   * @return an int representation of the supplied enum value.
+   * @param mouseButton the JavaFX enum value that describes the mouse button.
+   * @return a MouseStatus MouseButton Enum representation of the supplied enum value.
    * @throws IllegalStateException if the supplied value isn't supported.
    * @throws NullPointerException  if the supplied value is {@code null}.
    */
-  private int fxButtonToInt(MouseButton mouseButton) {
-    //TODO Change int representation to ENUM when updated in Model
+  private MouseStatus.MouseButton fxToMouseStatusButton(MouseButton mouseButton) {
     Objects.requireNonNull(mouseButton);
     switch (mouseButton) {
       case NONE:
-        return 0;
+        return MouseStatus.MouseButton.NONE;
       case PRIMARY:
-        return 1;
+        return MouseStatus.MouseButton.PRIMARY;
       case MIDDLE:
-        return 2;
+        return MouseStatus.MouseButton.MIDDLE;
       case SECONDARY:
-        return 3;
+        return MouseStatus.MouseButton.SECONDARY;
       default:
         throw new IllegalStateException("Invalid mouse button value: " + mouseButton);
     }
