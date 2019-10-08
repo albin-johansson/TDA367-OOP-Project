@@ -8,14 +8,14 @@ public final class MouseStatus {
 
   private final int x;
   private final int y;
-  private final MouseButton button;
+  private final MouseButtonID button;
 
   /**
    * @param x      the x coordinate of the mouse
    * @param y      the y coordinate of the mouse
    * @param button the button pressed
    */
-  public MouseStatus(int x, int y, MouseButton button) {
+  public MouseStatus(int x, int y, MouseButtonID button) {
     this.x = x;
     this.y = y;
     this.button = button;
@@ -44,11 +44,11 @@ public final class MouseStatus {
    *
    * @return the button that was pressed, if any.
    */
-  public MouseButton getButton() {
+  public MouseButtonID getButton() {
     return button;
   }
 
-  public enum MouseButton{
+  public enum MouseButtonID{
     NONE,
     PRIMARY,
     MIDDLE,

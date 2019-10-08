@@ -5,12 +5,14 @@ import chalmers.pimp.controller.components.PimpEditorPane;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.MouseStatus.MouseButtonID;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
+import chalmers.pimp.service.FXToMouseStatusButtonService;
 import chalmers.pimp.util.Resources;
 import chalmers.pimp.view.IView;
 import chalmers.pimp.view.renderer.RendererFactory;
@@ -86,7 +88,7 @@ final class ControllerImpl implements IController {
    */
   private MouseStatus createMouseStatus(MouseEvent event) {
     Objects.requireNonNull(event);
-    MouseStatus.MouseButton buttonID = fxToMouseStatusButton(event.getButton());
+    MouseButtonID buttonID = FXToMouseStatusButtonService.getMouseButtonID(event.getButton());
     return new MouseStatus((int) event.getX(), (int) event.getY(), buttonID);
   }
 
@@ -187,30 +189,6 @@ final class ControllerImpl implements IController {
       } catch (IOException ex) {
         ex.printStackTrace();
       }
-    }
-  }
-
-  /**
-   * Converts the button pressed to an MouseStatus MouseButton representation.
-   *
-   * @param mouseButton the JavaFX enum value that describes the mouse button.
-   * @return a MouseStatus MouseButton Enum representation of the supplied enum value.
-   * @throws IllegalStateException if the supplied value isn't supported.
-   * @throws NullPointerException  if the supplied value is {@code null}.
-   */
-  private MouseStatus.MouseButton fxToMouseStatusButton(MouseButton mouseButton) {
-    Objects.requireNonNull(mouseButton);
-    switch (mouseButton) {
-      case NONE:
-        return MouseStatus.MouseButton.NONE;
-      case PRIMARY:
-        return MouseStatus.MouseButton.PRIMARY;
-      case MIDDLE:
-        return MouseStatus.MouseButton.MIDDLE;
-      case SECONDARY:
-        return MouseStatus.MouseButton.SECONDARY;
-      default:
-        throw new IllegalStateException("Invalid mouse button value: " + mouseButton);
     }
   }
 
