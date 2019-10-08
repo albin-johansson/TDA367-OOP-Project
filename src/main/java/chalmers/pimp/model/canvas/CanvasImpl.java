@@ -4,7 +4,6 @@ import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
-import chalmers.pimp.model.pixeldata.PixelData;
 import java.util.Objects;
 
 /**
@@ -86,27 +85,26 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
-  public void moveActiveLayer(int xAmount, int yAmount) {
-    layerManager.moveActiveLayer(xAmount, yAmount);
-    canvasUpdateListeners.canvasUpdated();
-  }
-
-  @Deprecated
-  @Override
-  public void setLayerVisibility(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
-    layerManager.setLayerVisibility(readOnlyLayer.getDepthIndex(), isVisible);
+  public void moveActiveLayer(int dx, int dy) {
+    layerManager.moveActiveLayer(dx, dy);
     canvasUpdateListeners.canvasUpdated();
   }
 
   @Override
-  public void setPixel(IPixel pixel) {
+  public void setActiveLayerPixel(IPixel pixel) {
     layerManager.setActiveLayerPixel(pixel);
     canvasUpdateListeners.canvasUpdated();
   }
 
   @Override
-  public void setPixels(int x, int y, IReadOnlyPixelData pixelData) {
+  public void setActiveLayerPixels(int x, int y, IReadOnlyPixelData pixelData) {
     layerManager.setActiveLayerPixels(x, y, pixelData);
+    canvasUpdateListeners.canvasUpdated();
+  }
+
+  @Override
+  public void setLayerVisibility(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
+    layerManager.setLayerVisibility(readOnlyLayer.getDepthIndex(), isVisible);
     canvasUpdateListeners.canvasUpdated();
   }
 
@@ -136,11 +134,6 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
-  public void setPixels(int x, int y, PixelData pixels) {
-    layerManager.setActiveLayerPixels(x, y, pixels);
-  }
-
-  @Override
   public int getAmountOfLayers() {
     return layerManager.getAmountOfLayers();
   }
@@ -157,6 +150,7 @@ final class CanvasImpl implements ICanvas {
 
   @Override
   public void restore(CanvasMemento memento) {
+    Objects.requireNonNull(memento);
     layerManager = memento.getLayerManager();
   }
 
