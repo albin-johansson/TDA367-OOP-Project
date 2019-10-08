@@ -54,7 +54,7 @@ final class LayerItemPane extends AnchorPane {
    * @param model an reference to the {@code IModel}.
    * @param layer the layer this {@code LayerItem} represents.
    * @throws IOException          if the associated FXML file cannot be found.
-   * @throws NullPointerException if the IReadOnlyLayer argument is null
+   * @throws NullPointerException if the IReadOnlyLayer argument is null.
    */
   LayerItemPane(IModel model, IReadOnlyLayer layer) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));

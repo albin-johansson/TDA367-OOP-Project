@@ -17,9 +17,9 @@ final class PalettePane extends AnchorPane {
   private final IController controller;
 
   /**
-   * @param controller the associated chalmers.pimp.controller instance.
+   * @param controller the associated controller instance.
    * @throws IOException          if the associated FXML file cannot be loaded.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException if the supplied controller is {@code null}.
    */
   PalettePane(IController controller) throws IOException {
     this.controller = Objects.requireNonNull(controller);
@@ -27,26 +27,31 @@ final class PalettePane extends AnchorPane {
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void selectPencil() {
     controller.selectPencil();
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void selectEraser() {
     controller.selectEraser();
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void selectBucket() {
     controller.selectBucket();
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void selectMoveTool() {
     controller.selectMoveTool();
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void selectRectangleTool() {
     controller.selectRectangleTool();
   }

@@ -58,8 +58,6 @@ public final class PimpEditorPane extends AnchorPane {
     var palettePane = new PalettePane(controller);
     leftAnchorPane.getChildren().add(palettePane);
     AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
-
-//    populateLayerItemManagerPane();
   }
 
   /**
@@ -70,28 +68,4 @@ public final class PimpEditorPane extends AnchorPane {
   public GraphicsContext getGraphics() {
     return canvasPane.getGraphics();
   }
-
-//  /**
-//   * Populates this PEP's LayerItemManagerPane with LayerItems based on the layers in the
-//   * chalmers.pimp.model this PEP has
-//   */
-//  private void populateLayerItemManagerPane() {
-//    for (IReadOnlyLayer layer : model.getLayers()) {
-//      layerItemManagerPane.addLayerItemPane(createLayerItemPane(layer));
-//    }
-//  }
-
-//  /**
-//   * Creates the LayerItems for the view, based on a {@code IReadOnlyLayer}
-//   *
-//   * @param layer the {@code IReadOnlyLayer} that will be created as a view component
-//   * @return the corresponding {@code LayerItemPane} created from the {@code IReadOnlyLayer}
-//   */
-//  private LayerItemPane createLayerItemPane(IReadOnlyLayer layer) {
-//    try {
-//      return new LayerItemPane(model, layer);
-//    } catch (Exception e) {
-//      throw new RuntimeException(e);
-//    }
-//  }
 }
