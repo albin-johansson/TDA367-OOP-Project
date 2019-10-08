@@ -104,10 +104,10 @@ class ModelImplTest {
     }
 
     //Try to move back layer backwards and front layer forwards, should not change anything
-    model.moveLayer(layer1, -1);
-    model.moveLayer(layer3, 1);
+    model.changeLayerDepthIndex(layer1, -1);
+    model.changeLayerDepthIndex(layer3, 1);
     //Move middle layer "zero" steps
-    model.moveLayer(layer2, 0);
+    model.changeLayerDepthIndex(layer2, 0);
 
     //Assert order 1,2,3
     index = 0;
@@ -127,8 +127,8 @@ class ModelImplTest {
     }
 
     //Move back layer forwards, then front layer backwards. Each one step.
-    model.moveLayer(layer1, 1);
-    model.moveLayer(layer3, -1);
+    model.changeLayerDepthIndex(layer1, 1);
+    model.changeLayerDepthIndex(layer3, -1);
     //Assert order 2,3,1
     for (IReadOnlyLayer l : model.getLayers()) {
       switch (index) {
@@ -147,7 +147,7 @@ class ModelImplTest {
 
     //Supply invalid layer
     IReadOnlyLayer temp = LayerFactory.createRasterLayer(5, 5);
-    assertDoesNotThrow(() -> model.moveLayer(temp, 1));
+    assertDoesNotThrow(() -> model.changeLayerDepthIndex(temp, 1));
   }
 
   @Test

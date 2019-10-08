@@ -1,6 +1,9 @@
 package chalmers.pimp.model;
 
+import static chalmers.pimp.model.command.CommandFactory.creatRemoveLayerCommand;
+import static chalmers.pimp.model.command.CommandFactory.createAddLayerCommand;
 import static chalmers.pimp.model.command.CommandFactory.createMoveCommand;
+import static chalmers.pimp.model.command.CommandFactory.createStrokeCommand;
 
 import chalmers.pimp.model.canvas.CanvasFactory;
 import chalmers.pimp.model.canvas.ICanvas;
@@ -9,7 +12,6 @@ import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.ColorFactory;
-import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
@@ -122,7 +124,7 @@ final class ModelImpl implements IModel {
       stroke.add(pixel);
       stroke.updatePixels(canvas, pixel);
 
-      ICommand command = CommandFactory.createStrokeCommand(canvas, this, stroke);
+      ICommand command = createStrokeCommand(canvas, this, stroke);
       commandManager.insertCommand(command);
       stroke = null;
     }
@@ -130,7 +132,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void addLayer(ILayer layer) {
-    ICommand addLayerCmd = CommandFactory.createAddLayerCommand(canvas, this, layer);
+    ICommand addLayerCmd = createAddLayerCommand(canvas, this, layer);
     addLayerCmd.execute();
 
     commandManager.insertCommand(addLayerCmd);
@@ -145,7 +147,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void removeLayer(int layerIndex) {
-    ICommand removeLayerCmd = CommandFactory.creatRemoveLayerCommand(canvas, this, layerIndex);
+    ICommand removeLayerCmd = creatRemoveLayerCommand(canvas, this, layerIndex);
     removeLayerCmd.execute();
 
     commandManager.insertCommand(removeLayerCmd);
@@ -163,7 +165,7 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void moveLayer(IReadOnlyLayer layer, int steps) { // TODO rename
+  public void changeLayerDepthIndex(IReadOnlyLayer layer, int steps) {
     canvas.changeDepthIndex(layer, steps);
   }
 
@@ -266,16 +268,10 @@ final class ModelImpl implements IModel {
   @Override
   public void undo() {
     commandManager.undo();
-
-    canvas.notifyLayerUpdateListeners();
-    canvas.notifyCanvasUpdateListeners();
   }
 
   @Override
   public void redo() {
     commandManager.redo();
-
-    canvas.notifyLayerUpdateListeners();
-    canvas.notifyCanvasUpdateListeners();
   }
 }

@@ -119,13 +119,13 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private void decreaseZIndex() {
-    model.moveLayer(layer, -1);
+    model.changeLayerDepthIndex(layer, -1);
   }
 
   @FXML
   @SuppressWarnings("unused")
   private void increaseZIndex() {
-    model.moveLayer(layer, 1);
+    model.changeLayerDepthIndex(layer, 1);
   }
 
   @FXML

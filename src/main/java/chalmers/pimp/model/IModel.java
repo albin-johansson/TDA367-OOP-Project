@@ -124,7 +124,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * @param layer the layer to be moved.
    * @param steps the number of steps
    */
-  void moveLayer(IReadOnlyLayer layer, int steps);
+  void changeLayerDepthIndex(IReadOnlyLayer layer, int steps);
 
   /**
    * Sets the the pixel at the pixels coordinate, in the active layer. The coordinates are
