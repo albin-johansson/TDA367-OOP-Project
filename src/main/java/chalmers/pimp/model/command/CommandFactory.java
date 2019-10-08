@@ -15,6 +15,8 @@ import chalmers.pimp.model.canvas.layer.ILayer;
  */
 public final class CommandFactory {
 
+  // TODO command that represents changing layer index (by dragging a LIP)
+
   private CommandFactory() {
   }
 
@@ -66,7 +68,7 @@ public final class CommandFactory {
    * @param layerDepthIndex the layer depth index of the layer that will be removed.
    * @throws NullPointerException if any references are {@code null}.
    */
-  public static ICommand creatRemoveLayerCommand(ICanvas canvas,
+  public static ICommand createRemoveLayerCommand(ICanvas canvas,
       IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex) {
     return new RemoveLayerCommand(canvas, mementoTarget, layerDepthIndex);
   }

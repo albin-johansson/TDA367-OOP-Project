@@ -1,6 +1,6 @@
 package chalmers.pimp.model;
 
-import static chalmers.pimp.model.command.CommandFactory.creatRemoveLayerCommand;
+import static chalmers.pimp.model.command.CommandFactory.createRemoveLayerCommand;
 import static chalmers.pimp.model.command.CommandFactory.createAddLayerCommand;
 import static chalmers.pimp.model.command.CommandFactory.createMoveCommand;
 import static chalmers.pimp.model.command.CommandFactory.createStrokeCommand;
@@ -124,7 +124,9 @@ final class ModelImpl implements IModel {
       stroke.add(pixel);
       stroke.updatePixels(canvas, pixel);
 
+      // We don't need to explicitly execute the created command, the effect is already present
       ICommand command = createStrokeCommand(canvas, this, stroke);
+
       commandManager.insertCommand(command);
       stroke = null;
     }
@@ -147,7 +149,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void removeLayer(int layerIndex) {
-    ICommand removeLayerCmd = creatRemoveLayerCommand(canvas, this, layerIndex);
+    ICommand removeLayerCmd = createRemoveLayerCommand(canvas, this, layerIndex);
     removeLayerCmd.execute();
 
     commandManager.insertCommand(removeLayerCmd);
