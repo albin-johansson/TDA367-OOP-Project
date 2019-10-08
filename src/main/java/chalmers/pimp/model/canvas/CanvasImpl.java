@@ -85,12 +85,13 @@ final class CanvasImpl implements ICanvas {
   @Override
   public void changeDepthIndex(IReadOnlyLayer layer, int deltaZ) {
     layerManager.changeDepthIndex(layer, deltaZ);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public void moveActiveLayer(int dx, int dy) {
     layerManager.moveActiveLayer(dx, dy);
-    canvasUpdateListeners.canvasUpdated();
+    notifyCanvasUpdateListeners();
   }
 
   @Override

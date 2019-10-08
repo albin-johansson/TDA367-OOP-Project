@@ -25,7 +25,7 @@ final class StrokeCommand implements ICommand {
    */
   StrokeCommand(ICanvas layerModel, IMementoTarget<ModelMemento> mementoTarget, Stroke stroke) {
     this.layerModel = Objects.requireNonNull(layerModel);
-    this.mementoTarget = mementoTarget;
+    this.mementoTarget = Objects.requireNonNull(mementoTarget);
     this.stroke = Objects.requireNonNull(stroke);
     memento = stroke.getModelMemento();
   }

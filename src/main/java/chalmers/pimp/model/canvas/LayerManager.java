@@ -321,7 +321,8 @@ final class LayerManager {
 
   /**
    * Sets the name of the layer associated with the supplied depth index. This method has no effect
-   * if the supplied index isn't associated with a layer.
+   * if the supplied index isn't associated with a layer. Invoking this method doesn't trigger any
+   * events.
    *
    * @param index the depth index of the layer that will be renamed.
    * @param name  the new name of the layer, may not be {@code null}.
