@@ -1,13 +1,16 @@
 package chalmers.pimp.service;
 
-import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.MouseStatus.MouseButtonID;
 import java.util.Objects;
 import javafx.scene.input.MouseButton;
 
+/**
+ * The {@code FXToMouseStatusButtonService} class is a service for converting the JavaFX MouseButton
+ * enum to the models MouseStatus.MouseButtonID representation.
+ */
 public final class FXToMouseStatusButtonService {
 
-  private FXToMouseStatusButtonService(){
+  private FXToMouseStatusButtonService() {
 
   }
 
@@ -20,7 +23,7 @@ public final class FXToMouseStatusButtonService {
    * @throws NullPointerException  if the supplied value is {@code null}.
    */
 
-  public static MouseButtonID getMouseButtonID(MouseButton mouseButton){
+  public static MouseButtonID getMouseButtonID(MouseButton mouseButton) {
     Objects.requireNonNull(mouseButton);
     switch (mouseButton) {
       case NONE:
@@ -35,5 +38,4 @@ public final class FXToMouseStatusButtonService {
         throw new IllegalStateException("Invalid mouse button value: " + mouseButton);
     }
   }
-
 }
