@@ -10,10 +10,13 @@ import java.net.URL;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
@@ -21,6 +24,8 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.transform.Transform;
 
 /**
  * The {@code LayerItemPane} class represents a layer item in the chalmers.pimp.view.
@@ -77,16 +82,24 @@ final class LayerItemPane extends AnchorPane {
 
     addDragEventHandler();
     addDragOverEventHandler();
+    addDragExitedEventHandler();
     addDropEventHandler();
   }
 
   /**
-   * Adds the drag EventHandler
+   * Adds the drag EventHandler.
    */
   private void addDragEventHandler(){
     rootPane.setOnDragDetected((MouseEvent e)->{
       //We want the textArea to be dragged. Could also be copied.
       Dragboard db = rootPane.startDragAndDrop(TransferMode.MOVE);
+
+      SnapshotParameters sp =  new SnapshotParameters();
+      sp.setTransform(Transform.scale(0.8, 0.8));
+      WritableImage image = rootPane.snapshot(sp, null);
+
+
+      db.setDragView(image);
       model.selectLayer(layer);
       // Put a string on a dragboard as an identifier
       ClipboardContent content = new ClipboardContent();
@@ -100,20 +113,32 @@ final class LayerItemPane extends AnchorPane {
   }
 
   /**
-   * adds the drag over EventHandler
+   * Adds the drag over EventHandler.
    */
   private void addDragOverEventHandler(){
     rootPane.addEventHandler(DragEvent.DRAG_OVER, (DragEvent event) -> {
       if (event.getGestureSource() != rootPane
           && event.getDragboard().hasString()) {
         event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        //rootPane.setStyle("-fx-border-width: 2px 10px 4px 20px;");
+        rootPane.setStyle("-fx-border-color: #990bc8;");
       }
       event.consume();
     });
   }
 
   /**
-   * adds the drop EventHandler
+   * Removes the border from previous drag action.
+   */
+  private void addDragExitedEventHandler(){
+    rootPane.addEventHandler(DragEvent.DRAG_EXITED, (DragEvent event) -> {
+      rootPane.setStyle("-fx-border-width: 0,0,0,0");
+    });
+
+  }
+
+  /**
+   * Adds the drop EventHandler.
    */
   private void addDropEventHandler(){
     rootPane.addEventHandler(DragEvent.DRAG_DROPPED, (DragEvent event) -> {
