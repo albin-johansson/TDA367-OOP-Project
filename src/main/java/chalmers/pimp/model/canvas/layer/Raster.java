@@ -128,6 +128,9 @@ final class Raster implements ILayer {
     copy.setX(getX());
     copy.setY(getY());
     copy.setVisible(isVisible());
+    copy.setDepthIndex(getDepthIndex());
+    copy.setName(getName());
+
     return copy;
   }
 }
