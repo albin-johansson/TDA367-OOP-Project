@@ -15,9 +15,9 @@ import chalmers.pimp.model.pixeldata.PixelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CanvasTest {
+class CanvasImplTest {
 
-  private Canvas canvas;
+  private CanvasImpl canvas;
   private ILayer defaultLayer;
 
   /**
@@ -31,7 +31,7 @@ class CanvasTest {
 
   @BeforeEach
   private void setUp() {
-    canvas = new Canvas();
+    canvas = new CanvasImpl();
     defaultLayer = createLayer();
   }
 
