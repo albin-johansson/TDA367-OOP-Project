@@ -1,22 +1,24 @@
 package chalmers.pimp.model;
 
-import chalmers.pimp.model.canvas.Canvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 
 /**
- * The {@code IModel} interface specifies the facade for the main chalmers.pimp.model component in
- * the Pimp application.
+ * The {@code IModel} interface specifies the facade for the main model component in the
+ * application. This interface is a subinterface of {@link IChangeable} and {@link IMementoTarget}.
  */
-public interface IModel extends IChangeable {
+public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
 
-  // TODO create ILayerModel interface and use it as an aggregate
+  void startMovingLayer(int x, int y);
+
+  void updateMovingLayer(int x, int y);
+
+  void stopMovingLayer();
 
   /**
    * Starts a stroke.
@@ -92,18 +94,6 @@ public interface IModel extends IChangeable {
    * @param steps the number of steps
    */
   void moveLayer(IReadOnlyLayer layer, int steps);
-
-  void setLayerX(int x);
-
-  void setLayerY(int y);
-
-  /**
-   * Restores the state of the model to the one that is represented by the supplied memento object.
-   *
-   * @param memento the memento object used to restore the model state.
-   * @throws NullPointerException if any arguments are {@code null}.
-   */
-  void restore(ModelMemento memento);
 
   /**
    * Sets the the pixel at the pixels coordinate, in the active layer. The coordinates are
@@ -184,16 +174,12 @@ public interface IModel extends IChangeable {
    */
   void addLayerUpdateListener(ILayerUpdateListener listener);
 
-  void addCommand(ICommand command);
-
   /**
    * Returns all of the layers in the chalmers.pimp.model.
    *
    * @return all of the layers in the chalmers.pimp.model.
    */
   Iterable<? extends IReadOnlyLayer> getLayers();
-
-  IReadOnlyLayer getActiveLayer();
 
   /**
    * Can be Null if user chooses to deselect a tool.
@@ -223,22 +209,6 @@ public interface IModel extends IChangeable {
    */
   void selectedToolReleased(MouseStatus mouseStatus);
 
-//  /**
-//   * Replaces a layer of a specific index with a new layer. Does nothing if there is no layer on the
-//   * specified index.
-//   *
-//   * @param index the index of the layer to change.
-//   * @param layer the new layer.
-//   */
-//  void replaceLayer(int index, ILayer layer);
-
-  /**
-   * Creates a snap shot of the current state of the model.
-   *
-   * @return a snap shot of the current state of the model.
-   */
-  ModelMemento createSnapShot();
-
   /**
    * Moves the active layer by x- and y-amount.
    *
@@ -246,15 +216,6 @@ public interface IModel extends IChangeable {
    * @param yAmount the amount moved in dimension y.
    */
   void moveSelectedLayer(int xAmount, int yAmount);
-
-  Canvas getCanvas();
-  
-  /**
-   * Returns the models renderer.
-   *
-   * @return the models renderer.
-   */
-  IRenderer getRenderer();
 
   /**
    * Sets the models renderer.
@@ -268,4 +229,13 @@ public interface IModel extends IChangeable {
    * Notifies all canvas update listeners.
    */
   void notifyAllCanvasUpdateListeners();
+
+  /**
+   * Returns the models renderer.
+   *
+   * @return the models renderer.
+   */
+  IRenderer getRenderer();
+
+  IReadOnlyLayer getActiveLayer();
 }

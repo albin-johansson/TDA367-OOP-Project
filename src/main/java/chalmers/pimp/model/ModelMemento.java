@@ -1,6 +1,6 @@
 package chalmers.pimp.model;
 
-import chalmers.pimp.model.canvas.Canvas;
+import chalmers.pimp.model.canvas.CanvasMemento;
 import java.util.Objects;
 
 /**
@@ -10,26 +10,22 @@ import java.util.Objects;
  */
 public final class ModelMemento {
 
-  private final Canvas canvas;
+  private final CanvasMemento canvasMemento;
 
   /**
-   * Creates a {@code ModelMemento} instance. Note! All supplied references should refer to copies
-   * of the actual data used by the model by the time this constructor is called. Otherwise,
-   * unexpected behaviour might occur.
-   *
-   * @param canvas a copy of the canvas used by the model.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @param canvasMemento a memento object for a canvas instance.
+   * @throws NullPointerException if any references are {@code null}.
    */
-  ModelMemento(Canvas canvas) {
-    this.canvas = Objects.requireNonNull(canvas);
+  ModelMemento(CanvasMemento canvasMemento) {
+    this.canvasMemento = Objects.requireNonNull(canvasMemento);
   }
 
   /**
-   * Returns the saved canvas.
+   * Returns the canvas memento instance contained by this model memento instance.
    *
-   * @return the saved canvas.
+   * @return the canvas memento instance contained by this model memento instance.
    */
-  Canvas getCanvas() {
-    return canvas;
+  CanvasMemento getCanvasMemento() {
+    return canvasMemento;
   }
 }

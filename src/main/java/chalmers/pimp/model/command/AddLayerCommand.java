@@ -1,36 +1,40 @@
 package chalmers.pimp.model.command;
 
-import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.ModelMemento;
+import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.canvas.layer.ILayer;
+import java.util.Objects;
 
 final class AddLayerCommand implements ICommand {
 
-  private final IModel model;
+  private final IMementoTarget<ModelMemento> mementoTarget;
+  private final ICanvas canvas;
   private final ILayer layer;
   private ModelMemento modelMemento;
 
-  AddLayerCommand(IModel model, ILayer layer) {
-    this.model = model;
-    this.layer = layer;
+  AddLayerCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, ILayer layer) {
+    this.canvas = Objects.requireNonNull(canvas);
+    this.mementoTarget = Objects.requireNonNull(mementoTarget);
+    this.layer = Objects.requireNonNull(layer);
   }
 
   @Override
   public void execute() {
-    modelMemento = model.createSnapShot();
+    modelMemento = mementoTarget.createSnapShot();
 
-    model.getCanvas().addLayer(layer);
+    canvas.addLayer(layer);
   }
 
   @Override
   public void revert() {
     if (modelMemento != null) {
-      model.restore(modelMemento);
+      mementoTarget.restore(modelMemento);
     }
   }
 
   @Override
   public String getName() {
-    return "Add Layer";
+    return "Add Layer" /*+ layer.getName()*/; // TODO use the layer name
   }
 }

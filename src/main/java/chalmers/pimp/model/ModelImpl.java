@@ -1,6 +1,9 @@
 package chalmers.pimp.model;
 
-import chalmers.pimp.model.canvas.Canvas;
+import static chalmers.pimp.model.command.CommandFactory.createMoveCommand;
+
+import chalmers.pimp.model.canvas.CanvasFactory;
+import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
@@ -20,14 +23,16 @@ import java.util.Objects;
  */
 final class ModelImpl implements IModel {
 
+  private final ICanvas canvas;
   private final CommandManager commandManager;
-  private Canvas canvas;
-  private Stroke stroke;
-  private ITool selectedTool;
+
   private IRenderer renderer;
+  private Stroke stroke;
+  private LayerMovement layerMovement;
+  private ITool selectedTool;
 
   ModelImpl() {
-    canvas = new Canvas();
+    canvas = CanvasFactory.createCanvas();
     commandManager = new CommandManager();
 
     stroke = null;
@@ -44,6 +49,37 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void startMovingLayer(int x, int y) {
+    layerMovement = new LayerMovement();
+    layerMovement.start(x, y, createSnapShot());
+  }
+
+  @Override
+  public void updateMovingLayer(int x, int y) {
+    if (layerMovement == null) {
+      return;
+    }
+
+    layerMovement.update(x, y);
+    moveSelectedLayer(layerMovement.getDx(), layerMovement.getDy());
+  }
+
+  @Override
+  public void stopMovingLayer() {
+    if (layerMovement == null) {
+      return;
+    }
+
+    int depthIndex = getActiveLayer().getDepthIndex();
+    int x = getActiveLayer().getX();
+    int y = getActiveLayer().getY();
+
+    ICommand cmd = createMoveCommand(canvas, this, depthIndex, x, y, layerMovement.getMemento());
+    commandManager.insertCommand(cmd);
+    layerMovement = null;
+  }
+
+  @Override
   public void startStroke(IPixel pixel, int diameter) {
     Objects.requireNonNull(pixel);
     stroke = new Stroke(createSnapShot(), diameter);
@@ -55,7 +91,8 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(this, pixel);
+      stroke.updatePixels(canvas, pixel);
+      notifyAllCanvasUpdateListeners();
     }
   }
 
@@ -64,9 +101,9 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(this, pixel);
+      stroke.updatePixels(canvas, pixel);
 
-      ICommand command = CommandFactory.createStrokeCommand(this, stroke);
+      ICommand command = CommandFactory.createStrokeCommand(canvas, this, stroke);
       commandManager.insertCommand(command);
       stroke = null;
     }
@@ -74,7 +111,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void addLayer(ILayer layer) {
-    ICommand addLayerCmd = CommandFactory.createAddLayerCommand(this, layer);
+    ICommand addLayerCmd = CommandFactory.createAddLayerCommand(canvas, this, layer);
     addLayerCmd.execute();
 
     commandManager.insertCommand(addLayerCmd);
@@ -105,22 +142,6 @@ final class ModelImpl implements IModel {
   @Override
   public void moveLayer(IReadOnlyLayer layer, int steps) {
     canvas.changeDepthIndex(layer, steps);
-  }
-
-  @Override
-  public void setLayerX(int x) {
-    canvas.setLayerX(x);
-  }
-
-  @Override
-  public void setLayerY(int y) {
-    canvas.setLayerY(y);
-  }
-
-  @Override
-  public void restore(ModelMemento memento) {
-    canvas = memento.getCanvas();
-    // TODO...
   }
 
   @Override
@@ -169,18 +190,8 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void addCommand(ICommand command) {
-    commandManager.insertCommand(command);
-  }
-
-  @Override
   public Iterable<? extends IReadOnlyLayer> getLayers() {
     return canvas.getLayers();
-  }
-
-  @Override
-  public IReadOnlyLayer getActiveLayer() {
-    return canvas.getActiveLayer();
   }
 
   @Override
@@ -210,9 +221,38 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void moveSelectedLayer(int xAmount, int yAmount) {
+    canvas.moveActiveLayer(xAmount, yAmount);
+  }
+
+  @Override
+  public void setRenderer(IRenderer renderer) {
+    this.renderer = Objects.requireNonNull(renderer);
+  }
+
+  @Override
+  public void notifyAllCanvasUpdateListeners() {
+    canvas.notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public IRenderer getRenderer() {
+    return renderer;
+  }
+
+  @Override
+  public IReadOnlyLayer getActiveLayer() {
+    return canvas.getActiveLayer();
+  }
+
+  @Override
+  public void restore(ModelMemento modelMemento) {
+    canvas.restore(modelMemento.getCanvasMemento());
+  }
+
+  @Override
   public ModelMemento createSnapShot() {
-    var canvasCopy = new Canvas(canvas);
-    return new ModelMemento(canvasCopy);
+    return new ModelMemento(canvas.createSnapShot());
   }
 
   @Override
@@ -229,30 +269,5 @@ final class ModelImpl implements IModel {
 
     canvas.notifyLayerUpdateListeners();
     canvas.notifyCanvasUpdateListeners();
-  }
-
-  @Override
-  public void moveSelectedLayer(int xAmount, int yAmount) {
-    canvas.moveSelectedLayer(xAmount, yAmount);
-  }
-
-  @Override
-  public Canvas getCanvas() {
-    return canvas;
-  }
-
-  @Override
-  public IRenderer getRenderer() {
-    return renderer;
-  }
-
-  @Override
-  public void setRenderer(IRenderer renderer) {
-    this.renderer = Objects.requireNonNull(renderer);
-  }
-
-  @Override
-  public void notifyAllCanvasUpdateListeners() {
-    canvas.notifyAllCanvasListeners();
   }
 }

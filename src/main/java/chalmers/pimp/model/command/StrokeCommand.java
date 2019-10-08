@@ -1,8 +1,9 @@
 package chalmers.pimp.model.command;
 
-import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.Stroke;
+import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.pixeldata.IPixel;
 import java.util.Objects;
 
@@ -12,34 +13,36 @@ import java.util.Objects;
  */
 final class StrokeCommand implements ICommand {
 
-  private final IModel model;
+  private final ICanvas layerModel;
+  private final IMementoTarget<ModelMemento> mementoTarget;
   private final Stroke stroke;
   private ModelMemento memento;
 
   /**
-   * @param model  the associated model instance.
-   * @param stroke the associated stroke instance.
+   * @param layerModel the associated model instance.
+   * @param stroke     the associated stroke instance.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  StrokeCommand(IModel model, Stroke stroke) {
-    this.model = Objects.requireNonNull(model);
+  StrokeCommand(ICanvas layerModel, IMementoTarget<ModelMemento> mementoTarget, Stroke stroke) {
+    this.layerModel = Objects.requireNonNull(layerModel);
+    this.mementoTarget = mementoTarget;
     this.stroke = Objects.requireNonNull(stroke);
     memento = stroke.getModelMemento();
   }
 
   @Override
   public void execute() {
-    memento = model.createSnapShot();
+    memento = mementoTarget.createSnapShot();
 
     for (IPixel pixel : stroke.getPixels()) {
-      stroke.updatePixels(model, pixel);
+      stroke.updatePixels(layerModel, pixel);
     }
   }
 
   @Override
   public void revert() {
     if (memento != null) {
-      model.restore(memento);
+      mementoTarget.restore(memento);
     }
   }
 
