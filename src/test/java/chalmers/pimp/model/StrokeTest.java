@@ -34,6 +34,13 @@ class StrokeTest {
   }
 
   @Test
+  void updatePixels() {
+    assertThrows(NullPointerException.class, () -> stroke.updatePixels(null, null));
+    assertThrows(NullPointerException.class,
+        () -> stroke.updatePixels(CanvasFactory.createCanvas(), null));
+  }
+
+  @Test
   void getModelMemento() {
     assertEquals(memento, stroke.getModelMemento());
   }

@@ -45,7 +45,7 @@ public final class Stroke {
    *
    * @param model the associated model instance.
    * @param pixel the pixel affected by the stroke.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException if any references are {@code null}.
    */
   public void updatePixels(ICanvas model, IPixel pixel) {
     Objects.requireNonNull(model);
