@@ -2,13 +2,10 @@ package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
-import chalmers.pimp.model.point.IReadOnlyPoint;
-import chalmers.pimp.model.point.Point;
-import chalmers.pimp.model.point.PointFactory;
 import java.util.Objects;
-import javafx.scene.input.MouseEvent;
 
 /**
  * A tool for creating and editing shapes.
@@ -58,10 +55,10 @@ final class ShapeTool implements ITool {
    * @param mouseStatus information about the mouse.
    * @return the new origin point of the rectangle.
    */
-  private IReadOnlyPoint getOriginPoint(MouseStatus mouseStatus) {
+  private Point getOriginPoint(MouseStatus mouseStatus) {
     int originX = Math.min(x, mouseStatus.getX());
     int originY = Math.min(y, mouseStatus.getY());
-    return PointFactory.createPoint(originX, originY);
+    return new Point(originX, originY);
   }
 
   /**
@@ -72,10 +69,10 @@ final class ShapeTool implements ITool {
    * @param mouseStatus information about the mouse.
    * @return the new origin point of the rectangle.
    */
-  private IReadOnlyPoint getMaxPoint(MouseStatus mouseStatus) {
+  private Point getMaxPoint(MouseStatus mouseStatus) {
     int maxX = Math.max(x, mouseStatus.getX());
     int maxY = Math.max(y, mouseStatus.getY());
-    return PointFactory.createPoint(maxX, maxY);
+    return new Point(maxX, maxY);
   }
 
   /**
@@ -86,8 +83,8 @@ final class ShapeTool implements ITool {
    * @return a rectangle.
    */
   private ILayer createRect(MouseStatus mouseStatus) {
-    IReadOnlyPoint originPoint = getOriginPoint(mouseStatus);
-    IReadOnlyPoint maxPoint = getMaxPoint(mouseStatus);
+    Point originPoint = getOriginPoint(mouseStatus);
+    Point maxPoint = getMaxPoint(mouseStatus);
 
     int width = maxPoint.getX() - originPoint.getX();
     int height = maxPoint.getY() - originPoint.getY();
