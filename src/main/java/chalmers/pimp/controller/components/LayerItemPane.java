@@ -3,6 +3,7 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.canvas.layer.LayerType;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.net.URL;
@@ -38,14 +39,15 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private Label textLabel;
-
   @FXML
   @SuppressWarnings("unused")
   private ToggleButton toggleButton;
-
   @FXML
   @SuppressWarnings("unused")
   private ImageView imageView;
+  @FXML
+  @SuppressWarnings("unused")
+  private ImageView layerTypeIcon;
 
   private final IModel model;
   private final IReadOnlyLayer layer; // TODO remove
@@ -93,6 +95,31 @@ final class LayerItemPane extends AnchorPane {
     }
   }
 
+  /**
+   * Returns the {@code IReadOnlyLayer} that this LayerItem represents.
+   *
+   * @return the layer this LayerItem represents.
+   */
+  IReadOnlyLayer getLayer() {
+    return layer;
+  }
+
+  /**
+   * Sets the icon on the LayerItemPane to match that of the LayerType. Using String interpolation.
+   */
+  void setTypeIcon() {
+
+    //TODO Fix themes
+    String path = "images/light/" + layer.getLayerType().name().toLowerCase()
+        + ".png";
+
+    try {
+      layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
+    } catch (Exception e) {
+      System.err.println("Failed to load layerTypeIcon icon! Exception: " + e);
+    }
+  }
+
   @FXML
   @SuppressWarnings("unused")
   private void toggleVisibility() {
@@ -128,5 +155,10 @@ final class LayerItemPane extends AnchorPane {
   @SuppressWarnings("unused")
   private void increaseZIndex() {
     model.moveLayer(layer, 1);
+  }
+
+  @FXML
+  private void removeLayer() {
+    model.removeLayer(layer);
   }
 }

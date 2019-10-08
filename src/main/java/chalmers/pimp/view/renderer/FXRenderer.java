@@ -3,6 +3,7 @@ package chalmers.pimp.view.renderer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.service.ColorConverterService;
 import chalmers.pimp.service.PixelDataToFXService;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
@@ -68,12 +69,12 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void setFillColor(IColor color) {
-    graphicsContext.setFill(toPaint(color));
+    graphicsContext.setFill(ColorConverterService.toFXColor(color));
   }
 
   @Override
   public void setBorderColor(IColor color) {
-    graphicsContext.setStroke(toPaint(color));
+    graphicsContext.setStroke(ColorConverterService.toFXColor(color));
   }
 
   @Override
@@ -89,13 +90,5 @@ final class FXRenderer implements IRenderer {
   @Override
   public int getCanvasHeight() {
     return (int) graphicsContext.getCanvas().getHeight();
-  }
-
-  /**
-   * TODO: Replace with service when implemented.
-   */
-  private Paint toPaint(IColor color) {
-    return Color.color(color.getRedPercentage(), color.getGreenPercentage(),
-        color.getBluePercentage());
   }
 }
