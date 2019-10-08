@@ -70,15 +70,12 @@ final class LayerItemPane extends AnchorPane {
     textLabel.setText(layer.getName());
     associatedLayerIndex = layer.getDepthIndex();
 
-    if (model.getActiveLayer().getDepthIndex() == associatedLayerIndex) {
+    IReadOnlyLayer activeLayer = model.getActiveLayer();
+    if ((activeLayer != null) && (activeLayer.getDepthIndex() == associatedLayerIndex)) {
       setStyle("-fx-background-color: -selected-color;");
     }
 
-    if (layer.isVisible()) {
-      imageView.setImage(EYE_OPEN_IMAGE);
-    } else {
-      imageView.setImage(EYE_CLOSED_IMAGE);
-    }
+    updateVisibilityHint();
   }
 
 //  void setTypeIcon() {
@@ -93,10 +90,22 @@ final class LayerItemPane extends AnchorPane {
 //    }
 //  }
 
+  /**
+   * Updates the state of the layer visibility hint.
+   */
+  private void updateVisibilityHint() {
+    if (model.isLayerVisible(associatedLayerIndex)) {
+      imageView.setImage(EYE_OPEN_IMAGE);
+    } else {
+      imageView.setImage(EYE_CLOSED_IMAGE);
+    }
+  }
+
   @FXML
   @SuppressWarnings("unused")
   private void toggleVisibility() {
     model.setLayerVisibility(associatedLayerIndex, toggleButton.isSelected());
+    updateVisibilityHint();
   }
 
   @FXML
