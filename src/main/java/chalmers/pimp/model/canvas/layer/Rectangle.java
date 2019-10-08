@@ -100,6 +100,11 @@ final class Rectangle implements ILayer {
   }
 
   @Override
+  public LayerType getLayerType() {
+    return LayerType.SHAPE;
+  }
+
+  @Override
   public IReadOnlyPixelData getPixelData() {
     PixelData pixelData = new PixelData(width, height);
 

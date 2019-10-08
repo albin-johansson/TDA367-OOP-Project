@@ -50,4 +50,11 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
    * @return the depth index.
    */
   int getDepthIndex();
+
+  /**
+   * Returns the layer type of this layer.
+   *
+   * @return the layer type of this layer.
+   */
+  LayerType getLayerType();
 }

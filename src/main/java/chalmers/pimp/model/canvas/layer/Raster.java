@@ -99,6 +99,11 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public LayerType getLayerType() {
+    return LayerType.RASTER;
+  }
+
+  @Override
   public IReadOnlyPixelData getPixelData() {
     return pixelData;
   }
