@@ -139,12 +139,17 @@ final class ModelImpl implements IModel {
 
   @Override
   public void removeLayer(IReadOnlyLayer layer) {
-    canvas.removeLayer(layer); // TODO replace with command
+    Objects.requireNonNull(layer);
+    removeLayer(layer.getDepthIndex());
   }
 
   @Override
   public void removeLayer(int layerIndex) {
-    canvas.removeLayer(layerIndex);
+    ICommand removeLayerCmd = CommandFactory.creatRemoveLayerCommand(canvas, this, layerIndex);
+    removeLayerCmd.execute();
+
+    commandManager.insertCommand(removeLayerCmd);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
@@ -158,7 +163,7 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void moveLayer(IReadOnlyLayer layer, int steps) {
+  public void moveLayer(IReadOnlyLayer layer, int steps) { // TODO rename
     canvas.changeDepthIndex(layer, steps);
   }
 

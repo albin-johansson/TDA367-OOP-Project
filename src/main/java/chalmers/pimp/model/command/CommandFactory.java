@@ -57,4 +57,17 @@ public final class CommandFactory {
       IMementoTarget<ModelMemento> mementoTarget, ILayer layer) {
     return new AddLayerCommand(canvas, mementoTarget, layer);
   }
+
+  /**
+   * Creates and returns a command that represents the action of removing a layer.
+   *
+   * @param canvas          the associated canvas instance.
+   * @param mementoTarget   the memento target that will be used.
+   * @param layerDepthIndex the layer depth index of the layer that will be removed.
+   * @throws NullPointerException if any references are {@code null}.
+   */
+  public static ICommand creatRemoveLayerCommand(ICanvas canvas,
+      IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex) {
+    return new RemoveLayerCommand(canvas, mementoTarget, layerDepthIndex);
+  }
 }
