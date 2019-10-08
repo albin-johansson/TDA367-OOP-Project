@@ -3,7 +3,6 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerType;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.net.URL;
@@ -110,8 +109,7 @@ final class LayerItemPane extends AnchorPane {
   void setTypeIcon() {
 
     //TODO Fix themes
-    String path = "images/light/" + layer.getLayerType().name().toLowerCase()
-        + ".png";
+    String path = "images/light/" + layer.getLayerType().name().toLowerCase() + ".png";
 
     try {
       layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));

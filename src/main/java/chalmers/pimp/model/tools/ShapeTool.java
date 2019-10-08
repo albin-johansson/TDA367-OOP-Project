@@ -5,8 +5,6 @@ import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
-import chalmers.pimp.model.point.IReadOnlyPoint;
-import chalmers.pimp.model.point.PointFactory;
 import java.util.Objects;
 
 /**

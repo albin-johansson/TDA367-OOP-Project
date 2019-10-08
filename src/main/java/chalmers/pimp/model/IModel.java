@@ -85,11 +85,12 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void addLayer(ILayer layer);
 
   /**
-   * Removes the specified layer from the chalmers.pimp.model.
+   * Removes the specified layer from the model.
    *
-   * @param IReadOnlyLayer the layer that will be removed.
+   * @param layer the layer that will be removed.
    * @throws NullPointerException if any arguments are {@code null}.
    */
+  @Deprecated
   void removeLayer(IReadOnlyLayer layer);
 
   /**
@@ -235,7 +236,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   /**
    * Returns the currently active layer.
    *
-   * @return the currentyl active layer; {@code null} otherwise.
+   * @return the currently active layer; {@code null} otherwise.
    */
   IReadOnlyLayer getActiveLayer();
 
