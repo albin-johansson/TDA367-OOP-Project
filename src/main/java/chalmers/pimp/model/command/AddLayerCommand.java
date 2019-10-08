@@ -19,7 +19,7 @@ final class AddLayerCommand implements ICommand {
 
   /**
    * @param canvas        the associated canvas instance.
-   * @param mementoTarget the memento target.
+   * @param mementoTarget the memento target that will be used.
    * @param layer         the layer that will be added.
    * @throws NullPointerException if any references are {@code null}.
    */

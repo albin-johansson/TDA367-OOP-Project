@@ -18,16 +18,41 @@ public final class CommandFactory {
   private CommandFactory() {
   }
 
+  /**
+   * Creates and returns a command that represents the action of performing a pixel stroke.
+   *
+   * @param canvas        the associated canvas instance.
+   * @param mementoTarget the memento target that will be used.
+   * @param stroke        the stroke instance that describes the stroke.
+   * @throws NullPointerException if any references are {@code null}.
+   */
   public static ICommand createStrokeCommand(ICanvas canvas,
       IMementoTarget<ModelMemento> mementoTarget, Stroke stroke) {
     return new StrokeCommand(canvas, mementoTarget, stroke);
   }
 
+  /**
+   * Creates and returns a command that represents the action of moving a layer.
+   *
+   * @param canvas          the associated canvas instance.
+   * @param mementoTarget   the memento target that will be used.
+   * @param layerDepthIndex the layer depth index of the affected layer.
+   * @param movement        the layer movement instance that describes the movement.
+   * @throws NullPointerException if any references are {@code null}.
+   */
   public static ICommand createMoveCommand(ICanvas canvas,
       IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex, LayerMovement movement) {
     return new MoveCommand(canvas, mementoTarget, layerDepthIndex, movement);
   }
 
+  /**
+   * Creates and returns a command that represents the action of adding a layer.
+   *
+   * @param canvas        the associated canvas instance.
+   * @param mementoTarget the memento target that will be used.
+   * @param layer         the layer that will be added.
+   * @throws NullPointerException if any references are {@code null}.
+   */
   public static ICommand createAddLayerCommand(ICanvas canvas,
       IMementoTarget<ModelMemento> mementoTarget, ILayer layer) {
     return new AddLayerCommand(canvas, mementoTarget, layer);

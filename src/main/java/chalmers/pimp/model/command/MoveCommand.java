@@ -16,16 +16,23 @@ final class MoveCommand implements ICommand {
 
   private final ICanvas canvas;
   private final IMementoTarget<ModelMemento> mementoTarget;
-  private final int layerDepth;
+  private final int layerDepthIndex;
   private final int x;
   private final int y;
   private ModelMemento modelMemento;
 
-  MoveCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, int layerDepth,
+  /**
+   * @param canvas          the associated canvas instance.
+   * @param mementoTarget   the memento target that will be used.
+   * @param layerDepthIndex the layer depth index of the affected layer.
+   * @param movement        the layer movement instance that describes the movement.
+   * @throws NullPointerException if any references are {@code null}.
+   */
+  MoveCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex,
       LayerMovement movement) {
     this.canvas = Objects.requireNonNull(canvas);
     this.mementoTarget = Objects.requireNonNull(mementoTarget);
-    this.layerDepth = layerDepth;
+    this.layerDepthIndex = layerDepthIndex;
     Objects.requireNonNull(movement);
 
     x = movement.getEndX();
@@ -37,7 +44,7 @@ final class MoveCommand implements ICommand {
   public void execute() {
     modelMemento = mementoTarget.createSnapShot();
 
-    canvas.selectLayer(layerDepth);
+    canvas.selectLayer(layerDepthIndex);
     canvas.setActiveLayerX(x);
     canvas.setActiveLayerY(y);
   }

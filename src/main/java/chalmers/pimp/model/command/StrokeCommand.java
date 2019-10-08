@@ -13,36 +13,38 @@ import java.util.Objects;
  */
 final class StrokeCommand implements ICommand {
 
-  private final ICanvas layerModel;
+  private final ICanvas canvas;
   private final IMementoTarget<ModelMemento> mementoTarget;
   private final Stroke stroke;
-  private ModelMemento memento;
+  private ModelMemento modelMemento;
 
   /**
-   * @param layerModel the associated model instance.
-   * @param stroke     the associated stroke instance.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @param canvas        the associated canvas instance.
+   * @param mementoTarget the memento target that will be used.
+   * @param stroke        the stroke instance that describes the stroke.
+   * @throws NullPointerException if any references are {@code null}.
    */
-  StrokeCommand(ICanvas layerModel, IMementoTarget<ModelMemento> mementoTarget, Stroke stroke) {
-    this.layerModel = Objects.requireNonNull(layerModel);
+  StrokeCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, Stroke stroke) {
+    this.canvas = Objects.requireNonNull(canvas);
     this.mementoTarget = Objects.requireNonNull(mementoTarget);
     this.stroke = Objects.requireNonNull(stroke);
-    memento = stroke.getModelMemento();
+
+    modelMemento = stroke.getModelMemento();
   }
 
   @Override
   public void execute() {
-    memento = mementoTarget.createSnapShot();
+    modelMemento = mementoTarget.createSnapShot();
 
     for (IPixel pixel : stroke.getPixels()) {
-      stroke.updatePixels(layerModel, pixel);
+      stroke.updatePixels(canvas, pixel);
     }
   }
 
   @Override
   public void revert() {
-    if (memento != null) {
-      mementoTarget.restore(memento);
+    if (modelMemento != null) {
+      mementoTarget.restore(modelMemento);
     }
   }
 
