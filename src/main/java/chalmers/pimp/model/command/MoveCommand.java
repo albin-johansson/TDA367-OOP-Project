@@ -1,6 +1,7 @@
 package chalmers.pimp.model.command;
 
 import chalmers.pimp.model.IMementoTarget;
+import chalmers.pimp.model.LayerMovement;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.canvas.ICanvas;
 import java.util.Objects;
@@ -13,30 +14,32 @@ import java.util.Objects;
  */
 final class MoveCommand implements ICommand {
 
-  private final ICanvas layerModel;
+  private final ICanvas canvas;
   private final IMementoTarget<ModelMemento> mementoTarget;
   private final int layerDepth;
   private final int x;
   private final int y;
   private ModelMemento modelMemento;
 
-  MoveCommand(ICanvas layerModel, IMementoTarget<ModelMemento> mementoTarget, int layerDepth,
-      int x, int y, ModelMemento modelMemento) {
-    this.layerModel = Objects.requireNonNull(layerModel);
-    this.mementoTarget = mementoTarget;
+  MoveCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, int layerDepth,
+      LayerMovement movement) {
+    this.canvas = Objects.requireNonNull(canvas);
+    this.mementoTarget = Objects.requireNonNull(mementoTarget);
     this.layerDepth = layerDepth;
-    this.x = x;
-    this.y = y;
-    this.modelMemento = Objects.requireNonNull(modelMemento);
+    Objects.requireNonNull(movement);
+
+    x = movement.getEndX();
+    y = movement.getEndY();
+    modelMemento = Objects.requireNonNull(movement.getModelMemento());
   }
 
   @Override
   public void execute() {
     modelMemento = mementoTarget.createSnapShot();
 
-    layerModel.selectLayer(layerDepth);
-    layerModel.setActiveLayerX(x);
-    layerModel.setActiveLayerY(y);
+    canvas.selectLayer(layerDepth);
+    canvas.setActiveLayerX(x);
+    canvas.setActiveLayerY(y);
   }
 
   @Override

@@ -25,10 +25,9 @@ final class ModelImpl implements IModel {
 
   private final ICanvas canvas;
   private final CommandManager commandManager;
-
   private IRenderer renderer;
-  private Stroke stroke;
   private LayerMovement layerMovement;
+  private Stroke stroke;
   private ITool selectedTool;
 
   ModelImpl() {
@@ -90,11 +89,11 @@ final class ModelImpl implements IModel {
       return;
     }
 
-    int depthIndex = getActiveLayer().getDepthIndex();
-    int x = getActiveLayer().getX();
-    int y = getActiveLayer().getY();
+    layerMovement.stop();
+    layerMovement.setEndX(getActiveLayer().getX());
+    layerMovement.setEndY(getActiveLayer().getY());
 
-    ICommand cmd = createMoveCommand(canvas, this, depthIndex, x, y, layerMovement.getMemento());
+    ICommand cmd = createMoveCommand(canvas, this, getActiveLayer().getDepthIndex(), layerMovement);
     commandManager.insertCommand(cmd);
     layerMovement = null;
   }

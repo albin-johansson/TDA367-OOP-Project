@@ -1,6 +1,7 @@
 package chalmers.pimp.model.command;
 
 import chalmers.pimp.model.IMementoTarget;
+import chalmers.pimp.model.LayerMovement;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.Stroke;
 import chalmers.pimp.model.canvas.ICanvas;
@@ -23,9 +24,8 @@ public final class CommandFactory {
   }
 
   public static ICommand createMoveCommand(ICanvas canvas,
-      IMementoTarget<ModelMemento> mementoTarget, int layerDepth, int x, int y,
-      ModelMemento memento) {
-    return new MoveCommand(canvas, mementoTarget, layerDepth, x, y, memento);
+      IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex, LayerMovement movement) {
+    return new MoveCommand(canvas, mementoTarget, layerDepthIndex, movement);
   }
 
   public static ICommand createAddLayerCommand(ICanvas canvas,
