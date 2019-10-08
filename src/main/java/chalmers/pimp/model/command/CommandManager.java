@@ -15,7 +15,7 @@ public final class CommandManager implements IChangeable {
   /**
    * The maximum amount of commands in either the undo or redo stack.
    */
-  private static final int THRESHOLD = 45;
+  private static final int THRESHOLD = 25;
 
   private final Deque<ICommand> undoDeque;
   private final Deque<ICommand> redoDeque;
