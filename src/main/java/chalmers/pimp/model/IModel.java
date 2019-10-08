@@ -5,7 +5,6 @@ import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 
 /**
@@ -36,7 +35,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void addUndoRedoListener(IUndoRedoListener listener);
 
   /**
-   * Adds a layer update listener to the chalmers.pimp.model.
+   * Adds a layer update listener to the model.
    *
    * @param listener the listener that will be added, may not be {@code null}.
    * @throws NullPointerException     if any arguments are {@code null}.
@@ -44,11 +43,31 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    */
   void addLayerUpdateListener(ILayerUpdateListener listener);
 
-  void startMovingLayer(int x, int y);
+  /**
+   * Starts moving the currently active layer. This method has no effect if there is no active
+   * layer.
+   *
+   * @param x the new x-coordinate of the layer.
+   * @param y the new y-coordinate of the layer.
+   */
+  void startMovingActiveLayer(int x, int y);
 
-  void updateMovingLayer(int x, int y);
+  /**
+   * Updates the movement of the currently active layer. This method has no effect if the {@link
+   * IModel#startMovingActiveLayer(int, int)} method hasn't been invoked before invoking this
+   * method.
+   *
+   * @param x the new x-coordinate of the layer.
+   * @param y the new y-coordinate of the layer.
+   */
+  void updateMovingActiveLayer(int x, int y);
 
-  void stopMovingLayer();
+  /**
+   * Stops the movement of the currently active layer. This method has no effect if the {@link
+   * IModel#startMovingActiveLayer(int, int)} method hasn't been invoked before invoking this
+   * method.
+   */
+  void stopMovingActiveLayer();
 
   /**
    * Starts a stroke.
@@ -75,12 +94,11 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void endStroke(IPixel pixel);
 
   /**
-   * Adds the supplied layer to the chalmers.pimp.model.
+   * Adds the supplied layer to the model.
    *
    * @param layer the layer that will be added.
    * @throws NullPointerException     if any arguments are {@code null}.
-   * @throws IllegalArgumentException if the supplied layer has been added to the
-   *                                  chalmers.pimp.model previously.
+   * @throws IllegalArgumentException if the supplied layer has been added to the model previously.
    */
   void addLayer(ILayer layer);
 
@@ -138,15 +156,6 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void setActiveLayerPixel(IPixel pixel);
 
   /**
-   * Sets the color of multiple pixels in the model using the PixelData Class.
-   *
-   * @param x         start x value of the PixelData.
-   * @param y         start y value of the PixelData.
-   * @param pixelData the PixelData representing the pixels to be set.
-   */
-  void setActiveLayerPixels(int x, int y, PixelData pixelData);
-
-  /**
    * Sets the name of a layer.
    *
    * @param layer     the layer to have it's name changed.
@@ -196,21 +205,21 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void setSelectedTool(ITool tool);
 
   /**
-   * Tells the chalmers.pimp.model that the selected tool has been pressed.
+   * Tells the model that the selected tool has been pressed.
    *
    * @param mouseStatus the status of the mouse.
    */
   void selectedToolPressed(MouseStatus mouseStatus);
 
   /**
-   * Tells the chalmers.pimp.model that the selected tool has been dragged.
+   * Tells the model that the selected tool has been dragged.
    *
    * @param mouseStatus the status of the mouse.
    */
   void selectedToolDragged(MouseStatus mouseStatus);
 
   /**
-   * Tells the chalmers.pimp.model that the selected tool has been Released
+   * Tells the model that the selected tool has been Released
    *
    * @param mouseStatus the status of the mouse.
    */
@@ -224,6 +233,14 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    */
   void setRenderer(IRenderer renderer);
 
+  /**
+   * Indicates whether or not the layer associated with the supplied index is visible. This method
+   * has no effect if the supplied index is out-of-bounds.
+   *
+   * @param layerIndex the layer index of the layer that will be checked.
+   * @return {@code true} if the layer associated with the supplied index is visible; {@code false}
+   * otherwise.
+   */
   boolean isLayerVisible(int layerIndex);
 
   /**

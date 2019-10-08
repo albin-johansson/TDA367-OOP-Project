@@ -23,16 +23,16 @@ final class MoveTool implements ITool {
 
   @Override
   public void pressed(MouseStatus mouseStatus) {
-    model.startMovingLayer(mouseStatus.getX(), mouseStatus.getY());
+    model.startMovingActiveLayer(mouseStatus.getX(), mouseStatus.getY());
   }
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
-    model.updateMovingLayer(mouseStatus.getX(), mouseStatus.getY());
+    model.updateMovingActiveLayer(mouseStatus.getX(), mouseStatus.getY());
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
-    model.stopMovingLayer();
+    model.stopMovingActiveLayer();
   }
 }

@@ -173,6 +173,14 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    */
   int getAmountOfLayers();
 
+  /**
+   * Indicates whether or not the layer associated with the supplied index is visible. This method
+   * has no effect if the supplied index is out-of-bounds.
+   *
+   * @param layerIndex the layer index of the layer that will be checked.
+   * @return {@code true} if the layer associated with the supplied index is visible; {@code false}
+   * otherwise.
+   */
   boolean isLayerVisible(int layerIndex);
 
   /**

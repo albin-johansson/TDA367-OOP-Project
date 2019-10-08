@@ -95,18 +95,6 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
-  public void setActiveLayerPixel(IPixel pixel) {
-    layerManager.setActiveLayerPixel(pixel);
-    notifyCanvasUpdateListeners();
-  }
-
-  @Override
-  public void setActiveLayerPixels(int x, int y, IReadOnlyPixelData pixelData) {
-    layerManager.setActiveLayerPixels(x, y, pixelData);
-    notifyCanvasUpdateListeners();
-  }
-
-  @Override
   public void setLayerVisibility(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
     layerManager.setLayerVisibility(readOnlyLayer.getDepthIndex(), isVisible);
     notifyCanvasUpdateListeners();
@@ -126,6 +114,18 @@ final class CanvasImpl implements ICanvas {
   @Override
   public void setLayerName(int layerIndex, String layerName) {
     layerManager.setLayerName(layerIndex, layerName);
+  }
+
+  @Override
+  public void setActiveLayerPixel(IPixel pixel) {
+    layerManager.setActiveLayerPixel(pixel);
+    notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public void setActiveLayerPixels(int x, int y, IReadOnlyPixelData pixelData) {
+    layerManager.setActiveLayerPixels(x, y, pixelData);
+    notifyCanvasUpdateListeners();
   }
 
   @Override

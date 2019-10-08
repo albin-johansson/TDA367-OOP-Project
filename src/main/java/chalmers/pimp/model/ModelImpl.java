@@ -1,8 +1,8 @@
 package chalmers.pimp.model;
 
-import static chalmers.pimp.model.command.CommandFactory.createRemoveLayerCommand;
 import static chalmers.pimp.model.command.CommandFactory.createAddLayerCommand;
 import static chalmers.pimp.model.command.CommandFactory.createMoveCommand;
+import static chalmers.pimp.model.command.CommandFactory.createRemoveLayerCommand;
 import static chalmers.pimp.model.command.CommandFactory.createStrokeCommand;
 
 import chalmers.pimp.model.canvas.CanvasFactory;
@@ -15,7 +15,6 @@ import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
 import java.util.Objects;
@@ -41,9 +40,9 @@ final class ModelImpl implements IModel {
   }
 
   /**
-   * Checks if there is a active tool selected.
+   * Indicates whether or not there is a active tool.
    *
-   * @return true if there is a tool selected.
+   * @return {@code true} if there is a selected tool; {@code false} otherwise.
    */
   private boolean hasSelectedTool() {
     return selectedTool != null;
@@ -70,13 +69,17 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void startMovingLayer(int x, int y) {
+  public void startMovingActiveLayer(int x, int y) {
+    if (getActiveLayer() == null) {
+      return;
+    }
+
     layerMovement = new LayerMovement();
     layerMovement.start(x, y, createSnapShot());
   }
 
   @Override
-  public void updateMovingLayer(int x, int y) {
+  public void updateMovingActiveLayer(int x, int y) {
     if (layerMovement == null) {
       return;
     }
@@ -86,7 +89,7 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void stopMovingLayer() {
+  public void stopMovingActiveLayer() {
     if (layerMovement == null) {
       return;
     }
@@ -174,11 +177,6 @@ final class ModelImpl implements IModel {
   @Override
   public void setActiveLayerPixel(IPixel pixel) {
     canvas.setActiveLayerPixel(pixel);
-  }
-
-  @Override
-  public void setActiveLayerPixels(int x, int y, PixelData pixelData) {
-    canvas.setActiveLayerPixels(x, y, pixelData);
   }
 
   @Override
