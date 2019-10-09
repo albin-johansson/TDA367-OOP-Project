@@ -86,19 +86,20 @@ final class LayerItemPane extends AnchorPane {
   private void addDragEventHandler() {
     rootPane.setOnDragDetected((MouseEvent e) -> {
 
-      Dragboard db = rootPane.startDragAndDrop(TransferMode.MOVE);
+      if(e.isPrimaryButtonDown()){
+        Dragboard db = rootPane.startDragAndDrop(TransferMode.MOVE);
 
-      SnapshotParameters sp = new SnapshotParameters();
+        SnapshotParameters sp = new SnapshotParameters();
 
-      WritableImage image = rootPane.snapshot(sp, null);
+        WritableImage image = rootPane.snapshot(sp, null);
 
-      db.setDragView(image);
-      model.selectLayer(layer);
+        db.setDragView(image);
+        model.selectLayer(layer);
 
-      ClipboardContent content = new ClipboardContent();
-      content.putString(String.valueOf(layer.getDepthIndex()));
-      db.setContent(content);
-
+        ClipboardContent content = new ClipboardContent();
+        content.putString(String.valueOf(layer.getDepthIndex()));
+        db.setContent(content);
+      }
       e.consume();
     });
   }
@@ -184,16 +185,6 @@ final class LayerItemPane extends AnchorPane {
   private void updateActiveLayer() {
     model.selectLayer(layer);
     showIfLayerIsSelected();
-  }
-
-  @FXML
-  private void decreaseZIndex() {
-    model.moveLayer(layer, -1);
-  }
-
-  @FXML
-  private void increaseZIndex() {
-    model.moveLayer(layer, 1);
   }
 
   @FXML

@@ -16,44 +16,6 @@
   <children>
     <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
       <children>
-            <VBox>
-               <children>
-                  <Button mnemonicParsing="false" onAction="#increaseZIndex">
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/light/arrow_up.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets bottom="4.0" top="4.0" />
-                     </VBox.margin>
-                     <tooltip>
-                        <Tooltip text="Moves the layer forward" />
-                     </tooltip></Button>
-                  <Button mnemonicParsing="false" onAction="#decreaseZIndex" prefHeight="32.0" prefWidth="36.0">
-                     <graphic>
-                        <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/light/arrow_down.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets bottom="4.0" />
-                     </VBox.margin>
-                     <tooltip>
-                        <Tooltip text="Moves the layer backwards" />
-                     </tooltip></Button>
-               </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <padding>
-                  <Insets left="5.0" />
-               </padding>
-            </VBox>
             <VBox alignment="TOP_CENTER" prefWidth="76.0">
                <children>
               <Label fx:id="textLabel" onInputMethodTextChanged="#updateLayerName" text="Rectangle">
