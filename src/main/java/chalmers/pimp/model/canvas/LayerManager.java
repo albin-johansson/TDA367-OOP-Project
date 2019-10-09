@@ -107,30 +107,26 @@ final class LayerManager {
   }
 
   /**
-   * Changes the depth index (the z-value) of the supplied layer with the supplied offset. This
-   * method has no effect if the supplied offset is zero or if the supplied layer isn't registered
-   * in the layer manager.
+   * Offsets the depth index (the z-value) of the layer associated with the supplied layer depth
+   * index with the supplied offset. This method has no effect if the supplied offset is zero or if
+   * there isn't a layer associated with the supplied layer depth index.
    *
-   * @param layer  the layer that will be moved, may not be {@code null}.
-   * @param deltaZ the z-axis offset.
-   * @throws NullPointerException if the supplied layer is {@code null}.
+   * @param layerIndex the layer depth index associated with the layer that will be "moved".
+   * @param dz         the z-axis offset, may be either negative or positive.
    */
-  void changeDepthIndex(IReadOnlyLayer layer, int deltaZ) { // FIXME probably broken
-    Objects.requireNonNull(layer);
-    if (deltaZ == 0) {
+  void changeDepthIndex(int layerIndex, int dz) {
+    if (dz == 0) {
       return;
     }
 
-    ILayer match = findMatch(layer);
-    if (match != null) {
-
-      boolean movingFirstLayerBack = (match.getDepthIndex() == 0) && (deltaZ < 0);
-      boolean movingLastLayerForward = (match.getDepthIndex() == layers.size() - 1) && (deltaZ > 0);
+    if (inBounds(layerIndex)) {
+      boolean movingFirstLayerBack = (layerIndex == 0) && (dz < 0);
+      boolean movingLastLayerForward = (layerIndex == (layers.size() - 1)) && (dz > 0);
       if (movingFirstLayerBack || movingLastLayerForward) {
         return;
       }
 
-      layers.add(layer.getDepthIndex() + deltaZ, layers.remove(layer.getDepthIndex()));
+      layers.add(layerIndex + dz, layers.remove(layerIndex));
       resetDepthValues();
 
       var event = new LayerUpdateEvent(layers, layers.size());
@@ -228,6 +224,9 @@ final class LayerManager {
     if (inBounds(index)) {
       ILayer removed = layers.get(index);
       layers.remove(index);
+
+      resetDepthValues();
+
       updateActiveLayerAfterRemoval(removed);
     }
   }
@@ -263,6 +262,7 @@ final class LayerManager {
 
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
       for (IReadOnlyPixel pixel : row) {
+        // TODO this is a little bit strange?
         int dx = x - activeLayer.getX();
         int dy = y - activeLayer.getY();
         activeLayer.setPixel(PixelFactory.createPixelWithOffset(pixel, dx, dy));
@@ -332,6 +332,22 @@ final class LayerManager {
     Objects.requireNonNull(name);
     if (inBounds(index)) {
       layers.get(index).setName(name);
+    }
+  }
+
+  /**
+   * Returns the name of the layer associated with the supplied layer depth index. This method
+   * returns an empty string if there is no corresponding layer.
+   *
+   * @param layerIndex the layer depth index of the desired layer.
+   * @return the name of the layer associated with the supplied layer depth index; the empty string
+   * is returned if no match is found.
+   */
+  String getLayerName(int layerIndex) {
+    if (inBounds(layerIndex)) {
+      return layers.get(layerIndex).getName();
+    } else {
+      return "";
     }
   }
 

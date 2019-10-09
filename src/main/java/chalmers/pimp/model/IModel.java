@@ -120,14 +120,6 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void removeLayer(int layerIndex);
 
   /**
-   * Selects the supplied layer.
-   *
-   * @param layer the supplied layer that will be made active.
-   * @throws IllegalArgumentException if the supplied layer isn't associated with a layer.
-   */
-  void selectLayer(IReadOnlyLayer layer);
-
-  /**
    * Selects the layer associated with the specified index.
    *
    * @param layerIndex the index associated with the layer that will be made active.
@@ -139,10 +131,10 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * Moves the supplied layer {@code steps} in the list, were negative number moves the layer back
    * (and vice versa).
    *
-   * @param layer the layer to be moved.
-   * @param steps the number of steps
+   * @param layerIndex the layer index of the layer that will have its z-value changed.
+   * @param dz         the depth (z-value) offset, may be either negative of positive.
    */
-  void changeLayerDepthIndex(IReadOnlyLayer layer, int steps);
+  void changeLayerDepthIndex(int layerIndex, int dz);
 
   /**
    * Sets the the pixel at the pixels coordinate, in the active layer. The coordinates are
@@ -156,29 +148,12 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void setActiveLayerPixel(IPixel pixel);
 
   /**
-   * Sets the name of a layer.
-   *
-   * @param layer     the layer to have it's name changed.
-   * @param layerName the new name for the layer.
-   */
-  void setLayerName(IReadOnlyLayer layer, String layerName);
-
-  /**
    * Sets the name of an indexed layer.
    *
    * @param layerIndex the index for the layer.
    * @param layerName  the new name for the layer.
    */
   void setLayerName(int layerIndex, String layerName);
-
-  /**
-   * Sets the visibility property value for the supplied layer.
-   *
-   * @param layer     the {@code layer} which will have it's visibility changed.
-   * @param isVisible {@code true} if the active layer should be visible; {@code false} otherwise.
-   * @throws IllegalStateException if there is no active layer.
-   */
-  void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible);
 
   /**
    * Sets the visibility property value for the supplied layer.
@@ -242,6 +217,15 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * otherwise.
    */
   boolean isLayerVisible(int layerIndex);
+
+  /**
+   * Returns the name of the layer associated with the supplied depth index. This method returns the
+   * empty string if the supplied index is out-of-bounds.
+   *
+   * @param layerIndex the depth index associated with the desired layer.
+   * @return the name of the layer associated with the supplied depth index.
+   */
+  String getLayerName(int layerIndex);
 
   /**
    * Returns the models renderer.

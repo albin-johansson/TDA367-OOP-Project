@@ -82,21 +82,7 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    */
   void selectLayer(int layerIndex);
 
-  @Deprecated
-  void selectLayer(IReadOnlyLayer layer);
-
-  /**
-   * Offsets the depth index (the z-value) of the specified layer. This method has no effect if the
-   * supplied offset is zero <b>or</b> if the supplied layer isn't contained in the canvas.
-   *
-   * @param layer  the layer that will be have its depth index changed, may not be {@code null}.
-   * @param deltaZ the z-axis offset. A negative value indicates that the layer is moved "backwards"
-   *               and vice versa.
-   * @throws NullPointerException if the supplied layer is {@code null}.
-   * @deprecated change the layer parameter to a layer index value.
-   */
-  @Deprecated
-  void changeDepthIndex(IReadOnlyLayer layer, int deltaZ);
+  void changeDepthIndex(int layerIndex, int dz);
 
   /**
    * Moves the currently active layer. This method has no effect if there is no active layer.
@@ -106,9 +92,6 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    */
   void moveActiveLayer(int dx, int dy);
 
-  @Deprecated
-  void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible);
-
   /**
    * Sets the visibility property of the layer associated with the supplied depth index. This method
    * has no effect if the supplied index isn't associated with a layer.
@@ -117,9 +100,6 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    * @param isVisible  {@code true} if the layer should be visible; {@code false} otherwise.
    */
   void setLayerVisibility(int layerIndex, boolean isVisible);
-
-  @Deprecated
-  void setLayerName(IReadOnlyLayer layer, String layerName);
 
   /**
    * Sets the name of the layer associated with the supplied depth index. This method has no effect
@@ -182,6 +162,8 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    * otherwise.
    */
   boolean isLayerVisible(int layerIndex);
+
+  String getLayerName(int layerIndex);
 
   /**
    * Returns the currently active layer.

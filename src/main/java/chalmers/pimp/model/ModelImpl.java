@@ -160,18 +160,13 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void selectLayer(IReadOnlyLayer layer) {
-    canvas.selectLayer(layer);
-  }
-
-  @Override
   public void selectLayer(int layerIndex) {
     canvas.selectLayer(layerIndex);
   }
 
   @Override
-  public void changeLayerDepthIndex(IReadOnlyLayer layer, int steps) {
-    canvas.changeDepthIndex(layer, steps);
+  public void changeLayerDepthIndex(int layerIndex, int dz) {
+    canvas.changeDepthIndex(layerIndex, dz);
   }
 
   @Override
@@ -180,18 +175,8 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void setLayerName(IReadOnlyLayer layer, String layerName) {
-    canvas.setLayerName(layer, layerName);
-  }
-
-  @Override
   public void setLayerName(int layerIndex, String layerName) {
     canvas.setLayerName(layerIndex, layerName);
-  }
-
-  @Override
-  public void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible) {
-    canvas.setLayerVisibility(layer, isVisible);
   }
 
   @Override
@@ -238,6 +223,11 @@ final class ModelImpl implements IModel {
   @Override
   public boolean isLayerVisible(int layerIndex) {
     return canvas.isLayerVisible(layerIndex);
+  }
+
+  @Override
+  public String getLayerName(int layerIndex) {
+    return canvas.getLayerName(layerIndex);
   }
 
   @Override

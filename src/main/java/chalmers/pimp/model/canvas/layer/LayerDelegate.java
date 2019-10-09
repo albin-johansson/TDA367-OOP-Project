@@ -71,6 +71,12 @@ final class LayerDelegate {
     this.y = y;
   }
 
+  /**
+   * Offsets the x- and y-coordinates.
+   *
+   * @param dx the x-axis offset, may be negative.
+   * @param dy the y-axis offset, may be negative.
+   */
   void move(int dx, int dy) {
     x += dx;
     y += dy;

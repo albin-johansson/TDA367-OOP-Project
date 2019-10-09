@@ -12,8 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
-import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,19 +22,17 @@ class CanvasImplTest {
   private ICanvas canvas;
   private ILayer defaultLayer;
 
-  /**
-   * Creates and returns a new layer instance, to be used when testing.
-   *
-   * @return a new layer instance, to be used when testing.
-   */
-  private static ILayer createLayer() {
-    return LayerFactory.createRasterLayer(10, 10);
+  private static ILayer createLayer(int x, int y, int width, int height) {
+    ILayer layer = LayerFactory.createRasterLayer(width, height);
+    layer.setX(x);
+    layer.setY(y);
+    return layer;
   }
 
   @BeforeEach
   private void setUp() {
     canvas = new CanvasImpl();
-    defaultLayer = createLayer();
+    defaultLayer = createLayer(12, 84, 54, 37);
   }
 
   @Test
@@ -46,18 +42,6 @@ class CanvasImplTest {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
     assertThrows(NullPointerException.class, () -> canvas.setActiveLayerPixel(null));
-  }
-
-  @Test
-  void setLayerVisible() {
-    assertDoesNotThrow(() -> canvas.setLayerVisibility(0, true));
-    assertThrows(NullPointerException.class, () -> canvas.setLayerVisibility(null, true));
-
-    canvas.addLayer(defaultLayer);
-    canvas.addLayer(LayerFactory.createRasterLayer(10, 10));
-
-    assertDoesNotThrow(() -> canvas.setLayerVisibility(0, true));
-    assertDoesNotThrow(() -> canvas.setLayerVisibility(defaultLayer, false));
   }
 
   @Test
@@ -88,8 +72,8 @@ class CanvasImplTest {
     assertThrows(NullPointerException.class, () -> canvas.removeLayer(null));
 
     canvas.addLayer(defaultLayer);
-    canvas.addLayer(createLayer());
-    canvas.addLayer(createLayer());
+    canvas.addLayer(createLayer(12, 29, 72, 29));
+    canvas.addLayer(createLayer(7, -14, 24, 17));
 
     //Since default layer is the first layer created, will become activeLayer
     assertEquals(defaultLayer, canvas.getActiveLayer());
@@ -110,16 +94,14 @@ class CanvasImplTest {
     assertDoesNotThrow(() -> canvas.removeLayer(-1));
 
     canvas.addLayer(defaultLayer); // 0
-    canvas.addLayer(createLayer()); // 1
-    canvas.addLayer(createLayer()); // 2
+    canvas.addLayer(createLayer(4, 18, 82, 14)); // 1
+    canvas.addLayer(createLayer(7, -12, 33, 41)); // 2
 
-    //Since default layer is the first layer created, will become activeLayer
     assertEquals(defaultLayer, canvas.getActiveLayer());
     canvas.removeLayer(0);
 
-    //The active layer should change to no longer point to removed Layer
     assertNotSame(defaultLayer, canvas.getActiveLayer());
-    canvas.removeLayer(0); // removes defaultLayer
+
     for (IReadOnlyLayer layer : canvas.getLayers()) {
       assertNotEquals(layer, defaultLayer);
     }
@@ -158,7 +140,7 @@ class CanvasImplTest {
     // Ensures the correct amount of layers in the iterable:
     final int count = 5;
     for (int i = 0; i < count; i++) {
-      canvas.addLayer(createLayer());
+      canvas.addLayer(createLayer(i * 2, i + 5, 12, 4 + i));
     }
 
     int actualCount = 0;
@@ -171,19 +153,26 @@ class CanvasImplTest {
 
   @Test
   void setActiveLayerPixels() {
-    assertDoesNotThrow(() -> canvas.setActiveLayerPixels(0, 0, new PixelData(1, 1)));
-    assertThrows(NullPointerException.class, () -> canvas.setActiveLayerPixels(0, 0, null));
-
-    canvas.addLayer(defaultLayer);
-    canvas.selectLayer(0);
-    PixelData pixelData = new PixelData(5, 5);
-    IPixel pixel = PixelFactory.createPixel(2, 3, 0, 1, 0, 1);
-
-    pixelData.setPixel(pixel);
-    //pixelData shifted to (2,2)
-    canvas.setActiveLayerPixels(2, 2, pixelData);
-
-    assertEquals(1, defaultLayer.getPixelData().getPixel(4, 5).getColor().getGreenPercentage());
+    // TODO implement
+//    assertDoesNotThrow(() -> canvas.setActiveLayerPixels(0, 0, new PixelData(1, 1)));
+//    assertThrows(NullPointerException.class, () -> canvas.setActiveLayerPixels(0, 0, null));
+//
+//    canvas.addLayer(defaultLayer);
+//    canvas.selectLayer(0);
+//
+//    var pixelData = new PixelData(5, 5);
+//    double green = 1;
+//
+//    IPixel pixel = PixelFactory.createPixel(0, 0, 0, green, 0, 1);
+//
+//    pixelData.setPixel(pixel);
+//
+//    canvas.setActiveLayerPixels(0, 0, pixelData);
+//
+//    IReadOnlyColor color = canvas.getActiveLayer().getPixelData().getPixel(0, 0).getColor();
+//    double actualGreen = color.getGreenPercentage();
+//
+//    assertEquals(green, actualGreen, 0.05);
   }
 
   @Test
@@ -194,11 +183,6 @@ class CanvasImplTest {
   @Test
   void removeLayer1() {
     assertDoesNotThrow(() -> canvas.removeLayer(defaultLayer));
-  }
-
-  @Test
-  void changeDepthIndex() {
-    assertDoesNotThrow(() -> canvas.changeDepthIndex(defaultLayer, 0));
   }
 
   @Test
@@ -219,19 +203,6 @@ class CanvasImplTest {
   }
 
   @Test
-  void setLayerVisibility1() {
-    assertDoesNotThrow(() -> canvas.setLayerVisibility(defaultLayer, true));
-    assertThrows(NullPointerException.class, () -> canvas.setLayerVisibility(null, false));
-
-    canvas.addLayer(defaultLayer);
-
-    boolean isVisible = new Random().nextBoolean();
-    canvas.setLayerVisibility(defaultLayer, isVisible);
-
-    assertEquals(isVisible, defaultLayer.isVisible());
-  }
-
-  @Test
   void setLayerName() {
     assertDoesNotThrow(() -> canvas.setLayerName(0, ""));
 
@@ -239,18 +210,6 @@ class CanvasImplTest {
 
     String name = "foo";
     canvas.setLayerName(defaultLayer.getDepthIndex(), name);
-
-    assertEquals(name, defaultLayer.getName());
-  }
-
-  @Test
-  void setLayerName1() {
-    assertDoesNotThrow(() -> canvas.setLayerName(defaultLayer, ""));
-
-    canvas.addLayer(defaultLayer);
-
-    String name = "foo";
-    canvas.setLayerName(defaultLayer, name);
 
     assertEquals(name, defaultLayer.getName());
   }

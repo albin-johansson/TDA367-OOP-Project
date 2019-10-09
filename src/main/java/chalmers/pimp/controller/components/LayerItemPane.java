@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 
 /**
  * The {@code LayerItemPane} class represents a "layer item pane", which contains information about
- * a specific layer in the model. Instances of this class are designed to be "disposed" upon layer
+ * a specific layer in the model. Instances of this class are designed to be disposed upon layer
  * model updates. In other words, instances of the {@code LayerItemPane} class are meant to be
  * short-lived.
  *
@@ -53,22 +53,21 @@ final class LayerItemPane extends AnchorPane {
   private ImageView layerTypeIcon;
 
   private final IModel model;
-  private final IReadOnlyLayer layer; // TODO remove
   private final int associatedLayerIndex;
 
   /**
-   * @param model the associated model instance.
-   * @param layer the layer the created layer item pane will represent.
+   * @param model                the associated model instance.
+   * @param associatedLayerIndex the layer depth index of the associated layer in the model.
    * @throws IOException          if the associated FXML file cannot be found.
    * @throws NullPointerException if any references are {@code null}.
    */
-  LayerItemPane(IModel model, IReadOnlyLayer layer) throws IOException {
-    ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
+  LayerItemPane(IModel model, int associatedLayerIndex) throws IOException {
     this.model = Objects.requireNonNull(model);
-    this.layer = Objects.requireNonNull(layer);
+    this.associatedLayerIndex = associatedLayerIndex;
 
-    textLabel.setText(layer.getName());
-    associatedLayerIndex = layer.getDepthIndex();
+    ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
+
+    textLabel.setText(model.getLayerName(associatedLayerIndex));
 
     IReadOnlyLayer activeLayer = model.getActiveLayer();
     if ((activeLayer != null) && (activeLayer.getDepthIndex() == associatedLayerIndex)) {
@@ -113,9 +112,9 @@ final class LayerItemPane extends AnchorPane {
   private void updateLayerName() {
     String temp = textLabel.getText();
     if (temp.isEmpty()) {
-      textLabel.setText(layer.getName());
+      textLabel.setText(model.getLayerName(associatedLayerIndex));
     } else {
-      model.setLayerName(layer, textLabel.getText());
+      model.setLayerName(associatedLayerIndex, textLabel.getText());
     }
   }
 
@@ -128,18 +127,18 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private void decreaseZIndex() {
-    model.changeLayerDepthIndex(layer, -1);
+    model.changeLayerDepthIndex(associatedLayerIndex, -1);
   }
 
   @FXML
   @SuppressWarnings("unused")
   private void increaseZIndex() {
-    model.changeLayerDepthIndex(layer, 1);
+    model.changeLayerDepthIndex(associatedLayerIndex, 1);
   }
 
   @FXML
   @SuppressWarnings("unused")
   private void removeLayer() {
-    model.removeLayer(layer);
+    model.removeLayer(associatedLayerIndex);
   }
 }

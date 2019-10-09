@@ -76,15 +76,9 @@ final class CanvasImpl implements ICanvas {
     layerManager.selectLayer(layerIndex);
   }
 
-  @Deprecated
   @Override
-  public void selectLayer(IReadOnlyLayer layer) {
-    layerManager.selectLayer(layer.getDepthIndex());
-  }
-
-  @Override
-  public void changeDepthIndex(IReadOnlyLayer layer, int deltaZ) {
-    layerManager.changeDepthIndex(layer, deltaZ);
+  public void changeDepthIndex(int layerIndex, int dz) {
+    layerManager.changeDepthIndex(layerIndex, dz);
     notifyCanvasUpdateListeners();
   }
 
@@ -95,20 +89,9 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
-  public void setLayerVisibility(IReadOnlyLayer readOnlyLayer, boolean isVisible) {
-    layerManager.setLayerVisibility(readOnlyLayer.getDepthIndex(), isVisible);
-    notifyCanvasUpdateListeners();
-  }
-
-  @Override
   public void setLayerVisibility(int layerIndex, boolean isVisible) {
     layerManager.setLayerVisibility(layerIndex, isVisible);
     notifyCanvasUpdateListeners();
-  }
-
-  @Override
-  public void setLayerName(IReadOnlyLayer layer, String layerName) {
-    layerManager.setLayerName(layer.getDepthIndex(), layerName);
   }
 
   @Override
@@ -148,6 +131,11 @@ final class CanvasImpl implements ICanvas {
   @Override
   public boolean isLayerVisible(int layerIndex) {
     return layerManager.isLayerVisible(layerIndex);
+  }
+
+  @Override
+  public String getLayerName(int layerIndex) {
+    return layerManager.getLayerName(layerIndex);
   }
 
   @Override
