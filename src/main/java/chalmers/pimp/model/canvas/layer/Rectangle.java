@@ -7,6 +7,7 @@ import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
+import java.util.Objects;
 
 /**
  * The {@code Rectangle} class is an implementation of the {@code ILayer} interface that represents
@@ -15,9 +16,9 @@ import chalmers.pimp.model.pixeldata.PixelFactory;
 final class Rectangle implements ILayer {
 
   private final LayerDelegate layerDelegate;
+  private IColor color;
   private final int width;
   private final int height;
-  private IColor color;
 
   /**
    * Creates a rectangle.
@@ -28,7 +29,7 @@ final class Rectangle implements ILayer {
    * @param height the height of the rectangle.
    */
   Rectangle(int x, int y, int width, int height) {
-    layerDelegate = new LayerDelegate();
+    layerDelegate = new LayerDelegate(LayerType.SHAPE);
     layerDelegate.setX(x);
     layerDelegate.setY(y);
     this.width = width;
@@ -38,6 +39,20 @@ final class Rectangle implements ILayer {
     layerDelegate.setName((width == height) ? "Square" : "Rectangle");
 
     color = ColorFactory.createColor(255, 137, 243); // FIXME
+  }
+
+  /**
+   * Creates a copy of the supplied rectangle.
+   *
+   * @param rectangle the rectangle that will be copied.
+   * @throws NullPointerException if the supplied rectangle is {@code null}.
+   */
+  private Rectangle(Rectangle rectangle) {
+    Objects.requireNonNull(rectangle);
+    layerDelegate = new LayerDelegate(rectangle.layerDelegate);
+    width = rectangle.width;
+    height = rectangle.height;
+    color = ColorFactory.createColor(rectangle.color);
   }
 
   @Override
@@ -101,7 +116,7 @@ final class Rectangle implements ILayer {
 
   @Override
   public LayerType getLayerType() {
-    return LayerType.SHAPE;
+    return layerDelegate.getLayerType();
   }
 
   @Override
@@ -128,15 +143,23 @@ final class Rectangle implements ILayer {
 
   @Override
   public ILayer copy() {
-    var copy = new Rectangle(getX(), getY(), width, height);
-    copy.color = ColorFactory.createColor(color);
+    return new Rectangle(this);
+  }
 
-    copy.setX(getX());
-    copy.setY(getY());
-    copy.setVisible(isVisible());
-    copy.setDepthIndex(getDepthIndex());
-    copy.setName(getName());
+  @Override
+  public boolean equals(Object object) {
+    if (!(object instanceof Rectangle)) {
+      return false;
+    }
+    if (object == this) {
+      return true;
+    }
 
-    return copy;
+    var rectangle = (Rectangle) object;
+
+    return layerDelegate.equals(rectangle.layerDelegate)
+        && (width == rectangle.width)
+        && (height == rectangle.height)
+        && color.equals(rectangle.color);
   }
 }
