@@ -5,12 +5,14 @@ import chalmers.pimp.controller.components.PimpEditorPane;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.MouseStatus.MouseButtonID;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
+import chalmers.pimp.service.FXToMouseStatusButtonService;
 import chalmers.pimp.util.Resources;
 import chalmers.pimp.view.IView;
 import chalmers.pimp.view.renderer.RendererFactory;
@@ -23,7 +25,6 @@ import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -86,7 +87,7 @@ final class ControllerImpl implements IController {
    */
   private MouseStatus createMouseStatus(MouseEvent event) {
     Objects.requireNonNull(event);
-    int buttonID = fxButtonToInt(event.getButton());
+    MouseButtonID buttonID = FXToMouseStatusButtonService.getMouseButtonID(event.getButton());
     return new MouseStatus((int) event.getX(), (int) event.getY(), buttonID);
   }
 
@@ -187,31 +188,6 @@ final class ControllerImpl implements IController {
       } catch (IOException ex) {
         ex.printStackTrace();
       }
-    }
-  }
-
-  /**
-   * Converts the button pressed to an integer representation.
-   *
-   * @param mouseButton the enum value that describes the mouse button.
-   * @return an int representation of the supplied enum value.
-   * @throws IllegalStateException if the supplied value isn't supported.
-   * @throws NullPointerException  if the supplied value is {@code null}.
-   */
-  private int fxButtonToInt(MouseButton mouseButton) {
-    //TODO Change int representation to ENUM when updated in Model
-    Objects.requireNonNull(mouseButton);
-    switch (mouseButton) {
-      case NONE:
-        return 0;
-      case PRIMARY:
-        return 1;
-      case MIDDLE:
-        return 2;
-      case SECONDARY:
-        return 3;
-      default:
-        throw new IllegalStateException("Invalid mouse button value: " + mouseButton);
     }
   }
 
