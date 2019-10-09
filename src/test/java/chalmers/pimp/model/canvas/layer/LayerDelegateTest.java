@@ -1,6 +1,8 @@
 package chalmers.pimp.model.canvas.layer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,10 +10,31 @@ import org.junit.jupiter.api.Test;
 class LayerDelegateTest {
 
   private LayerDelegate delegate;
+  private LayerType layerType;
 
   @BeforeEach
   private void setUp() {
-    delegate = new LayerDelegate();
+    layerType = LayerType.SHAPE;
+    delegate = new LayerDelegate(layerType);
+  }
+
+  @Test
+  void ctor() {
+    assertThrows(NullPointerException.class, () -> new LayerDelegate((LayerType) null));
+  }
+
+  @Test
+  void copyCtor() {
+    assertThrows(NullPointerException.class, () -> new LayerDelegate((LayerDelegate) null));
+
+    var copy = new LayerDelegate(delegate);
+
+    assertEquals(delegate.getX(), copy.getX());
+    assertEquals(delegate.getY(), copy.getY());
+    assertEquals(delegate.getDepthIndex(), copy.getDepthIndex());
+    assertEquals(delegate.getName(), copy.getName());
+    assertEquals(delegate.isVisible(), copy.isVisible());
+    assertEquals(delegate.getLayerType(), copy.getLayerType());
   }
 
   @Test
@@ -67,5 +90,23 @@ class LayerDelegateTest {
     delegate.setY(expectedY);
 
     assertEquals(expectedY, delegate.getY());
+  }
+
+  @Test
+  void equalsTest() {
+    assertNotEquals(null, delegate);
+    assertEquals(delegate, delegate); // reflexive
+
+    var copy = new LayerDelegate(delegate);
+    var secondCopy = new LayerDelegate(copy);
+
+    // Transitive
+    assertEquals(copy, delegate);
+    assertEquals(delegate, secondCopy);
+    assertEquals(copy, secondCopy);
+
+    // Symmetric
+    assertEquals(delegate, copy);
+    assertEquals(copy, delegate);
   }
 }

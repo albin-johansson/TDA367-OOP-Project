@@ -1,9 +1,11 @@
 package chalmers.pimp.model.canvas.layer;
 
+import java.util.Objects;
+
 /**
  * The {@code LayerDelegate} class is designed to be used by implementations of the {@code ILayer}
- * interface. The implementations should use instances of this class to delegate requests related to
- * position and visibility.
+ * interface. The implementations should use instances of this class to delegate common layer
+ * requests.
  *
  * @see ILayer
  */
@@ -13,17 +15,42 @@ final class LayerDelegate {
    * The default value for the visibility property.
    */
   static final boolean DEFAULT_VISIBILITY_VALUE = true;
+
+  private final LayerType layerType;
+  private String name;
   private boolean isVisible;
   private int x;
   private int y;
-  private String name;
   private int depthIndex;
 
-  LayerDelegate() {
+  /**
+   * @param layerType the layer type that will be used by the layer delegate.
+   * @throws NullPointerException if any references are {@code null}.
+   */
+  LayerDelegate(LayerType layerType) {
+    this.layerType = Objects.requireNonNull(layerType);
+
+    name = "";
     isVisible = DEFAULT_VISIBILITY_VALUE;
     x = 0;
     y = 0;
-    name = "";
+    depthIndex = 0;
+  }
+
+  /**
+   * Creates a copy of the supplied layer delegate.
+   *
+   * @throws NullPointerException if the supplied layer delegate is {@code null}.
+   */
+  LayerDelegate(LayerDelegate layerDelegate) {
+    Objects.requireNonNull(layerDelegate);
+
+    layerType = layerDelegate.layerType;
+    x = layerDelegate.x;
+    y = layerDelegate.y;
+    depthIndex = layerDelegate.depthIndex;
+    name = layerDelegate.name;
+    isVisible = layerDelegate.isVisible;
   }
 
   /**
@@ -106,6 +133,15 @@ final class LayerDelegate {
   }
 
   /**
+   * Returns the layer type associated with this layer delegate.
+   *
+   * @return the layer type associated with this layer delegate.
+   */
+  LayerType getLayerType() {
+    return layerType;
+  }
+
+  /**
    * Returns the depth index for this layer.
    *
    * @return the depth index.
@@ -121,5 +157,43 @@ final class LayerDelegate {
    */
   void setDepthIndex(int depthIndex) {
     this.depthIndex = depthIndex;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(x, y, name, depthIndex, isVisible);
+  }
+
+  /**
+   * Indicates whether the supplied object is "equal" to this layer delegate.
+   *
+   * The supplied object is considered equal to this layer delegate if:
+   * <ul>
+   *   <li>the supplied object is an instance of the {@code LayerDelegate} class</li>
+   *   <li>the layer delegates have the same layer type value.</li>
+   *   <li>the layer delegates have the same x-coordinates.</li>
+   *   <li>the layer delegates have the same y-coordinates.</li>
+   *   <li>the layer delegates have the same depth index.</li>
+   * </ul>
+   *
+   * @param object the object that will be compared to this object.
+   * @return {@code true} if the supplied object is considered equal to this layer delegate; {@code
+   * false} otherwise.
+   */
+  @Override
+  public boolean equals(Object object) {
+    if (!(object instanceof LayerDelegate)) {
+      return false;
+    }
+    if (object == this) {
+      return true;
+    }
+
+    var layerDelegate = (LayerDelegate) object;
+
+    return (layerType == layerDelegate.layerType)
+        && (x == layerDelegate.x)
+        && (y == layerDelegate.y)
+        && (depthIndex == layerDelegate.depthIndex);
   }
 }
