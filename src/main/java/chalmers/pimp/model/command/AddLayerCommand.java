@@ -33,7 +33,7 @@ final class AddLayerCommand implements ICommand {
   public void execute() {
     modelMemento = mementoTarget.createSnapShot();
 
-    canvas.addLayer(layer);
+    canvas.addLayer(layer.copy());
   }
 
   @Override
