@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import chalmers.pimp.model.pixeldata.PixelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ class RectangleTest {
   @Test
   void setPixel() {
     // Should not actually manipulate anything.
-    assertDoesNotThrow(() -> rectangle.setPixel(0, 0, null));
+    assertDoesNotThrow(() -> rectangle.setPixel(PixelFactory.createPixel(0, 0)));
   }
 
   @Test
@@ -64,5 +65,21 @@ class RectangleTest {
   @Test
   void getLayerType() {
     assertEquals(LayerType.SHAPE, rectangle.getLayerType());
+  }
+
+  @Test
+  void setName() {
+    final String setName = "name";
+    rectangle.setName(setName);
+    assertEquals(setName, rectangle.getName());
+  }
+
+  @Test
+  void getName() {
+    assertNotNull(rectangle.getName());
+
+    final String setName = "name";
+    rectangle.setName(setName);
+    assertEquals(setName, rectangle.getName());
   }
 }

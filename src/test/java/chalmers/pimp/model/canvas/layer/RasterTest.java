@@ -18,7 +18,7 @@ class RasterTest {
 
   @Test
   void setPixel() {
-    assertThrows(NullPointerException.class, () -> raster.setPixel(0, 0, null));
+    assertThrows(NullPointerException.class, () -> raster.setPixel(null));
   }
 
   @Test
@@ -64,5 +64,21 @@ class RasterTest {
   @Test
   void getLayerType() {
     assertEquals(LayerType.RASTER, raster.getLayerType());
+  }
+
+  @Test
+  void setName() {
+    final String setName = "name";
+    raster.setName(setName);
+    assertEquals(setName, raster.getName());
+  }
+
+  @Test
+  void getName() {
+    assertNotNull(raster.getName());
+
+    final String setName = "name";
+    raster.setName(setName);
+    assertEquals(setName, raster.getName());
   }
 }

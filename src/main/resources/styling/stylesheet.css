@@ -124,3 +124,12 @@
 .menu-item:pressed {
   -fx-background-color: -background-pressed-color;
 }
+
+.menu-item:disabled {
+  -fx-cursor: default;
+  -fx-background-color: -background-color;
+}
+
+#layer-item{
+  -fx-background-color: #4e4e4e;
+}

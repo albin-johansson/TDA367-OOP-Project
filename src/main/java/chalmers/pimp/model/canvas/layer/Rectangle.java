@@ -3,21 +3,21 @@ package chalmers.pimp.model.canvas.layer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
-import java.awt.Color;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 
 /**
  * The {@code Rectangle} class is an implementation of the {@code ILayer} interface that represents
  * a rectangle.
  */
-public class Rectangle implements ILayer {
+final class Rectangle implements ILayer {
 
-  private static final LayerType layerType = LayerType.SHAPE;
   private final LayerDelegate layerDelegate;
-  private int width;
-  private int height;
-  private final IColor color;
+  private final int width;
+  private final int height;
+  private IColor color;
 
   /**
    * Creates a rectangle.
@@ -33,11 +33,15 @@ public class Rectangle implements ILayer {
     layerDelegate.setY(y);
     this.width = width;
     this.height = height;
-    color = ColorFactory.createColor(255, 137, 243);
+
+    // OBVIOUSLY not a good solution. Just a fun easter egg :)
+    layerDelegate.setName((width == height) ? "Square" : "Rectangle");
+
+    color = ColorFactory.createColor(255, 137, 243); // FIXME
   }
 
   @Override
-  public void setPixel(int x, int y, Color color) {
+  public void setPixel(IPixel pixel) {
   }
 
   @Override
@@ -56,6 +60,16 @@ public class Rectangle implements ILayer {
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
   }
@@ -71,12 +85,22 @@ public class Rectangle implements ILayer {
   }
 
   @Override
+  public String getName() {
+    return layerDelegate.getName();
+  }
+
+  @Override
+  public int getDepthIndex() {
+    return layerDelegate.getDepthIndex();
+  }
+
+  @Override
   public IReadOnlyPixelData getPixelData() {
     PixelData pixelData = new PixelData(width, height);
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
-        pixelData.setPixel(col, row, Color.MAGENTA);
+        pixelData.setPixel(PixelFactory.createPixel(col, row, 1, 0, 1, 1));
       }
     }
 
@@ -85,13 +109,23 @@ public class Rectangle implements ILayer {
 
   @Override
   public LayerType getLayerType() {
-    return layerType;
+    return LayerType.SHAPE;
   }
 
   @Override
   public void draw(IRenderer renderer) {
-    renderer.setFillColor(color);
-    renderer.setBorderColor(color);
-    renderer.fillRect(getX(), getY(), width, height);
+    if (isVisible()) {
+      renderer.setFillColor(color);
+      renderer.setBorderColor(color);
+      renderer.fillRect(getX(), getY(), width, height);
+    }
+  }
+
+  @Override
+  public ILayer copy() {
+    var copy = new Rectangle(getX(), getY(), width, height);
+    copy.color = ColorFactory.createColor(color);
+    copy.setVisible(isVisible());
+    return copy;
   }
 }

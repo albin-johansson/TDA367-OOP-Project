@@ -1,12 +1,13 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.ICopiable;
 import chalmers.pimp.model.IDrawable;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 
 /**
  * The {@code IReadOnlyLayer} interface specifies the basic read-only methods for layers.
  */
-public interface IReadOnlyLayer extends IDrawable {
+public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
 
   /**
    * Indicates whether or not the layer is visible.
@@ -42,4 +43,18 @@ public interface IReadOnlyLayer extends IDrawable {
    * @return the type of the layer.
    */
   LayerType getLayerType();
+
+  /**
+   * Returns the layer's name
+   *
+   * @return the layer's name as a {@code String}
+   */
+  String getName();
+
+  /**
+   * Returns the layer's depth index, 0 as furthest back.
+   *
+   * @return the depth index.
+   */
+  int getDepthIndex();
 }

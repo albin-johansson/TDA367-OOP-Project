@@ -1,6 +1,5 @@
 package chalmers.pimp.model.pixeldata;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +21,7 @@ public final class PixelData implements IReadOnlyPixelData {
   /**
    * A matrix of pixels with a List containing Lists (rows).
    */
-  private final List<List<Color>> pixels;
+  private final List<List<IPixel>> pixels;
 
   /**
    * Creates a PixelData with the given width (amount of pixels horizontally) and height (amount of
@@ -34,7 +33,7 @@ public final class PixelData implements IReadOnlyPixelData {
    */
   public PixelData(int width, int height) {
     if ((width <= 0) || (width > MAX_WIDTH) || (height <= 0) || (height > MAX_HEIGHT)) {
-      throw new IndexOutOfBoundsException("Width and height must be greater than zero.");
+      throw new IndexOutOfBoundsException("Bad dimensions: (" + width + "x" + height + ")");
     } else {
       pixels = createPixelDataMatrix(width, height);
     }
@@ -48,14 +47,14 @@ public final class PixelData implements IReadOnlyPixelData {
    * @param height the amount of pixels in height.
    * @return a matrix of colors.
    */
-  private List<List<Color>> createPixelDataMatrix(int width, int height) {
-    List<List<Color>> tempPixels = new ArrayList<>(height);
+  private List<List<IPixel>> createPixelDataMatrix(int width, int height) {
+    List<List<IPixel>> tempPixels = new ArrayList<>(height);
 
     for (int row = 0; row < height; row++) {
-      List<Color> tempRow = new ArrayList<>(width);
+      List<IPixel> tempRow = new ArrayList<>(width);
 
       for (int col = 0; col < width; col++) {
-        tempRow.add(new Color(0, 0, 0, 0));
+        tempRow.add(new PixelImpl(col, row));
       }
       tempPixels.add(tempRow);
     }
@@ -89,28 +88,26 @@ public final class PixelData implements IReadOnlyPixelData {
   }
 
   /**
-   * Sets the color of a specific pixel in the pixel matrix. Origin is positioned at top left corner
-   * and is zero indexed.
+   * Sets a specific pixel in the pixel matrix. Origin is positioned at top left corner and is zero
+   * indexed.
    *
-   * @param x     the zero-indexed x coordinate of the pixel to change color.
-   * @param y     the zero-indexed y coordinate of the pixel to change color.
-   * @param color the color to be set.
+   * @param pixel the pixel to be set.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  public void setPixel(int x, int y, Color color) {
-    Objects.requireNonNull(color);
-    if (!isBadCoordinate(x, y)) {
-      pixels.get(y).set(x, color);
+  public void setPixel(IPixel pixel) {
+    Objects.requireNonNull(pixel);
+    if (!isBadCoordinate(pixel.getX(), pixel.getY())) {
+      pixels.get(pixel.getY()).set(pixel.getX(), pixel);
     }
   }
 
   @Override
-  public Iterable<? extends Iterable<Color>> getPixels() {
+  public Iterable<? extends Iterable<? extends IReadOnlyPixel>> getPixels() {
     return pixels;
   }
 
   @Override
-  public Color getPixel(int x, int y) {
+  public IReadOnlyPixel getPixel(int x, int y) {
     ensureInRange(x, y);
     return pixels.get(y).get(x);
   }

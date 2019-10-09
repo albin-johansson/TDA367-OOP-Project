@@ -8,55 +8,77 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<fx:root prefHeight="400.0" prefWidth="64.0" stylesheets="@styling/stylesheet.css" type="AnchorPane"
-  xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+
+<fx:root prefHeight="400.0" prefWidth="64.0" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="8.0"
-      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-      AnchorPane.topAnchor="0.0">
+    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <ToggleButton mnemonicParsing="false" onAction="#selectPencil" selected="true">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@images/light/pencil.png"/>
+                <Image url="@images/light/pencil.png" />
               </image>
             </ImageView>
           </graphic>
           <tooltip>
-            <Tooltip text="Pencil Tool"/>
+            <Tooltip text="Pencil Tool" />
           </tooltip>
           <toggleGroup>
-            <ToggleGroup fx:id="palette"/>
+            <ToggleGroup fx:id="palette" />
           </toggleGroup>
         </ToggleButton>
         <ToggleButton mnemonicParsing="false" onAction="#selectEraser" toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@images/light/eraser.png"/>
+                <Image url="@images/light/eraser.png" />
               </image>
             </ImageView>
           </graphic>
           <tooltip>
-            <Tooltip text="Eraser Tool"/>
+            <Tooltip text="Eraser Tool" />
           </tooltip>
         </ToggleButton>
         <ToggleButton mnemonicParsing="false" onAction="#selectBucket" toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@images/light/bucket.png"/>
+                <Image url="@images/light/bucket.png" />
               </image>
             </ImageView>
           </graphic>
           <tooltip>
-            <Tooltip text="Bucket Tool"/>
+            <Tooltip text="Bucket Tool" />
           </tooltip>
         </ToggleButton>
+            <ToggleButton mnemonicParsing="false" onAction="#selectMoveTool" toggleGroup="$palette">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/light/move.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Move Tool" />
+               </tooltip>
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" onAction="#selectRectangleTool" toggleGroup="$palette">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/light/rectangle.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Rectangle Tool" />
+               </tooltip>
+            </ToggleButton>
       </children>
       <padding>
-        <Insets top="8.0"/>
+        <Insets top="8.0" />
       </padding>
     </VBox>
   </children>

@@ -1,5 +1,6 @@
 package chalmers.pimp.model.canvas;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -36,7 +37,17 @@ class LayerUpdateListenerCompositeTest {
     // The composite should not allow adding the same listener more than once
     ILayerUpdateListener listener = createListener();
     composite.add(listener);
-    assertThrows(IllegalArgumentException.class, () -> composite.add(listener));
+
+    assertDoesNotThrow(() -> composite.add(listener));
+
+    int nHits = 0;
+    for (ILayerUpdateListener child : composite) {
+      if (listener == child) {
+        nHits++;
+      }
+    }
+
+    assertEquals(1, nHits); // The listener should've only been added once
   }
 
   @Test

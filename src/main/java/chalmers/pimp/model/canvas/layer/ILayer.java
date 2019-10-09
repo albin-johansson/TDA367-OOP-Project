@@ -1,6 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
-import java.awt.Color;
+import chalmers.pimp.model.pixeldata.IPixel;
 
 /**
  * The {@code ILayer} interface specifies objects that represent some sort of layer. This interface
@@ -11,14 +11,13 @@ import java.awt.Color;
 public interface ILayer extends IReadOnlyLayer {
 
   /**
-   * Sets the pixel color at the specified coordinates. The coordinates are zero-indexed.
+   * Sets the color of a pixel specified by a specific coordinate. The coordinates are based on the
+   * provided pixels coordinates and the color on the provided pixels color.
    *
-   * @param x     the x-coordinate of the pixel that will be changed.
-   * @param y     the y-coordinate of the pixel that will be changed.
-   * @param color the new color of the specified pixel.
+   * @param pixel the pixel to be set
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  void setPixel(int x, int y, Color color);
+  void setPixel(IPixel pixel);
 
   /**
    * Sets the value of the visible property of this layer.
@@ -40,4 +39,18 @@ public interface ILayer extends IReadOnlyLayer {
    * @param y the new y-coordinate of the layer.
    */
   void setY(int y);
+
+  /**
+   * Sets the name of the layer.
+   *
+   * @param name the name of the layer.
+   */
+  void setName(String name);
+
+  /**
+   * Sets the depth index for this layer.
+   *
+   * @param depthIndex the new depth index.
+   */
+  void setDepthIndex(int depthIndex);
 }

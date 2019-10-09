@@ -1,19 +1,33 @@
 package chalmers.pimp.controller;
 
+import chalmers.pimp.controller.components.ImageChooser;
 import chalmers.pimp.controller.components.PimpEditorPane;
-import java.awt.Color;
-import java.io.IOException;
-import java.util.Objects;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
 import chalmers.pimp.util.Resources;
 import chalmers.pimp.view.IView;
+import chalmers.pimp.view.renderer.RendererFactory;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  * The {@code ControllerImpl} class is an implementation of the {@code IController} interface.
@@ -23,6 +37,7 @@ final class ControllerImpl implements IController {
   private final IModel model;
   private final IView view;
   private final Stage stage;
+  private final PimpEditorPane pane;
 
   /**
    * @param model the associated chalmers.pimp.model instance.
@@ -35,8 +50,10 @@ final class ControllerImpl implements IController {
     this.view = Objects.requireNonNull(view);
     this.stage = Objects.requireNonNull(stage);
 
-    PimpEditorPane pane = new PimpEditorPane(model, this);
-    view.setRendererGraphics(pane.getGraphics());
+    pane = new PimpEditorPane(model, this);
+    IRenderer renderer = RendererFactory.createFXRenderer(pane.getGraphics());
+    view.setRenderer(renderer);
+    model.setRenderer(renderer);
 
     prepareStage(new Scene(pane, 800, 600));
   }
@@ -53,11 +70,24 @@ final class ControllerImpl implements IController {
     stage.setMaximized(true);
     stage.setTitle("PIMP - Professional Image Manipulation Program");
     try {
-      Image icon = new Image(Resources.find(getClass(), "images/pimp_icon.png").toURI().toString());
+      var icon = new Image(Resources.find(getClass(), "images/pimp_icon.png").toURI().toString());
       stage.getIcons().add(icon);
     } catch (Exception e) {
-      e.printStackTrace();
+      System.err.println("Failed to load PIMP icon! Exception: " + e);
     }
+  }
+
+  /**
+   * Creates and returns a mouse status instance that describes the supplied mouse event.
+   *
+   * @param event the mouse event that will be "copied".
+   * @return a mouse status instance that describes the supplied mouse event.
+   * @throws NullPointerException if the supplied mouse event is {@code null}.
+   */
+  private MouseStatus createMouseStatus(MouseEvent event) {
+    Objects.requireNonNull(event);
+    int buttonID = fxButtonToInt(event.getButton());
+    return new MouseStatus((int) event.getX(), (int) event.getY(), buttonID);
   }
 
   @Override
@@ -66,13 +96,26 @@ final class ControllerImpl implements IController {
   }
 
   @Override
+  public void undo() {
+    model.undo();
+    view.repaint();
+  }
+
+  @Override
+  public void redo() {
+    model.redo();
+    view.repaint();
+  }
+
+  @Override
   public void selectPencil() {
-    model.setSelectedTool(ToolFactory.createPencil(10, Color.ORANGE, model));
+    ITool pencil = ToolFactory.createPencil(10, ColorFactory.createColor(255, 100, 50, 255), model);
+    model.setSelectedTool(pencil);
   }
 
   @Override
   public void selectEraser() {
-    Color color = new Color(0, 0, 0, 0);
+    IColor color = ColorFactory.createColor(0, 0, 0, 0);
     model.setSelectedTool(ToolFactory.createPencil(10, color, model));
   }
 
@@ -82,59 +125,98 @@ final class ControllerImpl implements IController {
   }
 
   @Override
+  public void selectRectangleTool() {
+    ITool rectangleTool = ToolFactory.createShapeTool(model);
+    model.setSelectedTool(rectangleTool);
+  }
+
+  @Override
+  public void selectMoveTool() {
+    model.setSelectedTool(ToolFactory.createMoveTool(model));
+  }
+
+  @Override
   public void selectedToolPressed(MouseEvent mouseEvent) {
-
-    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
-        fxButtonToInt(mouseEvent.getButton()));
-
-    model.selectedToolPressed(status);
+    model.selectedToolPressed(createMouseStatus(mouseEvent));
   }
 
   @Override
   public void selectedToolDragged(MouseEvent mouseEvent) {
-    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
-        fxButtonToInt(mouseEvent.getButton()));
-
-    model.selectedToolDragged(status);
+    model.selectedToolDragged(createMouseStatus(mouseEvent));
   }
 
   @Override
   public void selectedToolReleased(MouseEvent mouseEvent) {
-    MouseStatus status = new MouseStatus((int) mouseEvent.getX(), (int) mouseEvent.getY(),
-        fxButtonToInt(mouseEvent.getButton()));
+    model.selectedToolReleased(createMouseStatus(mouseEvent));
+  }
 
-    model.selectedToolReleased(status);
+  @Override
+  public void openImageChooser() {
+    try {
+      var imageChooser = new ImageChooser();
+
+      PixelData pixelData = imageChooser.openDialog(stage);
+      if (pixelData == null) {
+        return;
+      }
+
+      model.addLayer(LayerFactory.createRasterLayer(pixelData));
+    } catch (Exception e) {
+      System.err.println("Failed to import image! Exception: " + e);
+    }
+  }
+
+  @Override
+  public void exportImage() {
+    FileChooser fileChooser = new FileChooser();
+
+    fileChooser.getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));
+    fileChooser.getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("jpg files (*.jpg)", "*.jpg"));
+
+    File file = fileChooser.showSaveDialog(null);
+
+    if (file != null) {
+      try {
+        WritableImage image = pane.getGraphics().getCanvas()
+            .snapshot(new SnapshotParameters(), null);
+        RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
+
+        ImageIO.write(renderedImage, "png", file);
+      } catch (IOException ex) {
+        ex.printStackTrace();
+      }
+    }
   }
 
   /**
-   * Converts the button pressed to an int representation to reduce chalmers.pimp.model dependency
-   * of JavaFX
+   * Converts the button pressed to an integer representation.
    *
-   * @param mouseButton the fx ENUM that tells which button has been pressed
-   * @return an int representation
-   * @throws IllegalStateException if mouseButton is not a MouseButton Enum
+   * @param mouseButton the enum value that describes the mouse button.
+   * @return an int representation of the supplied enum value.
+   * @throws IllegalStateException if the supplied value isn't supported.
+   * @throws NullPointerException  if the supplied value is {@code null}.
    */
-  //TODO Change int representation to ENUM when updated in Model
   private int fxButtonToInt(MouseButton mouseButton) {
-    int output = 0;
+    //TODO Change int representation to ENUM when updated in Model
+    Objects.requireNonNull(mouseButton);
     switch (mouseButton) {
       case NONE:
-        output = 0;
-        break;
+        return 0;
       case PRIMARY:
-        output = 1;
-        break;
+        return 1;
       case MIDDLE:
-        output = 2;
-        break;
+        return 2;
       case SECONDARY:
-        output = 3;
-        break;
+        return 3;
       default:
-        throw new IllegalStateException(
-            "Mousebutton must be either NONE, PRIMARY, MIDDLE or SECONDARY");
+        throw new IllegalStateException("Invalid mouse button value: " + mouseButton);
     }
+  }
 
-    return output;
+  @Override
+  public void createNewLayer() {
+    model.addLayer(LayerFactory.createRasterLayer(1200, 800));
   }
 }

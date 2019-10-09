@@ -1,9 +1,9 @@
 package chalmers.pimp.model.pixeldata;
 
-import java.util.Objects;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.IReadOnlyColor;
+import java.util.Objects;
 
 /**
  * The {@code PixelImpl} class is an implementation of the {@code IPixel} interface.
@@ -25,6 +25,19 @@ final class PixelImpl implements IPixel {
     this.y = y;
 
     color = ColorFactory.createColor();
+  }
+
+  /**
+   * Creates a copy of the supplied pixel.
+   *
+   * @param pixel the pixel that will be copied.
+   * @throws NullPointerException if the supplied pixel is {@code null}.
+   */
+  PixelImpl(IReadOnlyPixel pixel) {
+    Objects.requireNonNull(pixel);
+    x = pixel.getX();
+    y = pixel.getY();
+    color = ColorFactory.createColor(pixel.getColor());
   }
 
   @Override
@@ -58,33 +71,13 @@ final class PixelImpl implements IPixel {
   }
 
   @Override
-  public double getRed() {
-    return color.getRedPercentage();
-  }
-
-  @Override
-  public double getGreen() {
-    return color.getGreenPercentage();
-  }
-
-  @Override
-  public double getBlue() {
-    return color.getBluePercentage();
-  }
-
-  @Override
-  public double getAlpha() {
-    return color.getAlphaPercentage();
-  }
-
-  @Override
   public IReadOnlyColor getColor() {
     return color;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(x, y, getRed(), getGreen(), getBlue());
+    return Objects.hash(x, y, color);
   }
 
   @Override
@@ -92,20 +85,17 @@ final class PixelImpl implements IPixel {
     if (!(obj instanceof IPixel)) {
       return false;
     }
-
-    IPixel pixel = (IPixel) obj;
-
-    return (pixel.getRed() == getRed()) && (pixel.getGreen() == getGreen()) && (pixel.getBlue()
-        == getBlue()) && (
-        pixel.getAlpha() == getAlpha());
+    if (obj == this) {
+      return true;
+    }
+    var pixel = (IPixel) obj;
+    return color.equals(pixel.getColor());
   }
 
   @Override
   public String toString() {
     String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
-    String state =
-        "Red: " + getRed() + ", Green: " + getGreen() + ", Blue: " + getBlue() + ", Alpha: "
-            + getAlpha();
+    String state = "X: " + x + ", Y: " + y + ", Color: " + color;
     return "(" + id + " | " + state + ")";
   }
 }
