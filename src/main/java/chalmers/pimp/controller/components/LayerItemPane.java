@@ -3,29 +3,23 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerType;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.transform.Transform;
 
 /**
  * The {@code LayerItemPane} class represents a layer item in the chalmers.pimp.view.
@@ -89,33 +83,30 @@ final class LayerItemPane extends AnchorPane {
   /**
    * Adds the drag EventHandler.
    */
-  private void addDragEventHandler(){
-    rootPane.setOnDragDetected((MouseEvent e)->{
-      //We want the textArea to be dragged. Could also be copied.
+  private void addDragEventHandler() {
+    rootPane.setOnDragDetected((MouseEvent e) -> {
+
       Dragboard db = rootPane.startDragAndDrop(TransferMode.MOVE);
 
-      SnapshotParameters sp =  new SnapshotParameters();
-      sp.setTransform(Transform.scale(0.8, 0.8));
-      WritableImage image = rootPane.snapshot(sp, null);
+      SnapshotParameters sp = new SnapshotParameters();
 
+      WritableImage image = rootPane.snapshot(sp, null);
 
       db.setDragView(image);
       model.selectLayer(layer);
-      // Put a string on a dragboard as an identifier
+
       ClipboardContent content = new ClipboardContent();
       content.putString(String.valueOf(layer.getDepthIndex()));
       db.setContent(content);
 
-      //Consume the event
       e.consume();
     });
-
   }
 
   /**
    * Adds the drag over EventHandler.
    */
-  private void addDragOverEventHandler(){
+  private void addDragOverEventHandler() {
     rootPane.addEventHandler(DragEvent.DRAG_OVER, (DragEvent event) -> {
       if (event.getGestureSource() != rootPane
           && event.getDragboard().hasString()) {
@@ -130,34 +121,29 @@ final class LayerItemPane extends AnchorPane {
   /**
    * Removes the border from previous drag action.
    */
-  private void addDragExitedEventHandler(){
+  private void addDragExitedEventHandler() {
     rootPane.addEventHandler(DragEvent.DRAG_EXITED, (DragEvent event) -> {
       rootPane.setStyle("-fx-border-width: 0,0,0,0");
     });
-
   }
 
   /**
    * Adds the drop EventHandler.
    */
-  private void addDropEventHandler(){
+  private void addDropEventHandler() {
     rootPane.addEventHandler(DragEvent.DRAG_DROPPED, (DragEvent event) -> {
-      //Get the dragboard back
+
       Dragboard db = event.getDragboard();
 
       boolean success = false;
-      //Could have some more thorough checks of course.
+
       if (db.hasString()) {
         int originDepth = Integer.parseInt(db.getString());
-        System.out.println("dropped");
-
-
-        model.moveLayer(model.getActiveLayer(), layer.getDepthIndex() - originDepth );
-
+        model.moveLayer(model.getActiveLayer(), layer.getDepthIndex() - originDepth);
 
         success = true;
       }
-      //Complete and consume the event.
+
       event.setDropCompleted(success);
       event.consume();
     });
