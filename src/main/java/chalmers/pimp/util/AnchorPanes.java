@@ -29,4 +29,14 @@ public final class AnchorPanes {
     AnchorPane.setLeftAnchor(node, (double) left);
     AnchorPane.setRightAnchor(node, (double) right);
   }
+
+  /**
+   * Utility method to set all Anchor points to 0.
+   *
+   * @param node the node to have all it's Anchor's set to 0.
+   * @throws NullPointerException if the Node argument is null
+   */
+  public static void setZeroAnchors(Node node) {
+    setAnchors(node, 0, 0, 0, 0);
+  }
 }
