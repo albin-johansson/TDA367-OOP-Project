@@ -4,7 +4,7 @@ import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import java.util.Objects;
 
 /**
- * Gives information to a listener when a layer is updated
+ * The {@code LayerUpdateEvent} class represents the state of a layer update event.
  */
 public final class LayerUpdateEvent {
 
@@ -12,10 +12,14 @@ public final class LayerUpdateEvent {
   private final int nLayers;
   private IReadOnlyLayer removedLayer;
   private IReadOnlyLayer addedLayer;
-
   private boolean visibilityUpdated;
   private boolean selectionUpdated;
 
+  /**
+   * @param layers  all of the layers contained in the model.
+   * @param nLayers the number of supplied layers.
+   * @throws NullPointerException if any references are {@code null}.
+   */
   LayerUpdateEvent(Iterable<? extends IReadOnlyLayer> layers, int nLayers) {
     this.layers = Objects.requireNonNull(layers);
     this.nLayers = nLayers;
@@ -104,10 +108,22 @@ public final class LayerUpdateEvent {
     return removedLayer != null;
   }
 
+  /**
+   * Returns the amount of layers associated with this layer update event. This corresponds to the
+   * amount of layers in the model.
+   *
+   * @return the amount of layers associated with this layer update event.
+   */
   public int getAmountOfLayers() {
     return nLayers;
   }
 
+  /**
+   * Returns all of the layers associated with this layer update event. The layers correspond to the
+   * layers contained in the model.
+   *
+   * @return all of the layers associated with this layer update event.
+   */
   public Iterable<? extends IReadOnlyLayer> getLayers() {
     return layers;
   }
