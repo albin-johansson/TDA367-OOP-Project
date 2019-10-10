@@ -130,6 +130,10 @@
   -fx-background-color: -background-color;
 }
 
-#layer-item{
+#layer-item {
   -fx-background-color: #4e4e4e;
+}
+
+.color-picker {
+  -fx-background-color: -background-pressed-color;
 }
