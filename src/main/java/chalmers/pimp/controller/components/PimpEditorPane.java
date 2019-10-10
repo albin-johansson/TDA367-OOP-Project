@@ -66,6 +66,8 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
     utilityPane = new UtilityPane(model);
     rightAnchorPane.getChildren().add(utilityPane);
     AnchorPanes.setZeroAnchors(utilityPane);
+
+    model.addLayerUpdateListener(this);
   }
 
   /**
