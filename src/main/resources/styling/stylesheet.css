@@ -92,6 +92,16 @@
   -fx-text-fill: -text-color;
 }
 
+.context-menu
+{
+  -fx-background-color: -background-color;
+  -fx-border-color: -background-color;
+  -fx-border-style: solid;
+  -fx-border-width: 1px;
+  -fx-border-radius: 10px;
+  -fx-background-radius: 10px;
+}
+
 .menu {
   -fx-background-color: -background-color;
   -fx-text-fill: -text-color;
@@ -114,6 +124,8 @@
   -fx-font-size: 12pt;
   -fx-background-color: -background-color;
   -fx-text-fill: -text-color;
+  -fx-border-width: 1px 0px 1px 0px;
+  -fx-border-color: -background-pressed-color;
 }
 
 .menu-item:hover {
@@ -132,4 +144,15 @@
 
 #layer-item{
   -fx-background-color: #4e4e4e;
+
 }
+
+#layer-item:hover{
+  -fx-cursor: OPEN_HAND;
+}
+
+
+#layer-item:pressed{
+  -fx-cursor: CLOSED_HAND;
+}
+

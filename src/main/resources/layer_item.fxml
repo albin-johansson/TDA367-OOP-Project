@@ -2,7 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
@@ -12,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root id="layer-item" fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#updateActiveLayer" prefHeight="75.0" prefWidth="225.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root id="layer-item" fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onContextMenuRequested="#openContextMenu" onMouseClicked="#updateActiveLayer" onMousePressed="#handleMouseEvent" prefHeight="76.0" prefWidth="225.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+    <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
       <children>
             <VBox alignment="TOP_CENTER" prefWidth="76.0">
                <children>
@@ -25,6 +27,14 @@
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
+                     <contextMenu>
+                        <ContextMenu fx:id="contextMenu">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#removeLayer" text="Delete Layer" />
+                              <MenuItem mnemonicParsing="false" text="Rename Layer" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
               </Label>
                   <ImageView fx:id="layerTypeIcon" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -36,7 +46,7 @@
                   <Insets left="20.0" />
                </HBox.margin>
             </VBox>
-            <VBox>
+            <VBox alignment="TOP_CENTER">
                <children>
               <ToggleButton fx:id="toggleButton" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#toggleVisibility" prefHeight="32.0" prefWidth="42.0" selected="true">
                 <graphic>
@@ -66,7 +76,7 @@
                   </Button>
                </children>
                <HBox.margin>
-                  <Insets left="20.0" right="10.0" />
+                  <Insets left="40.0" right="10.0" />
                </HBox.margin>
             </VBox>
       </children>

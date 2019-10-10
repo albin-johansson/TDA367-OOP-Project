@@ -8,13 +8,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -58,6 +61,9 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   private ImageView layerTypeIcon;
 
+  @FXML
+  private ContextMenu contextMenu;
+
   private IModel model;
   private IReadOnlyLayer layer;
 
@@ -74,10 +80,17 @@ final class LayerItemPane extends AnchorPane {
     textLabel.setText(layer.getName());
     updateVisibilityImage();
 
+    createContextMenu();
+
     addDragEventHandler();
     addDragOverEventHandler();
     addDragExitedEventHandler();
     addDropEventHandler();
+  }
+
+  private void createContextMenu(){
+    ContextMenu contextMenu = new ContextMenu();
+
   }
 
   /**
@@ -86,7 +99,7 @@ final class LayerItemPane extends AnchorPane {
   private void addDragEventHandler() {
     rootPane.setOnDragDetected((MouseEvent e) -> {
 
-      if(e.isPrimaryButtonDown()){
+      if (e.isPrimaryButtonDown()) {
         Dragboard db = rootPane.startDragAndDrop(TransferMode.MOVE);
 
         SnapshotParameters sp = new SnapshotParameters();
@@ -141,7 +154,6 @@ final class LayerItemPane extends AnchorPane {
       if (db.hasString()) {
         int originDepth = Integer.parseInt(db.getString());
         model.moveLayer(model.getActiveLayer(), layer.getDepthIndex() - originDepth);
-
         success = true;
       }
 
@@ -179,12 +191,32 @@ final class LayerItemPane extends AnchorPane {
   }
 
   /**
+   * Checks which mouse button was pressed and calls the appropriate method.
+   *
+   * @param e the associated MouseEvent.
+   */
+  @FXML
+  private void handleMouseEvent(MouseEvent e) {
+    System.out.println(e.isPrimaryButtonDown());
+    if (e.isPrimaryButtonDown()) {
+      updateActiveLayer();
+    } else if (e.isSecondaryButtonDown()) {
+      //openContextMenu(e);
+    }
+  }
+
+  /**
    * Sets this layer item's associated layer as the active layer.
    */
   @FXML
   private void updateActiveLayer() {
     model.selectLayer(layer);
     showIfLayerIsSelected();
+  }
+
+  @FXML
+  private void openContextMenu(ContextMenuEvent c){
+    contextMenu.show(rootPane,c.getSceneX(),c.getSceneY());
   }
 
   @FXML
