@@ -6,7 +6,6 @@ import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
-import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
 import chalmers.pimp.util.AnchorPanes;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
@@ -22,10 +21,11 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
 
   private final IModel model;
   private final IController controller;
-  private final LayerItemManagerPane layerItemManagerPane;
   private final ToolbarPane toolbarPane;
   private final PalettePane palettePane;
   private final CanvasPane canvasPane;
+  private final UtilityPane utilityPane;
+
   @FXML
   @SuppressWarnings("unused")
   private AnchorPane topAnchorPane;
@@ -51,24 +51,22 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
     this.controller = Objects.requireNonNull(controller);
     toolbarPane = new ToolbarPane(controller);
     topAnchorPane.getChildren().add(toolbarPane);
-    AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(toolbarPane);
     model.addUndoRedoListener(toolbarPane);
 
     canvasPane = new CanvasPane(controller);
     centerPane.getChildren().add(canvasPane);
-    AnchorPanes.setAnchors(canvasPane, 0, 0, 0, 0);
-
-    layerItemManagerPane = new LayerItemManagerPane();
-    model.addLayerUpdateListener(layerItemManagerPane);
-    model.addLayerUpdateListener(this);
-    rightAnchorPane.getChildren().add(layerItemManagerPane);
-    AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(canvasPane);
 
     palettePane = new PalettePane(controller);
     leftAnchorPane.getChildren().add(palettePane);
-    AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(palettePane);
 
-    populateLayerItemManagerPane();
+    utilityPane = new UtilityPane(model);
+    rightAnchorPane.getChildren().add(utilityPane);
+    AnchorPanes.setZeroAnchors(utilityPane);
+
+//    populateLayerItemManagerPane();
   }
 
   /**
@@ -78,16 +76,6 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
    */
   public GraphicsContext getGraphics() {
     return canvasPane.getGraphics();
-  }
-
-  /**
-   * Populates this PEP's LayerItemManagerPane with LayerItems based on the layers in the
-   * chalmers.pimp.model this PEP has
-   */
-  private void populateLayerItemManagerPane() {
-    for (IReadOnlyLayer layer : model.getLayers()) {
-      layerItemManagerPane.addLayerItemPane(createLayerItemPane(layer));
-    }
   }
 
   /**
@@ -112,8 +100,8 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
    */
   @Override
   public void layersUpdated(LayerUpdateEvent e) {
-    if (e.getType() == EventType.CREATED) {
-      layerItemManagerPane.addLayerItemPane(createLayerItemPane(e.getLayer()));
-    }
+//    if (e.getType() == EventType.CREATED) {
+//      layerItemManagerPane.addLayerItemPane(createLayerItemPane(e.getLayer()));
+//    }
   }
 }
