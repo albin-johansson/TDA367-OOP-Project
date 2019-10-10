@@ -191,11 +191,19 @@ final class LayerItemPane extends AnchorPane {
     showIfLayerIsSelected();
   }
 
+  /**
+   * Opens the context menu associated with the textLabel
+   *
+   * @param c the associated ContextMenuEvent
+   */
   @FXML
   private void openContextMenu(ContextMenuEvent c) {
     contextMenu.show(rootPane, c.getSceneX(), c.getSceneY());
   }
 
+  /**
+   * Removes target this Layer from the model
+   */
   @FXML
   private void removeLayer() {
     model.removeLayer(layer);
