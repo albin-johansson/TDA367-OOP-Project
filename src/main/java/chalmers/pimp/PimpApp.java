@@ -31,8 +31,5 @@ public final class PimpApp extends Application {
     IController controller = ControllerFactory.createController(model, view, stage);
     model.addCanvasUpdateListener(view);
     controller.run();
-
-    model.addLayer(LayerFactory.createRectangle(50,100,400,60));
-    model.selectLayer(0);
   }
 }
