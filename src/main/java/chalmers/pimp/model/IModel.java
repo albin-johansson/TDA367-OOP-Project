@@ -119,11 +119,12 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void selectLayer(int layerIndex);
 
   /**
-   * Moves the supplied layer {@code steps} in the list, were negative number moves the layer back
-   * (and vice versa).
+   * Offsets the depth index (the z-value) of the layer associated with the supplied layer depth
+   * index with the supplied offset. This method has no effect if the supplied offset is zero or if
+   * there isn't a layer associated with the supplied layer depth index.
    *
-   * @param layerIndex the layer index of the layer that will have its z-value changed.
-   * @param dz         the depth (z-value) offset, may be either negative of positive.
+   * @param layerIndex the layer depth index associated with the layer that will be "moved".
+   * @param dz         the z-axis offset, may be either negative or positive.
    */
   void changeLayerDepthIndex(int layerIndex, int dz);
 
@@ -210,11 +211,12 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   boolean isLayerVisible(int layerIndex);
 
   /**
-   * Returns the name of the layer associated with the supplied depth index. This method returns the
-   * empty string if the supplied index is out-of-bounds.
+   * Returns the name of the layer associated with the supplied layer depth index. This method
+   * returns an empty string if there is no corresponding layer.
    *
-   * @param layerIndex the depth index associated with the desired layer.
-   * @return the name of the layer associated with the supplied depth index.
+   * @param layerIndex the layer depth index of the desired layer.
+   * @return the name of the layer associated with the supplied layer depth index; the empty string
+   * is returned if no match is found.
    */
   String getLayerName(int layerIndex);
 

@@ -73,6 +73,14 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    */
   void selectLayer(int layerIndex);
 
+  /**
+   * Offsets the depth index (the z-value) of the layer associated with the supplied layer depth
+   * index with the supplied offset. This method has no effect if the supplied offset is zero or if
+   * there isn't a layer associated with the supplied layer depth index.
+   *
+   * @param layerIndex the layer depth index associated with the layer that will be "moved".
+   * @param dz         the z-axis offset, may be either negative or positive.
+   */
   void changeDepthIndex(int layerIndex, int dz);
 
   /**
@@ -154,6 +162,14 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    */
   boolean isLayerVisible(int layerIndex);
 
+  /**
+   * Returns the name of the layer associated with the supplied layer depth index. This method
+   * returns an empty string if there is no corresponding layer.
+   *
+   * @param layerIndex the layer depth index of the desired layer.
+   * @return the name of the layer associated with the supplied layer depth index; the empty string
+   * is returned if no match is found.
+   */
   String getLayerName(int layerIndex);
 
   /**
