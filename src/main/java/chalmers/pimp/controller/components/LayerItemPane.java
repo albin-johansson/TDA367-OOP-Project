@@ -3,22 +3,34 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerType;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 
 /**
  * The {@code LayerItemPane} class represents a layer item in the chalmers.pimp.view.
  */
 final class LayerItemPane extends AnchorPane {
+
+  @FXML
+  private AnchorPane rootPane;
 
   private static final Image EYE_OPEN_IMAGE;
   private static final Image EYE_CLOSED_IMAGE;
@@ -49,6 +61,9 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   private ImageView layerTypeIcon;
 
+  @FXML
+  private ContextMenu contextMenu;
+
   private IModel model;
   private IReadOnlyLayer layer;
 
@@ -64,6 +79,79 @@ final class LayerItemPane extends AnchorPane {
     this.layer = Objects.requireNonNull(layer);
     textLabel.setText(layer.getName());
     updateVisibilityImage();
+
+    addDragEventHandler();
+    addDragOverEventHandler();
+    addDragExitedEventHandler();
+    addDropEventHandler();
+  }
+
+  /**
+   * Adds the EventHandler for when a LayerItem is being dragged.
+   */
+  private void addDragEventHandler() {
+    rootPane.setOnDragDetected((MouseEvent e) -> {
+
+      if (e.isPrimaryButtonDown()) {
+        Dragboard db = rootPane.startDragAndDrop(TransferMode.MOVE);
+
+        SnapshotParameters sp = new SnapshotParameters();
+
+        WritableImage image = rootPane.snapshot(sp, null);
+
+        db.setDragView(image);
+        model.selectLayer(layer);
+
+        ClipboardContent content = new ClipboardContent();
+        content.putString(String.valueOf(layer.getDepthIndex()));
+        db.setContent(content);
+      }
+      e.consume();
+    });
+  }
+
+  /**
+   * Adds the EventHandler for when a LayerItem is having another Item dragged over it.
+   */
+  private void addDragOverEventHandler() {
+    rootPane.addEventHandler(DragEvent.DRAG_OVER, (DragEvent event) -> {
+      if (event.getGestureSource() != rootPane
+          && event.getDragboard().hasString()) {
+        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        rootPane.setStyle("-fx-border-color: #990bc8;");
+      }
+      event.consume();
+    });
+  }
+
+  /**
+   * Removes the border from previous drag action.
+   */
+  private void addDragExitedEventHandler() {
+    rootPane.addEventHandler(DragEvent.DRAG_EXITED, (DragEvent event) -> {
+      rootPane.setStyle("-fx-border-width: 0,0,0,0");
+    });
+  }
+
+  /**
+   * Adds the EventHandler for when another LayerItemPane is dropped on top of this LayerItemPane
+   */
+  private void addDropEventHandler() {
+    rootPane.addEventHandler(DragEvent.DRAG_DROPPED, (DragEvent event) -> {
+
+      Dragboard db = event.getDragboard();
+
+      boolean success = false;
+
+      if (db.hasString()) {
+        int originDepth = Integer.parseInt(db.getString());
+        model.moveLayer(model.getActiveLayer(), layer.getDepthIndex() - originDepth);
+        success = true;
+      }
+
+      event.setDropCompleted(success);
+      event.consume();
+    });
   }
 
   /**
@@ -103,16 +191,19 @@ final class LayerItemPane extends AnchorPane {
     showIfLayerIsSelected();
   }
 
+  /**
+   * Opens the context menu associated with the textLabel
+   *
+   * @param c the associated ContextMenuEvent
+   */
   @FXML
-  private void decreaseZIndex() {
-    model.moveLayer(layer, -1);
+  private void openContextMenu(ContextMenuEvent c) {
+    contextMenu.show(rootPane, c.getSceneX(), c.getSceneY());
   }
 
-  @FXML
-  private void increaseZIndex() {
-    model.moveLayer(layer, 1);
-  }
-
+  /**
+   * Removes target this Layer from the model
+   */
   @FXML
   private void removeLayer() {
     model.removeLayer(layer);
