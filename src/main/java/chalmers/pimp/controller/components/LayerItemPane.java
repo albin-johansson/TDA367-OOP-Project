@@ -3,12 +3,12 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.canvas.layer.LayerType;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -17,9 +17,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
@@ -33,9 +33,6 @@ import javafx.scene.layout.AnchorPane;
  * @see LayerItemContainerPane
  */
 final class LayerItemPane extends AnchorPane {
-
-  @FXML
-  private AnchorPane rootPane;
 
   private static final Image EYE_OPEN_IMAGE;
   private static final Image EYE_CLOSED_IMAGE;
@@ -70,8 +67,6 @@ final class LayerItemPane extends AnchorPane {
 
   private final IModel model;
   private final int associatedLayerIndex;
-  // private IModel model;
-  // private IReadOnlyLayer layer;
 
   /**
    * @param model                the associated model instance.
@@ -92,96 +87,97 @@ final class LayerItemPane extends AnchorPane {
       setStyle("-fx-background-color: -selected-color;");
     }
 
+    addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+      if (event.getButton() == MouseButton.PRIMARY) {
+        selectLayer();
+      } else if (event.getButton() == MouseButton.SECONDARY) {
+        openContextMenu(event.getSceneX(), event.getSceneY());
+      }
+    });
+
     updateVisibilityHint();
-    // this.layer = Objects.requireNonNull(layer);
-    // textLabel.setText(layer.getName());
-    // updateVisibilityImage();
 
-    addDragEventHandler();
-    addDragOverEventHandler();
-    addDragExitedEventHandler();
-    addDropEventHandler();
+    setOnDragDetected(this::handleDragDetected);
+    setOnDragOver(this::handleDragOver);
+    setOnDragDropped(this::handleDragDropped);
+    setOnDragExited(this::handleDragExited);
+
+    String path = "images/light/" + LayerType.RASTER.name().toLowerCase() + ".png";
+
+    try {
+      layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
+    } catch (Exception e) {
+      System.err.println("Failed to load layerTypeIcon icon! Exception: " + e);
+    }
   }
 
   /**
-   * Adds the EventHandler for when a LayerItem is being dragged.
+   * Handles a mouse event triggered by initiating a mouse drag on the layer item pane.
+   *
+   * @param event the associated mouse event.
    */
-  private void addDragEventHandler() {
-    rootPane.setOnDragDetected((MouseEvent e) -> {
+  private void handleDragDetected(MouseEvent event) {
+    if (event.isPrimaryButtonDown()) {
+      Dragboard dragBoard = startDragAndDrop(TransferMode.MOVE);
 
-      if (e.isPrimaryButtonDown()) {
-        Dragboard db = rootPane.startDragAndDrop(TransferMode.MOVE);
+      var snapshotParams = new SnapshotParameters();
 
-        SnapshotParameters sp = new SnapshotParameters();
+      WritableImage image = snapshot(snapshotParams, null);
 
-        WritableImage image = rootPane.snapshot(sp, null);
+      dragBoard.setDragView(image);
+      model.selectLayer(associatedLayerIndex);
 
-        db.setDragView(image);
-        model.selectLayer(layer);
-
-        ClipboardContent content = new ClipboardContent();
-        content.putString(String.valueOf(layer.getDepthIndex()));
-        db.setContent(content);
-      }
-      e.consume();
-    });
+      var content = new ClipboardContent();
+      content.putString(String.valueOf(associatedLayerIndex));
+      dragBoard.setContent(content);
+    }
+    event.consume();
   }
 
   /**
-   * Adds the EventHandler for when a LayerItem is having another Item dragged over it.
+   * Handles a drag event triggered by a drag drop on the layer item pane.
+   *
+   * @param event the associated drag event.
    */
-  private void addDragOverEventHandler() {
-    rootPane.addEventHandler(DragEvent.DRAG_OVER, (DragEvent event) -> {
-      if (event.getGestureSource() != rootPane
-          && event.getDragboard().hasString()) {
-        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-        rootPane.setStyle("-fx-border-color: #990bc8;");
-      }
-      event.consume();
-    });
+  private void handleDragDropped(DragEvent event) {
+    Dragboard db = event.getDragboard();
+
+    boolean success = false;
+
+    if (db.hasString()) {
+      int originDepth = Integer.parseInt(db.getString());
+
+      // TODO null check
+      model.changeLayerDepthIndex(model.getActiveLayer().getDepthIndex(),
+          associatedLayerIndex - originDepth);
+      success = true;
+    }
+
+    event.setDropCompleted(success);
+    event.consume();
   }
 
   /**
-   * Removes the border from previous drag action.
+   * Handles a drag event triggered by a drag over the layer item pane.
+   *
+   * @param event the associated drag event.
    */
-  private void addDragExitedEventHandler() {
-    rootPane.addEventHandler(DragEvent.DRAG_EXITED, (DragEvent event) -> {
-      rootPane.setStyle("-fx-border-width: 0,0,0,0");
-    });
+  private void handleDragOver(DragEvent event) {
+    if (event.getGestureSource() != this && event.getDragboard().hasString()) {
+      event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+      setStyle("-fx-border-color: -accent-color;");
+    }
+    event.consume();
   }
 
   /**
-   * Adds the EventHandler for when another LayerItemPane is dropped on top of this LayerItemPane
+   * Handles a drag event triggered by a drag that exited the layer item pane.
+   *
+   * @param event the associated drag event.
    */
-  private void addDropEventHandler() {
-    rootPane.addEventHandler(DragEvent.DRAG_DROPPED, (DragEvent event) -> {
-
-      Dragboard db = event.getDragboard();
-
-      boolean success = false;
-
-      if (db.hasString()) {
-        int originDepth = Integer.parseInt(db.getString());
-        model.moveLayer(model.getActiveLayer(), layer.getDepthIndex() - originDepth);
-        success = true;
-      }
-
-      event.setDropCompleted(success);
-      event.consume();
-    });
+  private void handleDragExited(DragEvent event) {
+    setStyle("-fx-border-width: 0,0,0,0");
   }
-
-//  void setTypeIcon() {
-//
-//    //TODO Fix themes
-//    String path = "images/light/" + layer.getLayerType().name().toLowerCase() + ".png";
-//
-//    try {
-//      layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
-//    } catch (Exception e) {
-//      System.err.println("Failed to load layerTypeIcon icon! Exception: " + e);
-//    }
-//  }
 
   /**
    * Updates the state of the layer visibility hint.
@@ -192,6 +188,24 @@ final class LayerItemPane extends AnchorPane {
     } else {
       imageView.setImage(EYE_CLOSED_IMAGE);
     }
+  }
+
+  /**
+   * Opens a context menu for this layer item pane.
+   *
+   * @param x the x-coordinate of the context menu.
+   * @param y the y-coordinate of the context menu.
+   */
+  private void openContextMenu(double x, double y) {
+    System.out.println("SHOW X: " + x + ", Y: " + y);
+    contextMenu.show(this, x, y);
+  }
+
+  /**
+   * Makes the layer associated with the layer item pane selected.
+   */
+  private void selectLayer() {
+    model.selectLayer(associatedLayerIndex);
   }
 
   @FXML
@@ -214,12 +228,6 @@ final class LayerItemPane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")
-  private void updateActiveLayer() {
-    model.selectLayer(associatedLayerIndex);
-  }
-
-  @FXML
-  @SuppressWarnings("unused")
   private void decreaseZIndex() {
     model.changeLayerDepthIndex(associatedLayerIndex, -1);
   }
@@ -230,12 +238,6 @@ final class LayerItemPane extends AnchorPane {
     model.changeLayerDepthIndex(associatedLayerIndex, 1);
   }
 
-  @FXML
-  @SuppressWarnings("unused")
-  private void openContextMenu(ContextMenuEvent c) {
-    contextMenu.show(rootPane, c.getSceneX(), c.getSceneY());
-  }
-  
   @FXML
   @SuppressWarnings("unused")
   private void removeLayer() {
