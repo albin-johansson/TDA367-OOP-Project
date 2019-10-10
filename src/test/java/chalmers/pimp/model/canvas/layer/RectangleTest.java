@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class RectangleTest {
 
   @BeforeEach
   private void setUp() {
-    rectangle = new Rectangle(0, 0, 10, 10);
+    rectangle = new Rectangle(0, 0, 10, 10, ColorFactory.createColor());
   }
 
   @Test
