@@ -6,6 +6,7 @@ import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
+import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
 import chalmers.pimp.util.AnchorPanes;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
@@ -65,8 +66,6 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
     utilityPane = new UtilityPane(model);
     rightAnchorPane.getChildren().add(utilityPane);
     AnchorPanes.setZeroAnchors(utilityPane);
-
-//    populateLayerItemManagerPane();
   }
 
   /**
@@ -100,8 +99,8 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
    */
   @Override
   public void layersUpdated(LayerUpdateEvent e) {
-//    if (e.getType() == EventType.CREATED) {
-//      layerItemManagerPane.addLayerItemPane(createLayerItemPane(e.getLayer()));
-//    }
+    if (e.getType() == EventType.CREATED) {
+      utilityPane.addLayerItemPane(createLayerItemPane(e.getLayer()));
+    }
   }
 }
