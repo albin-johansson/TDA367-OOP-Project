@@ -8,8 +8,6 @@ import chalmers.pimp.service.PixelDataToFXService;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 /**
  * The {@code FXRenderer} is a implementation of the {@code IRenderer} interface.
