@@ -3,7 +3,7 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.service.ColorService;
+import chalmers.pimp.service.ColorConverterService;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -25,7 +25,7 @@ public class ColorPickerPane extends AnchorPane {
     ControllerUtils.makeController(this, Resources.find(getClass(), "color_picker.fxml"));
 
     colorPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-      model.setSelectedColor(ColorService.fxToIColor(newValue));
+      model.setSelectedColor(ColorConverterService.fxToIColor(newValue));
     });
   }
 
@@ -35,7 +35,7 @@ public class ColorPickerPane extends AnchorPane {
    * @return the current color of the color picker.
    */
   public IColor getColor() {
-    return ColorService.fxToIColor(colorPicker.getValue());
+    return ColorConverterService.fxToIColor(colorPicker.getValue());
   }
 
   /**
@@ -44,7 +44,7 @@ public class ColorPickerPane extends AnchorPane {
    * @param color the new color.
    */
   public void setColor(IColor color) {
-    Color fxColor = ColorService.toFXColor(color);
+    Color fxColor = ColorConverterService.toFXColor(color);
     colorPicker.setValue(fxColor);
   }
 }
