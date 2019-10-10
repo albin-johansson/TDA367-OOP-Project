@@ -16,6 +16,13 @@ final class ChangeLayerDepthCommand extends AbstractCommand {
   private final int baseDepthIndex;
   private final int dz;
 
+  /**
+   * @param canvas         the associated canvas instance.
+   * @param mementoTarget  the memento target that will be used.
+   * @param baseDepthIndex the layer depth index of the layer that will be "moved".
+   * @param dz             the delta z value (the offset), may be either negative or positive.
+   * @throws NullPointerException if any references are {@code null}.
+   */
   ChangeLayerDepthCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget,
       int baseDepthIndex, int dz) {
     super(canvas, mementoTarget);

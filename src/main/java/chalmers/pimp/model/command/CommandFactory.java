@@ -14,9 +14,7 @@ import chalmers.pimp.model.canvas.layer.ILayer;
  * @see ICommand
  */
 public final class CommandFactory {
-
-  // TODO command that represents changing layer index (by dragging a LIP)
-
+  
   private CommandFactory() {
   }
 
@@ -73,13 +71,30 @@ public final class CommandFactory {
     return new RemoveLayerCommand(canvas, mementoTarget, layerDepthIndex);
   }
 
+  /**
+   * Creates and returns a command that represents the action of selecting a command.
+   *
+   * @param canvas           the associated canvas instance.
+   * @param mementoTarget    the memento target that will be used.
+   * @param targetLayerIndex the layer depth index of the layer that will be selected.
+   * @throws NullPointerException if any references are {@code null}.
+   */
   public static ICommand createLayerSelectionCommand(ICanvas canvas,
       IMementoTarget<ModelMemento> mementoTarget, int targetLayerIndex) {
     return new LayerSelectionCommand(canvas, mementoTarget, targetLayerIndex);
   }
 
+  /**
+   * Creates and returns a command that represents the action of changing the z-value of a layer.
+   *
+   * @param canvas         the associated canvas instance.
+   * @param mementoTarget  the memento target that will be used.
+   * @param baseDepthIndex the layer depth index of the layer that will be "moved".
+   * @param dz             the delta z value (the offset), may be either negative or positive.
+   * @throws NullPointerException if any references are {@code null}.
+   */
   public static ICommand createChangeLayerDepthCommand(ICanvas canvas,
-      IMementoTarget<ModelMemento> mementoTarget, int baseDepthIndex, int targetDepthIndex) {
-    return new ChangeLayerDepthCommand(canvas, mementoTarget, baseDepthIndex, targetDepthIndex);
+      IMementoTarget<ModelMemento> mementoTarget, int baseDepthIndex, int dz) {
+    return new ChangeLayerDepthCommand(canvas, mementoTarget, baseDepthIndex, dz);
   }
 }
