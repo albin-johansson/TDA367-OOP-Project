@@ -6,6 +6,7 @@ import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
@@ -26,6 +27,7 @@ final class ModelImpl implements IModel {
   private Stroke stroke;
   private ITool selectedTool;
   private IRenderer renderer;
+  private IColor selectedColor;
 
   ModelImpl() {
     canvas = new Canvas();
@@ -262,5 +264,15 @@ final class ModelImpl implements IModel {
   @Override
   public void notifyAllCanvasUpdateListeners() {
     canvas.notifyAllCanvasListeners();
+  }
+
+  @Override
+  public void setSelectedColor(IColor color) {
+    this.selectedColor = color;
+  }
+
+  @Override
+  public IColor getSelectedColor() {
+    return selectedColor;
   }
 }

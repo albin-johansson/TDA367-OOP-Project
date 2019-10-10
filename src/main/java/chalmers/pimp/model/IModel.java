@@ -4,6 +4,7 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
@@ -270,4 +271,18 @@ public interface IModel extends IChangeable {
    * Notifies all canvas update listeners.
    */
   void notifyAllCanvasUpdateListeners();
+
+  /**
+   * Sets the color that should be used for drawing items on the canvas.
+   *
+   * @param color the new color.
+   */
+  void setSelectedColor(IColor color);
+
+  /**
+   * Returns the selected color that is used for when creating new shapes, drawings etc.
+   *
+   * @return the selected color that is used for when creating new shapes, drawings etc.
+   */
+  IColor getSelectedColor();
 }
