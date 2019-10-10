@@ -2,6 +2,7 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.util.AnchorPanes;
 import chalmers.pimp.util.Resources;
@@ -33,6 +34,7 @@ class UtilityPane extends AnchorPane {
 
     addColorPickerPane();
     addLayerItemManagerPane();
+    populateLayerItemManagerPane();
   }
 
   /**
@@ -67,5 +69,32 @@ class UtilityPane extends AnchorPane {
    */
   public void setColor(IColor color) {
     colorPickerPane.setColor(color);
+  }
+
+  /**
+   * Populates the LayerItemManagerPane with LayerItems based on the layers in the model
+   */
+  private void populateLayerItemManagerPane() {
+    for (IReadOnlyLayer layer : model.getLayers()) {
+      layerItemManagerPane.addLayerItemPane(createLayerItemPane(layer));
+    }
+  }
+
+  /**
+   * Creates the LayerItems for the view, based on a {@code IReadOnlyLayer}
+   *
+   * @param layer the {@code IReadOnlyLayer} that will be created as a view component
+   * @return the corresponding {@code LayerItemPane} created from the {@code IReadOnlyLayer}
+   */
+  private LayerItemPane createLayerItemPane(IReadOnlyLayer layer) {
+    try {
+      return new LayerItemPane(model, layer);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  void addLayerItemPane(LayerItemPane layerItemPane) {
+    layerItemManagerPane.addLayerItemPane(layerItemPane);
   }
 }
