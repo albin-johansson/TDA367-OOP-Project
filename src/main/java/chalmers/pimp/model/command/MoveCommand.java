@@ -7,19 +7,17 @@ import chalmers.pimp.model.canvas.ICanvas;
 import java.util.Objects;
 
 /**
- * The {@code MoveCommand} represents the action of moving a layer.
+ * The {@code StrokeCommand} class is a subclass of {@code AbstractCommand} that represents the
+ * action of moving a layer (by changing its x- and y-coordinates).
  *
+ * @see AbstractCommand
  * @see ICommand
- * @see CommandFactory
  */
-final class MoveCommand implements ICommand {
+final class MoveCommand extends AbstractCommand {
 
-  private final ICanvas canvas;
-  private final IMementoTarget<ModelMemento> mementoTarget;
   private final int layerDepthIndex;
   private final int x;
   private final int y;
-  private ModelMemento modelMemento;
 
   /**
    * @param canvas          the associated canvas instance.
@@ -30,30 +28,22 @@ final class MoveCommand implements ICommand {
    */
   MoveCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex,
       LayerMovement movement) {
-    this.canvas = Objects.requireNonNull(canvas);
-    this.mementoTarget = Objects.requireNonNull(mementoTarget);
+    super(canvas, mementoTarget);
     this.layerDepthIndex = layerDepthIndex;
     Objects.requireNonNull(movement);
 
     x = movement.getEndX();
     y = movement.getEndY();
-    modelMemento = Objects.requireNonNull(movement.getModelMemento());
+    setModelMemento(movement.getModelMemento());
   }
 
   @Override
   public void execute() {
-    modelMemento = mementoTarget.createSnapShot();
+    updateModelMemento();
 
-    canvas.selectLayer(layerDepthIndex);
-    canvas.setActiveLayerX(x);
-    canvas.setActiveLayerY(y);
-  }
-
-  @Override
-  public void revert() {
-    if (modelMemento != null) {
-      mementoTarget.restore(modelMemento);
-    }
+    getCanvas().selectLayer(layerDepthIndex);
+    getCanvas().setActiveLayerX(x);
+    getCanvas().setActiveLayerY(y);
   }
 
   @Override

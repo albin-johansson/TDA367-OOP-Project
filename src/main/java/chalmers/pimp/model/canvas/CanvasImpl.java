@@ -60,12 +60,6 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
-  public void removeLayer(IReadOnlyLayer layer) {
-    layerManager.removeLayer(layer);
-    notifyCanvasUpdateListeners();
-  }
-
-  @Override
   public void removeLayer(int layerIndex) {
     layerManager.removeLayer(layerIndex);
     notifyCanvasUpdateListeners();

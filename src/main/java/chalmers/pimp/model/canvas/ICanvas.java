@@ -58,15 +58,6 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
   void addLayer(ILayer layer);
 
   /**
-   * Removes the specified layer from the canvas. This method has no effect if the supplied layer
-   * isn't contained in the canvas.
-   *
-   * @param layer the layer that will be removed, may not be {@code null}.
-   * @throws NullPointerException if the supplied layer is {@code null}.
-   */
-  void removeLayer(IReadOnlyLayer layer);
-
-  /**
    * Removes the layer associated with the supplied depth index. This method has no effect if the
    * supplied index is out-of-bounds.
    *

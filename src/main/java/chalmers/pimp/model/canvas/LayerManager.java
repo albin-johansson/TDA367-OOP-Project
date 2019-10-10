@@ -153,7 +153,8 @@ final class LayerManager {
 
   /**
    * Adds a layer to the manager. This method has no effect if the supplied layer is already
-   * contained within the manager.
+   * contained within the manager. The supplied layer will be made the active layer if it is the
+   * only present layer in the manager.
    *
    * @param layer the layer that will be added, may not be {@code null}.
    * @throws NullPointerException if the supplied layer is {@code null}.
@@ -197,21 +198,6 @@ final class LayerManager {
     event.setSelectionUpdated(true);
     event.setRemovedLayer(removed);
     layerUpdateListeners.layersUpdated(event);
-  }
-
-  /**
-   * Removes the supplied layer from the manager. This method has no effect if the supplied layer
-   * isn't found in the manager.
-   *
-   * @param layer the layer that will be removed, may not be {@code null}.
-   * @throws NullPointerException if the supplied layer is {@code null}.
-   */
-  void removeLayer(IReadOnlyLayer layer) {
-    ILayer match = findMatch(layer);
-    if (match != null) {
-      removeLayer(match.getDepthIndex());
-      updateActiveLayerAfterRemoval(match); // TODO should only be done after removing active layer
-    }
   }
 
   /**

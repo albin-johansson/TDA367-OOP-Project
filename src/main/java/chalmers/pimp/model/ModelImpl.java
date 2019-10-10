@@ -1,6 +1,8 @@
 package chalmers.pimp.model;
 
 import static chalmers.pimp.model.command.CommandFactory.createAddLayerCommand;
+import static chalmers.pimp.model.command.CommandFactory.createChangeLayerDepthCommand;
+import static chalmers.pimp.model.command.CommandFactory.createLayerSelectionCommand;
 import static chalmers.pimp.model.command.CommandFactory.createMoveCommand;
 import static chalmers.pimp.model.command.CommandFactory.createRemoveLayerCommand;
 import static chalmers.pimp.model.command.CommandFactory.createStrokeCommand;
@@ -128,45 +130,45 @@ final class ModelImpl implements IModel {
       stroke.updatePixels(canvas, pixel);
 
       // We don't need to explicitly execute the created command, the effect is already present
-      ICommand command = createStrokeCommand(canvas, this, stroke);
+      ICommand cmd = createStrokeCommand(canvas, this, stroke);
 
-      commandManager.insertCommand(command);
+      commandManager.insertCommand(cmd);
       stroke = null;
     }
   }
 
   @Override
   public void addLayer(ILayer layer) {
-    ICommand addLayerCmd = createAddLayerCommand(canvas, this, layer);
-    addLayerCmd.execute();
+    ICommand cmd = createAddLayerCommand(canvas, this, layer);
+    cmd.execute();
 
-    commandManager.insertCommand(addLayerCmd);
+    commandManager.insertCommand(cmd);
     notifyCanvasUpdateListeners();
   }
 
   @Override
-  public void removeLayer(IReadOnlyLayer layer) {
-    Objects.requireNonNull(layer);
-    removeLayer(layer.getDepthIndex());
-  }
-
-  @Override
   public void removeLayer(int layerIndex) {
-    ICommand removeLayerCmd = createRemoveLayerCommand(canvas, this, layerIndex);
-    removeLayerCmd.execute();
+    ICommand cmd = createRemoveLayerCommand(canvas, this, layerIndex);
+    cmd.execute();
 
-    commandManager.insertCommand(removeLayerCmd);
+    commandManager.insertCommand(cmd);
     notifyCanvasUpdateListeners();
   }
 
   @Override
   public void selectLayer(int layerIndex) {
-    canvas.selectLayer(layerIndex);
+    ICommand cmd = createLayerSelectionCommand(canvas, this, layerIndex);
+    cmd.execute();
+
+    commandManager.insertCommand(cmd);
   }
 
   @Override
   public void changeLayerDepthIndex(int layerIndex, int dz) {
-    canvas.changeDepthIndex(layerIndex, dz);
+    ICommand cmd = createChangeLayerDepthCommand(canvas, this, layerIndex, dz);
+    cmd.execute();
+
+    commandManager.insertCommand(cmd);
   }
 
   @Override

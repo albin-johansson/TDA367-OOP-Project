@@ -2,7 +2,6 @@ package chalmers.pimp.model;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -11,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
-import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,27 +34,6 @@ class ModelImplTest {
   }
 
   @Test
-  void removeLayerByReference() {
-    assertThrows(NullPointerException.class, () -> model.removeLayer(null));
-
-    ILayer nonAddedLayer = LayerFactory.createRasterLayer(10, 10);
-
-    assertDoesNotThrow(() -> model.removeLayer(nonAddedLayer));
-  }
-
-//  @Test
-//  void removeLayerByIndex() {
-//    assertThrows(IllegalStateException.class, () -> model.removeLayer(-1));
-//
-//    ILayer layer = LayerFactory.createRasterLayer(10, 10);
-//    model.addLayer(layer); // 0
-//
-//    model.removeLayer(0);
-//
-//    assertEquals(0, model.getAmountOfLayers());
-//  }
-
-  @Test
   void selectLayerByIndex() {
     assertDoesNotThrow(() -> model.selectLayer(0));
 
@@ -66,20 +43,10 @@ class ModelImplTest {
     assertDoesNotThrow(() -> model.selectLayer(0));
   }
 
-//  @Test
-//  void selectLayerByReference() {
-//    assertDoesNotThrow(() -> model.selectLayer(0));
-//
-//    ILayer layer = LayerFactory.createRasterLayer(10, 10);
-//    model.addLayer(layer);
-//
-//    assertDoesNotThrow(() -> model.selectLayer(layer));
-//  }
-
   @Test
   void moveLayer() {
     model.addLayer(LayerFactory.createRasterLayer(1, 1));
-    model.addLayer( LayerFactory.createRasterLayer(2, 2));
+    model.addLayer(LayerFactory.createRasterLayer(2, 2));
     model.addLayer(LayerFactory.createRasterLayer(3, 3));
 
     // TODO rewrite
@@ -194,17 +161,6 @@ class ModelImplTest {
     assertThrows(NullPointerException.class, () -> model.setLayerName(0, temp2));
     assertDoesNotThrow(() -> model.setLayerName(-1, temp));
   }
-
-//  @Test
-//  void setLayerVisibility() {
-//    assertDoesNotThrow(() -> model.setLayerVisibility(0, true));
-//    assertThrows(NullPointerException.class, () -> model.setLayerVisibility(null, false));
-//    ILayer layer = LayerFactory.createRasterLayer(10, 10);
-//    model.addLayer(layer);
-//
-//    assertDoesNotThrow(() -> model.setLayerVisibility(0, false));
-//    assertDoesNotThrow(() -> model.setLayerVisibility(layer, true));
-//  }
 
   @Test
   void addCanvasUpdateListener() {

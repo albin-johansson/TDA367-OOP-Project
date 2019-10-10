@@ -44,7 +44,7 @@ final class ShapeTool implements ITool {
   public void released(MouseStatus mouseStatus) {
     ILayer newShape = createRect(mouseStatus);
     model.addLayer(newShape);
-    model.selectLayer(newShape.getDepthIndex());
+    model.selectLayer(newShape.getDepthIndex()); // FIXME make automatic?
   }
 
   /**

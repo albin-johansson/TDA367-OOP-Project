@@ -67,30 +67,7 @@ class CanvasImplTest {
   }
 
   @Test
-  void removeLayerByReference() {
-    assertDoesNotThrow(() -> canvas.removeLayer(defaultLayer));
-    assertThrows(NullPointerException.class, () -> canvas.removeLayer(null));
-
-    canvas.addLayer(defaultLayer);
-    canvas.addLayer(createLayer(12, 29, 72, 29));
-    canvas.addLayer(createLayer(7, -14, 24, 17));
-
-    //Since default layer is the first layer created, will become activeLayer
-    assertEquals(defaultLayer, canvas.getActiveLayer());
-    canvas.removeLayer(defaultLayer);
-
-    //The active layer should change to no longer point to removed Layer
-    assertNotSame(defaultLayer, canvas.getActiveLayer());
-
-    assertDoesNotThrow(() -> canvas.removeLayer(defaultLayer));
-
-    for (IReadOnlyLayer layer : canvas.getLayers()) {
-      assertNotEquals(layer, defaultLayer);
-    }
-  }
-
-  @Test
-  void removeLayerByIndex() {
+  void removeLayer() {
     assertDoesNotThrow(() -> canvas.removeLayer(-1));
 
     canvas.addLayer(defaultLayer); // 0
@@ -127,7 +104,7 @@ class CanvasImplTest {
     canvas.addLayer(defaultLayer);
     assertEquals(1, canvas.getAmountOfLayers());
 
-    canvas.removeLayer(defaultLayer);
+    canvas.removeLayer(0);
     assertEquals(0, canvas.getAmountOfLayers());
   }
 
@@ -173,16 +150,6 @@ class CanvasImplTest {
 //    double actualGreen = color.getGreenPercentage();
 //
 //    assertEquals(green, actualGreen, 0.05);
-  }
-
-  @Test
-  void removeLayer() {
-    assertDoesNotThrow(() -> canvas.removeLayer(0));
-  }
-
-  @Test
-  void removeLayer1() {
-    assertDoesNotThrow(() -> canvas.removeLayer(defaultLayer));
   }
 
   @Test

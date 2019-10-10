@@ -103,15 +103,6 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void addLayer(ILayer layer);
 
   /**
-   * Removes the specified layer from the model.
-   *
-   * @param layer the layer that will be removed.
-   * @throws NullPointerException if any arguments are {@code null}.
-   */
-  @Deprecated
-  void removeLayer(IReadOnlyLayer layer);
-
-  /**
    * Removes the layer associated with the specified index. The layer index is zero-indexed.
    *
    * @param layerIndex the layer associated with the specified index (zero-indexed).

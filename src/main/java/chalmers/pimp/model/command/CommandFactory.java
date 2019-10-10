@@ -72,4 +72,14 @@ public final class CommandFactory {
       IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex) {
     return new RemoveLayerCommand(canvas, mementoTarget, layerDepthIndex);
   }
+
+  public static ICommand createLayerSelectionCommand(ICanvas canvas,
+      IMementoTarget<ModelMemento> mementoTarget, int targetLayerIndex) {
+    return new LayerSelectionCommand(canvas, mementoTarget, targetLayerIndex);
+  }
+
+  public static ICommand createChangeLayerDepthCommand(ICanvas canvas,
+      IMementoTarget<ModelMemento> mementoTarget, int baseDepthIndex, int targetDepthIndex) {
+    return new ChangeLayerDepthCommand(canvas, mementoTarget, baseDepthIndex, targetDepthIndex);
+  }
 }

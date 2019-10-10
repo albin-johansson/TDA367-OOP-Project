@@ -7,15 +7,15 @@ import chalmers.pimp.model.canvas.layer.ILayer;
 import java.util.Objects;
 
 /**
- * The {@code AddLayerCommand} class is an implementation of {@code ICommand} that represents the
- * action of adding a layer to the canvas.
+ * The {@code AddLayerCommand} class is a subclass of {@code AbstractCommand} that represents the
+ * action of adding a layer.
+ *
+ * @see AbstractCommand
+ * @see ICommand
  */
-final class AddLayerCommand implements ICommand {
+final class AddLayerCommand extends AbstractCommand {
 
-  private final IMementoTarget<ModelMemento> mementoTarget;
-  private final ICanvas canvas;
   private final ILayer layer;
-  private ModelMemento modelMemento;
 
   /**
    * @param canvas        the associated canvas instance.
@@ -24,27 +24,18 @@ final class AddLayerCommand implements ICommand {
    * @throws NullPointerException if any references are {@code null}.
    */
   AddLayerCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, ILayer layer) {
-    this.canvas = Objects.requireNonNull(canvas);
-    this.mementoTarget = Objects.requireNonNull(mementoTarget);
+    super(canvas, mementoTarget);
     this.layer = Objects.requireNonNull(layer);
   }
 
   @Override
   public void execute() {
-    modelMemento = mementoTarget.createSnapShot();
-
-    canvas.addLayer(layer.copy());
-  }
-
-  @Override
-  public void revert() {
-    if (modelMemento != null) {
-      mementoTarget.restore(modelMemento);
-    }
+    updateModelMemento();
+    getCanvas().addLayer(layer.copy());
   }
 
   @Override
   public String getName() {
-    return "Add Layer" /*+ layer.getName()*/; // TODO use the layer name
+    return "Add Layer";
   }
 }
