@@ -1,8 +1,13 @@
 package chalmers.pimp.controller.components;
 
-import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.controller.ControllerUtils;
+import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.service.ColorService;
+import chalmers.pimp.util.Resources;
+import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
@@ -12,7 +17,17 @@ import javafx.scene.paint.Color;
 public class ColorPickerPane extends AnchorPane {
 
   @FXML
-  private Color colorPicker;
+  private ColorPicker colorPicker;
+  private final IModel model;
+
+  ColorPickerPane(IModel model) throws IOException {
+    this.model = model;
+    ControllerUtils.makeController(this, Resources.find(getClass(), "color_picker.fxml"));
+
+    colorPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+      model.setSelectedColor(ColorService.fxToIColor(newValue));
+    });
+  }
 
   /**
    * Returns the current color of the color picker.
@@ -20,13 +35,16 @@ public class ColorPickerPane extends AnchorPane {
    * @return the current color of the color picker.
    */
   public IColor getColor() {
-    int max = 255;
+    return ColorService.fxToIColor(colorPicker.getValue());
+  }
 
-    int red = (int) (colorPicker.getRed() * max);
-    int green = (int) (colorPicker.getGreen() * max);
-    int blue = (int) (colorPicker.getBlue() * max);
-    int alpha = (int) (colorPicker.getOpacity() * max);
-
-    return ColorFactory.createColor(red, green, blue, alpha);
+  /**
+   * Sets the color of the color picker.
+   *
+   * @param color the new color.
+   */
+  public void setColor(IColor color) {
+    Color fxColor = ColorService.toFXColor(color);
+    colorPicker.setValue(fxColor);
   }
 }
