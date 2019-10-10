@@ -1,5 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.PixelData;
 
 /**
@@ -45,6 +47,20 @@ public final class LayerFactory {
    * @return a rectangle layer.
    */
   public static ILayer createRectangle(int x, int y, int width, int height) {
-    return new Rectangle(x, y, width, height);
+    return new Rectangle(x, y, width, height, ColorFactory.createColor(0xFF, 0xFF, 0xFF));
+  }
+
+  /**
+   * Creates and returns a layer that is a rectangle.
+   *
+   * @param x      the zero-indexed x coordinate of the rectangle.
+   * @param y      the zero-indexed y coordinate of the rectangle.
+   * @param width  the width of the rectangle.
+   * @param height the height of the rectangle.
+   * @param color  the color of the rectangle.
+   * @return a rectangle layer.
+   */
+  public static ILayer createRectangle(int x, int y, int width, int height, IColor color) {
+    return new Rectangle(x, y, width, height, color);
   }
 }
