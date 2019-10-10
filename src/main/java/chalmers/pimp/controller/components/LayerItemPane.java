@@ -80,21 +80,14 @@ final class LayerItemPane extends AnchorPane {
     textLabel.setText(layer.getName());
     updateVisibilityImage();
 
-    createContextMenu();
-
     addDragEventHandler();
     addDragOverEventHandler();
     addDragExitedEventHandler();
     addDropEventHandler();
   }
 
-  private void createContextMenu(){
-    ContextMenu contextMenu = new ContextMenu();
-
-  }
-
   /**
-   * Adds the drag EventHandler.
+   * Adds the EventHandler for when a LayerItem is being dragged.
    */
   private void addDragEventHandler() {
     rootPane.setOnDragDetected((MouseEvent e) -> {
@@ -118,14 +111,13 @@ final class LayerItemPane extends AnchorPane {
   }
 
   /**
-   * Adds the drag over EventHandler.
+   * Adds the EventHandler for when a LayerItem is having another Item dragged over it.
    */
   private void addDragOverEventHandler() {
     rootPane.addEventHandler(DragEvent.DRAG_OVER, (DragEvent event) -> {
       if (event.getGestureSource() != rootPane
           && event.getDragboard().hasString()) {
         event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-        //rootPane.setStyle("-fx-border-width: 2px 10px 4px 20px;");
         rootPane.setStyle("-fx-border-color: #990bc8;");
       }
       event.consume();
@@ -142,7 +134,7 @@ final class LayerItemPane extends AnchorPane {
   }
 
   /**
-   * Adds the drop EventHandler.
+   * Adds the EventHandler for when another LayerItemPane is dropped on top of this LayerItemPane
    */
   private void addDropEventHandler() {
     rootPane.addEventHandler(DragEvent.DRAG_DROPPED, (DragEvent event) -> {
@@ -191,21 +183,6 @@ final class LayerItemPane extends AnchorPane {
   }
 
   /**
-   * Checks which mouse button was pressed and calls the appropriate method.
-   *
-   * @param e the associated MouseEvent.
-   */
-  @FXML
-  private void handleMouseEvent(MouseEvent e) {
-    System.out.println(e.isPrimaryButtonDown());
-    if (e.isPrimaryButtonDown()) {
-      updateActiveLayer();
-    } else if (e.isSecondaryButtonDown()) {
-      //openContextMenu(e);
-    }
-  }
-
-  /**
    * Sets this layer item's associated layer as the active layer.
    */
   @FXML
@@ -215,8 +192,8 @@ final class LayerItemPane extends AnchorPane {
   }
 
   @FXML
-  private void openContextMenu(ContextMenuEvent c){
-    contextMenu.show(rootPane,c.getSceneX(),c.getSceneY());
+  private void openContextMenu(ContextMenuEvent c) {
+    contextMenu.show(rootPane, c.getSceneX(), c.getSceneY());
   }
 
   @FXML

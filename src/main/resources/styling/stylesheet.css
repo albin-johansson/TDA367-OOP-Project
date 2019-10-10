@@ -144,6 +144,7 @@
 
 #layer-item{
   -fx-background-color: #4e4e4e;
+  -fx-border-width: 3px 0px 0px 0px;
 
 }
 
