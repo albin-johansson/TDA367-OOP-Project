@@ -157,3 +157,6 @@
   -fx-cursor: CLOSED_HAND;
 }
 
+#info-pane{
+  -fx-background-color: linear-gradient(-background-pressed-color, -background-color);
+}

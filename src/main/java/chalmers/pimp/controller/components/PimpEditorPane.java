@@ -25,6 +25,7 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
   private final LayerItemManagerPane layerItemManagerPane;
   private final ToolbarPane toolbarPane;
   private final PalettePane palettePane;
+  private final InfoPane infoPane;
   private final CanvasPane canvasPane;
   @FXML
   @SuppressWarnings("unused")
@@ -38,6 +39,9 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
   @FXML
   @SuppressWarnings("unused")
   private AnchorPane leftAnchorPane;
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane bottomAnchorPane;
 
   /**
    * @param model      the associated chalmers.pimp.model instance.
@@ -67,6 +71,10 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
     palettePane = new PalettePane(controller);
     leftAnchorPane.getChildren().add(palettePane);
     AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
+
+    infoPane = new InfoPane();
+    bottomAnchorPane.getChildren().add(infoPane);
+    AnchorPanes.setAnchors(infoPane,0,0,0,0);
 
     populateLayerItemManagerPane();
   }
