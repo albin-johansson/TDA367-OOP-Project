@@ -26,18 +26,19 @@ final class Rectangle implements ILayer {
    * @param y      the zero-indexed y coordinate of the rectangle.
    * @param width  the width of the rectangle.
    * @param height the height of the rectangle.
+   * @param color  the color of the rectangle.
    */
-  Rectangle(int x, int y, int width, int height) {
+  Rectangle(int x, int y, int width, int height, IColor color) {
     layerDelegate = new LayerDelegate();
     layerDelegate.setX(x);
     layerDelegate.setY(y);
     this.width = width;
     this.height = height;
+    this.color = color;
 
     // OBVIOUSLY not a good solution. Just a fun easter egg :)
     layerDelegate.setName((width == height) ? "Square" : "Rectangle");
 
-    color = ColorFactory.createColor(255, 137, 243); // FIXME
   }
 
   @Override
@@ -123,7 +124,7 @@ final class Rectangle implements ILayer {
 
   @Override
   public ILayer copy() {
-    var copy = new Rectangle(getX(), getY(), width, height);
+    var copy = new Rectangle(getX(), getY(), width, height, color);
     copy.color = ColorFactory.createColor(color);
     copy.setVisible(isVisible());
     return copy;
