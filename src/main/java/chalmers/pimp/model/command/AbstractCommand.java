@@ -27,6 +27,10 @@ abstract class AbstractCommand implements ICommand {
     this.mementoTarget = Objects.requireNonNull(mementoTarget);
   }
 
+  /**
+   * Updates the internal model memento reference, this is done by creating a snap shot of the
+   * associated memento target.
+   */
   final void updateModelMemento() {
     modelMemento = mementoTarget.createSnapShot();
   }
