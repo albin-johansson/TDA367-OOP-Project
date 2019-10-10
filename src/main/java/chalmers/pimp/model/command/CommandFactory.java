@@ -14,7 +14,7 @@ import chalmers.pimp.model.canvas.layer.ILayer;
  * @see ICommand
  */
 public final class CommandFactory {
-  
+
   private CommandFactory() {
   }
 
