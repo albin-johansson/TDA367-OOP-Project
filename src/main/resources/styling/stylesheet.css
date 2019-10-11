@@ -87,13 +87,12 @@
 }
 
 .menu-bar {
-  -fx-background-color: -background-color;
+  -fx-background-color: rgba(0, 0, 0, 0);
   -fx-font-size: 12pt;
   -fx-text-fill: -text-color;
 }
 
-.context-menu
-{
+.context-menu {
   -fx-background-color: -background-color;
   -fx-border-color: -background-color;
   -fx-border-style: solid;
@@ -103,7 +102,7 @@
 }
 
 .menu {
-  -fx-background-color: -background-color;
+  -fx-background-color: rgba(0, 0, 0, 0);
   -fx-text-fill: -text-color;
 }
 
@@ -142,18 +141,30 @@
   -fx-background-color: -background-color;
 }
 
-#layer-item{
+.infopane-item{
+  -fx-border-width: 0px 2px 0px 0px;
+  -fx-border-color: -background-pressed-color;
+}
+
+#layer-item {
   -fx-background-color: #4e4e4e;
   -fx-border-width: 3px 0px 0px 0px;
 
 }
 
-#layer-item:hover{
+#layer-item:hover {
   -fx-cursor: OPEN_HAND;
 }
 
 
-#layer-item:pressed{
+#layer-item:pressed {
   -fx-cursor: CLOSED_HAND;
 }
 
+#info-pane {
+  -fx-background-color: linear-gradient(-background-pressed-color, -background-color);
+}
+
+#toolbar-pane {
+  -fx-background-color: linear-gradient(-background-pressed-color, -background-color);
+}
