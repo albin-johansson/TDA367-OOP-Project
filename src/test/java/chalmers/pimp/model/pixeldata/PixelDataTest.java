@@ -2,6 +2,7 @@ package chalmers.pimp.model.pixeldata;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -45,5 +46,25 @@ class PixelDataTest {
     assertThrows(IndexOutOfBoundsException.class, () -> new PixelData(-1, -1));
     assertThrows(IndexOutOfBoundsException.class, () -> new PixelData(0, 0));
     assertDoesNotThrow(() -> new PixelData(100, 100));
+  }
+
+  @Test
+  void equalsTest() {
+    assertNotEquals(null, pixelData);
+
+    assertEquals(pixelData, pixelData); // Reflexive
+
+    var copy = new PixelData(pixelData);
+
+    // Symmetric
+    assertEquals(pixelData, copy);
+    assertEquals(copy, pixelData);
+
+    var secondCopy = new PixelData(copy);
+
+    // Transitive
+    assertEquals(pixelData, copy);
+    assertEquals(copy, secondCopy);
+    assertEquals(pixelData, secondCopy);
   }
 }

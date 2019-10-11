@@ -1,4 +1,4 @@
-package chalmers.pimp.model;
+package chalmers.pimp.model.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

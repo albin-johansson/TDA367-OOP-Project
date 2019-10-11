@@ -1,5 +1,7 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.command.UndoRedoEvent;
+
 /**
  * The {@code IUndoRedoListener} interface specifies objects that may listen for undo/redo updates.
  */

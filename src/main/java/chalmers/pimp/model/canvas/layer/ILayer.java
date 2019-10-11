@@ -26,6 +26,8 @@ public interface ILayer extends IReadOnlyLayer {
    */
   void setVisible(boolean isVisible);
 
+  void move(int dx, int dy);
+
   /**
    * Sets the x-coordinate of the layer.
    *

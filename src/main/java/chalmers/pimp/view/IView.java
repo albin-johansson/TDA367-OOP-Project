@@ -10,13 +10,13 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 public interface IView extends ICanvasUpdateListener {
 
   /**
+   * Tells the View to repaint itself
+   */
+  void repaint();
+
+  /**
    * @param renderer the specific renderer the view should use.
    * @throws NullPointerException if the provided renderer is {@code null}.
    */
   void setRenderer(IRenderer renderer);
-
-  /**
-   * Tells the View to repaint itself
-   */
-  void repaint();
 }

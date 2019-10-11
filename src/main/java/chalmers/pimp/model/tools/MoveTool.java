@@ -9,8 +9,6 @@ import java.util.Objects;
  */
 final class MoveTool implements ITool {
 
-  private int startX;
-  private int startY;
   private final IModel model;
 
   /**
@@ -24,24 +22,17 @@ final class MoveTool implements ITool {
   }
 
   @Override
-  public void dragged(MouseStatus mouseStatus) {
-    int xAmount = mouseStatus.getX() - startX;
-    int yAmount = mouseStatus.getY() - startY;
-    model.moveSelectedLayer(xAmount, yAmount);
-    startX = mouseStatus.getX();
-    startY = mouseStatus.getY();
+  public void pressed(MouseStatus mouseStatus) {
+    model.startMovingActiveLayer(mouseStatus.getX(), mouseStatus.getY());
   }
 
   @Override
-  public void pressed(MouseStatus mouseStatus) {
-    startX = mouseStatus.getX();
-    startY = mouseStatus.getY();
+  public void dragged(MouseStatus mouseStatus) {
+    model.updateMovingActiveLayer(mouseStatus.getX(), mouseStatus.getY());
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
-    int xAmount = mouseStatus.getX() - startX;
-    int yAmount = mouseStatus.getY() - startY;
-    model.moveSelectedLayer(xAmount, yAmount);
+    model.stopMovingActiveLayer();
   }
 }

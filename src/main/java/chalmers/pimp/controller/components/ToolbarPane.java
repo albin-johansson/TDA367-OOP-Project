@@ -3,7 +3,7 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
 import chalmers.pimp.model.IUndoRedoListener;
-import chalmers.pimp.model.UndoRedoEvent;
+import chalmers.pimp.model.command.UndoRedoEvent;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.util.Objects;
@@ -33,9 +33,9 @@ final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
   private Button redoButton;
 
   /**
-   * @param controller the associated chalmers.pimp.controller instance.
+   * @param controller the associated controller instance.
    * @throws IOException          if the associated FXML file cannot be read.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException if the supplied controller is {@code null}.
    */
   ToolbarPane(IController controller) throws IOException {
     this.controller = Objects.requireNonNull(controller);
@@ -43,32 +43,38 @@ final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void undo() {
     controller.undo();
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void redo() {
     controller.redo();
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void exit() {
     Platform.exit();
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void createNewLayer() {
     controller.createNewLayer();
   }
 
   @FXML
+  @SuppressWarnings("unused")
   private void openImageChooser() {
     controller.openImageChooser();
   }
 
   @FXML
-  private void exportImage(){
+  @SuppressWarnings("unused")
+  private void exportImage() {
     controller.exportImage();
   }
 

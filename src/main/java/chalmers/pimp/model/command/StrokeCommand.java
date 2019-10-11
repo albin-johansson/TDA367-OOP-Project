@@ -1,45 +1,42 @@
 package chalmers.pimp.model.command;
 
-import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.Stroke;
+import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.pixeldata.IPixel;
 import java.util.Objects;
 
 /**
- * The {@code StrokeCommand} class represents the action of a mouse stroke, which affects a varying
- * amount of pixels.
+ * The {@code StrokeCommand} class is a subclass of {@code AbstractCommand} that represents the
+ * action of performing a stroke with a pixel-based "pen" tool.
+ *
+ * @see AbstractCommand
+ * @see ICommand
  */
-final class StrokeCommand implements ICommand {
+final class StrokeCommand extends AbstractCommand {
 
-  private final IModel model;
   private final Stroke stroke;
-  private ModelMemento memento;
 
   /**
-   * @param model  the associated model instance.
-   * @param stroke the associated stroke instance.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @param canvas        the associated canvas instance.
+   * @param mementoTarget the memento target that will be used.
+   * @param stroke        the stroke instance that describes the stroke.
+   * @throws NullPointerException if any references are {@code null}.
    */
-  StrokeCommand(IModel model, Stroke stroke) {
-    this.model = Objects.requireNonNull(model);
+  StrokeCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, Stroke stroke) {
+    super(canvas, mementoTarget);
     this.stroke = Objects.requireNonNull(stroke);
-    memento = stroke.getModelMemento();
+
+    setModelMemento(stroke.getModelMemento());
   }
 
   @Override
   public void execute() {
-    memento = model.createSnapShot();
+    updateModelMemento();
 
     for (IPixel pixel : stroke.getPixels()) {
-      stroke.updatePixels(model, pixel);
-    }
-  }
-
-  @Override
-  public void revert() {
-    if (memento != null) {
-      model.restore(memento);
+      stroke.updatePixels(getCanvas(), pixel);
     }
   }
 
