@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-
 <fx:root id="info-pane" fx:id="bottomAnchorPane" prefHeight="25.0" prefWidth="1920.0" styleClass="pane" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0" stylesheets="@styling/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" stylesheets="@styling/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="IT'S WORKING?!" />
+            <HBox alignment="CENTER_LEFT" styleClass="toolbar-item">
+               <children>
+                  <Label text="Canvas Size: " />
+                  <Label fx:id="canvasWidth" text="Label" />
+                  <Label text="x" />
+                  <Label fx:id="canvasHeight" text="Label" />
+               </children>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" styleClass="toolbar-item">
+               <children>
+                  <Label text="X-Pos: " />
+                  <Label prefWidth="60.0" text="-" fx:id="xPos" />
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" styleClass="toolbar-item">
+               <children>
+                  <Label text="Y-Pos: " />
+                  <Label fx:id="yPos" text="-" />
+               </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </HBox>
          </children>
       </HBox>
    </children>

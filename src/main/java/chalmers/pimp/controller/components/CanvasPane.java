@@ -33,7 +33,6 @@ final class CanvasPane extends AnchorPane {
     canvas.heightProperty().bind(heightProperty());
 
     setOnMousePressed(controller::selectedToolPressed);
-    setOnMouseDragged(controller::selectedToolDragged);
     setOnMouseReleased(controller::selectedToolReleased);
   }
 

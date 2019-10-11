@@ -72,11 +72,37 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
     leftAnchorPane.getChildren().add(palettePane);
     AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
 
-    infoPane = new InfoPane();
+    infoPane = new InfoPane(controller, model);
     bottomAnchorPane.getChildren().add(infoPane);
-    AnchorPanes.setAnchors(infoPane,0,0,0,0);
+    AnchorPanes.setAnchors(infoPane, 0, 0, 0, 0);
+
+    initiateInfoPane();
 
     populateLayerItemManagerPane();
+  }
+
+  /**
+   * Adds listeners to the Canvas which in turn call for the infoPane to update itself.
+   */
+  private void initiateInfoPane() {
+    canvasPane.getGraphics().getCanvas().heightProperty()
+        .addListener((observable, oldvalue, newvalue) ->
+            infoPane.setCanvasHeightLabel(String.valueOf(newvalue.intValue()))
+        );
+
+    canvasPane.getGraphics().getCanvas().widthProperty()
+        .addListener((observable, oldvalue, newvalue) ->
+            infoPane.setCanvasWidthLabel(String.valueOf(newvalue.intValue()))
+        );
+
+    canvasPane.setOnMouseDragged((e)->{
+      infoPane.updateCoordinates(e);
+      controller.selectedToolDragged(e);
+    });
+
+    canvasPane.setOnMouseMoved(infoPane::updateCoordinates);
+    canvasPane.setOnMouseExited(infoPane::turnOffCoordinates);
+
   }
 
   /**
