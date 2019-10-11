@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.canvas.layer.LayerType;
-import com.sun.javafx.scene.control.CustomColorDialog;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
