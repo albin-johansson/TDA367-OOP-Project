@@ -2,6 +2,8 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.service.ColorConverterService;
 import chalmers.pimp.util.Resources;
@@ -27,6 +29,8 @@ public class ColorPickerPane extends AnchorPane {
     colorPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
       model.setSelectedColor(ColorConverterService.fxToIColor(newValue));
     });
+    
+    setColor(Colors.BLACK);
   }
 
   /**

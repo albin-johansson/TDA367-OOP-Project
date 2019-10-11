@@ -57,6 +57,7 @@ final class ControllerImpl implements IController {
     model.setRenderer(renderer);
 
     prepareStage(new Scene(pane, 800, 600));
+    selectPencil();
   }
 
   /**
