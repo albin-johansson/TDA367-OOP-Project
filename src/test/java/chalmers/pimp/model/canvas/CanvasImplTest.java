@@ -72,9 +72,11 @@ class CanvasImplTest {
 
     canvas.addLayer(defaultLayer); // 0
     canvas.addLayer(createLayer(4, 18, 82, 14)); // 1
-    canvas.addLayer(createLayer(7, -12, 33, 41)); // 2
 
-    assertEquals(defaultLayer, canvas.getActiveLayer());
+    ILayer lastLayer = createLayer(7, -12, 33, 41);
+    canvas.addLayer(lastLayer); // 2
+
+    assertEquals(lastLayer, canvas.getActiveLayer());
     canvas.removeLayer(0);
 
     assertNotSame(defaultLayer, canvas.getActiveLayer());

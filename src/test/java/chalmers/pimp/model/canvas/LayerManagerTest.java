@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.canvas.layer.LayerType;
+import com.sun.javafx.scene.control.CustomColorDialog;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,19 +76,19 @@ class LayerManagerTest {
     manager.addLayer(LayerFactory.createRectangle(0, 0, 10, 10)); // SHAPE
     manager.addLayer(LayerFactory.createRasterLayer(5, 5)); // RASTER
 
-    assertEquals(LayerType.SHAPE, manager.getActiveLayer().getLayerType());
+    assertEquals(LayerType.RASTER, manager.getActiveLayer().getLayerType());
 
     manager.selectLayer(-1); // should have no effect
-    assertEquals(LayerType.SHAPE, manager.getActiveLayer().getLayerType());
+    assertEquals(LayerType.RASTER, manager.getActiveLayer().getLayerType());
 
     manager.selectLayer(2); // should have no effect
-    assertEquals(LayerType.SHAPE, manager.getActiveLayer().getLayerType());
-
-    manager.selectLayer(1);
     assertEquals(LayerType.RASTER, manager.getActiveLayer().getLayerType());
 
     manager.selectLayer(0);
     assertEquals(LayerType.SHAPE, manager.getActiveLayer().getLayerType());
+
+    manager.selectLayer(1);
+    assertEquals(LayerType.RASTER, manager.getActiveLayer().getLayerType());
   }
 
   @Test

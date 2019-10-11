@@ -50,7 +50,9 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
 
   /**
    * Adds a layer to the canvas. This method has no effect if the supplied layer is already
-   * contained within the canvas.
+   * contained within the canvas. The added layer will automatically be made the active layer. Note!
+   * Do <b>not</b> keep and use the supplied reference to the layer, since a copy of the supplied
+   * layer will be used.
    *
    * @param layer the layer that will be added, may not be {@code null}.
    * @throws NullPointerException if the supplied layer is {@code null}.

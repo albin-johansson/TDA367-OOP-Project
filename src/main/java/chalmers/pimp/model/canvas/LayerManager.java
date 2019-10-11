@@ -53,10 +53,10 @@ final class LayerManager {
    * <b>not</b> cause any listener notifications.
    */
   private void resetDepthValues() {
-    int i = 0;
+    int index = 0;
     for (ILayer layer : layers) {
-      layer.setDepthIndex(i);
-      i++;
+      layer.setDepthIndex(index);
+      index++;
     }
   }
 
@@ -152,9 +152,9 @@ final class LayerManager {
   }
 
   /**
-   * Adds a layer to the manager. This method has no effect if the supplied layer is already
-   * contained within the manager. The supplied layer will be made the active layer if it is the
-   * only present layer in the manager.
+   * Adds a layer to the manager and makes it the active layer. This method has no effect if the
+   * supplied layer is already contained within the manager. The supplied layer will be made the
+   * active layer if it is the only present layer in the manager.
    *
    * @param layer the layer that will be added, may not be {@code null}.
    * @throws NullPointerException if the supplied layer is {@code null}.
@@ -166,38 +166,14 @@ final class LayerManager {
 
       resetDepthValues();
 
-      if (getAmountOfLayers() == 1) {
-        selectLayer(layer.getDepthIndex());
-      }
+      activeLayer = layer;
 
       var event = new LayerUpdateEvent(layers, layers.size());
       event.setAddedLayer(layer);
+      event.setSelectionUpdated(true);
 
       layerUpdateListeners.layersUpdated(event);
     }
-  }
-
-  /**
-   * Updates the active layer after the removal of the supplied layer. This method changes the
-   * active layer
-   *
-   * @param removed the layer that was removed.
-   * @throws NullPointerException if the supplied layer is {@code null}.
-   */
-  private void updateActiveLayerAfterRemoval(IReadOnlyLayer removed) { // FIXME probably broken
-    Objects.requireNonNull(removed);
-    if (inBounds(removed.getDepthIndex() - 1)) {
-      activeLayer = layers.get(removed.getDepthIndex() - 1);
-    } else if (inBounds(removed.getDepthIndex() + 1)) {
-      activeLayer = layers.get(removed.getDepthIndex() + 1);
-    } else {
-      activeLayer = null;
-    }
-
-    var event = new LayerUpdateEvent(layers, layers.size());
-    event.setSelectionUpdated(true);
-    event.setRemovedLayer(removed);
-    layerUpdateListeners.layersUpdated(event);
   }
 
   /**
@@ -208,12 +184,29 @@ final class LayerManager {
    */
   void removeLayer(int index) {
     if (inBounds(index)) {
-      ILayer removed = layers.get(index);
-      layers.remove(index);
+
+      boolean removedLayerWasActive = (activeLayer != null)
+          && (index == activeLayer.getDepthIndex());
+
+      if (removedLayerWasActive) {
+        if (inBounds(index - 1)) {
+          activeLayer = layers.get(index - 1);
+        } else if (inBounds(index + 1)) {
+          activeLayer = layers.get(index + 1);
+        } else {
+          activeLayer = null;
+        }
+      }
+
+      ILayer removedLayer = layers.remove(index);
 
       resetDepthValues();
 
-      updateActiveLayerAfterRemoval(removed);
+      var event = new LayerUpdateEvent(layers, layers.size());
+      event.setSelectionUpdated(true);
+      event.setRemovedLayer(removedLayer);
+
+      layerUpdateListeners.layersUpdated(event);
     }
   }
 

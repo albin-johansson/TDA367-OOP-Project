@@ -94,7 +94,9 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void endStroke(IPixel pixel);
 
   /**
-   * Adds the supplied layer to the model.
+   * Adds the supplied layer to the model. The added layer will automatically be made the active
+   * layer. Note! Do <b>not</b> keep and use the supplied reference to the layer, since a copy of
+   * the supplied layer will be used.
    *
    * @param layer the layer that will be added.
    * @throws NullPointerException     if any arguments are {@code null}.
@@ -228,11 +230,12 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   IRenderer getRenderer();
 
   /**
-   * Returns the currently active layer.
+   * Returns the currently active layer. Note! Use this method with caution since the returned
+   * reference may become invalidated as a result of executing other actions.
    *
    * @return the currently active layer; {@code null} otherwise.
    */
-  IReadOnlyLayer getActiveLayer();
+  IReadOnlyLayer getActiveLayer(); // TODO remove, high risk of invalid use
 
   /**
    * Returns all of the layers in the model.

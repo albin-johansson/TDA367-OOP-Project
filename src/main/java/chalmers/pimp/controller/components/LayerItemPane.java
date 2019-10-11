@@ -102,8 +102,10 @@ final class LayerItemPane extends AnchorPane {
     setOnDragDropped(this::handleDragDropped);
     setOnDragExited(this::handleDragExited);
 
+    // FIXME replace with service
     String path = "images/light/" + LayerType.RASTER.name().toLowerCase() + ".png";
 
+    // TODO create service for creating JavaFX images from a URL
     try {
       layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
     } catch (Exception e) {
@@ -147,10 +149,12 @@ final class LayerItemPane extends AnchorPane {
     if (db.hasString()) {
       int originDepth = Integer.parseInt(db.getString());
 
-      // TODO null check
-      model.changeLayerDepthIndex(model.getActiveLayer().getDepthIndex(),
-          associatedLayerIndex - originDepth);
-      success = true;
+      IReadOnlyLayer activeLayer = model.getActiveLayer();
+      if (activeLayer != null) {
+        int dz = associatedLayerIndex - originDepth;
+        model.changeLayerDepthIndex(activeLayer.getDepthIndex(), dz);
+        success = true;
+      }
     }
 
     event.setDropCompleted(success);
@@ -197,7 +201,6 @@ final class LayerItemPane extends AnchorPane {
    * @param y the y-coordinate of the context menu.
    */
   private void openContextMenu(double x, double y) {
-    System.out.println("SHOW X: " + x + ", Y: " + y);
     contextMenu.show(this, x, y);
   }
 
