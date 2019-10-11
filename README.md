@@ -4,4 +4,4 @@
 
 # Tools
 ## Java version
-The group will be using Java 8 for this project
+The group will be using Java 12 for this project
