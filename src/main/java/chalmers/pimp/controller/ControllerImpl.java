@@ -160,8 +160,9 @@ final class ControllerImpl implements IController {
       if (pixelData == null) {
         return;
       }
+      String pixelDataName = imageChooser.getResentFileName();
 
-      model.addLayer(LayerFactory.createRasterLayer(pixelData));
+      model.addLayer(LayerFactory.createRasterLayer(pixelData, pixelDataName));
     } catch (Exception e) {
       System.err.println("Failed to import image! Exception: " + e);
     }
