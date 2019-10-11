@@ -141,6 +141,11 @@
   -fx-background-color: -background-color;
 }
 
+.infopane-item{
+  -fx-border-width: 0px 2px 0px 0px;
+  -fx-border-color: -background-pressed-color;
+}
+
 #layer-item {
   -fx-background-color: #4e4e4e;
   -fx-border-width: 3px 0px 0px 0px;

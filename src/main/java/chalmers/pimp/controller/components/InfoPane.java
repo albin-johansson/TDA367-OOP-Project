@@ -20,6 +20,10 @@ public class InfoPane extends AnchorPane {
   private Label xPos;
   @FXML
   private Label yPos;
+  @FXML
+  private Label layerWidth;
+  @FXML
+  private Label layerHeight;
 
   InfoPane(IController controller, IModel model) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "info_pane.fxml"));
@@ -41,5 +45,13 @@ public class InfoPane extends AnchorPane {
   void turnOffCoordinates(MouseEvent e){
     xPos.setText("-");
     yPos.setText("-");
+  }
+
+  void setLayerWidthLabel(String string){
+    layerWidth.setText(string);
+  }
+
+  void setLayerHeightLabel(String string){
+    layerHeight.setText(string);
   }
 }

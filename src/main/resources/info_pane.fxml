@@ -9,7 +9,7 @@
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" stylesheets="@styling/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" styleClass="toolbar-item">
+            <HBox alignment="CENTER_LEFT" styleClass="infopane-item">
                <children>
                   <Label text="Canvas Size: " />
                   <Label fx:id="canvasWidth" text="Label" />
@@ -23,22 +23,33 @@
                   <Insets right="10.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" styleClass="toolbar-item">
+            <HBox alignment="CENTER_LEFT" styleClass="infopane-item">
                <children>
                   <Label text="X-Pos: " />
-                  <Label prefWidth="60.0" text="-" fx:id="xPos" />
-               </children>
-               <padding>
-                  <Insets left="10.0" right="10.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" styleClass="toolbar-item">
-               <children>
-                  <Label text="Y-Pos: " />
-                  <Label fx:id="yPos" text="-" />
+                  <Label prefWidth="40.0" text="-" fx:id="xPos" />
                </children>
                <padding>
                   <Insets left="10.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" styleClass="infopane-item">
+               <children>
+                  <Label text="Y-Pos: " />
+                  <Label fx:id="yPos" prefWidth="40.0" text="-" />
+               </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" styleClass="infopane-item">
+               <children>
+                  <Label text="Layer Size: " />
+                  <Label fx:id="layerWidth" text="Label" />
+                  <Label text="x" />
+                  <Label fx:id="layerHeight" text="Label" />
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
                </padding>
             </HBox>
          </children>

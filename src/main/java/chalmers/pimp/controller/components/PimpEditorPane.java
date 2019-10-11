@@ -95,14 +95,13 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
             infoPane.setCanvasWidthLabel(String.valueOf(newvalue.intValue()))
         );
 
-    canvasPane.setOnMouseDragged((e)->{
+    canvasPane.setOnMouseDragged((e) -> {
       infoPane.updateCoordinates(e);
       controller.selectedToolDragged(e);
     });
 
     canvasPane.setOnMouseMoved(infoPane::updateCoordinates);
     canvasPane.setOnMouseExited(infoPane::turnOffCoordinates);
-
   }
 
   /**
@@ -149,5 +148,8 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
     if (e.getType() == EventType.CREATED) {
       layerItemManagerPane.addLayerItemPane(createLayerItemPane(e.getLayer()));
     }
+
+    infoPane.setLayerHeightLabel(String.valueOf(model.getActiveLayer().getPixelData().getHeight()));
+    infoPane.setLayerWidthLabel(String.valueOf(model.getActiveLayer().getPixelData().getWidth()));
   }
 }
