@@ -55,7 +55,7 @@ public final class Stroke {
 
     for (int row = 0; row < diameter; row++) {
       for (int col = 0; col < diameter; col++) {
-        IPixel p = PixelFactory.createPixel(col, row, color);
+        IPixel p = PixelFactory.createPixel(col, row, model.getSelectedColor());
         pixels.setPixel(p);
       }
     }
