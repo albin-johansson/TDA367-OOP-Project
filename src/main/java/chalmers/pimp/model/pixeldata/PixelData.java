@@ -10,6 +10,8 @@ import java.util.Objects;
  */
 public final class PixelData implements IReadOnlyPixelData {
 
+  // FIXME this class should not be public (create interface)
+
   /**
    * The max width of the matrix.
    */
@@ -40,6 +42,23 @@ public final class PixelData implements IReadOnlyPixelData {
   }
 
   /**
+   * Creates a copy of the supplied pixel data instance.
+   *
+   * @param pixelData the pixel data instance that will be copied.
+   * @throws NullPointerException if the supplied pixel data is {@code null}.
+   */
+  public PixelData(PixelData pixelData) {
+    Objects.requireNonNull(pixelData);
+    pixels = createPixelDataMatrix(pixelData.getWidth(), pixelData.getHeight());
+
+    for (Iterable<? extends IReadOnlyPixel> pixelRow : pixelData.getPixels()) {
+      for (IReadOnlyPixel pixel : pixelRow) {
+        setPixel(PixelFactory.createPixel(pixel));
+      }
+    }
+  }
+
+  /**
    * Returns a matrix with the desired width and height with opaque colored pixels. Returns a matrix
    * (a list of rows).
    *
@@ -48,18 +67,18 @@ public final class PixelData implements IReadOnlyPixelData {
    * @return a matrix of colors.
    */
   private List<List<IPixel>> createPixelDataMatrix(int width, int height) {
-    List<List<IPixel>> tempPixels = new ArrayList<>(height);
+    var result = new ArrayList<List<IPixel>>(height);
 
     for (int row = 0; row < height; row++) {
-      List<IPixel> tempRow = new ArrayList<>(width);
+      var pixelRow = new ArrayList<IPixel>(width);
 
       for (int col = 0; col < width; col++) {
-        tempRow.add(new PixelImpl(col, row));
+        pixelRow.add(new PixelImpl(col, row));
       }
-      tempPixels.add(tempRow);
+      result.add(pixelRow);
     }
 
-    return tempPixels;
+    return result;
   }
 
   /**
@@ -120,5 +139,33 @@ public final class PixelData implements IReadOnlyPixelData {
   @Override
   public int getHeight() {
     return pixels.size();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(pixels);
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (!(object instanceof PixelData)) {
+      return false;
+    }
+    if (object == this) {
+      return true;
+    }
+
+    var pixelData = (PixelData) object;
+
+    for (int row = 0; row < pixels.size(); row++) {
+      for (int col = 0; col < pixels.get(row).size(); col++) {
+        IReadOnlyPixel pixel = getPixel(col, row);
+        if (!pixel.equals(pixelData.getPixel(col, row))) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 }

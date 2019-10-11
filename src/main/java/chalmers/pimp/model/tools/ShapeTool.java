@@ -12,10 +12,9 @@ import java.util.Objects;
  */
 final class ShapeTool implements ITool {
 
+  private final IModel model;
   private int x;
   private int y;
-  private IModel model;
-  private ILayer currentShape;
 
   /**
    * Creates and returns a shape tool.
@@ -29,7 +28,7 @@ final class ShapeTool implements ITool {
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
-    model.notifyAllCanvasUpdateListeners();
+    model.notifyCanvasUpdateListeners();
     ILayer newShape = createRect(mouseStatus);
     newShape.draw(model.getRenderer());
   }
@@ -44,7 +43,6 @@ final class ShapeTool implements ITool {
   public void released(MouseStatus mouseStatus) {
     ILayer newShape = createRect(mouseStatus);
     model.addLayer(newShape);
-    model.selectLayer(newShape.getDepthIndex());
   }
 
   /**

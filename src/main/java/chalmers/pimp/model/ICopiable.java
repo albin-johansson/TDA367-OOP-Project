@@ -7,7 +7,7 @@ package chalmers.pimp.model;
  *
  * @param <T> the type of the object that will be copied.
  */
-public interface ICopiable<T> { // TODO check if this should be replaced with Cloneable
+public interface ICopiable<T> {
 
   /**
    * Creates and returns a copy of this object.

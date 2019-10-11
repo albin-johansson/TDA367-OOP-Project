@@ -2,10 +2,8 @@ package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
-import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 
 /**
@@ -22,7 +20,7 @@ final class Raster implements ILayer {
    * @param height the height of the raster.
    */
   Raster(int width, int height) {
-    layerDelegate = new LayerDelegate();
+    layerDelegate = new LayerDelegate(LayerType.RASTER);
     layerDelegate.setName("Raster");
     pixelData = new PixelData(width, height);
   }
@@ -35,7 +33,19 @@ final class Raster implements ILayer {
    */
   Raster(PixelData pixelData) {
     this.pixelData = Objects.requireNonNull(pixelData);
-    layerDelegate = new LayerDelegate();
+    layerDelegate = new LayerDelegate(LayerType.RASTER);
+  }
+
+  /**
+   * Creates a copy of the supplied raster instance.
+   *
+   * @param raster the raster that will be copied.
+   * @throws NullPointerException if the supplied raster is {@code null}.
+   */
+  private Raster(Raster raster) {
+    Objects.requireNonNull(raster);
+    pixelData = new PixelData(raster.pixelData);
+    layerDelegate = new LayerDelegate(raster.layerDelegate);
   }
 
   @Override
@@ -46,6 +56,11 @@ final class Raster implements ILayer {
   @Override
   public void setVisible(boolean isVisible) {
     layerDelegate.setVisible(isVisible);
+  }
+
+  @Override
+  public void move(int dx, int dy) {
+    layerDelegate.move(dx, dy);
   }
 
   @Override
@@ -94,13 +109,13 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public IReadOnlyPixelData getPixelData() {
-    return pixelData;
+  public LayerType getLayerType() {
+    return layerDelegate.getLayerType();
   }
 
   @Override
-  public LayerType getLayerType() {
-    return LayerType.RASTER;
+  public IReadOnlyPixelData getPixelData() {
+    return pixelData;
   }
 
   @Override
@@ -112,15 +127,25 @@ final class Raster implements ILayer {
 
   @Override
   public ILayer copy() {
-    var copy = new Raster(pixelData.getWidth(), pixelData.getHeight());
+    return new Raster(this);
+  }
 
-    for (Iterable<? extends IReadOnlyPixel> pixelRow : pixelData.getPixels()) {
-      for (IReadOnlyPixel pixel : pixelRow) {
-        copy.setPixel(PixelFactory.createPixel(pixel));
-      }
+  @Override
+  public int hashCode() {
+    return Objects.hash(layerDelegate, pixelData);
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (!(object instanceof Raster)) {
+      return false;
+    }
+    if (object == this) {
+      return true;
     }
 
-    copy.setVisible(isVisible());
-    return copy;
+    var raster = (Raster) object;
+
+    return layerDelegate.equals(raster.layerDelegate) && pixelData.equals(raster.pixelData);
   }
 }

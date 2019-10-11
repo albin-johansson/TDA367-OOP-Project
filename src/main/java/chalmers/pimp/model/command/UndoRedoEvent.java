@@ -1,4 +1,4 @@
-package chalmers.pimp.model;
+package chalmers.pimp.model.command;
 
 import java.util.Objects;
 

@@ -4,15 +4,15 @@ package chalmers.pimp.model;
  * The {@code IChangeable} interface specifies objects that allow for their state to be cycled
  * through undo and redo actions.
  */
-public interface IChangeable { // TODO is this interface necessary?
+public interface IChangeable {
 
   /**
-   * Undoes the last performed action.
+   * Attempts to undo an action.
    */
   void undo();
 
   /**
-   * Redoes the last undone action.
+   * Attempts to redo an undone action.
    */
-  void redo(); // TODO improve doc
+  void redo();
 }
