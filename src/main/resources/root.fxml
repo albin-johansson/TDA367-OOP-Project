@@ -7,7 +7,7 @@
   <children>
     <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <right>
-        <AnchorPane fx:id="rightAnchorPane" prefHeight="200.0" prefWidth="200.0" styleClass="pane" BorderPane.alignment="CENTER" />
+        <AnchorPane fx:id="rightAnchorPane" prefWidth="300.0" styleClass="pane" BorderPane.alignment="CENTER" />
       </right>
       <top>
         <AnchorPane fx:id="topAnchorPane" prefHeight="64.0" prefWidth="200.0" styleClass="pane" BorderPane.alignment="CENTER" />
