@@ -16,11 +16,6 @@ import javafx.scene.layout.AnchorPane;
  */
 public final class PimpEditorPane extends AnchorPane {
 
-  private final IModel model;
-  private final IController controller;
-  private final LayerItemManagerPane layerItemManagerPane;
-  private final ToolbarPane toolbarPane;
-  private final PalettePane palettePane;
   private final CanvasPane canvasPane;
   @FXML
   @SuppressWarnings("unused")
@@ -54,9 +49,11 @@ public final class PimpEditorPane extends AnchorPane {
     AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
     model.addUndoRedoListener(toolbarPane);
 
-    canvasPane = new CanvasPane(controller);
+    var canvasPane = new CanvasPane(controller);
     centerPane.getChildren().add(canvasPane);
     AnchorPanes.setAnchors(canvasPane, 0, 0, 0, 0);
+
+    this.canvasPane = canvasPane;
 
     var layerItemManagerPane = new LayerItemContainerPane(model);
     model.addLayerUpdateListener(layerItemManagerPane);
@@ -67,19 +64,18 @@ public final class PimpEditorPane extends AnchorPane {
     leftAnchorPane.getChildren().add(palettePane);
     AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
 
-    infoPane = new InfoPane(controller, model);
+    var infoPane = new InfoPane(controller, model);
     bottomAnchorPane.getChildren().add(infoPane);
     AnchorPanes.setAnchors(infoPane, 0, 0, 0, 0);
 
-    initiateInfoPane();
+    initiateInfoPane(canvasPane, infoPane, controller, model);
 
-    populateLayerItemManagerPane();
   }
 
   /**
    * Adds listeners to the Canvas which in turn call for the infoPane to update itself.
    */
-  private void initiateInfoPane() {
+  private void initiateInfoPane(CanvasPane canvasPane, InfoPane infoPane, IController controller, IModel model) {
     canvasPane.getGraphics().getCanvas().heightProperty()
         .addListener((observable, oldvalue, newvalue) ->
             infoPane.setCanvasHeightLabel(String.valueOf(newvalue.intValue()))
@@ -97,6 +93,11 @@ public final class PimpEditorPane extends AnchorPane {
 
     canvasPane.setOnMouseMoved(infoPane::updateCoordinates);
     canvasPane.setOnMouseExited(infoPane::turnOffCoordinates);
+
+    model.addLayerUpdateListener(event->{
+      infoPane.setLayerHeightLabel(String.valueOf(model.getActiveLayer().getPixelData().getHeight()));
+      infoPane.setLayerWidthLabel(String.valueOf(model.getActiveLayer().getPixelData().getWidth()));
+    });
   }
 
   /**
@@ -108,40 +109,4 @@ public final class PimpEditorPane extends AnchorPane {
     return canvasPane.getGraphics();
   }
 
-  /**
-   * Populates this PEP's LayerItemManagerPane with LayerItems based on the layers in the
-   * chalmers.pimp.model this PEP has
-   */
-  private void populateLayerItemManagerPane() {
-    for (IReadOnlyLayer layer : model.getLayers()) {
-      layerItemManagerPane.addLayerItemPane(createLayerItemPane(layer));
-    }
-  }
-
-  /**
-   * Creates the LayerItems for the view, based on a {@code IReadOnlyLayer}
-   *
-   * @param layer the {@code IReadOnlyLayer} that will be created as a view component
-   * @return the corresponding {@code LayerItemPane} created from the {@code IReadOnlyLayer}
-   */
-  private LayerItemPane createLayerItemPane(IReadOnlyLayer layer) {
-    try {
-      return new LayerItemPane(model, layer);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  /**
-   * Will only act if {@code EventType} is CREATED, and will then create a new LayerItemPane with
-   * the supplied layer
-   *
-   * @param e the {@code LayerUpdateEvent} which houses the EventType and associated Layer
-   */
-  @Override
-  public void layersUpdated(LayerUpdateEvent e) {
-    if (e.getType() == EventType.CREATED) {
-      layerItemManagerPane.addLayerItemPane(createLayerItemPane(e.getLayer()));
-    }
-  }
 }
