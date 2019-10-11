@@ -1,6 +1,7 @@
 package chalmers.pimp.model.command;
 
 import chalmers.pimp.model.IChangeable;
+import chalmers.pimp.model.IUndoRedoListener;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
@@ -14,14 +15,39 @@ public final class CommandManager implements IChangeable {
   /**
    * The maximum amount of commands in either the undo or redo stack.
    */
-  private static final int THRESHOLD = 45;
+  private static final int THRESHOLD = 25;
 
   private final Deque<ICommand> undoDeque;
   private final Deque<ICommand> redoDeque;
+  private final UndoRedoListenerComposite undoRedoListeners;
 
   public CommandManager() {
     undoDeque = new ArrayDeque<>(THRESHOLD);
     redoDeque = new ArrayDeque<>(THRESHOLD);
+    undoRedoListeners = new UndoRedoListenerComposite();
+  }
+
+  /**
+   * Notifies all registered undo/redo listeners.
+   */
+  private void notifyUndoRedoListeners() {
+    var event = new UndoRedoEvent();
+
+    boolean isUndoable = isUndoable();
+    boolean isRedoable = isRedoable();
+
+    event.setUndoable(isUndoable);
+    event.setRedoable(isRedoable);
+
+    if (isUndoable) {
+      event.setUndoCommandName(getUndoCommandName());
+    }
+
+    if (isRedoable) {
+      event.setRedoCommandName(getRedoCommandName());
+    }
+
+    undoRedoListeners.undoRedoStateChanged(event);
   }
 
   /**
@@ -49,6 +75,18 @@ public final class CommandManager implements IChangeable {
     ensureSize(undoDeque);
     undoDeque.push(command);
     redoDeque.clear();
+
+    notifyUndoRedoListeners();
+  }
+
+  /**
+   * Adds a undo/redo listener to this command manager.
+   *
+   * @param listener the undo/redo listener that will be added.
+   * @throws NullPointerException if the supplied listener is {@code null}.
+   */
+  public void addUndoRedoListener(IUndoRedoListener listener) {
+    undoRedoListeners.add(listener);
   }
 
   /**
@@ -56,7 +94,7 @@ public final class CommandManager implements IChangeable {
    *
    * @return {@code true} if there is an undoable command; {@code false} otherwise.
    */
-  public boolean isUndoable() {
+  private boolean isUndoable() {
     return !undoDeque.isEmpty();
   }
 
@@ -65,7 +103,7 @@ public final class CommandManager implements IChangeable {
    *
    * @return {@code true} if there is an redoable command; {@code false} otherwise.
    */
-  public boolean isRedoable() {
+  private boolean isRedoable() {
     return !redoDeque.isEmpty();
   }
 
@@ -74,7 +112,7 @@ public final class CommandManager implements IChangeable {
    *
    * @return the name of the next undoable command, or {@code null} if there is no undoable command.
    */
-  public String getUndoCommandName() {
+  private String getUndoCommandName() {
     return (undoDeque.size() >= 1) ? undoDeque.peek().getName() : null;
   }
 
@@ -83,7 +121,7 @@ public final class CommandManager implements IChangeable {
    *
    * @return the name of the next redoable command, or {@code null} if there is no redoable command.
    */
-  public String getRedoCommandName() {
+  private String getRedoCommandName() {
     return (redoDeque.size() >= 1) ? redoDeque.peek().getName() : null;
   }
 
@@ -95,6 +133,8 @@ public final class CommandManager implements IChangeable {
 
       redoDeque.push(command);
       ensureSize(redoDeque);
+
+      notifyUndoRedoListeners();
     }
   }
 
@@ -106,6 +146,8 @@ public final class CommandManager implements IChangeable {
 
       undoDeque.push(command);
       ensureSize(undoDeque);
+
+      notifyUndoRedoListeners();
     }
   }
 }

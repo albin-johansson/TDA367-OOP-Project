@@ -1,9 +1,7 @@
 package chalmers.pimp.model.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,29 +25,6 @@ class CommandManagerTest {
     final int before = command.getExecutedAmount();
     commandManager.insertCommand(command);
     assertEquals(before, command.getExecutedAmount());
-  }
-
-  @Test
-  void isUndoable() {
-    assertFalse(commandManager.isUndoable());
-
-    commandManager.insertCommand(command);
-    assertTrue(commandManager.isUndoable());
-
-    commandManager.undo();
-    assertFalse(commandManager.isUndoable());
-  }
-
-  @Test
-  void isRedoable() {
-    assertFalse(commandManager.isRedoable());
-
-    commandManager.insertCommand(command);
-    commandManager.undo();
-    assertTrue(commandManager.isRedoable());
-
-    commandManager.redo();
-    assertFalse(commandManager.isRedoable());
   }
 
   @Test

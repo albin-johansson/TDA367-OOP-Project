@@ -1,4 +1,7 @@
-package chalmers.pimp.model;
+package chalmers.pimp.model.command;
+
+import chalmers.pimp.model.AbstractComposite;
+import chalmers.pimp.model.IUndoRedoListener;
 
 /**
  * The {@code UndoRedoListenerComposite} class is a subclass of {@link AbstractComposite} that

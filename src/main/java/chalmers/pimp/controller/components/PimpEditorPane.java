@@ -3,10 +3,6 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
 import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
-import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerUpdateEvent;
-import chalmers.pimp.model.canvas.layer.LayerUpdateEvent.EventType;
 import chalmers.pimp.util.AnchorPanes;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
@@ -18,12 +14,8 @@ import javafx.scene.layout.AnchorPane;
 /**
  * The {@code PimpEditorPane} class represents the main editor pane for the Pimp application.
  */
-public final class PimpEditorPane extends AnchorPane implements ILayerUpdateListener {
+public final class PimpEditorPane extends AnchorPane {
 
-  private final IModel model;
-  private final IController controller;
-  private final ToolbarPane toolbarPane;
-  private final PalettePane palettePane;
   private final CanvasPane canvasPane;
   private final UtilityPane utilityPane;
 
@@ -48,26 +40,26 @@ public final class PimpEditorPane extends AnchorPane implements ILayerUpdateList
    */
   public PimpEditorPane(IModel model, IController controller) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "root.fxml"));
-    this.model = Objects.requireNonNull(model);
-    this.controller = Objects.requireNonNull(controller);
-    toolbarPane = new ToolbarPane(controller);
+    Objects.requireNonNull(model);
+    Objects.requireNonNull(controller);
+
+    var toolbarPane = new ToolbarPane(controller);
     topAnchorPane.getChildren().add(toolbarPane);
     AnchorPanes.setZeroAnchors(toolbarPane);
     model.addUndoRedoListener(toolbarPane);
 
     canvasPane = new CanvasPane(controller);
     centerPane.getChildren().add(canvasPane);
-    AnchorPanes.setZeroAnchors(canvasPane);
+    AnchorPanes.setAnchors(canvasPane, 0, 0, 0, 0);
 
-    palettePane = new PalettePane(controller);
+    var layerItemManagerPane = new LayerItemContainerPane(model);
+    model.addLayerUpdateListener(layerItemManagerPane);
+    rightAnchorPane.getChildren().add(layerItemManagerPane);
+    AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
+
+    var palettePane = new PalettePane(controller);
     leftAnchorPane.getChildren().add(palettePane);
-    AnchorPanes.setZeroAnchors(palettePane);
-
-    utilityPane = new UtilityPane(model);
-    rightAnchorPane.getChildren().add(utilityPane);
-    AnchorPanes.setZeroAnchors(utilityPane);
-
-    model.addLayerUpdateListener(this);
+    AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
   }
 
   /**

@@ -1,16 +1,24 @@
 package chalmers.pimp.model;
 
-import chalmers.pimp.model.canvas.Canvas;
+import static chalmers.pimp.model.command.CommandFactory.createAddLayerCommand;
+import static chalmers.pimp.model.command.CommandFactory.createChangeLayerDepthCommand;
+import static chalmers.pimp.model.command.CommandFactory.createLayerSelectionCommand;
+import static chalmers.pimp.model.command.CommandFactory.createMoveCommand;
+import static chalmers.pimp.model.command.CommandFactory.createRemoveLayerCommand;
+import static chalmers.pimp.model.command.CommandFactory.createStrokeCommand;
+
+import chalmers.pimp.model.canvas.CanvasFactory;
+import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
+import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.command.CommandFactory;
+import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 import java.util.Objects;
 
@@ -19,51 +27,81 @@ import java.util.Objects;
  */
 final class ModelImpl implements IModel {
 
+  private final ICanvas canvas;
   private final CommandManager commandManager;
-  private final UndoRedoListenerComposite undoRedoListeners;
-  private Canvas canvas;
+  private IRenderer renderer;
+  private LayerMovement layerMovement;
   private Stroke stroke;
   private ITool selectedTool;
-  private IRenderer renderer;
-  private IColor selectedColor;
 
   ModelImpl() {
-    canvas = new Canvas();
+    canvas = CanvasFactory.createCanvas();
     commandManager = new CommandManager();
-    undoRedoListeners = new UndoRedoListenerComposite();
     stroke = null;
   }
 
   /**
-   * Notifies all registered undo/redo listeners.
-   */
-  private void notifyUndoRedoListeners() {
-    var event = new UndoRedoEvent();
-
-    boolean isUndoable = commandManager.isUndoable();
-    boolean isRedoable = commandManager.isRedoable();
-
-    event.setUndoable(isUndoable);
-    event.setRedoable(isRedoable);
-
-    if (isUndoable) {
-      event.setUndoCommandName(commandManager.getUndoCommandName());
-    }
-
-    if (isRedoable) {
-      event.setRedoCommandName(commandManager.getRedoCommandName());
-    }
-
-    undoRedoListeners.undoRedoStateChanged(event);
-  }
-
-  /**
-   * Checks if there is a active tool selected.
+   * Indicates whether or not there is a active tool.
    *
-   * @return true if there is a tool selected.
+   * @return {@code true} if there is a selected tool; {@code false} otherwise.
    */
   private boolean hasSelectedTool() {
     return selectedTool != null;
+  }
+
+  @Override
+  public void notifyCanvasUpdateListeners() {
+    canvas.notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public void addCanvasUpdateListener(ICanvasUpdateListener listener) {
+    canvas.addCanvasUpdateListener(listener);
+  }
+
+  @Override
+  public void addUndoRedoListener(IUndoRedoListener listener) {
+    commandManager.addUndoRedoListener(listener);
+  }
+
+  @Override
+  public void addLayerUpdateListener(ILayerUpdateListener listener) {
+    canvas.addLayerUpdateListener(listener);
+  }
+
+  @Override
+  public void startMovingActiveLayer(int x, int y) {
+    if (getActiveLayer() == null) {
+      return;
+    }
+
+    layerMovement = new LayerMovement();
+    layerMovement.start(x, y, createSnapShot());
+  }
+
+  @Override
+  public void updateMovingActiveLayer(int x, int y) {
+    if (layerMovement == null) {
+      return;
+    }
+
+    layerMovement.update(x, y);
+    moveActiveLayer(layerMovement.getDx(), layerMovement.getDy());
+  }
+
+  @Override
+  public void stopMovingActiveLayer() {
+    if (layerMovement == null) {
+      return;
+    }
+
+    layerMovement.stop();
+    layerMovement.setEndX(getActiveLayer().getX());
+    layerMovement.setEndY(getActiveLayer().getY());
+
+    ICommand cmd = createMoveCommand(canvas, this, getActiveLayer().getDepthIndex(), layerMovement);
+    commandManager.insertCommand(cmd);
+    layerMovement = null;
   }
 
   @Override
@@ -78,7 +116,8 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(this, pixel);
+      stroke.updatePixels(canvas, pixel);
+      notifyCanvasUpdateListeners();
     }
   }
 
@@ -87,63 +126,53 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(this, pixel);
+      stroke.updatePixels(canvas, pixel);
 
-      ICommand command = CommandFactory.createStrokeCommand(this, stroke);
-      commandManager.insertCommand(command);
+      // We don't need to explicitly execute the created command, the effect is already present
+      ICommand cmd = createStrokeCommand(canvas, this, stroke);
+
+      commandManager.insertCommand(cmd);
       stroke = null;
     }
   }
 
   @Override
   public void addLayer(ILayer layer) {
-    canvas.addLayer(layer);
-  }
+    ICommand cmd = createAddLayerCommand(canvas, this, layer);
+    cmd.execute();
 
-  @Override
-  public void removeLayer(IReadOnlyLayer layer) {
-    canvas.removeLayer(layer);
+    commandManager.insertCommand(cmd);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public void removeLayer(int layerIndex) {
-    canvas.removeLayer(layerIndex);
-  }
+    ICommand cmd = createRemoveLayerCommand(canvas, this, layerIndex);
+    cmd.execute();
 
-  @Override
-  public void selectLayer(IReadOnlyLayer layer) {
-    canvas.selectLayer(layer);
+    commandManager.insertCommand(cmd);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
   public void selectLayer(int layerIndex) {
-    canvas.selectLayer(layerIndex);
+    ICommand cmd = createLayerSelectionCommand(canvas, this, layerIndex);
+    cmd.execute();
+
+    commandManager.insertCommand(cmd);
   }
 
   @Override
-  public void moveLayer(IReadOnlyLayer layer, int steps) {
-    canvas.moveLayer(layer, steps);
+  public void changeLayerDepthIndex(int layerIndex, int dz) {
+    ICommand cmd = createChangeLayerDepthCommand(canvas, this, layerIndex, dz);
+    cmd.execute();
+
+    commandManager.insertCommand(cmd);
   }
 
   @Override
-  public void restore(ModelMemento memento) {
-    canvas = memento.getCanvas();
-    // TODO...
-  }
-
-  @Override
-  public void setPixel(IPixel pixel) {
-    canvas.setPixel(pixel);
-  }
-
-  @Override
-  public void setPixels(int x, int y, PixelData pixelData) {
-    canvas.setPixels(x, y, pixelData);
-  }
-
-  @Override
-  public void setLayerName(IReadOnlyLayer layer, String layerName) {
-    canvas.setLayerName(layer, layerName);
+  public void setActiveLayerPixel(IPixel pixel) {
+    canvas.setActiveLayerPixel(pixel);
   }
 
   @Override
@@ -152,43 +181,13 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void setLayerVisibility(IReadOnlyLayer layer, boolean isVisible) {
-    canvas.setLayerVisible(layer, isVisible);
-  }
-
-  @Override
   public void setLayerVisibility(int layerIndex, boolean isVisible) {
-    canvas.setLayerVisible(layerIndex, isVisible);
+    canvas.setLayerVisibility(layerIndex, isVisible);
   }
 
   @Override
-  public void addCanvasUpdateListener(ICanvasUpdateListener listener) {
-    canvas.addCanvasUpdateListener(listener);
-  }
-
-  @Override
-  public void addUndoRedoListener(IUndoRedoListener listener) {
-    undoRedoListeners.add(listener);
-  }
-
-  @Override
-  public void addLayerUpdateListener(ILayerUpdateListener listener) {
-    canvas.addLayerUpdateListener(listener);
-  }
-
-  @Override
-  public Iterable<? extends IReadOnlyLayer> getLayers() {
-    return canvas.getLayers();
-  }
-
-  @Override
-  public int getAmountOfLayers() {
-    return canvas.getAmountOfLayers();
-  }
-
-  @Override
-  public IReadOnlyLayer getActiveLayer() {
-    return canvas.getActiveLayer();
+  public void moveActiveLayer(int dx, int dy) {
+    canvas.moveActiveLayer(dx, dy);
   }
 
   @Override
@@ -215,41 +214,6 @@ final class ModelImpl implements IModel {
     if (hasSelectedTool()) {
       selectedTool.released(mouseStatus);
     }
-    notifyUndoRedoListeners();
-  }
-
-  @Override
-  public void replaceLayer(int index, ILayer layer) {
-    if (canvas.layerExists(index)) {
-      canvas.addLayer(index, layer);
-      canvas.removeLayer(index + 1);
-    }
-  }
-
-  public ModelMemento createSnapShot() {
-    return new ModelMemento(new Canvas(canvas));
-  }
-
-  @Override
-  public void undo() {
-    commandManager.undo();
-    notifyUndoRedoListeners();
-  }
-
-  @Override
-  public void redo() {
-    commandManager.redo();
-    notifyUndoRedoListeners();
-  }
-
-  @Override
-  public void moveSelectedLayer(int xAmount, int yAmount) {
-    canvas.moveSelectedLayer(xAmount, yAmount);
-  }
-
-  @Override
-  public IRenderer getRenderer() {
-    return renderer;
   }
 
   @Override
@@ -258,8 +222,48 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void notifyAllCanvasUpdateListeners() {
-    canvas.notifyAllCanvasListeners();
+  public boolean isLayerVisible(int layerIndex) {
+    return canvas.isLayerVisible(layerIndex);
+  }
+
+  @Override
+  public String getLayerName(int layerIndex) {
+    return canvas.getLayerName(layerIndex);
+  }
+
+  @Override
+  public IRenderer getRenderer() {
+    return renderer;
+  }
+
+  @Override
+  public IReadOnlyLayer getActiveLayer() {
+    return canvas.getActiveLayer();
+  }
+
+  @Override
+  public Iterable<? extends IReadOnlyLayer> getLayers() {
+    return canvas.getLayers();
+  }
+
+  @Override
+  public void restore(ModelMemento modelMemento) {
+    canvas.restore(modelMemento.getCanvasMemento());
+  }
+
+  @Override
+  public ModelMemento createSnapShot() {
+    return new ModelMemento(canvas.createSnapShot());
+  }
+
+  @Override
+  public void undo() {
+    commandManager.undo();
+  }
+
+  @Override
+  public void redo() {
+    commandManager.redo();
   }
 
   @Override

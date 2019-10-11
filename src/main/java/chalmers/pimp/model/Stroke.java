@@ -1,5 +1,6 @@
 package chalmers.pimp.model;
 
+import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
@@ -44,9 +45,9 @@ public final class Stroke {
    *
    * @param model the associated model instance.
    * @param pixel the pixel affected by the stroke.
-   * @throws NullPointerException if any arguments are {@code null}.
+   * @throws NullPointerException if any references are {@code null}.
    */
-  public void updatePixels(IModel model, IPixel pixel) {
+  public void updatePixels(ICanvas model, IPixel pixel) {
     Objects.requireNonNull(model);
     Objects.requireNonNull(pixel);
 
@@ -61,7 +62,7 @@ public final class Stroke {
     }
 
     int radius = (int) (diameter / 2.0);
-    model.setPixels(pixel.getX() - radius, pixel.getY() - radius, pixels);
+    model.setActiveLayerPixels(pixel.getX() - radius, pixel.getY() - radius, pixels);
   }
 
   /**

@@ -1,6 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -62,11 +63,6 @@ class RasterTest {
   }
 
   @Test
-  void getLayerType() {
-    assertEquals(LayerType.RASTER, raster.getLayerType());
-  }
-
-  @Test
   void setName() {
     final String setName = "name";
     raster.setName(setName);
@@ -80,5 +76,82 @@ class RasterTest {
     final String setName = "name";
     raster.setName(setName);
     assertEquals(setName, raster.getName());
+  }
+
+  @Test
+  void copy() {
+    var copy = raster.copy();
+    assertEquals(raster, copy);
+  }
+
+  @Test
+  void equalsTest() {
+    var copy = raster.copy();
+
+    assertNotEquals(null, raster);
+
+    assertEquals(raster, raster); // Reflexive
+
+    // Symmetric
+    assertEquals(copy, raster);
+    assertEquals(raster, copy);
+
+    var secondCopy = copy.copy();
+
+    // Transitive
+    assertEquals(raster, copy);
+    assertEquals(copy, secondCopy);
+    assertEquals(raster, secondCopy);
+  }
+
+  @Test
+  void move() {
+    final int dx = 29;
+    final int dy = -134;
+
+    final int x = raster.getX();
+    final int y = raster.getY();
+
+    raster.move(dx, dy);
+
+    assertEquals(x + dx, raster.getX());
+    assertEquals(y + dy, raster.getY());
+  }
+
+  @Test
+  void setX() {
+    int x = -255;
+    raster.setX(x);
+
+    assertEquals(x, raster.getX());
+  }
+
+  @Test
+  void setY() {
+    int y = 8124;
+    raster.setY(y);
+
+    assertEquals(y, raster.getY());
+  }
+
+  @Test
+  void setDepthIndex() {
+    int depthIndex = 8923;
+    raster.setDepthIndex(depthIndex);
+
+    assertEquals(depthIndex, raster.getDepthIndex());
+  }
+
+  @Test
+  void getDepthIndex() {
+    int depthIndex = 1294;
+    raster.setDepthIndex(depthIndex);
+
+    assertEquals(depthIndex, raster.getDepthIndex());
+  }
+
+  @Test
+  void getLayerType() {
+    assertEquals(raster.getLayerType(), LayerType.RASTER);
   }
 }

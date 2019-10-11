@@ -7,6 +7,7 @@ import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
+import java.util.Objects;
 
 /**
  * The {@code Rectangle} class is an implementation of the {@code ILayer} interface that represents
@@ -15,9 +16,9 @@ import chalmers.pimp.model.pixeldata.PixelFactory;
 final class Rectangle implements ILayer {
 
   private final LayerDelegate layerDelegate;
+  private IColor color;
   private final int width;
   private final int height;
-  private IColor color;
 
   /**
    * Creates a rectangle.
@@ -29,7 +30,7 @@ final class Rectangle implements ILayer {
    * @param color  the color of the rectangle.
    */
   Rectangle(int x, int y, int width, int height, IColor color) {
-    layerDelegate = new LayerDelegate();
+    layerDelegate = new LayerDelegate(LayerType.SHAPE);
     layerDelegate.setX(x);
     layerDelegate.setY(y);
     this.width = width;
@@ -41,6 +42,20 @@ final class Rectangle implements ILayer {
 
   }
 
+  /**
+   * Creates a copy of the supplied rectangle.
+   *
+   * @param rectangle the rectangle that will be copied.
+   * @throws NullPointerException if the supplied rectangle is {@code null}.
+   */
+  private Rectangle(Rectangle rectangle) {
+    Objects.requireNonNull(rectangle);
+    layerDelegate = new LayerDelegate(rectangle.layerDelegate);
+    width = rectangle.width;
+    height = rectangle.height;
+    color = ColorFactory.createColor(rectangle.color);
+  }
+
   @Override
   public void setPixel(IPixel pixel) {
   }
@@ -48,6 +63,11 @@ final class Rectangle implements ILayer {
   @Override
   public void setVisible(boolean isVisible) {
     layerDelegate.setVisible(isVisible);
+  }
+
+  @Override
+  public void move(int dx, int dy) {
+    layerDelegate.move(dx, dy);
   }
 
   @Override
@@ -96,6 +116,11 @@ final class Rectangle implements ILayer {
   }
 
   @Override
+  public LayerType getLayerType() {
+    return layerDelegate.getLayerType();
+  }
+
+  @Override
   public IReadOnlyPixelData getPixelData() {
     PixelData pixelData = new PixelData(width, height);
 
@@ -109,11 +134,6 @@ final class Rectangle implements ILayer {
   }
 
   @Override
-  public LayerType getLayerType() {
-    return LayerType.SHAPE;
-  }
-
-  @Override
   public void draw(IRenderer renderer) {
     if (isVisible()) {
       renderer.setFillColor(color);
@@ -124,9 +144,23 @@ final class Rectangle implements ILayer {
 
   @Override
   public ILayer copy() {
-    var copy = new Rectangle(getX(), getY(), width, height, color);
-    copy.color = ColorFactory.createColor(color);
-    copy.setVisible(isVisible());
-    return copy;
+    return new Rectangle(this);
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (!(object instanceof Rectangle)) {
+      return false;
+    }
+    if (object == this) {
+      return true;
+    }
+
+    var rectangle = (Rectangle) object;
+
+    return layerDelegate.equals(rectangle.layerDelegate)
+        && (width == rectangle.width)
+        && (height == rectangle.height)
+        && color.equals(rectangle.color);
   }
 }
