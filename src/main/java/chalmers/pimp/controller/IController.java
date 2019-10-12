@@ -34,6 +34,11 @@ public interface IController {
   void selectRectangleTool();
 
   /**
+   * Sets the doodle tool as the selectedTool in model
+   */
+  void selectDoodleTool();
+
+  /**
    * Undoes the previously executed command. This method has no effect if there is nothing to undo.
    */
   void undo();

@@ -4,6 +4,7 @@ import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,18 +17,29 @@ final class Doodle implements ILayer {
   private final List<IPixel> pixels;
   private final LayerDelegate layerDelegate;
   private final IReadOnlyColor color;
-  private final int width;
+  private final int lineWidth;
+  private int width;
+  private int height;
 
-  Doodle(int width, IReadOnlyColor color) {
+  Doodle(int lineWidth, IReadOnlyColor color) {
     pixels = new ArrayList<>();
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
-    this.width = width;
+    layerDelegate.setName("Doodle");
+    this.lineWidth = lineWidth;
     this.color = color;
+    width = 0;
+    height = 0;
   }
 
   @Override
   public void setPixel(IPixel pixel) {
     pixels.add(pixel);
+    if (pixel.getX() > width - 1) {
+      width = pixel.getX() + 1;
+    }
+    if (pixel.getY() > height - 1) {
+      height = pixel.getY() + 1;
+    }
   }
 
   @Override
@@ -87,8 +99,18 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public int getWidth() {
+    return width;
+  }
+
+  @Override
+  public int getHeight() {
+    return height;
+  }
+
+  @Override
   public String getName() {
-    return null;
+    return layerDelegate.getName();
   }
 
   @Override
@@ -98,7 +120,7 @@ final class Doodle implements ILayer {
 
   @Override
   public ILayer copy() {
-    Doodle copy = new Doodle(width, color);
+    Doodle copy = new Doodle(lineWidth, color);
     copy.layerDelegate.setX(layerDelegate.getX());
     copy.layerDelegate.setY(layerDelegate.getY());
     copy.layerDelegate.setVisible(layerDelegate.isVisible());
@@ -112,11 +134,11 @@ final class Doodle implements ILayer {
 
   @Override
   public void draw(IRenderer renderer) {
-    if (pixels.size() == 0) {
+    if (!layerDelegate.isVisible() && pixels.size() == 0) {
       return;
     }
 
-    renderer.setLineWidth(width);
+    renderer.setLineWidth(lineWidth);
     renderer.setFillColor(color);
     renderer.setBorderColor(color);
 

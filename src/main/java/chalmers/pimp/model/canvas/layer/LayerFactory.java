@@ -52,11 +52,11 @@ public final class LayerFactory {
   /**
    * Creates and returns a layer that is a doodle.
    *
-   * @param width the width of the line strokes.
+   * @param lineWidth the width of the line strokes.
    * @param color the color of the line strokes.
    * @return a doodle layer.
    */
-  public static ILayer createDoodle(int width, IReadOnlyColor color) {
-    return new Doodle(width, color);
+  public static ILayer createDoodle(int lineWidth, IReadOnlyColor color) {
+    return new Doodle(lineWidth, color);
   }
 }
