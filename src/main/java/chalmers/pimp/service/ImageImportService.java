@@ -38,8 +38,10 @@ public final class ImageImportService {
    *
    * @param file the file to have it's name returned.
    * @return the name of the supplied file.
+   * @throws NullPointerException if the supplied file is {@code null}.
    */
   public static String getFileNameFromFile(File file) {
+    Objects.requireNonNull(file);
     List<String> temp = new ArrayList<>(Arrays.asList(file.getName().split("\\.")));
     return file.getName().replace("." + temp.get(temp.size() - 1), "");
   }
