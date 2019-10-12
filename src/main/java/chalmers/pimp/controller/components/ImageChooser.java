@@ -62,12 +62,7 @@ public final class ImageChooser {
    */
   private void setRecentFileName(File recentFile) {
     List<String> temp = new ArrayList<>(Arrays.asList(recentFile.getName().split("\\.")));
-    temp.remove((temp.size() - 1));
-    StringBuilder returnString = new StringBuilder();
-    for (String s : temp) {
-      returnString.append(s);
-    }
-    recentFileName = returnString.toString();
+    recentFileName = recentFile.getName().replace("." + temp.get(temp.size() - 1), "");
   }
 
   /**
