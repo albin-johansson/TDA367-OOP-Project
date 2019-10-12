@@ -42,12 +42,12 @@ final class Raster implements ILayer {
    *
    * @param pixelData the pixel data that will be copied.
    * @param pixelDataName the name of the new raster.
-   * @throws NullPointerException if the supplied pixel data is {@code null}.
+   * @throws NullPointerException if the supplied pixel data or pixel data name is {@code null}.
    */
   Raster(PixelData pixelData, String pixelDataName) {
     this.pixelData = Objects.requireNonNull(pixelData);
     layerDelegate = new LayerDelegate(LayerType.RASTER);
-    layerDelegate.setName(pixelDataName);
+    layerDelegate.setName(Objects.requireNonNull(pixelDataName));
   }
 
   /**
