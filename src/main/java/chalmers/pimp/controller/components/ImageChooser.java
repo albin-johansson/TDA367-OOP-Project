@@ -2,6 +2,7 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.service.FXToPixelDataService;
+import chalmers.pimp.service.FileService;
 import chalmers.pimp.service.ImageImportService;
 import java.io.File;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public final class ImageChooser {
    * @param recentFile the {@code File} from which the name comes from.
    */
   private void setRecentFileName(File recentFile) {
-    recentFileName = ImageImportService.getFileNameFromFile(recentFile);
+    recentFileName = FileService.getFileNameFromFile(recentFile);
   }
 
   /**
