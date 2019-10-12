@@ -90,7 +90,7 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void setLineWidth(int width) {
-
+    graphicsContext.setLineWidth(width);
   }
 
   @Override

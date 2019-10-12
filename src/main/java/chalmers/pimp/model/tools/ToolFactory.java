@@ -2,7 +2,6 @@ package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.IReadOnlyColor;
 
 /**
  * The {@code ToolFactory} class is a factory for creating instances of the {@code ITool}
