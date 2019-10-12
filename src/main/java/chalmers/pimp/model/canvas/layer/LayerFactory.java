@@ -1,5 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.PixelData;
 
 /**
@@ -46,5 +47,16 @@ public final class LayerFactory {
    */
   public static ILayer createRectangle(int x, int y, int width, int height) {
     return new Rectangle(x, y, width, height);
+  }
+
+  /**
+   * Creates and returns a layer that is a doodle.
+   *
+   * @param width the width of the line strokes.
+   * @param color the color of the line strokes.
+   * @return a doodle layer.
+   */
+  public static ILayer createDoodle(int width, IReadOnlyColor color) {
+    return new Doodle(width, color);
   }
 }
