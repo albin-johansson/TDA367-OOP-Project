@@ -160,7 +160,7 @@ final class ControllerImpl implements IController {
       if (pixelData == null) {
         return;
       }
-      String pixelDataName = imageChooser.getResentFileName();
+      String pixelDataName = imageChooser.getRecentFileName();
 
       model.addLayer(LayerFactory.createRasterLayer(pixelData, pixelDataName));
     } catch (Exception e) {

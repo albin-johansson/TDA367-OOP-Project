@@ -20,7 +20,7 @@ import javafx.stage.Window;
 public final class ImageChooser {
 
   private final FileChooser fileChooser;
-  private String resentFileName;
+  private String recentFileName;
 
   public ImageChooser() {
     fileChooser = new FileChooser();
@@ -28,7 +28,7 @@ public final class ImageChooser {
 
     var filter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png");
     fileChooser.getExtensionFilters().add(filter);
-    resentFileName = "No file name created";
+    recentFileName = "No file name created";
   }
 
   /**
@@ -48,34 +48,34 @@ public final class ImageChooser {
       System.out.println("No image file was selected!");
       return null;
     }
-    setResentFileName(file);
+    setRecentFileName(file);
 
     Image image = ImageImportService.importImage(file);
     return FXToPixelDataService.createPixelDataCopy(image);
   }
 
   /**
-   * Sets the resentFileName for this ImageChooser, based on the supplied {@code File}. Removes the
+   * Sets the recentFileName for this ImageChooser, based on the supplied {@code File}. Removes the
    * extension.
    *
-   * @param resentFile the {@code File} from which the name comes from.
+   * @param recentFile the {@code File} from which the name comes from.
    */
-  private void setResentFileName(File resentFile) {
-    List<String> temp = new ArrayList<>(Arrays.asList(resentFile.getName().split("\\.")));
+  private void setRecentFileName(File recentFile) {
+    List<String> temp = new ArrayList<>(Arrays.asList(recentFile.getName().split("\\.")));
     temp.remove((temp.size() - 1));
     StringBuilder returnString = new StringBuilder();
     for (String s : temp) {
       returnString.append(s);
     }
-    resentFileName = returnString.toString();
+    recentFileName = returnString.toString();
   }
 
   /**
-   * Returns the most resent file name for an imported file, without extension.
+   * Returns the most recent file name for an imported file, without extension.
    *
-   * @return then name of the most resent file.
+   * @return then name of the most recent file.
    */
-  public String getResentFileName() {
-    return resentFileName;
+  public String getRecentFileName() {
+    return recentFileName;
   }
 }
