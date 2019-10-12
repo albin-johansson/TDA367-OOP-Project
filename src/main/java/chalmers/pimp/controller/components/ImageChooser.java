@@ -5,9 +5,6 @@ import chalmers.pimp.service.FXToPixelDataService;
 import chalmers.pimp.service.ImageImportService;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -55,14 +52,12 @@ public final class ImageChooser {
   }
 
   /**
-   * Sets the recentFileName for this ImageChooser, based on the supplied {@code File}. Removes the
-   * extension.
+   * Sets the recentFileName for this ImageChooser, based on the supplied {@code File}.
    *
    * @param recentFile the {@code File} from which the name comes from.
    */
   private void setRecentFileName(File recentFile) {
-    List<String> temp = new ArrayList<>(Arrays.asList(recentFile.getName().split("\\.")));
-    recentFileName = recentFile.getName().replace("." + temp.get(temp.size() - 1), "");
+    recentFileName = ImageImportService.getFileNameFromFile(recentFile);
   }
 
   /**
