@@ -115,7 +115,7 @@ final class Doodle implements ILayer {
 
   @Override
   public int getDepthIndex() {
-    return 0;
+    return layerDelegate.getDepthIndex();
   }
 
   @Override
@@ -134,7 +134,7 @@ final class Doodle implements ILayer {
 
   @Override
   public void draw(IRenderer renderer) {
-    if (!layerDelegate.isVisible() && pixels.size() == 0) {
+    if (!isVisible() || pixels.size() == 0) {
       return;
     }
 
