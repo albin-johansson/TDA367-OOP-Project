@@ -6,6 +6,8 @@ import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.mock.Line;
+import chalmers.pimp.model.mock.RendererMock;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
@@ -17,118 +19,11 @@ import org.junit.jupiter.api.Test;
 
 class DoodleTest {
 
-  static class Line {
-
-    private final int x1, y1, x2, y2;
-
-    Line(int x1, int y1, int x2, int y2) {
-      this.x1 = x1;
-      this.y1 = y1;
-      this.x2 = x2;
-      this.y2 = y2;
-    }
-
-    Line(IPixel p1, IPixel p2) {
-      this.x1 = p1.getX();
-      this.y1 = p1.getY();
-      this.x2 = p2.getX();
-      this.y2 = p2.getY();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (!(o instanceof Line)) {
-        return false;
-      }
-
-      Line l = (Line) o;
-
-      return (this.x1 == l.x1 && this.y1 == l.y1 && this.x2 == l.x2 && this.y2 == l.y2) || (
-          this.x1 == l.x2 && this.y1 == l.y2 && this.x2 == l.x1 && this.y2 == l.y1);
-    }
-  }
-
-  static class RendererMock implements IRenderer {
-
-    @Override
-    public void drawRect(int x, int y, int width, int height) {
-
-    }
-
-    @Override
-    public void fillRect(int x, int y, int width, int height) {
-
-    }
-
-    @Override
-    public void drawEllipse(int x, int y, int radiusX, int radiusY) {
-
-    }
-
-    @Override
-    public void fillEllipse(int x, int y, int radiusX, int radiusY) {
-
-    }
-
-    @Override
-    public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width,
-        int height) {
-
-    }
-
-    @Override
-    public void drawText(String content, int x, int y, int fontSize) {
-
-    }
-
-    @Override
-    public void drawLine(int x1, int y1, int x2, int y2) {
-      lines.add(new Line(x1, y1, x2, y2));
-    }
-
-    @Override
-    public void setRotation(int rotation) {
-
-    }
-
-    @Override
-    public void setFillColor(IReadOnlyColor color) {
-
-    }
-
-    @Override
-    public void setBorderColor(IReadOnlyColor color) {
-
-    }
-
-    @Override
-    public void setBorderWidth(int width) {
-
-    }
-
-    @Override
-    public void setLineWidth(int width) {
-
-    }
-
-    @Override
-    public int getCanvasWidth() {
-      return 0;
-    }
-
-    @Override
-    public int getCanvasHeight() {
-      return 0;
-    }
-  }
-
   private ILayer doodle;
-  private static List<Line> lines;
 
   @BeforeEach
   void init() {
     doodle = LayerFactory.createDoodle(10, ColorFactory.createColor(0,0,0));
-    lines = new ArrayList<>();
   }
 
   @Test
@@ -162,37 +57,41 @@ class DoodleTest {
 
   @Test
   void draw1() {
+    RendererMock renderer = new RendererMock();
     doodle.setY(10);
     doodle.setX(20);
-    doodle.draw(new RendererMock());
-    assertEquals(lines.size(), 0);
+    doodle.draw(renderer);
+    assertEquals(renderer.lines.size(), 0);
   }
 
   @Test
   void draw2() {
     IPixel p = PixelFactory.createPixel(10, 20);
+    RendererMock renderer = new RendererMock();
     doodle.setPixel(p);
-    doodle.draw(new RendererMock());
-    assertEquals(lines.size(), 1);
-    assertEquals(new Line(p, p), lines.get(0));
+    doodle.draw(renderer);
+    assertEquals(renderer.lines.size(), 1);
+    assertEquals(new Line(p, p), renderer.lines.get(0));
   }
 
   @Test
   void draw3() {
     IPixel p = PixelFactory.createPixel(10, 20);
+    RendererMock renderer = new RendererMock();
     doodle.setPixel(p);
     doodle.setX(10);
     doodle.setY(20);
-    doodle.draw(new RendererMock());
-    assertEquals(lines.size(), 1);
+    doodle.draw(renderer);
+    assertEquals(renderer.lines.size(), 1);
     assertEquals(new Line(p.getX() + 10, p.getY() + 20, p.getX() + 10, p.getY() + 20),
-        lines.get(0));
+        renderer.lines.get(0));
   }
 
   @Test
   void draw4() {
     List<IPixel> pixels = new ArrayList<>();
     int nPixels = 10;
+    RendererMock renderer = new RendererMock();
     for (int i = 0; i < nPixels; i++) {
       pixels.add(PixelFactory.createPixel(i * 10, i * 10 + 5));
     }
@@ -201,11 +100,11 @@ class DoodleTest {
       doodle.setPixel(p);
     }
 
-    doodle.draw(new RendererMock());
+    doodle.draw(renderer);
 
-    assertEquals(lines.size(), nPixels - 1);
+    assertEquals(renderer.lines.size(), nPixels - 1);
     for (int i = 1; i < nPixels; i++) {
-      assertEquals(new Line(pixels.get(i), pixels.get(i - 1)), lines.get(i - 1));
+      assertEquals(new Line(pixels.get(i), pixels.get(i - 1)), renderer.lines.get(i - 1));
     }
   }
 
@@ -214,6 +113,7 @@ class DoodleTest {
     List<IPixel> pixels = new ArrayList<>();
     int nPixels = 10;
     ILayer doodle2;
+    RendererMock renderer = new RendererMock();
 
     for (int i = 0; i < nPixels; i++) {
       pixels.add(PixelFactory.createPixel(i * 10, i * 10 + 5));
@@ -224,12 +124,12 @@ class DoodleTest {
     }
 
     doodle2 = doodle.copy();
-    doodle2.draw(new RendererMock());
+    doodle2.draw(renderer);
 
-    assertEquals(lines.size(), nPixels - 1);
+    assertEquals(renderer.lines.size(), nPixels - 1);
 
     for (int i = 1; i < nPixels; i++) {
-      assertEquals(new Line(pixels.get(i), pixels.get(i - 1)), lines.get(i - 1));
+      assertEquals(new Line(pixels.get(i), pixels.get(i - 1)), renderer.lines.get(i - 1));
     }
   }
 }

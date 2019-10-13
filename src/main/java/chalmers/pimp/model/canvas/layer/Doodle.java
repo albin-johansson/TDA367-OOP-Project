@@ -8,6 +8,7 @@ import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A layer which has a list of points and draws straight lines between the points.
@@ -26,7 +27,7 @@ final class Doodle implements ILayer {
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
     layerDelegate.setName("Doodle");
     this.lineWidth = lineWidth;
-    this.color = color;
+    this.color = Objects.requireNonNull(color);
     width = 0;
     height = 0;
   }
@@ -34,11 +35,11 @@ final class Doodle implements ILayer {
   @Override
   public void setPixel(IPixel pixel) {
     pixels.add(pixel);
-    if (pixel.getX() > width - 1) {
-      width = pixel.getX() + 1;
+    if (pixel.getX() > width - lineWidth) {
+      width = pixel.getX() + lineWidth;
     }
-    if (pixel.getY() > height - 1) {
-      height = pixel.getY() + 1;
+    if (pixel.getY() > height - lineWidth) {
+      height = pixel.getY() + lineWidth;
     }
   }
 
@@ -121,9 +122,11 @@ final class Doodle implements ILayer {
   @Override
   public ILayer copy() {
     Doodle copy = new Doodle(lineWidth, color);
-    copy.layerDelegate.setX(layerDelegate.getX());
-    copy.layerDelegate.setY(layerDelegate.getY());
-    copy.layerDelegate.setVisible(layerDelegate.isVisible());
+    copy.layerDelegate.setX(getX());
+    copy.layerDelegate.setY(getY());
+    copy.layerDelegate.setVisible(isVisible());
+    copy.layerDelegate.setName(getName());
+    copy.layerDelegate.setDepthIndex(getDepthIndex());
 
     for (IPixel i : pixels) {
       copy.pixels.add(PixelFactory.createPixel(i));
@@ -134,7 +137,7 @@ final class Doodle implements ILayer {
 
   @Override
   public void draw(IRenderer renderer) {
-    if (!isVisible() || pixels.size() == 0) {
+    if (!isVisible() || pixels.isEmpty()) {
       return;
     }
 

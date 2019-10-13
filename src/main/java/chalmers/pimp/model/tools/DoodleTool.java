@@ -8,6 +8,9 @@ import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 
+/**
+ * A tool which the user can deaw vectorised lines with
+ */
 final class DoodleTool implements ITool {
 
   private final IModel model;
@@ -16,6 +19,13 @@ final class DoodleTool implements ITool {
   private int x, y;
   private ILayer doodle;
 
+  /**
+   * Creates a doodle tool
+   *
+   * @param diameter the diameter of the doodle.
+   * @param color    the color of the doodle.
+   * @param model    reference back to the model.
+   */
   DoodleTool(int diameter, IColor color, IModel model) {
     this.diameter = diameter;
     this.color = Objects.requireNonNull(color);
