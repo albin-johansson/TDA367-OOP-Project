@@ -18,7 +18,7 @@ import javafx.stage.Window;
 public final class ImageChooser {
 
   private final FileChooser fileChooser;
-  private String recentFileName;
+  private String mostRecentFileName;
 
   public ImageChooser() {
     fileChooser = new FileChooser();
@@ -26,7 +26,7 @@ public final class ImageChooser {
 
     var filter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png");
     fileChooser.getExtensionFilters().add(filter);
-    recentFileName = "No file name created";
+    mostRecentFileName = "No file name created";
   }
 
   /**
@@ -46,7 +46,7 @@ public final class ImageChooser {
       System.out.println("No image file was selected!");
       return null;
     }
-    setRecentFileName(file);
+    setMostRecentFileName(file);
 
     Image image = ImageImportService.importImage(file);
     return FXToPixelDataService.createPixelDataCopy(image);
@@ -55,10 +55,10 @@ public final class ImageChooser {
   /**
    * Sets the recentFileName for this ImageChooser, based on the supplied {@code File}.
    *
-   * @param recentFile the {@code File} from which the name comes from.
+   * @param mostRecentFileName the {@code File} from which the name comes from.
    */
-  private void setRecentFileName(File recentFile) {
-    recentFileName = FileService.getFileNameFromFile(recentFile);
+  private void setMostRecentFileName(File mostRecentFileName) {
+    this.mostRecentFileName = FileService.getFileNameFromFile(mostRecentFileName);
   }
 
   /**
@@ -66,7 +66,7 @@ public final class ImageChooser {
    *
    * @return then name of the most recent file.
    */
-  public String getRecentFileName() {
-    return recentFileName;
+  public String getMostRecentFileName() {
+    return mostRecentFileName;
   }
 }
