@@ -25,6 +25,11 @@ public final class FileService {
   public static String getFileNameFromFile(File file) {
     Objects.requireNonNull(file);
     List<String> temp = new ArrayList<>(Arrays.asList(file.getName().split("\\.")));
-    return file.getName().replace("." + temp.get(temp.size() - 1), "");
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(temp.get(0));
+    for (int i = 1; i < temp.size() - 1; i++) {
+      stringBuilder.append("." + temp.get(i));
+    }
+    return stringBuilder.toString();
   }
 }
