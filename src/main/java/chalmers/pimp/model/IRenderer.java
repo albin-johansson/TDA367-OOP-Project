@@ -82,6 +82,13 @@ public interface IRenderer {
   void resetRotation();
 
   /**
+   * Sets the transparency alpha value. 1 is no transparency, 0 is completely transparent.
+   *
+   * @param alpha the new alpha value [0, 1].
+   */
+  void setGlobalAlpha(double alpha);
+
+  /**
    * Sets the fill color.
    *
    * @param color the color to be set.

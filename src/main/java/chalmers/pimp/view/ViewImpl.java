@@ -47,9 +47,11 @@ final class ViewImpl implements IView {
 
   private void paintWaterMark(){
     renderer.setRotation(-35);
+    renderer.setGlobalAlpha(0.5);
     renderer.setFillColor(ColorFactory.createColor(0xFF, 0xFF, 0xFF, 0xFF));
     renderer.setFillColor(ColorFactory.createColor(0,0,0,0xFF));
     renderer.drawText(TM_STRING,5,renderer.getCanvasHeight()-TM_FONT_SIZE/35, TM_FONT_SIZE);
+    renderer.setGlobalAlpha(1);
     renderer.resetRotation();
 
   }

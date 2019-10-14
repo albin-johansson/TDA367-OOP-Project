@@ -75,6 +75,9 @@ final class FXRenderer implements IRenderer {
     setRotation(-lastRotation);
   }
 
+  @Override
+  public void setGlobalAlpha(double alpha) {
+    graphicsContext.setGlobalAlpha(alpha);
   }
 
   @Override
