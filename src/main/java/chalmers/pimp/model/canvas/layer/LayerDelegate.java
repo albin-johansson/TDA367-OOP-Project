@@ -37,6 +37,8 @@ final class LayerDelegate {
     x = 0;
     y = 0;
     depthIndex = 0;
+    rotation = 0;
+    alpha = 1;
   }
 
   /**
@@ -53,6 +55,8 @@ final class LayerDelegate {
     depthIndex = layerDelegate.depthIndex;
     name = layerDelegate.name;
     isVisible = layerDelegate.isVisible;
+    rotation = layerDelegate.rotation;
+    alpha = layerDelegate.alpha;
   }
 
   /**
