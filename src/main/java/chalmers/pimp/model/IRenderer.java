@@ -74,7 +74,7 @@ public interface IRenderer {
    *
    * @param rotation the rotation in degrees.
    */
-  void setRotation(int rotation);
+  void setRotation(double rotation);
 
   /**
    * Resets the rotation to 0;

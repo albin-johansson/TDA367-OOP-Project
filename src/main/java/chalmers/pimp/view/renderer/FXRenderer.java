@@ -65,7 +65,7 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void setRotation(int rotation) {
+  public void setRotation(double rotation) {
     graphicsContext.rotate(rotation);
     lastRotation += rotation;
   }
