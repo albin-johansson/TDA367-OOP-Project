@@ -19,6 +19,7 @@ import javafx.scene.paint.Paint;
 final class FXRenderer implements IRenderer {
 
   private final GraphicsContext graphicsContext;
+  private int lastRotation;
 
   /**
    * Creates and returns a FX renderer.
@@ -28,6 +29,7 @@ final class FXRenderer implements IRenderer {
    */
   FXRenderer(GraphicsContext graphicsContext) {
     this.graphicsContext = Objects.requireNonNull(graphicsContext);
+    lastRotation = 0;
   }
 
   @Override
@@ -64,6 +66,14 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void setRotation(int rotation) {
+    graphicsContext.rotate(rotation);
+    lastRotation += rotation;
+  }
+
+  @Override
+  public void resetRotation(){
+    setRotation(-lastRotation);
+  }
 
   }
 

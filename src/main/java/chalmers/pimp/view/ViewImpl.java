@@ -5,10 +5,6 @@ import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.ColorFactory;
 import java.util.Objects;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextBoundsType;
-import javafx.scene.transform.Rotate;
 
 /**
  * The {@code ViewImpl} class is an implementation of the {@code IView} interface.
@@ -50,11 +46,11 @@ final class ViewImpl implements IView {
   }
 
   private void paintWaterMark(){
+    renderer.setRotation(-35);
     renderer.setFillColor(ColorFactory.createColor(0xFF, 0xFF, 0xFF, 0xFF));
-    renderer.fillRect(0,renderer.getCanvasHeight()-TM_FONT_SIZE/15,TM_STRING.length()*TM_FONT_SIZE/60, TM_FONT_SIZE/10);
     renderer.setFillColor(ColorFactory.createColor(0,0,0,0xFF));
-    renderer.setRotation(1);
     renderer.drawText(TM_STRING,5,renderer.getCanvasHeight()-TM_FONT_SIZE/35, TM_FONT_SIZE);
+    renderer.resetRotation();
 
   }
 }

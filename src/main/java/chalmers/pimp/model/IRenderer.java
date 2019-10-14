@@ -77,6 +77,11 @@ public interface IRenderer {
   void setRotation(int rotation);
 
   /**
+   * Resets the rotation to 0;
+   */
+  void resetRotation();
+
+  /**
    * Sets the fill color.
    *
    * @param color the color to be set.
