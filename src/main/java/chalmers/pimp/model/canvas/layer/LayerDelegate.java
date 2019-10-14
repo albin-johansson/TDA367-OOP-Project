@@ -22,6 +22,8 @@ final class LayerDelegate {
   private int x;
   private int y;
   private int depthIndex;
+  private double rotation;
+  private double alpha;
 
   /**
    * @param layerType the layer type that will be used by the layer delegate.
@@ -163,6 +165,43 @@ final class LayerDelegate {
    */
   void setDepthIndex(int depthIndex) {
     this.depthIndex = depthIndex;
+  }
+
+  /**
+   * Sets the rotation for this layer.
+   *
+   * @param rotation the new rotation.
+   */
+  void setRotation(double rotation) {
+    this.rotation = rotation;
+  }
+
+  /**
+   * Returns the rotation value for this layer.
+   *
+   * @return the rotation value.
+   */
+  double getRotation() {
+    return rotation;
+  }
+
+  /**
+   * Returns the alpha value for this layer.
+   *
+   * @return the alpha value.
+   */
+
+  public double getAlpha() {
+    return alpha;
+  }
+
+  /**
+   * Sets the alpha value for this layer.
+   *
+   * @param alpha the new alpha.
+   */
+  public void setAlpha(double alpha) {
+    this.alpha = alpha;
   }
 
   @Override
