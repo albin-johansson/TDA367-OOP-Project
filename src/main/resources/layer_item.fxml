@@ -2,36 +2,20 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
 
 <fx:root id="layer-item" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="76.0" prefWidth="225.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
       <children>
-        <Label fx:id="textLabel" alignment="CENTER" onInputMethodTextChanged="#updateLayerName" prefHeight="57.0" prefWidth="85.0" text="Rectangle" textAlignment="CENTER">
-          <font>
-            <Font size="24.0" />
-          </font>
-               <contextMenu>
-                  <ContextMenu fx:id="contextMenu">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#removeLayer" text="Delete Layer" />
-                        <MenuItem mnemonicParsing="false" text="Rename Layer" />
-                    </items>
-                  </ContextMenu>
-               </contextMenu>
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin>
-        </Label>
+            <TextField fx:id="textLabel" alignment="CENTER" editable="false" />
             <ImageView fx:id="layerTypeIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/light/raster.png" />
@@ -47,6 +31,14 @@
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
+               <contextMenu>
+                  <ContextMenu fx:id="contextMenu">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#removeLayer" text="Delete Layer" />
+                        <MenuItem mnemonicParsing="false" text="Rename Layer" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
         </ToggleButton>
       </children>
     </HBox>

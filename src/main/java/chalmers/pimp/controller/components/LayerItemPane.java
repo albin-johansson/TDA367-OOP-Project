@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -51,7 +52,7 @@ final class LayerItemPane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")
-  private Label textLabel;
+  private TextField textLabel;
   @FXML
   @SuppressWarnings("unused")
   private ToggleButton toggleButton;

@@ -168,3 +168,14 @@
 #toolbar-pane {
   -fx-background-color: linear-gradient(-background-pressed-color, -background-color);
 }
+
+.text-field{
+  -fx-background-color: transparent;
+}
+
+.text-input{
+  -fx-font-size: 12pt;
+  -fx-font-weight: normal;
+  -fx-text-fill: -text-color;
+}
+
