@@ -22,7 +22,13 @@ final class Doodle implements ILayer {
   private int width;
   private int height;
 
-  Doodle(int lineWidth, IReadOnlyColor color) {
+  /**
+   * Creates a layer which has a list of points and draws straight lines between the points.
+   *
+   * @param lineWidth the width of the line between the points
+   * @param color     the color of the lines
+   */
+  Doodle(int lineWidth, IReadOnlyColor color) throws NullPointerException {
     pixels = new ArrayList<>();
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
     layerDelegate.setName("Doodle");
@@ -30,6 +36,23 @@ final class Doodle implements ILayer {
     this.color = Objects.requireNonNull(color);
     width = 0;
     height = 0;
+  }
+
+  /**
+   * Creates a copy of the specified doodle
+   *
+   * @param doodle the specified doodle to be copied
+   */
+  Doodle(Doodle doodle) throws NullPointerException {
+    Objects.requireNonNull(doodle);
+    this.layerDelegate = new LayerDelegate(doodle.layerDelegate);
+    pixels = new ArrayList<>();
+    color = doodle.color;
+    lineWidth = doodle.lineWidth;
+
+    for (IPixel i : doodle.pixels) {
+      pixels.add(PixelFactory.createPixel(i));
+    }
   }
 
   @Override
@@ -121,18 +144,7 @@ final class Doodle implements ILayer {
 
   @Override
   public ILayer copy() {
-    Doodle copy = new Doodle(lineWidth, color);
-    copy.layerDelegate.setX(getX());
-    copy.layerDelegate.setY(getY());
-    copy.layerDelegate.setVisible(isVisible());
-    copy.layerDelegate.setName(getName());
-    copy.layerDelegate.setDepthIndex(getDepthIndex());
-
-    for (IPixel i : pixels) {
-      copy.pixels.add(PixelFactory.createPixel(i));
-    }
-
-    return copy;
+    return new Doodle(this);
   }
 
   @Override
