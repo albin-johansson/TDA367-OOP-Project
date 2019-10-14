@@ -27,8 +27,9 @@ final class Doodle implements ILayer {
    *
    * @param lineWidth the width of the line between the points
    * @param color     the color of the lines
+   * @throws NullPointerException if color is null
    */
-  Doodle(int lineWidth, IReadOnlyColor color) throws NullPointerException {
+  Doodle(int lineWidth, IReadOnlyColor color) {
     pixels = new ArrayList<>();
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
     layerDelegate.setName("Doodle");
@@ -42,6 +43,7 @@ final class Doodle implements ILayer {
    * Creates a copy of the specified doodle
    *
    * @param doodle the specified doodle to be copied
+   * @throws NullPointerException if color is null
    */
   Doodle(Doodle doodle) throws NullPointerException {
     Objects.requireNonNull(doodle);
