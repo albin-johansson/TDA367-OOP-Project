@@ -1,8 +1,6 @@
 package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
-import chalmers.pimp.controller.IController;
-import chalmers.pimp.model.IModel;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -10,7 +8,11 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-public class InfoPane extends AnchorPane {
+/**
+ * The {@code InfoPane} class represents the bottom pane displaying interesting data about the
+ * project.
+ */
+class InfoPane extends AnchorPane {
 
   @FXML
   private Label canvasWidth;
@@ -25,33 +27,58 @@ public class InfoPane extends AnchorPane {
   @FXML
   private Label layerHeight;
 
-  InfoPane(IController controller, IModel model) throws IOException {
+
+  InfoPane() throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "info_pane.fxml"));
   }
 
+  /**
+   * Updates the canvasWidth Label.
+   * @param string the new width.
+   */
   void setCanvasWidthLabel(String string) {
     canvasWidth.setText(string);
   }
 
+  /**
+   * Updates the canvasHeight Label.
+   * @param string the new height.
+   */
   void setCanvasHeightLabel(String string) {
     canvasHeight.setText(string);
   }
 
-  void updateCoordinates(MouseEvent e){
-    xPos.setText(String.valueOf((int)e.getX()));
-    yPos.setText(String.valueOf((int)e.getY()));
+  /**
+   * Updates the mouse-coordinates displayed.
+   * @param e the associated mouseEvent.
+   */
+  void updateCoordinates(MouseEvent e) {
+    xPos.setText(String.valueOf((int) e.getX()));
+    yPos.setText(String.valueOf((int) e.getY()));
   }
 
-  void turnOffCoordinates(MouseEvent e){
+  /**
+   * Stops displaying mouse-coordinates when the mouse leaves the canvas.
+   * @param e the associated mouseEvent.
+   */
+  void turnOffCoordinates(MouseEvent e) {
     xPos.setText("-");
     yPos.setText("-");
   }
 
-  void setLayerWidthLabel(String string){
+  /**
+   * Updates the layerWidth Label.
+   * @param string the new width.
+   */
+  void setLayerWidthLabel(String string) {
     layerWidth.setText(string);
   }
 
-  void setLayerHeightLabel(String string){
+  /**
+   * Updates the layerHeight Label.
+   * @param string the new height.
+   */
+  void setLayerHeightLabel(String string) {
     layerHeight.setText(string);
   }
 }
