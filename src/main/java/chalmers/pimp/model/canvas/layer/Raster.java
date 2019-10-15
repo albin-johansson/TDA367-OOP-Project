@@ -84,6 +84,16 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public void setRotation(double rotation) {
+    layerDelegate.setRotation(rotation);
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
+  }
+
+  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
   }
@@ -111,6 +121,16 @@ final class Raster implements ILayer {
   @Override
   public LayerType getLayerType() {
     return layerDelegate.getLayerType();
+  }
+
+  @Override
+  public double getRotation() {
+    return layerDelegate.getRotation();
+  }
+
+  @Override
+  public double getAlpha() {
+    return layerDelegate.getAlpha();
   }
 
   @Override
