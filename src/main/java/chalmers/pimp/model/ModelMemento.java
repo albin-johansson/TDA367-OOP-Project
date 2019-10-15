@@ -1,6 +1,8 @@
 package chalmers.pimp.model;
 
 import chalmers.pimp.model.canvas.CanvasMemento;
+import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.IReadOnlyColor;
 import java.util.Objects;
 
 /**
@@ -11,13 +13,18 @@ import java.util.Objects;
 public final class ModelMemento {
 
   private final CanvasMemento canvasMemento;
+  private final IReadOnlyColor color;
 
   /**
    * @param canvasMemento a memento object for a canvas instance.
+   * @param color         the selected color.
    * @throws NullPointerException if any references are {@code null}.
    */
-  ModelMemento(CanvasMemento canvasMemento) {
+  ModelMemento(CanvasMemento canvasMemento, IReadOnlyColor color) {
     this.canvasMemento = Objects.requireNonNull(canvasMemento);
+    this.color = ColorFactory.createColor(
+        Objects.requireNonNull(color)
+    );
   }
 
   /**
@@ -27,5 +34,9 @@ public final class ModelMemento {
    */
   CanvasMemento getCanvasMemento() {
     return canvasMemento;
+  }
+
+  IReadOnlyColor getColor() {
+    return color;
   }
 }
