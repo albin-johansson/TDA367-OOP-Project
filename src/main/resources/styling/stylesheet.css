@@ -173,9 +173,10 @@
   -fx-background-color: transparent;
 }
 
+/* TODO: Set color to permanently white*/
 .text-input{
   -fx-font-size: 12pt;
   -fx-font-weight: normal;
-  -fx-text-fill: -text-color;
+  //-fx-text-fill: white !important;
 }
 

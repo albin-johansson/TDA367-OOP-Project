@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
@@ -15,7 +16,10 @@
   <children>
     <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
       <children>
-            <TextField fx:id="textLabel" alignment="CENTER" editable="false" />
+            <TextField fx:id="textField" alignment="CENTER" editable="false" focusTraversable="false" onAction="#setName" prefHeight="30.0" prefWidth="100.0" text="Layer">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></TextField>
             <ImageView fx:id="layerTypeIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/light/raster.png" />
@@ -35,7 +39,7 @@
                   <ContextMenu fx:id="contextMenu">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#removeLayer" text="Delete Layer" />
-                        <MenuItem mnemonicParsing="false" text="Rename Layer" />
+                        <MenuItem mnemonicParsing="false" onAction="#renameLayer" text="Rename Layer" />
                     </items>
                   </ContextMenu>
                </contextMenu>

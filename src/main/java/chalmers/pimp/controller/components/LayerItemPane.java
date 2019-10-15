@@ -52,7 +52,7 @@ final class LayerItemPane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")
-  private TextField textLabel;
+  private TextField textField;
   @FXML
   @SuppressWarnings("unused")
   private ToggleButton toggleButton;
@@ -81,7 +81,7 @@ final class LayerItemPane extends AnchorPane {
 
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
 
-    textLabel.setText(model.getLayerName(associatedLayerIndex));
+    textField.setText(model.getLayerName(associatedLayerIndex));
 
     IReadOnlyLayer activeLayer = model.getActiveLayer();
     if ((activeLayer != null) && (activeLayer.getDepthIndex() == associatedLayerIndex)) {
@@ -222,11 +222,11 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private void updateLayerName() {
-    String temp = textLabel.getText();
+    String temp = textField.getText();
     if (temp.isEmpty()) {
-      textLabel.setText(model.getLayerName(associatedLayerIndex));
+      textField.setText(model.getLayerName(associatedLayerIndex));
     } else {
-      model.setLayerName(associatedLayerIndex, textLabel.getText());
+      model.setLayerName(associatedLayerIndex, textField.getText());
     }
   }
 
@@ -246,5 +246,18 @@ final class LayerItemPane extends AnchorPane {
   @SuppressWarnings("unused")
   private void removeLayer() {
     model.removeLayer(associatedLayerIndex);
+  }
+
+  @FXML
+  private void renameLayer(){
+    textField.setEditable(true);
+    textField.requestFocus();
+  }
+
+  @FXML
+  private void setName(){
+    model.setLayerName(associatedLayerIndex, textField.getText());
+    textField.setEditable(false);
+    this.requestFocus();
   }
 }
