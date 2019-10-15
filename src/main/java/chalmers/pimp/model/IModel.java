@@ -239,11 +239,6 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   IReadOnlyLayer getActiveLayer(); // TODO remove, high risk of invalid use
 
   /**
-   * Notifies all canvas update listeners.
-   */
-  void notifyAllCanvasUpdateListeners();
-
-  /**
    * Sets the color that should be used for drawing items on the canvas.
    *
    * @param color the new color.
