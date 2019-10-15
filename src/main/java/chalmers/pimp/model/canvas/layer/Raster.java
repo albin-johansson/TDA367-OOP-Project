@@ -141,11 +141,12 @@ final class Raster implements ILayer {
   @Override
   public void draw(IRenderer renderer) {
     if (isVisible()) {
-      renderer.setRotation(layerDelegate.getRotation());
+      renderer.startTransform(layerDelegate.getRotation(), layerDelegate.getPoint(),
+          pixelData.getWidth(), pixelData.getHeight());
       renderer.setGlobalAlpha(layerDelegate.getAlpha());
       renderer.drawImage(pixelData, getX(), getY(), pixelData.getWidth(), pixelData.getHeight());
       renderer.setGlobalAlpha(0);
-      renderer.resetRotation();
+      renderer.endTransform();
     }
   }
 

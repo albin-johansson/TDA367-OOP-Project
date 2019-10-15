@@ -155,13 +155,13 @@ final class Rectangle implements ILayer {
   @Override
   public void draw(IRenderer renderer) {
     if (isVisible()) {
-      renderer.setRotation(layerDelegate.getRotation());
+      renderer.startTransform(layerDelegate.getRotation(), layerDelegate.getPoint(), width, height);
       renderer.setGlobalAlpha(color.getAlphaPercentage());
       renderer.setFillColor(color);
       renderer.setBorderColor(color);
       renderer.fillRect(getX(), getY(), width, height);
       renderer.setGlobalAlpha(0);
-      renderer.resetRotation();
+      renderer.endTransform();
     }
   }
 
