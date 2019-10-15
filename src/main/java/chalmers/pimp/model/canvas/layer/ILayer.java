@@ -55,4 +55,18 @@ public interface ILayer extends IReadOnlyLayer {
    * @param depthIndex the new depth index.
    */
   void setDepthIndex(int depthIndex);
+
+  /**
+   * Sets the rotation for this layer.
+   *
+   * @param rotation the new rotation.
+   */
+  void setRotation(double rotation);
+
+  /**
+   * Sets the alpha value for this layer.
+   *
+   * @param alpha the new alpha value.
+   */
+  void setAlpha(double alpha);
 }
