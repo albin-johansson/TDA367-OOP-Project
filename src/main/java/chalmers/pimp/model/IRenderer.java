@@ -70,16 +70,20 @@ public interface IRenderer {
   void drawText(String content, int x, int y, int fontSize);
 
   /**
-   * Sets the rotation.
+   * Creates and starts a new rotation transform. Will also save the previous transform.
    *
-   * @param rotation the rotation in degrees.
+   * @param rotation   the rotation to use (degrees).
+   * @param startPoint the point for the coordinates.
+   * @param width      the width of the object.
+   * @param height     the height of the object.
    */
-  void setRotation(double rotation);
+  void startTransform(double rotation, Point startPoint, int width, int height);
 
   /**
-   * Resets the rotation to 0;
+   * Restores the transform to the previous saved state, thus ending the transform from affecting
+   * more objects.
    */
-  void resetRotation();
+  void endTransform();
 
   /**
    * Sets the transparency alpha value. 1 is no transparency, 0 is completely transparent.

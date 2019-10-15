@@ -1,6 +1,7 @@
 package chalmers.pimp.view.renderer;
 
 import chalmers.pimp.model.IRenderer;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.service.ColorConverterService;
@@ -8,8 +9,7 @@ import chalmers.pimp.service.PixelDataToFXService;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.scene.transform.Affine;
 
 /**
  * The {@code FXRenderer} is a implementation of the {@code IRenderer} interface.
@@ -19,7 +19,6 @@ import javafx.scene.paint.Paint;
 final class FXRenderer implements IRenderer {
 
   private final GraphicsContext graphicsContext;
-  private int lastRotation;
 
   /**
    * Creates and returns a FX renderer.
@@ -29,7 +28,7 @@ final class FXRenderer implements IRenderer {
    */
   FXRenderer(GraphicsContext graphicsContext) {
     this.graphicsContext = Objects.requireNonNull(graphicsContext);
-    lastRotation = 0;
+    graphicsContext.save(); // Save default transform
   }
 
   @Override
@@ -64,15 +63,18 @@ final class FXRenderer implements IRenderer {
     }
   }
 
-  @Override
-  public void setRotation(double rotation) {
-    graphicsContext.rotate(rotation);
-    lastRotation += rotation;
+  public void startTransform(double rotation, Point startPoint, int width, int height) {
+    endTransform();
+    graphicsContext.save(); // Save default transform
+    Affine rotate = new Affine();
+    double centerX = startPoint.getX() + width / 2;
+    double centerY = startPoint.getY() + height / 2;
+    rotate.appendRotation(rotation, centerX, centerY);
+    graphicsContext.setTransform(rotate);
   }
 
-  @Override
-  public void resetRotation(){
-    setRotation(-lastRotation);
+  public void endTransform() {
+    graphicsContext.restore();
   }
 
   @Override
