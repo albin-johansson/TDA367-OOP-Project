@@ -1,6 +1,7 @@
 package chalmers.pimp.model;
 
 import chalmers.pimp.model.canvas.ICanvas;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
@@ -17,16 +18,18 @@ public final class Stroke {
   private final List<IPixel> pixels;
   private final ModelMemento modelMemento;
   private final int diameter;
+  private final IColor color;
 
   /**
    * @param modelMemento the model memento object, that represents the current model state.
    * @param diameter     the diameter of the stroke, in pixels.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  Stroke(ModelMemento modelMemento, int diameter) {
+  Stroke(ModelMemento modelMemento, int diameter, IColor color) {
     this.modelMemento = Objects.requireNonNull(modelMemento);
     this.diameter = diameter;
     pixels = new ArrayList<>(10);
+    this.color = color;
   }
 
   /**
@@ -47,16 +50,15 @@ public final class Stroke {
    * @param pixel the pixel affected by the stroke.
    * @throws NullPointerException if any references are {@code null}.
    */
-  public void updatePixels(ICanvas model, IPixel pixel) {
+  public void updatePixels(ICanvas model, IPixel pixel, IReadOnlyColor color) {
     Objects.requireNonNull(model);
     Objects.requireNonNull(pixel);
 
     var pixels = new PixelData(diameter, diameter);
-    IReadOnlyColor color = pixel.getColor();
 
     for (int row = 0; row < diameter; row++) {
       for (int col = 0; col < diameter; col++) {
-        IPixel p = PixelFactory.createPixel(col, row, model.getSelectedColor());
+        IPixel p = PixelFactory.createPixel(col, row, color);
         pixels.setPixel(p);
       }
     }
@@ -81,5 +83,14 @@ public final class Stroke {
    */
   public Iterable<IPixel> getPixels() {
     return pixels;
+  }
+
+  /**
+   * Returns the color of the stroke.
+   *
+   * @return the color of the stroke.
+   */
+  public IReadOnlyColor getColor() {
+    return color;
   }
 }
