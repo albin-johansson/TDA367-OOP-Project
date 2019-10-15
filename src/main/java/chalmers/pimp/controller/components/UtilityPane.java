@@ -2,7 +2,6 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.util.AnchorPanes;
 import chalmers.pimp.util.Resources;
@@ -18,7 +17,7 @@ import javafx.scene.layout.VBox;
  */
 class UtilityPane extends AnchorPane {
 
-  private final LayerItemManagerPane layerItemManagerPane;
+  private final LayerItemContainerPane layerItemContainerPane;
   private final ColorPickerPane colorPickerPane;
   private final IModel model;
 
@@ -30,12 +29,11 @@ class UtilityPane extends AnchorPane {
     this.model = Objects.requireNonNull(model);
 
     colorPickerPane = new ColorPickerPane(model);
-    layerItemManagerPane = new LayerItemManagerPane();
-    model.addLayerUpdateListener(layerItemManagerPane);
+    layerItemContainerPane = new LayerItemContainerPane(model);
+    model.addLayerUpdateListener(layerItemContainerPane);
 
     addColorPickerPane();
-    addLayerItemManagerPane();
-    populateLayerItemManagerPane();
+    layerItemContainerPane();
   }
 
   /**
@@ -49,9 +47,9 @@ class UtilityPane extends AnchorPane {
   /**
    * Adds the layer item manager pane to the vbox and sets its anchor points to zero.
    */
-  private void addLayerItemManagerPane() throws IOException {
-    VBoxContainer.getChildren().add(layerItemManagerPane);
-    AnchorPanes.setZeroAnchors(layerItemManagerPane);
+  private void layerItemContainerPane() throws IOException {
+    VBoxContainer.getChildren().add(layerItemContainerPane);
+    AnchorPanes.setZeroAnchors(layerItemContainerPane);
   }
 
   /**
@@ -70,32 +68,5 @@ class UtilityPane extends AnchorPane {
    */
   public void setColor(IColor color) {
     colorPickerPane.setColor(color);
-  }
-
-  /**
-   * Populates the LayerItemManagerPane with LayerItems based on the layers in the model
-   */
-  private void populateLayerItemManagerPane() {
-    for (IReadOnlyLayer layer : model.getLayers()) {
-      layerItemManagerPane.addLayerItemPane(createLayerItemPane(layer));
-    }
-  }
-
-  /**
-   * Creates the LayerItems for the view, based on a {@code IReadOnlyLayer}
-   *
-   * @param layer the {@code IReadOnlyLayer} that will be created as a view component
-   * @return the corresponding {@code LayerItemPane} created from the {@code IReadOnlyLayer}
-   */
-  private LayerItemPane createLayerItemPane(IReadOnlyLayer layer) {
-    try {
-      return new LayerItemPane(model, layer);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  void addLayerItemPane(LayerItemPane layerItemPane) {
-    layerItemManagerPane.addLayerItemPane(layerItemPane);
   }
 }
