@@ -43,23 +43,26 @@ public final class PimpEditorPane extends AnchorPane {
     Objects.requireNonNull(model);
     Objects.requireNonNull(controller);
 
+    // Toolbar (TOP)
     var toolbarPane = new ToolbarPane(controller);
     topAnchorPane.getChildren().add(toolbarPane);
     AnchorPanes.setZeroAnchors(toolbarPane);
     model.addUndoRedoListener(toolbarPane);
 
+    // Utility (RIGHT)
+    utilityPane = new UtilityPane(model);
+    rightAnchorPane.getChildren().add(utilityPane);
+    AnchorPanes.setZeroAnchors(utilityPane);
+
+    // Canvas (CENTER)
     canvasPane = new CanvasPane(controller);
     centerPane.getChildren().add(canvasPane);
-    AnchorPanes.setAnchors(canvasPane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(canvasPane);
 
-    var layerItemManagerPane = new LayerItemContainerPane(model);
-    model.addLayerUpdateListener(layerItemManagerPane);
-    rightAnchorPane.getChildren().add(layerItemManagerPane);
-    AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
-
+    // Palette pane (LEFT)
     var palettePane = new PalettePane(controller);
     leftAnchorPane.getChildren().add(palettePane);
-    AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(palettePane);
   }
 
   /**
@@ -69,32 +72,5 @@ public final class PimpEditorPane extends AnchorPane {
    */
   public GraphicsContext getGraphics() {
     return canvasPane.getGraphics();
-  }
-
-  /**
-   * Creates the LayerItems for the view, based on a {@code IReadOnlyLayer}
-   *
-   * @param layer the {@code IReadOnlyLayer} that will be created as a view component
-   * @return the corresponding {@code LayerItemPane} created from the {@code IReadOnlyLayer}
-   */
-  private LayerItemPane createLayerItemPane(IReadOnlyLayer layer) {
-    try {
-      return new LayerItemPane(model, layer);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  /**
-   * Will only act if {@code EventType} is CREATED, and will then create a new LayerItemPane with
-   * the supplied layer
-   *
-   * @param e the {@code LayerUpdateEvent} which houses the EventType and associated Layer
-   */
-  @Override
-  public void layersUpdated(LayerUpdateEvent e) {
-    if (e.getType() == EventType.CREATED) {
-      utilityPane.addLayerItemPane(createLayerItemPane(e.getLayer()));
-    }
   }
 }
