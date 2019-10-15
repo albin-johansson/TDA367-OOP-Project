@@ -53,7 +53,7 @@ public final class ColorFactory {
    * @return a copy of the supplied color.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  public static IColor createColor(IReadOnlyColor color) {
+  public static IColor createColor(IColor color) {
     Objects.requireNonNull(color);
     return new ColorImpl(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
   }
