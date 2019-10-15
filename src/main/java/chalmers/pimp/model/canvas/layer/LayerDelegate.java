@@ -1,5 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.Point;
 import java.util.Objects;
 
 /**
@@ -19,8 +20,7 @@ final class LayerDelegate {
   private final LayerType layerType;
   private String name;
   private boolean isVisible;
-  private int x;
-  private int y;
+  private Point point;
   private int depthIndex;
   private double rotation;
   private double alpha;
@@ -34,8 +34,7 @@ final class LayerDelegate {
 
     name = "";
     isVisible = DEFAULT_VISIBILITY_VALUE;
-    x = 0;
-    y = 0;
+    point = new Point(0, 0);
     depthIndex = 0;
     rotation = 0;
     alpha = 1;
@@ -50,8 +49,7 @@ final class LayerDelegate {
     Objects.requireNonNull(layerDelegate);
 
     layerType = layerDelegate.layerType;
-    x = layerDelegate.x;
-    y = layerDelegate.y;
+    point = new Point(layerDelegate.point.getX(), layerDelegate.point.getY());
     depthIndex = layerDelegate.depthIndex;
     name = layerDelegate.name;
     isVisible = layerDelegate.isVisible;
@@ -60,21 +58,21 @@ final class LayerDelegate {
   }
 
   /**
-   * Sets the x-coordinate of the layer.
+   * Sets the x-coordinate of the layer's point.
    *
-   * @param x the new x-coordinate of the layer.
+   * @param x the new x-coordinate of the layer's point.
    */
   void setX(int x) {
-    this.x = x;
+    point = point.setX(x);
   }
 
   /**
-   * Sets the y-coordinate of the layer.
+   * Sets the y-coordinate of the layer's point.
    *
-   * @param y the new y-coordinate of the layer.
+   * @param y the new y-coordinate of the layer's point.
    */
   void setY(int y) {
-    this.y = y;
+    point = point.setY(y);
   }
 
   /**
@@ -84,8 +82,8 @@ final class LayerDelegate {
    * @param dy the y-axis offset, may be negative.
    */
   void move(int dx, int dy) {
-    x += dx;
-    y += dy;
+    point = point.setX(point.getX() + dx);
+    point = point.setY(point.getY() + dy);
   }
 
   /**
@@ -123,7 +121,7 @@ final class LayerDelegate {
    * @return the x-coordinate of the layer.
    */
   int getX() {
-    return x;
+    return point.getX();
   }
 
   /**
@@ -132,7 +130,16 @@ final class LayerDelegate {
    * @return the y-coordinate of the layer.
    */
   int getY() {
-    return y;
+    return point.getY();
+  }
+
+  /**
+   * Returns the coordinate point.
+   *
+   * @return the coordinate point.
+   */
+  Point getPoint() {
+    return point;
   }
 
   /**
@@ -210,7 +217,7 @@ final class LayerDelegate {
 
   @Override
   public int hashCode() {
-    return Objects.hash(x, y, name, depthIndex, isVisible);
+    return Objects.hash(point, name, depthIndex, isVisible);
   }
 
   /**
@@ -241,8 +248,8 @@ final class LayerDelegate {
     var layerDelegate = (LayerDelegate) object;
 
     return (layerType == layerDelegate.layerType)
-        && (x == layerDelegate.x)
-        && (y == layerDelegate.y)
+        && (point.getX() == layerDelegate.point.getX())
+        && (point.getY() == layerDelegate.point.getY())
         && (depthIndex == layerDelegate.depthIndex);
   }
 }
