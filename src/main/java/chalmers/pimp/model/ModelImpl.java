@@ -13,9 +13,9 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.command.CommandFactory;
-import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
@@ -33,6 +33,7 @@ final class ModelImpl implements IModel {
   private LayerMovement layerMovement;
   private Stroke stroke;
   private ITool selectedTool;
+  private IColor selectedColor;
 
   ModelImpl() {
     canvas = CanvasFactory.createCanvas();
@@ -107,7 +108,7 @@ final class ModelImpl implements IModel {
   @Override
   public void startStroke(IPixel pixel, int diameter) {
     Objects.requireNonNull(pixel);
-    stroke = new Stroke(createSnapShot(), diameter);
+    stroke = new Stroke(createSnapShot(), diameter, selectedColor);
     updateStroke(pixel);
   }
 
@@ -116,7 +117,7 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(canvas, pixel);
+      stroke.updatePixels(canvas, pixel, selectedColor);
       notifyCanvasUpdateListeners();
     }
   }
@@ -126,7 +127,7 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(canvas, pixel);
+      stroke.updatePixels(canvas, pixel, selectedColor);
 
       // We don't need to explicitly execute the created command, the effect is already present
       ICommand cmd = createStrokeCommand(canvas, this, stroke);
@@ -249,11 +250,13 @@ final class ModelImpl implements IModel {
   @Override
   public void restore(ModelMemento modelMemento) {
     canvas.restore(modelMemento.getCanvasMemento());
+    selectedColor = ColorFactory.createColor(modelMemento.getColor());
+    System.out.println("selected color" + selectedColor.toString());
   }
 
   @Override
   public ModelMemento createSnapShot() {
-    return new ModelMemento(canvas.createSnapShot());
+    return new ModelMemento(canvas.createSnapShot(), selectedColor);
   }
 
   @Override
@@ -268,7 +271,19 @@ final class ModelImpl implements IModel {
 
   @Override
   public void setSelectedColor(IColor color) {
-    this.selectedColor = color;
+    // A null instance is sent to this function from the color picker when the app is started.
+    // Quick fix to prevent bad stuff from occurring. Implement a better way of solving this issue?
+    // Or is it simply good enough?
+    if (color == null) {
+      return;
+    }
+
+    var cmd = CommandFactory.createChangeColorCommand(canvas, this, color);
+    cmd.execute();
+    System.out.println("changing color to: " + color);
+    commandManager.insertCommand(cmd);
+
+//    this.selectedColor = color;
   }
 
   @Override
