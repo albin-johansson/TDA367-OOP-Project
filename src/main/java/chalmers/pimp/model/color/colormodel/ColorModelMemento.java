@@ -19,7 +19,9 @@ public final class ColorModelMemento {
   }
 
   /**
-   * @return
+   * Returns the color that the model was using when the memento was created.
+   *
+   * @return the color that the model was using when the memento was created.
    */
   IColor getColor() {
     return color;
