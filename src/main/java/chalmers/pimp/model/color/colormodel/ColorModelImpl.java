@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @see IColorModel
  */
-public class ColorModelImpl implements IColorModel {
+final class ColorModelImpl implements IColorModel {
 
   private IColor color;
   private final List<IColorChangeListener> colorChangeListeners;
