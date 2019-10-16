@@ -9,7 +9,10 @@ import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 
 /**
- * A tool which the user can deaw vectorised lines with
+ * The {@code DoodleTool} class is an implementation of the {@code ITool} interface that represents
+ * that is used to create "doodles". A doodle is basically a collection of interconnected points.
+ *
+ * @see ITool
  */
 final class DoodleTool implements ITool {
 
@@ -19,11 +22,10 @@ final class DoodleTool implements ITool {
   private ILayer doodle;
 
   /**
-   * Creates a doodle tool
-   *
-   * @param lineWidth the width of the doodle.
+   * @param lineWidth the line width of the doodle.
    * @param color     the color of the doodle.
-   * @param model     reference back to the model.
+   * @param model     the associated model instance.
+   * @throws NullPointerException if any references are {@code null}.
    */
   DoodleTool(int lineWidth, IColor color, IModel model) {
     this.lineWidth = lineWidth;
