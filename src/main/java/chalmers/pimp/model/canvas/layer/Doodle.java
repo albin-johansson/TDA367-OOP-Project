@@ -12,7 +12,7 @@ import java.util.Objects;
 /**
  * A layer which has a list of points and draws straight lines between the points.
  */
-final class Doodle implements ILayer {
+final class Doodle implements IDoodleLayer {
 
   private final List<Point> points;
   private final LayerDelegate layerDelegate;
@@ -52,17 +52,6 @@ final class Doodle implements ILayer {
     lineWidth = doodle.lineWidth;
 
     doodle.points.forEach(p -> points.add(p));
-  }
-
-  @Override
-  public void setPixel(IPixel pixel) {
-    points.add(new Point(pixel.getX(), pixel.getY()));
-    if (pixel.getX() > width - lineWidth) {
-      width = pixel.getX() + lineWidth;
-    }
-    if (pixel.getY() > height - lineWidth) {
-      height = pixel.getY() + lineWidth;
-    }
   }
 
   @Override
@@ -165,6 +154,26 @@ final class Doodle implements ILayer {
     for (int i = 1; i < points.size(); i++) {
       renderer.drawLine(points.get(i).addX(getX()).addY(getY()),
           points.get(i - 1).addX(getX()).addY(getY()));
+    }
+  }
+
+  @Override
+  public void addPoint(Point p) {
+    points.add(p);
+    if (p.getX() > width - lineWidth) {
+      width = p.getX() + lineWidth;
+    }
+    if (p.getY() > height - lineWidth) {
+      height = p.getY() + lineWidth;
+    }
+  }
+
+  @Override
+  public void removePoint(Point p, double threshold) {
+    for (Point po : points) {
+      if (po.distance(p) <= threshold) {
+        points.remove(po);
+      }
     }
   }
 }

@@ -2,6 +2,8 @@ package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.Point;
+import chalmers.pimp.model.canvas.layer.IDoodleLayer;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.color.IColor;
@@ -17,7 +19,7 @@ final class DoodleTool implements ITool {
   private final IColor color;
   private final int lineWidth;
   private int x, y;
-  private ILayer doodle;
+  private IDoodleLayer doodle;
 
   /**
    * Creates a doodle tool
@@ -41,7 +43,7 @@ final class DoodleTool implements ITool {
   @Override
   public void dragged(MouseStatus mouseStatus) {
     model.notifyCanvasUpdateListeners();
-    doodle.setPixel(PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color));
+    doodle.addPoint(new Point(mouseStatus.getX(), mouseStatus.getY()));
     doodle.draw(model.getRenderer());
   }
 

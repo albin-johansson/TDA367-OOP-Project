@@ -76,4 +76,16 @@ public final class Point {
   public Point addY(int yOffset) {
     return new Point(x, y + yOffset);
   }
+
+  /**
+   * Returns the distance between this and point p
+   *
+   * @param p the point to be compared with
+   * @return the distance this point and point p
+   */
+  public double distance(Point p) {
+    double dy = p.y - y;
+    double dx = p.x - x;
+    return Math.sqrt(dy * dy + dx * dx);
+  }
 }

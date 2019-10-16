@@ -1,6 +1,7 @@
 package chalmers.pimp.model.canvas;
 
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.IRasterLayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixel;
@@ -219,7 +220,9 @@ final class LayerManager {
   void setActiveLayerPixel(IPixel pixel) {
     Objects.requireNonNull(pixel);
     if (activeLayer != null) {
-      activeLayer.setPixel(pixel);
+      if (activeLayer instanceof IRasterLayer) {
+        ((IRasterLayer) activeLayer).setPixel(pixel);
+      }
     }
   }
 
@@ -244,7 +247,9 @@ final class LayerManager {
         // TODO this is a little bit strange?
         int dx = x - activeLayer.getX();
         int dy = y - activeLayer.getY();
-        activeLayer.setPixel(PixelFactory.createPixelWithOffset(pixel, dx, dy));
+        if (activeLayer instanceof IRasterLayer) {
+          ((IRasterLayer)activeLayer).setPixel(PixelFactory.createPixelWithOffset(pixel, dx, dy));
+        }
       }
     }
   }
