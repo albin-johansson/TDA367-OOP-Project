@@ -40,7 +40,6 @@ final class ModelImpl implements IModel {
   private LayerMovement layerMovement;
   private Stroke stroke; // TODO remove
   private ITool selectedTool;
-
   private int width;
   private int height;
 
@@ -101,8 +100,8 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void centerViewport(int areaWidth, int areaHeight) {
-    viewportModel.center(areaWidth, areaHeight);
+  public void centerViewport() {
+    viewportModel.center(width, height);
     notifyCanvasUpdateListeners();
   }
 

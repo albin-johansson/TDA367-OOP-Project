@@ -14,7 +14,8 @@ import chalmers.pimp.model.IMementoTarget;
 public interface IViewportModel extends IMementoTarget<ViewportModelMemento> {
 
   /**
-   * Centers the viewport over the are with the supplied dimensions.
+   * Centers the viewport over the area with the supplied dimensions. The area should represent the
+   * model canvas.
    *
    * @param areaWidth  the width of the area.
    * @param areaHeight the height of the area.

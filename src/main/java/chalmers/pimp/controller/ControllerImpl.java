@@ -77,7 +77,7 @@ final class ControllerImpl implements IController {
 
   @Override
   public void centerViewport() {
-    model.centerViewport(pane.getCanvasWidth(), pane.getCanvasHeight());
+    model.centerViewport();
   }
 
   @Override

@@ -57,8 +57,8 @@ final class Viewport implements IReadOnlyViewport {
       throw new IllegalArgumentException(msg);
     }
 
-    int x = (areaWidth - width) / 2;
-    int y = (areaHeight - height) / 2;
+    int x = -(areaWidth - width) / 2;
+    int y = -(areaHeight - height) / 2;
     this.x = x;
     this.y = y;
   }
