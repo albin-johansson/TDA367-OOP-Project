@@ -4,13 +4,14 @@ import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.IColorModel;
+import java.util.Objects;
 
 /**
  * The {@code ChangeColorCommand} class is a command that represents a change of color.
  *
  * @see ICommand
  */
-public class ChangeColorCommand implements ICommand {
+final class ChangeColorCommand implements ICommand {
 
   private final IMementoTarget<ModelMemento> mementoTarget;
   private final IColorModel colorModel;
@@ -23,14 +24,11 @@ public class ChangeColorCommand implements ICommand {
    * @param color         the mew color.
    * @throws NullPointerException if any references are {@code null}.
    */
-  ChangeColorCommand(
-      IMementoTarget<ModelMemento> mementoTarget,
-      IColorModel colorModel,
-      IColor color
-  ) {
-    this.mementoTarget = mementoTarget;
-    this.colorModel = colorModel;
-    this.color = color;
+  ChangeColorCommand(IMementoTarget<ModelMemento> mementoTarget, IColorModel colorModel,
+      IColor color) {
+    this.mementoTarget = Objects.requireNonNull(mementoTarget);
+    this.colorModel = Objects.requireNonNull(colorModel);
+    this.color = Objects.requireNonNull(color);
   }
 
   @Override
