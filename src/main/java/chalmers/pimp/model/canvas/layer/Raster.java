@@ -1,6 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.IRenderer;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
@@ -23,6 +24,7 @@ final class Raster implements ILayer {
     layerDelegate = new LayerDelegate(LayerType.RASTER);
     layerDelegate.setName("Raster");
     pixelData = new PixelData(width, height);
+    setRotationAnchorToCenter();
   }
 
   /**
@@ -34,6 +36,7 @@ final class Raster implements ILayer {
   Raster(PixelData pixelData) {
     this.pixelData = Objects.requireNonNull(pixelData);
     layerDelegate = new LayerDelegate(LayerType.RASTER);
+    setRotationAnchorToCenter();
   }
 
   /**
@@ -61,6 +64,7 @@ final class Raster implements ILayer {
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
+    setRotationAnchorToCenter();
   }
 
   @Override
@@ -84,8 +88,21 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public void setRotationAnchor(Point rotationAnchor) {
+    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
+    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
+  }
+
+  @Override
+  public void setRotationAnchorToCenter() {
+    Point temp = new Point(layerDelegate.getX() + (pixelData.getWidth() / 2),
+        layerDelegate.getY() + (pixelData.getHeight() / 2));
+    layerDelegate.setRotationAnchor(temp);
+  }
+
+  @Override
   public void setRotation(double rotation) {
-    layerDelegate.setRotation(rotation);
+    layerDelegate.setRotationDegrees(rotation);
   }
 
   @Override
@@ -119,13 +136,18 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public Point getRotationAnchor() {
+    return layerDelegate.getRotationAnchorPoint();
+  }
+
+  @Override
   public LayerType getLayerType() {
     return layerDelegate.getLayerType();
   }
 
   @Override
   public double getRotation() {
-    return layerDelegate.getRotation();
+    return layerDelegate.getRotationDegrees();
   }
 
   @Override
@@ -141,7 +163,7 @@ final class Raster implements ILayer {
   @Override
   public void draw(IRenderer renderer) {
     if (isVisible()) {
-      renderer.startTransform(layerDelegate.getRotation(), layerDelegate.getPoint(),
+      renderer.startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(),
           pixelData.getWidth(), pixelData.getHeight());
       renderer.setGlobalAlpha(layerDelegate.getAlpha());
       renderer.drawImage(pixelData, getX(), getY(), pixelData.getWidth(), pixelData.getHeight());

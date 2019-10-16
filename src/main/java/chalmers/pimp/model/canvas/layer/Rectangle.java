@@ -1,6 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.IRenderer;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
@@ -34,6 +35,7 @@ final class Rectangle implements ILayer {
     layerDelegate.setY(y);
     this.width = width;
     this.height = height;
+    setRotationAnchorToCenter();
 
     // OBVIOUSLY not a good solution. Just a fun easter egg :)
     layerDelegate.setName((width == height) ? "Square" : "Rectangle");
@@ -67,6 +69,7 @@ final class Rectangle implements ILayer {
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
+    setRotationAnchorToCenter();
   }
 
   @Override
@@ -90,8 +93,20 @@ final class Rectangle implements ILayer {
   }
 
   @Override
+  public void setRotationAnchor(Point rotationAnchor) {
+    layerDelegate.setRotationAnchor(rotationAnchor);
+  }
+
+  @Override
+  public void setRotationAnchorToCenter() {
+    Point temp = new Point(layerDelegate.getX() + width / 2,
+        layerDelegate.getY() + height / 2);
+    layerDelegate.setRotationAnchor(temp);
+  }
+
+  @Override
   public void setRotation(double rotation) {
-    layerDelegate.setRotation(rotation);
+    layerDelegate.setRotationDegrees(rotation);
   }
 
   @Override
@@ -125,13 +140,18 @@ final class Rectangle implements ILayer {
   }
 
   @Override
+  public Point getRotationAnchor() {
+    return layerDelegate.getRotationAnchorPoint();
+  }
+
+  @Override
   public LayerType getLayerType() {
     return layerDelegate.getLayerType();
   }
 
   @Override
   public double getRotation() {
-    return layerDelegate.getRotation();
+    return layerDelegate.getRotationDegrees();
   }
 
   @Override
@@ -155,7 +175,9 @@ final class Rectangle implements ILayer {
   @Override
   public void draw(IRenderer renderer) {
     if (isVisible()) {
-      renderer.startTransform(layerDelegate.getRotation(), layerDelegate.getPoint(), width, height);
+      renderer
+          .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(), width,
+              height);
       renderer.setGlobalAlpha(color.getAlphaPercentage());
       renderer.setFillColor(color);
       renderer.setBorderColor(color);
