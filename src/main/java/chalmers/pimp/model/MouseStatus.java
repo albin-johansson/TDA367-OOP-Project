@@ -48,7 +48,7 @@ public final class MouseStatus {
     return button;
   }
 
-  public enum MouseButtonID{
+  public enum MouseButtonID {
     NONE,
     PRIMARY,
     MIDDLE,

@@ -28,9 +28,12 @@ public final class PimpApp extends Application {
     IModel model = ModelFactory.createModel();
     IView view = ViewFactory.createView(model);
     IController controller = ControllerFactory.createController(model, view, stage);
+
     model.addCanvasUpdateListener(view);
+
     controller.run();
 
+    controller.centerViewport();
     view.repaint();
   }
 }

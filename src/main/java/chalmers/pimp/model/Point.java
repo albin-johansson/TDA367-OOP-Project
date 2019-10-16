@@ -26,7 +26,7 @@ public final class Point {
    * @return a new point with the same y component and the new x component.
    */
   public Point setX(int x) {
-    return new Point(x, getY());
+    return new Point(x, y);
   }
 
   /**
@@ -36,7 +36,7 @@ public final class Point {
    * @return a new point with the same x component and the new y component.
    */
   public Point setY(int y) {
-    return new Point(getX(), y);
+    return new Point(x, y);
   }
 
   /**

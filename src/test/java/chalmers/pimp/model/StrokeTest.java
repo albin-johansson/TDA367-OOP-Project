@@ -8,6 +8,8 @@ import chalmers.pimp.model.canvas.CanvasFactory;
 import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelFactory;
+import chalmers.pimp.model.viewport.IViewportModel;
+import chalmers.pimp.model.viewport.ViewportModelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +21,8 @@ class StrokeTest {
   @BeforeEach
   void setUp() {
     ICanvas canvas = CanvasFactory.createCanvas();
-    memento = new ModelMemento(canvas.createSnapShot());
+    IViewportModel viewportModel = ViewportModelFactory.createViewportModel();
+    memento = new ModelMemento(canvas.createSnapShot(), viewportModel.createSnapShot());
     stroke = new Stroke(memento, 10);
   }
 
