@@ -2,6 +2,7 @@ package chalmers.pimp.view.renderer;
 
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.service.ColorConverterService;
 import chalmers.pimp.service.PixelDataToFXService;
@@ -63,22 +64,32 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
+  public void drawLine(int x1, int y1, int x2, int y2) {
+    graphicsContext.strokeLine(x1, y1, x2, y2);
+  }
+
+  @Override
   public void setRotation(int rotation) {
 
   }
 
   @Override
-  public void setFillColor(IColor color) {
+  public void setFillColor(IReadOnlyColor color) {
     graphicsContext.setFill(ColorConverterService.toFXColor(color));
   }
 
   @Override
-  public void setBorderColor(IColor color) {
+  public void setBorderColor(IReadOnlyColor color) {
     graphicsContext.setStroke(ColorConverterService.toFXColor(color));
   }
 
   @Override
   public void setBorderWidth(int width) {
+    graphicsContext.setLineWidth(width);
+  }
+
+  @Override
+  public void setLineWidth(int width) {
     graphicsContext.setLineWidth(width);
   }
 
