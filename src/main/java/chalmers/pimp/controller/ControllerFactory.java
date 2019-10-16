@@ -15,12 +15,12 @@ public final class ControllerFactory {
   }
 
   /**
-   * Creates and returns a chalmers.pimp.controller instance.
+   * Creates and returns a model instance.
    *
    * @param model the associated model instance.
    * @param view  the associated model instance.
    * @param stage the parent stage instance.
-   * @return a chalmers.pimp.controller instance.
+   * @return a model instance.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   public static IController createController(IModel model, IView view, Stage stage) {
