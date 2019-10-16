@@ -16,7 +16,6 @@ final class DoodleTool implements ITool {
   private final IModel model;
   private final IColor color;
   private final int lineWidth;
-  private int x, y;
   private ILayer doodle;
 
   /**
