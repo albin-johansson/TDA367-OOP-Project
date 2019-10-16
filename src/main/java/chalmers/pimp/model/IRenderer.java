@@ -106,9 +106,9 @@ public interface IRenderer {
   void setBorderWidth(int width);
 
   /**
-   * Sets the line width
+   * Sets the width of the line which will be drawn
    *
-   * @param width the width of tht line
+   * @param width the width of the line
    */
   void setLineWidth(int width);
 

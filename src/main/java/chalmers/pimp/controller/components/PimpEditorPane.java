@@ -96,7 +96,7 @@ public final class PimpEditorPane extends AnchorPane {
 
     model.addLayerUpdateListener(event->{
       infoPane.setLayerHeightLabel(String.valueOf(model.getActiveLayer().getHeight()));
-      infoPane.setLayerWidthLabel(String.valueOf(model.getActiveLayer().getWidth()));
+      infoPane.setLayerWidthLabel(String.valueOf(model.getActiveLayer().getLineWidth1()));
     });
   }
 

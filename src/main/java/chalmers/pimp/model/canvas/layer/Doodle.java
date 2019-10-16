@@ -5,8 +5,6 @@ import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
-import chalmers.pimp.model.pixeldata.PixelData;
-import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -124,8 +122,8 @@ final class Doodle implements ILayer {
   }
 
   @Override
-  public int getWidth() {
-    return width;
+  public int getLineWidth1() {
+    return lineWidth1;
   }
 
   @Override
@@ -150,11 +148,11 @@ final class Doodle implements ILayer {
 
   @Override
   public void draw(IRenderer renderer) {
-    if (points.size() == 0) {
+    if (!isVisible() || points.isEmpty()) {
       return;
     }
 
-    renderer.setLineWidth(width);
+    renderer.setLineWidth(lineWidth);
     renderer.setFillColor(color);
     renderer.setBorderColor(color);
 
