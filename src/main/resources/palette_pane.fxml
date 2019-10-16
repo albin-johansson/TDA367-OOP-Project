@@ -13,11 +13,11 @@
   <children>
     <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <ToggleButton mnemonicParsing="false" onAction="#selectPencil" selected="true">
+        <ToggleButton mnemonicParsing="false" onAction="#selectPencil">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@images/light/pencil.png" />
+                <Image url="@images/light/pixels.png" />
               </image>
             </ImageView>
           </graphic>
@@ -85,7 +85,19 @@
                   </ImageView>
                </graphic>
                <tooltip>
-                  <Tooltip text="Rotate Tool" />
+                <Tooltip text="Rotate Tool" />
+               </tooltip>
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" onAction="#selectDoodleTool" toggleGroup="$palette">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/light/pencil.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Doodle tool" />
                </tooltip>
             </ToggleButton>
       </children>

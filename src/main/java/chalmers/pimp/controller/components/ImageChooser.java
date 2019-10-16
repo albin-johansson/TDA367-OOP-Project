@@ -2,6 +2,7 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.service.FXToPixelDataService;
+import chalmers.pimp.service.FileService;
 import chalmers.pimp.service.ImageImportService;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javafx.stage.Window;
 public final class ImageChooser {
 
   private final FileChooser fileChooser;
+  private String mostRecentFileName;
 
   public ImageChooser() {
     fileChooser = new FileChooser();
@@ -24,6 +26,7 @@ public final class ImageChooser {
 
     var filter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png");
     fileChooser.getExtensionFilters().add(filter);
+    mostRecentFileName = "No file name created";
   }
 
   /**
@@ -43,8 +46,27 @@ public final class ImageChooser {
       System.out.println("No image file was selected!");
       return null;
     }
+    setMostRecentFileName(file);
 
     Image image = ImageImportService.importImage(file);
     return FXToPixelDataService.createPixelDataCopy(image);
+  }
+
+  /**
+   * Sets the recentFileName for this ImageChooser, based on the supplied {@code File}.
+   *
+   * @param mostRecentFileName the {@code File} from which the name comes from.
+   */
+  private void setMostRecentFileName(File mostRecentFileName) {
+    this.mostRecentFileName = FileService.getFileNameFromFile(mostRecentFileName);
+  }
+
+  /**
+   * Returns the most recent file name for an imported file, without extension.
+   *
+   * @return then name of the most recent file.
+   */
+  public String getMostRecentFileName() {
+    return mostRecentFileName;
   }
 }

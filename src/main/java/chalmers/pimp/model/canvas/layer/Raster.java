@@ -37,6 +37,20 @@ final class Raster implements ILayer {
     this.pixelData = Objects.requireNonNull(pixelData);
     layerDelegate = new LayerDelegate(LayerType.RASTER);
     setRotationAnchorToCenter();
+    layerDelegate.setName("Import");
+  }
+
+  /**
+   * Creates a raster that is a copy of the supplied pixel data and sets the name of the raster.
+   *
+   * @param pixelData the pixel data that will be copied.
+   * @param pixelDataName the name of the new raster.
+   * @throws NullPointerException if the supplied pixel data or pixel data name is {@code null}.
+   */
+  Raster(PixelData pixelData, String pixelDataName) {
+    this.pixelData = Objects.requireNonNull(pixelData);
+    layerDelegate = new LayerDelegate(LayerType.RASTER);
+    layerDelegate.setName(Objects.requireNonNull(pixelDataName));
   }
 
   /**
@@ -153,6 +167,16 @@ final class Raster implements ILayer {
   @Override
   public double getAlpha() {
     return layerDelegate.getAlpha();
+  }
+
+  @Override
+  public int getWidth() {
+    return pixelData.getWidth();
+  }
+
+  @Override
+  public int getHeight() {
+    return pixelData.getHeight();
   }
 
   @Override

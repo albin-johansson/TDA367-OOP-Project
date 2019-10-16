@@ -3,6 +3,7 @@ package chalmers.pimp.view.renderer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.service.ColorConverterService;
 import chalmers.pimp.service.PixelDataToFXService;
@@ -63,6 +64,7 @@ final class FXRenderer implements IRenderer {
     }
   }
 
+  @Override
   public void startTransform(double rotation, Point startPoint, int width, int height) {
     endTransform();
     graphicsContext.save(); // Save default transform
@@ -72,6 +74,14 @@ final class FXRenderer implements IRenderer {
     rotate.appendRotation(rotation, centerX, centerY);
     graphicsContext.setTransform(rotate);
   }
+
+  @Override
+  public void drawLine(Point p1, Point p2) {
+    graphicsContext.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+  }
+
+  @Override
+  public void setRotation(int rotation) {
 
   public void endTransform() {
     graphicsContext.restore();
@@ -83,17 +93,22 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void setFillColor(IColor color) {
+  public void setFillColor(IReadOnlyColor color) {
     graphicsContext.setFill(ColorConverterService.toFXColor(color));
   }
 
   @Override
-  public void setBorderColor(IColor color) {
+  public void setBorderColor(IReadOnlyColor color) {
     graphicsContext.setStroke(ColorConverterService.toFXColor(color));
   }
 
   @Override
   public void setBorderWidth(int width) {
+    graphicsContext.setLineWidth(width);
+  }
+
+  @Override
+  public void setLineWidth(int width) {
     graphicsContext.setLineWidth(width);
   }
 

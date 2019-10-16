@@ -158,6 +158,16 @@ final class Rectangle implements ILayer {
   public double getAlpha() {
     return layerDelegate.getAlpha();
   }
+  
+  @Override
+  public int getWidth() {
+    return width;
+  }
+
+  @Override
+  public int getHeight() {
+    return height;
+  }
 
   @Override
   public IReadOnlyPixelData getPixelData() {

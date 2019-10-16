@@ -29,6 +29,9 @@ public final class PimpEditorPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private AnchorPane leftAnchorPane;
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane bottomAnchorPane;
 
   /**
    * @param model      the associated chalmers.pimp.model instance.
@@ -46,9 +49,11 @@ public final class PimpEditorPane extends AnchorPane {
     AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
     model.addUndoRedoListener(toolbarPane);
 
-    canvasPane = new CanvasPane(controller);
+    var canvasPane = new CanvasPane(controller);
     centerPane.getChildren().add(canvasPane);
     AnchorPanes.setAnchors(canvasPane, 0, 0, 0, 0);
+
+    this.canvasPane = canvasPane;
 
     var layerItemManagerPane = new LayerItemContainerPane(model);
     model.addLayerUpdateListener(layerItemManagerPane);
@@ -58,6 +63,41 @@ public final class PimpEditorPane extends AnchorPane {
     var palettePane = new PalettePane(controller);
     leftAnchorPane.getChildren().add(palettePane);
     AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
+
+    var infoPane = new InfoPane(controller, model);
+    bottomAnchorPane.getChildren().add(infoPane);
+    AnchorPanes.setAnchors(infoPane, 0, 0, 0, 0);
+
+    initiateInfoPane(canvasPane, infoPane, controller, model);
+
+  }
+
+  /**
+   * Adds listeners to the Canvas which in turn call for the infoPane to update itself.
+   */
+  private void initiateInfoPane(CanvasPane canvasPane, InfoPane infoPane, IController controller, IModel model) {
+    canvasPane.getGraphics().getCanvas().heightProperty()
+        .addListener((observable, oldvalue, newvalue) ->
+            infoPane.setCanvasHeightLabel(String.valueOf(newvalue.intValue()))
+        );
+
+    canvasPane.getGraphics().getCanvas().widthProperty()
+        .addListener((observable, oldvalue, newvalue) ->
+            infoPane.setCanvasWidthLabel(String.valueOf(newvalue.intValue()))
+        );
+
+    canvasPane.setOnMouseDragged((e) -> {
+      infoPane.updateCoordinates(e);
+      controller.selectedToolDragged(e);
+    });
+
+    canvasPane.setOnMouseMoved(infoPane::updateCoordinates);
+    canvasPane.setOnMouseExited(infoPane::turnOffCoordinates);
+
+    model.addLayerUpdateListener(event->{
+      infoPane.setLayerHeightLabel(String.valueOf(model.getActiveLayer().getHeight()));
+      infoPane.setLayerWidthLabel(String.valueOf(model.getActiveLayer().getWidth()));
+    });
   }
 
   /**
@@ -68,4 +108,5 @@ public final class PimpEditorPane extends AnchorPane {
   public GraphicsContext getGraphics() {
     return canvasPane.getGraphics();
   }
+
 }
