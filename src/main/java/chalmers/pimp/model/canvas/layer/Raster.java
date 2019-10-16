@@ -128,6 +128,16 @@ final class Raster implements ILayer {
   }
 
   @Override
+  public int getWidth() {
+    return pixelData.getWidth();
+  }
+
+  @Override
+  public int getHeight() {
+    return pixelData.getHeight();
+  }
+
+  @Override
   public IReadOnlyPixelData getPixelData() {
     return pixelData;
   }

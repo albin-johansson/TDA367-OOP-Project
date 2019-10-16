@@ -42,4 +42,16 @@ public final class ToolFactory {
   public static ITool createShapeTool(IModel model) {
     return new ShapeTool(model);
   }
+
+  /**
+   * Creates and returns a doodle tool
+   *
+   * @param diameter the diameter of the stroke line.
+   * @param color    the color of the stroke line.
+   * @param model    the reference to the model.
+   * @return a tool which represents a doodle tool.
+   */
+  public static ITool createDoodleTool(int diameter, IColor color, IModel model) {
+    return new DoodleTool(diameter, color, model);
+  }
 }
