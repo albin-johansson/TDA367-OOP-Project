@@ -5,6 +5,7 @@ import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.colorchangeobserver.IColorChangeListener;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.tools.ITool;
 
@@ -258,4 +259,12 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * @return all of the layers in the model.
    */
   Iterable<? extends IReadOnlyLayer> getLayers();
+
+  /**
+   * Adds a listener.
+   *
+   * @param listener a listener that listens to color changes.
+   * @throws NullPointerException if the provided observer is null.
+   */
+  void addColorChangeListener(IColorChangeListener listener);
 }
