@@ -167,6 +167,36 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void moveActiveLayer(int dx, int dy);
 
   /**
+   * Starts rotating the currently active layer. This method has no effect if there is no active
+   * layer.
+   *
+   */
+  void startRotatingActiveLayer(int x, int y);
+
+  /**
+   * Updates the rotation of the currently active layer. This method has no effect if the {@link
+   * IModel#startMovingActiveLayer(int, int)} method hasn't been invoked before invoking this
+   * method.
+   *
+   * @param x the new x-coordinate of the layer.
+   * @param y the new y-coordinate of the layer.
+   */
+  void updateRotatingActiveLayer(int x, int y);
+
+  /**
+   * Stops the rotation of the currently active layer. This method has no effect if the {@link
+   * IModel#startMovingActiveLayer(int, int)} method hasn't been invoked before invoking this
+   * method.
+   */
+  void stopRotatingActiveLayer();
+  /**
+   * Rotates the active layer by alpha degrees.
+   *
+   * @param alpha the rotation in degrees.
+   */
+  void rotateActiveLayer(double alpha);
+
+  /**
    * Can be Null if user chooses to deselect a tool.
    *
    * @param tool the tool to be selected.
