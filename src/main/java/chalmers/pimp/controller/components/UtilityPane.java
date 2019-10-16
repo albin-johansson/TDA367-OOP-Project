@@ -29,6 +29,7 @@ class UtilityPane extends AnchorPane {
     this.model = Objects.requireNonNull(model);
 
     colorPickerPane = new ColorPickerPane(model);
+    model.addColorChangeListener(colorPickerPane);
     layerItemContainerPane = new LayerItemContainerPane(model);
     model.addLayerUpdateListener(layerItemContainerPane);
 
