@@ -5,7 +5,12 @@ import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colorchangeobserver.IColorChangeObservable;
 
 /**
- * The {@code IColorModel} holds a color that the model uses.
+ * The {@code IColorModel} interface specifies objects that represent the color model (information
+ * about the selected color). The {@code IColorModel} interface extends {@code
+ * IColorChangeObservable} interface and is thus observable and can notify its listeners when its
+ * color has been modified.
+ *
+ * @see chalmers.pimp.model.color.colorchangeobserver.IColorChangeListener
  */
 public interface IColorModel extends IMementoTarget<ColorModelMemento>, IColorChangeObservable {
 
@@ -20,6 +25,7 @@ public interface IColorModel extends IMementoTarget<ColorModelMemento>, IColorCh
    * Sets the color.
    *
    * @param color new color.
+   * @throws NullPointerException if the provided color is {@code null}.
    */
   void setColor(IColor color);
 }
