@@ -169,26 +169,7 @@ final class ControllerImpl implements IController {
 
   @Override
   public void exportImage() {
-    FileChooser fileChooser = new FileChooser();
-
-    fileChooser.getExtensionFilters()
-        .add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));
-    fileChooser.getExtensionFilters()
-        .add(new FileChooser.ExtensionFilter("jpg files (*.jpg)", "*.jpg"));
-
-    File file = fileChooser.showSaveDialog(null);
-
-    if (file != null) {
-      try {
-        WritableImage image = pane.getGraphics().getCanvas()
-            .snapshot(new SnapshotParameters(), null);
-        RenderedImage renderedImage = SwingFXUtils.fromFXImage(image, null);
-
-        ImageIO.write(renderedImage, "png", file);
-      } catch (IOException ex) {
-        ex.printStackTrace();
-      }
-    }
+    ImageExportService.exportImage(model.getWidth(), model.getHeight(), model.getLayers());
   }
 
   @Override
