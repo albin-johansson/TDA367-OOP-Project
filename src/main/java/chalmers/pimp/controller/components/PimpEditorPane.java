@@ -31,6 +31,9 @@ public final class PimpEditorPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private AnchorPane leftAnchorPane;
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane bottomAnchorPane;
 
   /**
    * @param model      the associated chalmers.pimp.model instance.
@@ -63,6 +66,42 @@ public final class PimpEditorPane extends AnchorPane {
     var palettePane = new PalettePane(controller);
     leftAnchorPane.getChildren().add(palettePane);
     AnchorPanes.setZeroAnchors(palettePane);
+
+    // Info pane (DOWN)
+    var infoPane = new InfoPane(controller, model);
+    bottomAnchorPane.getChildren().add(infoPane);
+    AnchorPanes.setZeroAnchors(infoPane);
+
+    initiateInfoPane(canvasPane, infoPane, controller, model);
+
+  }
+
+  /**
+   * Adds listeners to the Canvas which in turn call for the infoPane to update itself.
+   */
+  private void initiateInfoPane(CanvasPane canvasPane, InfoPane infoPane, IController controller, IModel model) {
+    canvasPane.getGraphics().getCanvas().heightProperty()
+        .addListener((observable, oldvalue, newvalue) ->
+            infoPane.setCanvasHeightLabel(String.valueOf(newvalue.intValue()))
+        );
+
+    canvasPane.getGraphics().getCanvas().widthProperty()
+        .addListener((observable, oldvalue, newvalue) ->
+            infoPane.setCanvasWidthLabel(String.valueOf(newvalue.intValue()))
+        );
+
+    canvasPane.setOnMouseDragged((e) -> {
+      infoPane.updateCoordinates(e);
+      controller.selectedToolDragged(e);
+    });
+
+    canvasPane.setOnMouseMoved(infoPane::updateCoordinates);
+    canvasPane.setOnMouseExited(infoPane::turnOffCoordinates);
+
+    model.addLayerUpdateListener(event->{
+      infoPane.setLayerHeightLabel(String.valueOf(model.getActiveLayer().getHeight()));
+      infoPane.setLayerWidthLabel(String.valueOf(model.getActiveLayer().getWidth()));
+    });
   }
 
   /**
@@ -73,4 +112,5 @@ public final class PimpEditorPane extends AnchorPane {
   public GraphicsContext getGraphics() {
     return canvasPane.getGraphics();
   }
+
 }

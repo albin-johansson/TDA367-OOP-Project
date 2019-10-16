@@ -18,6 +18,9 @@
          <center>
             <AnchorPane fx:id="centerPane" cache="true" cacheHint="SPEED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="pane" BorderPane.alignment="CENTER" />
          </center>
+         <bottom>
+            <AnchorPane fx:id="bottomAnchorPane" prefHeight="25.0" prefWidth="1920.0" BorderPane.alignment="CENTER" />
+         </bottom>
     </BorderPane>
   </children>
 </fx:root>
