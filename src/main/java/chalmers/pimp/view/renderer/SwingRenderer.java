@@ -6,9 +6,10 @@ import static java.awt.RenderingHints.VALUE_RENDER_QUALITY;
 
 import chalmers.pimp.model.IArea;
 import chalmers.pimp.model.IRenderer;
-import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -31,6 +32,7 @@ final class SwingRenderer implements IRenderer {
   private Color fillColor;
   private int borderWidth;
   private int rotation;
+  private int lineWidth;
 
   /**
    * @param graphics the graphics instance that will be used internally.
@@ -106,20 +108,28 @@ final class SwingRenderer implements IRenderer {
   }
 
   @Override
+  public void drawLine(Point p1, Point p2) {
+    if ((p1 != null) && (p2 != null)) {
+      graphics.setStroke(new BasicStroke(lineWidth));
+      graphics.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+    }
+  }
+
+  @Override
   public void setRotation(int rotation) {
     this.rotation = rotation;
     graphics.rotate(Math.toRadians(rotation));
   }
 
   @Override
-  public void setFillColor(IColor color) {
+  public void setFillColor(IReadOnlyColor color) {
     if (color != null) {
       fillColor = toSwingColor(color);
     }
   }
 
   @Override
-  public void setBorderColor(IColor color) {
+  public void setBorderColor(IReadOnlyColor color) {
     if (color != null) {
       borderColor = toSwingColor(color);
     }
@@ -128,6 +138,11 @@ final class SwingRenderer implements IRenderer {
   @Override
   public void setBorderWidth(int width) {
     borderWidth = width;
+  }
+
+  @Override
+  public void setLineWidth(int width) {
+    lineWidth = width;
   }
 
   @Override

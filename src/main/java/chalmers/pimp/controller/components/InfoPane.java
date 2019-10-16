@@ -37,14 +37,6 @@ final class InfoPane extends AnchorPane {
     ControllerUtils.makeController(this, Resources.find(getClass(), "info_pane.fxml"));
   }
 
-  void setCanvasWidthLabel(int width) {
-    canvasWidth.setText(String.valueOf(width));
-  }
-
-  void setCanvasHeightLabel(int height) {
-    canvasHeight.setText(String.valueOf(height));
-  }
-
   void updateCoordinates(MouseEvent e) {
     xPos.setText(String.valueOf((int) e.getX()));
     yPos.setText(String.valueOf((int) e.getY()));
@@ -55,19 +47,19 @@ final class InfoPane extends AnchorPane {
     yPos.setText("-");
   }
 
-  /**
-   * Updates the layerWidth Label.
-   * @param string the new width.
-   */
-  void setLayerWidthLabel(String string) {
-    layerWidth.setText(string);
+  void setCanvasWidthLabel(int width) {
+    canvasWidth.setText(String.valueOf(width));
   }
 
-  /**
-   * Updates the layerHeight Label.
-   * @param string the new height.
-   */
-  void setLayerHeightLabel(String string) {
-    layerHeight.setText(string);
+  void setCanvasHeightLabel(int height) {
+    canvasHeight.setText(String.valueOf(height));
+  }
+
+  void setLayerWidthLabel(int width) {
+    layerWidth.setText(String.valueOf(width));
+  }
+
+  void setLayerHeightLabel(int height) {
+    layerHeight.setText(String.valueOf(height));
   }
 }

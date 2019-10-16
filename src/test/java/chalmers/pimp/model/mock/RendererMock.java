@@ -16,6 +16,11 @@ public class RendererMock implements IRenderer {
   }
 
   @Override
+  public void clear() {
+    
+  }
+
+  @Override
   public void drawRect(int x, int y, int width, int height) {
 
   }

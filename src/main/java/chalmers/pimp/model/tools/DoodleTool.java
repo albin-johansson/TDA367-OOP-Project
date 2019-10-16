@@ -23,8 +23,8 @@ final class DoodleTool implements ITool {
    * Creates a doodle tool
    *
    * @param lineWidth the width of the doodle.
-   * @param color    the color of the doodle.
-   * @param model    reference back to the model.
+   * @param color     the color of the doodle.
+   * @param model     reference back to the model.
    */
   DoodleTool(int lineWidth, IColor color, IModel model) {
     this.lineWidth = lineWidth;
@@ -41,13 +41,16 @@ final class DoodleTool implements ITool {
   @Override
   public void dragged(MouseStatus mouseStatus) {
     model.notifyCanvasUpdateListeners();
-    doodle.setPixel(PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color));
-    doodle.draw(model.getRenderer());
+
+    int x = model.getViewport().getRelativeX(mouseStatus.getX());
+    int y = model.getViewport().getRelativeY(mouseStatus.getY());
+
+    doodle.setPixel(PixelFactory.createPixel(x, y, color));
+    doodle.draw(model.getRenderer(), model.getViewport());
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
     model.addLayer(doodle);
-    model.selectLayer(doodle.getDepthIndex());
   }
 }

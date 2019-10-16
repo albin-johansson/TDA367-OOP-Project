@@ -41,7 +41,7 @@ final class Raster implements ILayer {
   /**
    * Creates a raster that is a copy of the supplied pixel data and sets the name of the raster.
    *
-   * @param pixelData the pixel data that will be copied.
+   * @param pixelData     the pixel data that will be copied.
    * @param pixelDataName the name of the new raster.
    * @throws NullPointerException if the supplied pixel data or pixel data name is {@code null}.
    */

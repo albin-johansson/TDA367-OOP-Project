@@ -9,7 +9,6 @@ import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
 
@@ -79,14 +78,14 @@ public final class PimpEditorPane extends AnchorPane {
   private void initiateInfoPane(CanvasPane canvasPane, InfoPane infoPane, IController controller,
       IModel model) {
 
-    Canvas canvas = canvasPane.getGraphics().getCanvas();
+//    Canvas canvas = canvasPane.getGraphics().getCanvas();
 
-    // FIXME
-    canvas.heightProperty().addListener((observable, oldvalue, newvalue) ->
-        infoPane.setCanvasHeightLabel(newvalue.intValue()));
-
-    canvas.widthProperty().addListener((observable, oldvalue, newvalue) ->
-        infoPane.setCanvasWidthLabel(newvalue.intValue()));
+//    // FIXME
+//    canvas.heightProperty().addListener((observable, oldvalue, newvalue) ->
+//        infoPane.setCanvasHeightLabel(newvalue.intValue()));
+//
+//    canvas.widthProperty().addListener((observable, oldvalue, newvalue) ->
+//        infoPane.setCanvasWidthLabel(newvalue.intValue()));
 
     canvasPane.setOnMouseDragged((e) -> {
       infoPane.updateCoordinates(e);
@@ -99,11 +98,11 @@ public final class PimpEditorPane extends AnchorPane {
     model.addLayerUpdateListener(event -> {
       if (model.getActiveLayer() == null) {
         infoPane.turnOffCoordinates();
-        return;
+      } else {
+        IReadOnlyLayer layer = model.getActiveLayer();
+        infoPane.setLayerWidthLabel(layer.getWidth());
+        infoPane.setLayerHeightLabel(layer.getHeight());
       }
-      IReadOnlyLayer layer = model.getActiveLayer();
-      infoPane.setLayerHeightLabel(String.valueOf(layer.getPixelData().getHeight()));
-      infoPane.setLayerWidthLabel(String.valueOf(layer.getPixelData().getWidth()));
     });
   }
 
@@ -114,23 +113,5 @@ public final class PimpEditorPane extends AnchorPane {
    */
   public GraphicsContext getGraphics() {
     return canvasPane.getGraphics();
-  }
-
-  /**
-   * Returns the current width of the canvas pane.
-   *
-   * @return the current width of the canvas pane.
-   */
-  public int getCanvasWidth() {
-    return (int) canvasPane.getWidth();
-  }
-
-  /**
-   * Returns the current height of the canvas pane.
-   *
-   * @return the current height of the canvas pane.
-   */
-  public int getCanvasHeight() {
-    return (int) canvasPane.getHeight();
   }
 }
