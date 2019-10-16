@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
  * The {@code UtilityPane} is the right anchor pane that contains the color picker and the container
  * containing layers.
  */
-class UtilityPane extends AnchorPane {
+final class UtilityPane extends AnchorPane {
 
   private final LayerItemContainerPane layerItemContainerPane;
   private final ColorPickerPane colorPickerPane;
@@ -24,6 +24,11 @@ class UtilityPane extends AnchorPane {
   @FXML
   private VBox VBoxContainer;
 
+  /**
+   * @param model the model.
+   * @throws IOException if the utility pane fxml file is not found.
+   * @throws NullPointerException if the provided model is {@code null}.
+   */
   UtilityPane(IModel model) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "utility_pane.fxml"));
     this.model = Objects.requireNonNull(model);
@@ -34,7 +39,7 @@ class UtilityPane extends AnchorPane {
     model.addLayerUpdateListener(layerItemContainerPane);
 
     addColorPickerPane();
-    layerItemContainerPane();
+    addLayerItemContainerPane();
   }
 
   /**
@@ -48,7 +53,7 @@ class UtilityPane extends AnchorPane {
   /**
    * Adds the layer item manager pane to the vbox and sets its anchor points to zero.
    */
-  private void layerItemContainerPane() throws IOException {
+  private void addLayerItemContainerPane() {
     VBoxContainer.getChildren().add(layerItemContainerPane);
     AnchorPanes.setZeroAnchors(layerItemContainerPane);
   }
