@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 /**
  * The {@code ColorPickerPane} represents the anchor pane that holds the color picker.
  */
-public class ColorPickerPane extends AnchorPane implements IColorChangeListener {
+final class ColorPickerPane extends AnchorPane implements IColorChangeListener {
 
   @FXML
   private ColorPicker colorPicker;
