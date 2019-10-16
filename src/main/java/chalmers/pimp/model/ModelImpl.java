@@ -215,6 +215,7 @@ final class ModelImpl implements IModel {
     if (hasSelectedTool()) {
       selectedTool.released(mouseStatus);
     }
+    canvas.notifyLayerUpdateListeners();
   }
 
   @Override

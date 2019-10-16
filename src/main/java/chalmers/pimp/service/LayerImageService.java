@@ -40,9 +40,6 @@ public final class LayerImageService {
 
     renderer.drawImage(layer.getPixelData(), x, y, size, size);
 
-    SnapshotParameters parameters = new SnapshotParameters();
-
-    System.out.println("test?");
-    return canvas.snapshot(parameters, null);
+    return canvas.snapshot(new SnapshotParameters(), null);
   }
 }
