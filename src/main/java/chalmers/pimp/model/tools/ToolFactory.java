@@ -34,6 +34,16 @@ public final class ToolFactory {
   }
 
   /**
+   * Create and returns a RotateTool
+   *
+   * @param model a reference to the Model.
+   * @return a RotateTool with a current rotation of 0 degrees.
+   */
+  public static ITool createRotateTool(IModel model) {
+    return new RotateTool(model);
+  }
+
+  /**
    * Creates and returns a shape tool.
    *
    * @param model a reference to the model
