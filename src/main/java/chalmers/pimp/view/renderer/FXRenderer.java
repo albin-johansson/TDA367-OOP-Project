@@ -35,7 +35,17 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void drawRect(int x, int y, int width, int height) {
-    graphicsContext.rect(x, y, width, height);
+    // Upper left -> Upper Right
+    graphicsContext.strokeLine(x, y, (x + width), y);
+
+    // Upper right -> Lower right
+    graphicsContext.strokeLine((x + width), y, (x + width), (y + height));
+
+    // Lower right -> lower left
+    graphicsContext.strokeLine((x + width), (y + height), x, (y + height));
+
+    // Lower left -> Upper left
+    graphicsContext.strokeLine(x, (y + height), x, y);
   }
 
   @Override
