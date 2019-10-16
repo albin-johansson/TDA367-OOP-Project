@@ -2,9 +2,9 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.colorchangeobserver.IColorChangeListener;
 import chalmers.pimp.service.ColorConverterService;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 /**
  * The {@code ColorPickerPane} represents the anchor pane that holds the color picker.
  */
-public class ColorPickerPane extends AnchorPane {
+public class ColorPickerPane extends AnchorPane implements IColorChangeListener {
 
   @FXML
   private ColorPicker colorPicker;
@@ -50,5 +50,10 @@ public class ColorPickerPane extends AnchorPane {
   public void setColor(IColor color) {
     Color fxColor = ColorConverterService.toFXColor(color);
     colorPicker.setValue(fxColor);
+  }
+
+  @Override
+  public void colorChanged(IColor color) {
+    setColor(color);
   }
 }
