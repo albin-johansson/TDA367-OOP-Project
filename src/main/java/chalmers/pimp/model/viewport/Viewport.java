@@ -53,7 +53,8 @@ final class Viewport implements IReadOnlyViewport {
    */
   void center(int areaWidth, int areaHeight) {
     if ((areaWidth < 1) || (areaHeight < 1)) {
-      throw new IllegalArgumentException("Bad area dimensions: (" + width + "x" + height + ")");
+      String msg = "Bad area dimensions: (" + areaWidth + "x" + areaHeight + ")";
+      throw new IllegalArgumentException(msg);
     }
 
     int x = (areaWidth - width) / 2;

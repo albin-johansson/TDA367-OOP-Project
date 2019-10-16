@@ -17,6 +17,16 @@ class ViewportTest {
   }
 
   @Test
+  void copyCtor() {
+    var copy = new Viewport(viewport);
+
+    assertEquals(viewport.getX(), copy.getX());
+    assertEquals(viewport.getY(), copy.getY());
+    assertEquals(viewport.getWidth(), copy.getWidth());
+    assertEquals(viewport.getHeight(), copy.getHeight());
+  }
+
+  @Test
   void center() {
     assertThrows(IllegalArgumentException.class, () -> viewport.center(0, 10));
     assertThrows(IllegalArgumentException.class, () -> viewport.center(10, 0));
