@@ -9,6 +9,11 @@ import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 public interface IRenderer {
 
   /**
+   * Clears the rendering target with the currently selected fill color.
+   */
+  void clear();
+
+  /**
    * Draws a rectangle outline.
    *
    * @param x      the zero-indexed x coordinate of the rectangle.

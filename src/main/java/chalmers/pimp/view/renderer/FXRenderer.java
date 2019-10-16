@@ -8,8 +8,6 @@ import chalmers.pimp.service.PixelDataToFXService;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 /**
  * The {@code FXRenderer} is a implementation of the {@code IRenderer} interface.
@@ -31,6 +29,11 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
+  public void clear() {
+    graphicsContext.fillRect(0, 0, getCanvasWidth(), getCanvasHeight());
+  }
+
+  @Override
   public void drawRect(int x, int y, int width, int height) {
     graphicsContext.rect(x, y, width, height);
   }
@@ -42,7 +45,6 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void drawEllipse(int x, int y, int radiusX, int radiusY) {
-
   }
 
   @Override
@@ -84,11 +86,11 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public int getCanvasWidth() {
-    return (int) graphicsContext.getCanvas().getWidth();
+    return (int) graphicsContext.getCanvas().getWidth() + 1;
   }
 
   @Override
   public int getCanvasHeight() {
-    return (int) graphicsContext.getCanvas().getHeight();
+    return (int) graphicsContext.getCanvas().getHeight() + 1;
   }
 }
