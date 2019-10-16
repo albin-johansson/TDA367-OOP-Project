@@ -2,14 +2,15 @@ package chalmers.pimp.view.renderer;
 
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
-import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.service.ColorConverterService;
 import chalmers.pimp.service.PixelDataToFXService;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
+import javafx.scene.shape.StrokeLineJoin;
 
 /**
  * The {@code FXRenderer} is a implementation of the {@code IRenderer} interface.
@@ -19,6 +20,7 @@ import javafx.scene.image.Image;
 final class FXRenderer implements IRenderer {
 
   private final GraphicsContext graphicsContext;
+  private final BoxBlur lineBlurEffect;
 
   /**
    * Creates and returns a FX renderer.
@@ -28,6 +30,13 @@ final class FXRenderer implements IRenderer {
    */
   FXRenderer(GraphicsContext graphicsContext) {
     this.graphicsContext = Objects.requireNonNull(graphicsContext);
+
+    lineBlurEffect = new BoxBlur();
+    lineBlurEffect.setWidth(1);
+    lineBlurEffect.setHeight(1);
+    lineBlurEffect.setIterations(1);
+
+    graphicsContext.setLineJoin(StrokeLineJoin.ROUND); // should make strokes a little bit smoother
   }
 
   @Override
@@ -78,7 +87,9 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void drawLine(Point p1, Point p2) {
+    graphicsContext.setEffect(lineBlurEffect);
     graphicsContext.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+    graphicsContext.setEffect(null);
   }
 
   @Override
