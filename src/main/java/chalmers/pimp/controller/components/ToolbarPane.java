@@ -68,6 +68,12 @@ final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
 
   @FXML
   @SuppressWarnings("unused")
+  private void centerViewport() {
+    controller.centerViewport();
+  }
+
+  @FXML
+  @SuppressWarnings("unused")
   private void openImageChooser() {
     controller.openImageChooser();
   }
