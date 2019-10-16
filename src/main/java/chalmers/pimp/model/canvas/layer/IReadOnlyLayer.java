@@ -2,6 +2,7 @@ package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.ICopiable;
 import chalmers.pimp.model.IDrawable;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 
 /**
@@ -50,6 +51,13 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
    * @return the depth index.
    */
   int getDepthIndex();
+
+  /**
+   * Returns the layer's rotation anchor point.
+   *
+   * @return the rotation anchor point.
+   */
+  Point getRotationAnchor();
 
   /**
    * Returns the layer type of this layer.
