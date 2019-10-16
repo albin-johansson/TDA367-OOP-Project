@@ -1,9 +1,8 @@
 package chalmers.pimp.model.color.colormodel;
 
+import chalmers.pimp.model.AbstractComposite;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colorchangeobserver.IColorChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,10 +10,9 @@ import java.util.Objects;
  *
  * @see IColorModel
  */
-final class ColorModelImpl implements IColorModel {
+final class ColorModelImpl extends AbstractComposite<IColorChangeListener> implements IColorModel {
 
   private IColor color;
-  private final List<IColorChangeListener> colorChangeListeners;
 
   /**
    * @param color the color that the color model implementation should contain.
@@ -22,7 +20,6 @@ final class ColorModelImpl implements IColorModel {
    */
   ColorModelImpl(IColor color) {
     this.color = Objects.requireNonNull(color);
-    colorChangeListeners = new ArrayList<>();
   }
 
   @Override
@@ -32,7 +29,7 @@ final class ColorModelImpl implements IColorModel {
 
   @Override
   public void setColor(IColor color) {
-    this.color = color;
+    this.color = Objects.requireNonNull(color);
     notifyAllColorChangeListeners();
   }
 
@@ -49,12 +46,12 @@ final class ColorModelImpl implements IColorModel {
 
   @Override
   public void addColorChangeListener(IColorChangeListener observer) {
-    colorChangeListeners.add(Objects.requireNonNull(observer));
+    add(Objects.requireNonNull(observer));
   }
 
   @Override
   public void notifyAllColorChangeListeners() {
-    for (IColorChangeListener colorChangeListener : colorChangeListeners) {
+    for (IColorChangeListener colorChangeListener : this) {
       colorChangeListener.colorChanged(color);
     }
   }
