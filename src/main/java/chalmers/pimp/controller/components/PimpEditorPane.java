@@ -3,11 +3,13 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.util.AnchorPanes;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
 
@@ -64,27 +66,27 @@ public final class PimpEditorPane extends AnchorPane {
     leftAnchorPane.getChildren().add(palettePane);
     AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
 
-    var infoPane = new InfoPane(controller, model);
+    var infoPane = new InfoPane();
     bottomAnchorPane.getChildren().add(infoPane);
     AnchorPanes.setAnchors(infoPane, 0, 0, 0, 0);
 
     initiateInfoPane(canvasPane, infoPane, controller, model);
-
   }
 
   /**
    * Adds listeners to the Canvas which in turn call for the infoPane to update itself.
    */
-  private void initiateInfoPane(CanvasPane canvasPane, InfoPane infoPane, IController controller, IModel model) {
-    canvasPane.getGraphics().getCanvas().heightProperty()
-        .addListener((observable, oldvalue, newvalue) ->
-            infoPane.setCanvasHeightLabel(String.valueOf(newvalue.intValue()))
-        );
+  private void initiateInfoPane(CanvasPane canvasPane, InfoPane infoPane, IController controller,
+      IModel model) {
 
-    canvasPane.getGraphics().getCanvas().widthProperty()
-        .addListener((observable, oldvalue, newvalue) ->
-            infoPane.setCanvasWidthLabel(String.valueOf(newvalue.intValue()))
-        );
+    Canvas canvas = canvasPane.getGraphics().getCanvas();
+
+    // FIXME
+    canvas.heightProperty().addListener((observable, oldvalue, newvalue) ->
+        infoPane.setCanvasHeightLabel(newvalue.intValue()));
+
+    canvas.widthProperty().addListener((observable, oldvalue, newvalue) ->
+        infoPane.setCanvasWidthLabel(newvalue.intValue()));
 
     canvasPane.setOnMouseDragged((e) -> {
       infoPane.updateCoordinates(e);
@@ -92,11 +94,16 @@ public final class PimpEditorPane extends AnchorPane {
     });
 
     canvasPane.setOnMouseMoved(infoPane::updateCoordinates);
-    canvasPane.setOnMouseExited(infoPane::turnOffCoordinates);
+    canvasPane.setOnMouseExited(event -> infoPane.turnOffCoordinates());
 
-    model.addLayerUpdateListener(event->{
-      infoPane.setLayerHeightLabel(String.valueOf(model.getActiveLayer().getPixelData().getHeight()));
-      infoPane.setLayerWidthLabel(String.valueOf(model.getActiveLayer().getPixelData().getWidth()));
+    model.addLayerUpdateListener(event -> {
+      if (model.getActiveLayer() == null) {
+        infoPane.turnOffCoordinates();
+        return;
+      }
+      IReadOnlyLayer layer = model.getActiveLayer();
+      infoPane.setLayerHeightLabel(String.valueOf(layer.getPixelData().getHeight()));
+      infoPane.setLayerWidthLabel(String.valueOf(layer.getPixelData().getWidth()));
     });
   }
 
@@ -109,4 +116,21 @@ public final class PimpEditorPane extends AnchorPane {
     return canvasPane.getGraphics();
   }
 
+  /**
+   * Returns the current width of the canvas pane.
+   *
+   * @return the current width of the canvas pane.
+   */
+  public int getCanvasWidth() {
+    return (int) canvasPane.getWidth();
+  }
+
+  /**
+   * Returns the current height of the canvas pane.
+   *
+   * @return the current height of the canvas pane.
+   */
+  public int getCanvasHeight() {
+    return (int) canvasPane.getHeight();
+  }
 }
