@@ -2,7 +2,6 @@ package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.PixelData;
 
 /**
@@ -85,7 +84,7 @@ public final class LayerFactory {
    * @param color the color of the line strokes.
    * @return a doodle layer.
    */
-  public static ILayer createDoodle(int lineWidth, IReadOnlyColor color) {
+  public static ILayer createDoodle(int lineWidth, IColor color) {
     return new Doodle(lineWidth, color);
   }
 }
