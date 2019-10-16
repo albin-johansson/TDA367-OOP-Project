@@ -84,9 +84,11 @@ final class ShapeTool implements ITool {
     Point originPoint = getOriginPoint(mouseStatus);
     Point maxPoint = getMaxPoint(mouseStatus);
 
+    int x = model.getViewport().getRelativeX(originPoint.getX());
+    int y = model.getViewport().getRelativeY(originPoint.getY());
     int width = maxPoint.getX() - originPoint.getX();
     int height = maxPoint.getY() - originPoint.getY();
 
-    return LayerFactory.createRectangle(originPoint.getX(), originPoint.getY(), width, height);
+    return LayerFactory.createRectangle(x, y, width, height);
   }
 }
