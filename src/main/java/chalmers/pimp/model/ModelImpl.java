@@ -277,16 +277,12 @@ final class ModelImpl implements IModel {
     commandManager.redo();
   }
 
+  static int loops = 0;
+
   @Override
   public void setSelectedColor(IColor color) {
-    // A null instance is sent to this function from the color picker when the app is started.
-    // Quick fix to prevent bad stuff from occurring. Implement a better way of solving this issue?
-    // Or is it simply good enough?
-    if (color == null) {
-      return;
-    }
-
-    var cmd = CommandFactory.createChangeColorCommand(this, colorModel, color);
+    ICommand cmd = CommandFactory
+        .createChangeColorCommand(this, colorModel, Objects.requireNonNull(color));
     cmd.execute();
     commandManager.insertCommand(cmd);
   }
