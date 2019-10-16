@@ -10,9 +10,7 @@ import java.util.Objects;
  * The {@code ViewImpl} class is an implementation of the {@code IView} interface.
  */
 final class ViewImpl implements IView {
-
-  private static final String TM_STRING = "Made with PIMP™, by Smash Bros™ and powered by O'Boy™ and Barilla™";
-  private static final int TM_FONT_SIZE = 356; //TODO Fix better ratio
+  
   private final IModel model;
   private IRenderer renderer;
 
@@ -42,16 +40,5 @@ final class ViewImpl implements IView {
     for (IDrawable drawable : model.getLayers()) {
       drawable.draw(renderer);
     }
-    paintWaterMark();
-  }
-
-  private void paintWaterMark() {
-//    renderer.setRotation(-35);
-    renderer.setGlobalAlpha(0.5);
-    renderer.setFillColor(ColorFactory.createColor(0xFF, 0xFF, 0xFF, 0xFF));
-    renderer.setFillColor(ColorFactory.createColor(0, 0, 0, 0xFF));
-    renderer.drawText(TM_STRING, 5, renderer.getCanvasHeight() - TM_FONT_SIZE / 35, TM_FONT_SIZE);
-    renderer.setGlobalAlpha(1);
-//    renderer.resetRotation();
   }
 }
