@@ -42,8 +42,8 @@ class ViewportTest {
 
     viewport.center(areaWidth, areaHeight);
 
-    assertEquals((areaWidth - width) / 2, viewport.getX());
-    assertEquals((areaHeight - height) / 2, viewport.getY());
+    assertEquals(-(areaWidth - width) / 2, viewport.getX());
+    assertEquals(-(areaHeight - height) / 2, viewport.getY());
   }
 
   @Test

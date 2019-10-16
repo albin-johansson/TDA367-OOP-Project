@@ -32,8 +32,8 @@ class ViewportModelImplTest {
 
     model.center(areaWidth, areaHeight);
 
-    assertEquals((areaWidth - width) / 2, model.getX());
-    assertEquals((areaHeight - height) / 2, model.getY());
+    assertEquals(-(areaWidth - width) / 2, model.getX());
+    assertEquals(-(areaHeight - height) / 2, model.getY());
   }
 
   @Test
