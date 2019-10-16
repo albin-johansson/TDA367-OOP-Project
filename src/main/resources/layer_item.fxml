@@ -32,7 +32,7 @@
                   <Insets right="5.0" />
                </HBox.margin>
         </Label>
-            <ImageView fx:id="layerTypeIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="layerPreview" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/light/raster.png" />
                </image>

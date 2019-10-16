@@ -60,7 +60,7 @@ final class LayerItemPane extends AnchorPane {
   private ImageView imageView;
   @FXML
   @SuppressWarnings("unused")
-  private ImageView layerTypeIcon;
+  private ImageView layerPreview;
   @FXML
   @SuppressWarnings("unused")
   private ContextMenu contextMenu;
@@ -102,7 +102,7 @@ final class LayerItemPane extends AnchorPane {
     setOnDragDropped(this::handleDragDropped);
     setOnDragExited(this::handleDragExited);
 
-    // FIXME replace with service
+    /*// FIXME replace with service
     String path = "images/light/" + LayerType.RASTER.name().toLowerCase() + ".png";
 
     // TODO create service for creating JavaFX images from a URL
@@ -110,7 +110,7 @@ final class LayerItemPane extends AnchorPane {
       layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
     } catch (Exception e) {
       System.err.println("Failed to load layerTypeIcon icon! Exception: " + e);
-    }
+    }*/
   }
 
   /**
@@ -245,5 +245,14 @@ final class LayerItemPane extends AnchorPane {
   @SuppressWarnings("unused")
   private void removeLayer() {
     model.removeLayer(associatedLayerIndex);
+  }
+
+  /**
+   * Sets the layerPreviewImage.
+   *
+   * @param image the new Image.
+   */
+  void setImage(Image image){
+    layerPreview.setImage(image);
   }
 }
