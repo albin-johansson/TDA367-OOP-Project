@@ -22,13 +22,14 @@ public final class Stroke {
   /**
    * @param modelMemento the model memento object, that represents the current model state.
    * @param diameter     the diameter of the stroke, in pixels.
+   * @param color        the strokes color.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   Stroke(ModelMemento modelMemento, int diameter, IColor color) {
     this.modelMemento = Objects.requireNonNull(modelMemento);
     this.diameter = diameter;
     pixels = new ArrayList<>(10);
-    this.color = color;
+    this.color = Objects.requireNonNull(color);
   }
 
   /**
@@ -47,6 +48,7 @@ public final class Stroke {
    *
    * @param model the associated model instance.
    * @param pixel the pixel affected by the stroke.
+   * @param color the color that the updated pixels should be colored with.
    * @throws NullPointerException if any references are {@code null}.
    */
   public void updatePixels(ICanvas model, IPixel pixel, IColor color) {
