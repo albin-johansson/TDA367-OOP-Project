@@ -26,6 +26,12 @@ public interface ILayer extends IReadOnlyLayer {
    */
   void setVisible(boolean isVisible);
 
+  /**
+   * Moves the layer.
+   *
+   * @param dx the x-axis offset, may be negative.
+   * @param dy the y-axis offset, may be negative.
+   */
   void move(int dx, int dy);
 
   /**
