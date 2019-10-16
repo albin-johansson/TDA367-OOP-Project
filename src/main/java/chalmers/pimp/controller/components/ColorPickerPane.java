@@ -8,6 +8,7 @@ import chalmers.pimp.model.color.colorchangeobserver.IColorChangeListener;
 import chalmers.pimp.service.ColorConverterService;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
+import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.AnchorPane;
@@ -22,8 +23,13 @@ final class ColorPickerPane extends AnchorPane implements IColorChangeListener {
   private ColorPicker colorPicker;
   private final IModel model;
 
+  /**
+   * @param model the model.
+   * @throws IOException if the color picker pane fxml file is not found.
+   * @throws NullPointerException if the provided model is {@code null}.
+   */
   ColorPickerPane(IModel model) throws IOException {
-    this.model = model;
+    this.model = Objects.requireNonNull(model);
     ControllerUtils.makeController(this, Resources.find(getClass(), "color_picker.fxml"));
 
     colorPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
