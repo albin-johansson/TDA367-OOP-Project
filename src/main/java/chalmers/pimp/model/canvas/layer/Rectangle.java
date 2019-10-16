@@ -120,7 +120,7 @@ final class Rectangle implements ILayer {
   }
 
   @Override
-  public int getLineWidth1() {
+  public int getWidth() {
     return width;
   }
 

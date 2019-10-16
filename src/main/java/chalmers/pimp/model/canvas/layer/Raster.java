@@ -114,7 +114,7 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public int getLineWidth1() {
+  public int getWidth() {
     return pixelData.getWidth();
   }
 

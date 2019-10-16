@@ -122,8 +122,8 @@ final class Doodle implements ILayer {
   }
 
   @Override
-  public int getLineWidth1() {
-    return lineWidth1;
+  public int getWidth() {
+    return width;
   }
 
   @Override
