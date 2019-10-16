@@ -41,7 +41,7 @@ public interface IController {
   void setViewportHeight(int height);
 
   /**
-   * Sets Pencil as selectedTool in chalmers.pimp.model
+   * Sets Pencil as selectedTool in model
    */
   void selectPencil();
 

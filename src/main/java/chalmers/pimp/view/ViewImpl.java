@@ -15,7 +15,7 @@ final class ViewImpl implements IView {
   private IRenderer renderer;
 
   /**
-   * @param model the associated chalmers.pimp.model instance.
+   * @param model the associated model instance.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   ViewImpl(IModel model) {

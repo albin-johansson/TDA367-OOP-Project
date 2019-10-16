@@ -14,7 +14,7 @@ public final class ViewFactory {
   /**
    * Creates and returns a chalmers.pimp.view instance.
    *
-   * @param model the associated chalmers.pimp.model instance.
+   * @param model the associated model instance.
    * @return a chalmers.pimp.view instance.
    * @throws NullPointerException if any arguments are {@code null}.
    */

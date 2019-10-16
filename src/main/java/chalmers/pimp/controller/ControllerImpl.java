@@ -33,7 +33,7 @@ final class ControllerImpl implements IController {
   private final PimpEditorPane pane;
 
   /**
-   * @param model the associated chalmers.pimp.model instance.
+   * @param model the associated model instance.
    * @param view  the associated chalmers.pimp.view instance.
    * @param stage the parent stage instance.
    * @throws NullPointerException if any arguments are {@code null}.

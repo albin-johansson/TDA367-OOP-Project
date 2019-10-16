@@ -20,7 +20,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void notifyCanvasUpdateListeners();
 
   /**
-   * Adds a canvas update listener to the chalmers.pimp.model.
+   * Adds a canvas update listener to the model.
    *
    * @param listener the listener that will be added, may not be {@code null}.
    * @throws NullPointerException if any arguments are {@code null}.

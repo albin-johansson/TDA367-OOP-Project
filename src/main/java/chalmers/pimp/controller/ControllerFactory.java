@@ -17,7 +17,7 @@ public final class ControllerFactory {
   /**
    * Creates and returns a chalmers.pimp.controller instance.
    *
-   * @param model the associated chalmers.pimp.model instance.
+   * @param model the associated model instance.
    * @param view  the associated chalmers.pimp.view instance.
    * @param stage the parent stage instance.
    * @return a chalmers.pimp.controller instance.

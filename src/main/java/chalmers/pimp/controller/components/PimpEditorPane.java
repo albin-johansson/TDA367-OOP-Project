@@ -35,7 +35,7 @@ public final class PimpEditorPane extends AnchorPane {
   private AnchorPane bottomAnchorPane;
 
   /**
-   * @param model      the associated chalmers.pimp.model instance.
+   * @param model      the associated model instance.
    * @param controller the parent chalmers.pimp.controller instance.
    * @throws IOException          if the associated FXML file cannot be found.
    * @throws NullPointerException if any arguments are {@code null}.
