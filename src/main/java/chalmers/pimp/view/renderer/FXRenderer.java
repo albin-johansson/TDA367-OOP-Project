@@ -1,6 +1,7 @@
 package chalmers.pimp.view.renderer;
 
 import chalmers.pimp.model.IRenderer;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
@@ -64,8 +65,8 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void drawLine(int x1, int y1, int x2, int y2) {
-    graphicsContext.strokeLine(x1, y1, x2, y2);
+  public void drawLine(Point p1, Point p2) {
+    graphicsContext.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
   }
 
   @Override

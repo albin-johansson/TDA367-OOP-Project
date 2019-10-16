@@ -1,5 +1,6 @@
 package chalmers.pimp.model.mock;
 
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.pixeldata.IPixel;
 
 public class Line {
@@ -18,6 +19,13 @@ public class Line {
     this.y1 = p1.getY();
     this.x2 = p2.getX();
     this.y2 = p2.getY();
+  }
+
+  public Line(Point p1, Point p2){
+    x1 = p1.getX();
+    y1 = p1.getY();
+    x2 = p2.getX();
+    y2 = p2.getY();
   }
 
   @Override

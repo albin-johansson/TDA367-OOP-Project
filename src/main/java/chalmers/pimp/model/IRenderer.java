@@ -70,14 +70,12 @@ public interface IRenderer {
   void drawText(String content, int x, int y, int fontSize);
 
   /**
-   * Draws a line between point (x1,y1) and (x2, y2).
+   * Draws a line from point p1 to point p2
    *
-   * @param x1 the first x-coordinate
-   * @param y1 the first y-coordinate
-   * @param x2 the second x-coordinate
-   * @param y2 the second y-coordinate
+   * @param p1 first point
+   * @param p2 second point
    */
-  void drawLine(int x1, int y1, int x2, int y2);
+  void drawLine(Point p1, Point p2);
 
   /**
    * Sets the rotation.
@@ -108,9 +106,9 @@ public interface IRenderer {
   void setBorderWidth(int width);
 
   /**
-   * Sets the width of the line which will be drawn
+   * Sets the line width
    *
-   * @param width the width of the line
+   * @param width the width of tht line
    */
   void setLineWidth(int width);
 
