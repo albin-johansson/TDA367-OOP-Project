@@ -29,12 +29,11 @@ final class ViewImpl implements IView {
     IReadOnlyViewport viewport = model.getViewport();
 
     renderer.setFillColor(ColorFactory.createColor(0xFF, 0xFF, 0xFF));
-    renderer.fillRect(viewport.getRelativeX(0), viewport.getRelativeY(0), model.getWidth(),
-        model.getHeight());
 
-    renderer.setFillColor(ColorFactory.createColor(0, 0, 0));
-    renderer.drawRect(viewport.getRelativeX(0), viewport.getRelativeY(0), model.getWidth(),
-        model.getHeight());
+    int x = viewport.getRelativeX(0);
+    int y = viewport.getRelativeY(0);
+
+    renderer.fillRect(x, y, model.getWidth(), model.getHeight());
   }
 
   /**
@@ -76,9 +75,6 @@ final class ViewImpl implements IView {
 
   @Override
   public void repaint() {
-    renderer.setFillColor(ColorFactory.createColor(0xFF, 0xAA, 0, 0xFF));
-    renderer.clear();
-
     drawCanvasArea();
     model.draw(renderer);
     fillCanvasSurroundingArea();
