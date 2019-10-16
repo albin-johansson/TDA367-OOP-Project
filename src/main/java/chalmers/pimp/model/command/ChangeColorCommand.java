@@ -5,6 +5,11 @@ import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.IColorModel;
 
+/**
+ * The {@code ChangeColorCommand} class is a command that represents a change of color.
+ *
+ * @see ICommand
+ */
 public class ChangeColorCommand implements ICommand {
 
   private final IMementoTarget<ModelMemento> mementoTarget;
