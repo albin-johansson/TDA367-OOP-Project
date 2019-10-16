@@ -94,7 +94,7 @@
 
 .context-menu {
   -fx-background-color: -background-color;
-  -fx-border-color: -background-color;
+  -fx-border-color: -background-pressed-color;
   -fx-border-style: solid;
   -fx-border-width: 1px;
   -fx-border-radius: 10px;
@@ -141,7 +141,7 @@
   -fx-background-color: -background-color;
 }
 
-.infopane-item{
+.infopane-item {
   -fx-border-width: 0px 2px 0px 0px;
   -fx-border-color: -background-pressed-color;
 }
@@ -168,3 +168,15 @@
 #toolbar-pane {
   -fx-background-color: linear-gradient(-background-pressed-color, -background-color);
 }
+
+.text-field {
+  -fx-background-color: transparent;
+}
+
+/* TODO: Set color to permanently white*/
+.text-input {
+  -fx-font-size: 12pt;
+  -fx-font-weight: normal;
+/ / -fx-text-fill: white !important;
+}
+

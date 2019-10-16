@@ -56,4 +56,24 @@ public final class Point {
   public int getY() {
     return y;
   }
+
+  /**
+   * Returns a new point with xOffset offset in the x-direction
+   *
+   * @param xOffset the x offset to be added
+   * @return a new point with with coordinates (x + xOffset, y)
+   */
+  public Point addX(int xOffset) {
+    return new Point(x + xOffset, y);
+  }
+
+  /**
+   * Returns a new point with yOffset offset in the y-direction
+   *
+   * @param yOffset the y offset to be added
+   * @return a new point with with coordinates (x, y + yOffset)
+   */
+  public Point addY(int yOffset) {
+    return new Point(x, y + yOffset);
+  }
 }

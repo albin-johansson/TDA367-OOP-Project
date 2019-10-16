@@ -1,6 +1,6 @@
 package chalmers.pimp.model;
 
-import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 
 /**
@@ -75,6 +75,14 @@ public interface IRenderer {
   void drawText(String content, int x, int y, int fontSize);
 
   /**
+   * Draws a line from point p1 to point p2
+   *
+   * @param p1 first point
+   * @param p2 second point
+   */
+  void drawLine(Point p1, Point p2);
+
+  /**
    * Sets the rotation.
    *
    * @param rotation the rotation in degrees.
@@ -86,14 +94,14 @@ public interface IRenderer {
    *
    * @param color the color to be set.
    */
-  void setFillColor(IColor color);
+  void setFillColor(IReadOnlyColor color);
 
   /**
    * Sets the color of the border.
    *
    * @param color the color to be set.
    */
-  void setBorderColor(IColor color);
+  void setBorderColor(IReadOnlyColor color);
 
   /**
    * Sets the border width.
@@ -101,6 +109,13 @@ public interface IRenderer {
    * @param width the width of borders.
    */
   void setBorderWidth(int width);
+
+  /**
+   * Sets the width of the line which will be drawn
+   *
+   * @param width the width of the line
+   */
+  void setLineWidth(int width);
 
   /**
    * Returns the width of the rendering target.

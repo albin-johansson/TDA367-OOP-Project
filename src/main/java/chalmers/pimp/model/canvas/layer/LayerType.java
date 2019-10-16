@@ -18,5 +18,10 @@ public enum LayerType {
    * The value that represents shape layers. Shape layers aren't pixel-based, instead they use
    * formulas for their representation. Shape layers are considered "smarter" than raster layers.
    */
-  SHAPE
+  SHAPE,
+  /**
+   * The value that represents doodle layers. Doodle layers save points where the user drags the
+   * mouse and then draws lines between the points.
+   */
+  DOODLE
 }

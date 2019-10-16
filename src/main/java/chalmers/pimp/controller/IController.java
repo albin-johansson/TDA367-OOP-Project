@@ -3,7 +3,7 @@ package chalmers.pimp.controller;
 import javafx.scene.input.MouseEvent;
 
 /**
- * The {@code IController} interface specifies the facade for the chalmers.pimp.controller component
+ * The {@code IController} interface specifies the facade for the controller component
  * in the MVC architecture that the Pimp application uses.
  */
 public interface IController {
@@ -46,19 +46,24 @@ public interface IController {
   void selectPencil();
 
   /**
-   * Sets a Transparent Pencil as selectedTool in chalmers.pimp.model
+   * Sets a Transparent Pencil as selected tool in model
    */
   void selectEraser();
 
   /**
-   * Sets Bucket as selectedTool in chalmers.pimp.model
+   * Sets Bucket as selected tool in model
    */
   void selectBucket();
 
   /**
-   * Sets the rectangle tool as the selectedTool in model
+   * Sets the rectangle tool as the selected tool in model
    */
   void selectRectangleTool();
+
+  /**
+   * Sets the doodle tool as the selected tool in model
+   */
+  void selectDoodleTool();
 
   /**
    * Undoes the previously executed command. This method has no effect if there is nothing to undo.
@@ -76,21 +81,21 @@ public interface IController {
   void selectMoveTool();
 
   /**
-   * Tells the chalmers.pimp.model that the selected tool has been pressed.
+   * Tells the model that the selected tool has been pressed.
    *
    * @param mouseEvent the associated mouseEvent
    */
   void selectedToolPressed(MouseEvent mouseEvent);
 
   /**
-   * Tells the chalmers.pimp.model that the selected tool has been dragged.
+   * Tells the model that the selected tool has been dragged.
    *
    * @param mouseEvent the associated mouseEvent.
    */
   void selectedToolDragged(MouseEvent mouseEvent);
 
   /**
-   * Tells the chalmers.pimp.model that the selected tool has been released.
+   * Tells the model that the selected tool has been released.
    *
    * @param mouseEvent the associated mouseEvent.
    */

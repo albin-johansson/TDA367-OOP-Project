@@ -131,6 +131,12 @@ final class ControllerImpl implements IController {
   }
 
   @Override
+  public void selectDoodleTool() {
+    model.setSelectedTool(
+        ToolFactory.createDoodleTool(10, ColorFactory.createColor(255, 100, 50, 255), model));
+  }
+
+  @Override
   public void selectMoveTool() {
     model.setSelectedTool(ToolFactory.createMoveTool(model));
   }
@@ -159,8 +165,9 @@ final class ControllerImpl implements IController {
       if (pixelData == null) {
         return;
       }
+      String pixelDataName = imageChooser.getMostRecentFileName();
 
-      model.addLayer(LayerFactory.createRasterLayer(pixelData));
+      model.addLayer(LayerFactory.createRasterLayer(pixelData, pixelDataName));
     } catch (Exception e) {
       System.err.println("Failed to import image! Exception: " + e);
     }

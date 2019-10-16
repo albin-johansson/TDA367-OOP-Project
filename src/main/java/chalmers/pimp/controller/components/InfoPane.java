@@ -8,6 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * The {@code InfoPane} class represents the bottom pane displaying interesting data about the
+ * project.
+ */
 final class InfoPane extends AnchorPane {
 
   @FXML
@@ -51,11 +55,19 @@ final class InfoPane extends AnchorPane {
     yPos.setText("-");
   }
 
-  void setLayerWidthLabel(String width) {
-    layerWidth.setText(width);
+  /**
+   * Updates the layerWidth Label.
+   * @param string the new width.
+   */
+  void setLayerWidthLabel(String string) {
+    layerWidth.setText(string);
   }
 
-  void setLayerHeightLabel(String height) {
-    layerHeight.setText(height);
+  /**
+   * Updates the layerHeight Label.
+   * @param string the new height.
+   */
+  void setLayerHeightLabel(String string) {
+    layerHeight.setText(string);
   }
 }

@@ -57,4 +57,18 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
    * @return the layer type of this layer.
    */
   LayerType getLayerType();
+
+  /**
+   * Returns the width of the layer.
+   *
+   * @return the width of the layer.
+   */
+  int getWidth();
+
+  /**
+   * Returns the height of the layer.
+   *
+   * @return the height of the layer.
+   */
+  int getHeight();
 }
