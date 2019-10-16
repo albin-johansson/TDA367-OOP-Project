@@ -6,6 +6,7 @@ import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.tools.ITool;
+import chalmers.pimp.model.viewport.IReadOnlyViewport;
 
 /**
  * The {@code IModel} interface specifies the facade for the main model component in the
@@ -42,6 +43,59 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * @throws IllegalArgumentException if the supplied listener has been added previously.
    */
   void addLayerUpdateListener(ILayerUpdateListener listener);
+
+  /**
+   * Draws all of the drawables contained in the model.
+   *
+   * @param renderer the renderer that will be used.
+   * @throws NullPointerException if the supplied renderer is {@code null}.
+   */
+  void draw(IRenderer renderer);
+
+  /**
+   * Moves the viewport.
+   *
+   * @param dx the x-axis offset, may be negative.
+   * @param dy the y-axis offset, may be negative.
+   */
+  void moveViewport(int dx, int dy);
+
+  /**
+   * @param areaWidth
+   * @param areaHeight
+   */
+  void centerViewport(int areaWidth, int areaHeight);
+
+  /**
+   * @param width
+   */
+  void setViewportWidth(int width);
+
+  /**
+   * @param height
+   */
+  void setViewportHeight(int height);
+
+  /**
+   * Returns the width of the model canvas. Note! This is not the width of the viewport.
+   *
+   * @return the width of the model canvas.
+   */
+  int getWidth();
+
+  /**
+   * Returns the height of the model canvas. Note! This is not the height of the viewport.
+   *
+   * @return the height of the model canvas.
+   */
+  int getHeight();
+
+  /**
+   * Returns a copy of the current viewport.
+   *
+   * @return a copy of the current viewport.
+   */
+  IReadOnlyViewport getViewport();
 
   /**
    * Starts moving the currently active layer. This method has no effect if there is no active

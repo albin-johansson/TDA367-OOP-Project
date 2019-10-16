@@ -19,23 +19,39 @@ import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
+import chalmers.pimp.model.viewport.IReadOnlyViewport;
+import chalmers.pimp.model.viewport.IViewportModel;
+import chalmers.pimp.model.viewport.ViewportModelFactory;
 import java.util.Objects;
 
 /**
  * The {@code ModelImpl} class is an implementation of the {@code IModel} interface.
+ *
+ * @see IModel
+ * @see ModelFactory
  */
 final class ModelImpl implements IModel {
 
-  private final ICanvas canvas;
   private final CommandManager commandManager;
+  private final ICanvas canvas;
+  private final IViewportModel viewportModel;
+
   private IRenderer renderer;
   private LayerMovement layerMovement;
-  private Stroke stroke;
+  private Stroke stroke; // TODO remove
   private ITool selectedTool;
 
+  private int width;
+  private int height;
+
   ModelImpl() {
-    canvas = CanvasFactory.createCanvas();
     commandManager = new CommandManager();
+
+    canvas = CanvasFactory.createCanvas();
+    viewportModel = ViewportModelFactory.createViewportModel();
+
+    width = 800;
+    height = 600;
 
     stroke = null;
     selectedTool = ToolFactory.createPencil(2, ColorFactory.createColor(0xFF, 0, 0xFF), this);
@@ -71,6 +87,53 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void draw(IRenderer renderer) {
+    Objects.requireNonNull(renderer);
+    for (IDrawable drawable : getLayers()) {
+      drawable.draw(renderer, viewportModel.getViewport());
+    }
+  }
+
+  @Override
+  public void moveViewport(int dx, int dy) {
+    viewportModel.moveViewport(dx, dy);
+    notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public void centerViewport(int areaWidth, int areaHeight) {
+    viewportModel.center(areaWidth, areaHeight);
+    notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public void setViewportWidth(int width) {
+    viewportModel.setWidth(width);
+    notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public void setViewportHeight(int height) {
+    viewportModel.setHeight(height);
+    notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public int getWidth() {
+    return width;
+  }
+
+  @Override
+  public int getHeight() {
+    return height;
+  }
+
+  @Override
+  public IReadOnlyViewport getViewport() {
+    return viewportModel.getViewport();
+  }
+
+  @Override
   public void startMovingActiveLayer(int x, int y) {
     if (getActiveLayer() == null) {
       return;
@@ -97,8 +160,8 @@ final class ModelImpl implements IModel {
     }
 
     layerMovement.stop();
-    layerMovement.setEndX(getActiveLayer().getX());
-    layerMovement.setEndY(getActiveLayer().getY());
+    layerMovement.setEndX(canvas.getActiveLayer().getX());
+    layerMovement.setEndY(canvas.getActiveLayer().getY());
 
     ICommand cmd = createMoveCommand(canvas, this, getActiveLayer().getDepthIndex(), layerMovement);
     commandManager.insertCommand(cmd);
@@ -250,11 +313,12 @@ final class ModelImpl implements IModel {
   @Override
   public void restore(ModelMemento modelMemento) {
     canvas.restore(modelMemento.getCanvasMemento());
+    viewportModel.restore(modelMemento.getViewportModelMemento());
   }
 
   @Override
   public ModelMemento createSnapShot() {
-    return new ModelMemento(canvas.createSnapShot());
+    return new ModelMemento(canvas.createSnapShot(), viewportModel.createSnapShot());
   }
 
   @Override
