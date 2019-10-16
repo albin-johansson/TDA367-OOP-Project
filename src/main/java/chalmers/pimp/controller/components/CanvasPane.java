@@ -35,6 +35,12 @@ final class CanvasPane extends AnchorPane {
     canvas.widthProperty().bind(widthProperty());
     canvas.heightProperty().bind(heightProperty());
 
+    canvas.widthProperty().addListener(((observable, oldValue, newValue) ->
+        controller.setViewportWidth(newValue.intValue())));
+
+    canvas.heightProperty().addListener(((observable, oldValue, newValue) ->
+        controller.setViewportHeight(newValue.intValue())));
+
     addEventHandler(ScrollEvent.ANY, this::handleScroll);
 
     setOnMousePressed(controller::selectedToolPressed);
