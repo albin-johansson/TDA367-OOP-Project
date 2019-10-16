@@ -14,6 +14,33 @@ public interface IController {
   void run();
 
   /**
+   * Centers the viewport over the canvas.
+   */
+  void centerViewport();
+
+  /**
+   * Moves the viewport.
+   *
+   * @param dx the x-axis offset, may be negative.
+   * @param dy the y-axis offset, may be negative.
+   */
+  void moveViewport(int dx, int dy);
+
+  /**
+   * Sets the width of the viewport.
+   *
+   * @param width the new width of the viewport.
+   */
+  void setViewportWidth(int width);
+
+  /**
+   * Sets the height of the viewport.
+   *
+   * @param height the new width of the viewport.
+   */
+  void setViewportHeight(int height);
+
+  /**
    * Sets Pencil as selectedTool in chalmers.pimp.model
    */
   void selectPencil();
@@ -81,7 +108,8 @@ public interface IController {
   void openImageChooser();
 
   /**
-   * Opens file chooser save dialog and allows you to save the Image.
+   * Attempts to save the current canvas state into an image. Invoking this method will open a modal
+   * dialog. This method has no effect if the save operation fails.
    */
   void exportImage();
 }
