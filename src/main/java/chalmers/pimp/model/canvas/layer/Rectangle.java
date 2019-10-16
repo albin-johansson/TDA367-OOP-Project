@@ -1,7 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.IRenderer;
-import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
@@ -28,6 +27,7 @@ final class Rectangle implements ILayer {
    * @param width  the width of the rectangle.
    * @param height the height of the rectangle.
    * @param color  the color of the rectangle.
+   * @throws NullPointerException if the provided color is null.
    */
   Rectangle(int x, int y, int width, int height, IColor color) {
     layerDelegate = new LayerDelegate(LayerType.SHAPE);
@@ -35,11 +35,10 @@ final class Rectangle implements ILayer {
     layerDelegate.setY(y);
     this.width = width;
     this.height = height;
-    this.color = color;
+    this.color = Objects.requireNonNull(color);
 
     // OBVIOUSLY not a good solution. Just a fun easter egg :)
     layerDelegate.setName((width == height) ? "Square" : "Rectangle");
-
   }
 
   /**
