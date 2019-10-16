@@ -2,29 +2,43 @@ package chalmers.pimp.model.command;
 
 import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.ModelMemento;
-import chalmers.pimp.model.canvas.ICanvas;
-import chalmers.pimp.model.color.ColorFactory;
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.colormodel.IColorModel;
 
-public class ChangeColorCommand extends AbstractCommand {
+public class ChangeColorCommand implements ICommand {
 
-  private final IReadOnlyColor color;
+  private final IMementoTarget<ModelMemento> mementoTarget;
+  private final IColorModel colorModel;
+  private final IColor color;
+  private ModelMemento modelMemento;
 
   /**
-   * @param canvas        the associated canvas instance.
    * @param mementoTarget the memento target that will be used.
+   * @param colorModel    the representation of the color in the model.
    * @param color         the mew color.
    * @throws NullPointerException if any references are {@code null}.
    */
-  ChangeColorCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget,
-      IReadOnlyColor color) {
-    super(canvas, mementoTarget);
-    this.color = ColorFactory.createColor(color);
+  ChangeColorCommand(
+      IMementoTarget<ModelMemento> mementoTarget,
+      IColorModel colorModel,
+      IColor color
+  ) {
+    this.mementoTarget = mementoTarget;
+    this.colorModel = colorModel;
+    this.color = color;
   }
 
   @Override
   public void execute() {
-    updateModelMemento();
+    modelMemento = mementoTarget.createSnapShot();
+    colorModel.setColor(color);
+  }
+
+  @Override
+  public void revert() {
+    if (modelMemento != null) {
+      mementoTarget.restore(modelMemento);
+    }
   }
 
   @Override
