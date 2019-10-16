@@ -5,13 +5,14 @@ import java.util.Objects;
 import javafx.scene.input.MouseButton;
 
 /**
- * The {@code FXToMouseStatusButtonService} class is a service for converting the JavaFX MouseButton
- * enum to the models MouseStatus.MouseButtonID representation.
+ * The {@code MouseButtonConverterService} class is a service for converting values of the JavaFX
+ * {@code MouseButton} enum to the corresponding {@code MouseButtonID} values.
+ *
+ * @see MouseButtonID
  */
-public final class FXToMouseStatusButtonService {
+final class MouseButtonConverterService {
 
-  private FXToMouseStatusButtonService() {
-
+  private MouseButtonConverterService() {
   }
 
   /**
@@ -22,8 +23,7 @@ public final class FXToMouseStatusButtonService {
    * @throws IllegalStateException if the supplied value isn't supported.
    * @throws NullPointerException  if the supplied value is {@code null}.
    */
-
-  public static MouseButtonID getMouseButtonID(MouseButton mouseButton) {
+  static MouseButtonID getMouseButtonID(MouseButton mouseButton) {
     Objects.requireNonNull(mouseButton);
     switch (mouseButton) {
       case NONE:
