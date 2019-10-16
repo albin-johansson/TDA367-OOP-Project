@@ -122,7 +122,11 @@ final class Rectangle implements ILayer {
 
   @Override
   public IReadOnlyPixelData getPixelData() {
-    PixelData pixelData = new PixelData(width, height);
+    // Ensures that the pixel data is at least 1x1
+    int dx = (width < 1) ? 1 : 0;
+    int dy = (height < 1) ? 1 : 0;
+
+    PixelData pixelData = new PixelData(width + dx, height + dy);
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
