@@ -30,7 +30,7 @@ final class ShapeTool implements ITool {
   public void dragged(MouseStatus mouseStatus) {
     model.notifyCanvasUpdateListeners();
     ILayer newShape = createRect(mouseStatus);
-    newShape.draw(model.getRenderer());
+    newShape.draw(model.getRenderer(), model.getViewport());
   }
 
   @Override

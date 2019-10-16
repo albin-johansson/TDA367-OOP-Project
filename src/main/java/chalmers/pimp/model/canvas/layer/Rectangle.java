@@ -7,6 +7,7 @@ import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
+import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.Objects;
 
 /**
@@ -32,7 +33,7 @@ final class Rectangle implements ILayer {
     layerDelegate = new LayerDelegate(LayerType.SHAPE);
     layerDelegate.setX(x);
     layerDelegate.setY(y);
-    this.width = width;
+    this.width = width; // FIXME don't allow width/height to be < 0
     this.height = height;
 
     // OBVIOUSLY not a good solution. Just a fun easter egg :)
@@ -133,11 +134,14 @@ final class Rectangle implements ILayer {
   }
 
   @Override
-  public void draw(IRenderer renderer) {
+  public void draw(IRenderer renderer, IReadOnlyViewport viewport) {
     if (isVisible()) {
       renderer.setFillColor(color);
       renderer.setBorderColor(color);
-      renderer.fillRect(getX(), getY(), width, height);
+
+      int drawX = viewport.getRelativeX(getX());
+      int drawY = viewport.getRelativeY(getY());
+      renderer.fillRect(drawX, drawY, width, height);
     }
   }
 

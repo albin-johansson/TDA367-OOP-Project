@@ -4,6 +4,7 @@ import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.Objects;
 
 /**
@@ -119,9 +120,11 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public void draw(IRenderer renderer) {
+  public void draw(IRenderer renderer, IReadOnlyViewport viewport) {
     if (isVisible()) {
-      renderer.drawImage(pixelData, getX(), getY(), pixelData.getWidth(), pixelData.getHeight());
+      int drawX = viewport.getRelativeX(getX());
+      int drawY = viewport.getRelativeY(getY());
+      renderer.drawImage(pixelData, drawX, drawY, pixelData.getWidth(), pixelData.getHeight());
     }
   }
 
