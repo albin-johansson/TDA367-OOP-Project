@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @see IColor
  */
-public final class ColorImpl implements IColor {
+final class ColorImpl implements IColor {
 
   private static final int MAX_VALUE = 255;
   private static final int MIN_VALUE = 0;
