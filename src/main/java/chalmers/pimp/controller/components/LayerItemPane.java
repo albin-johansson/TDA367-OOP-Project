@@ -258,6 +258,6 @@ final class LayerItemPane extends AnchorPane {
   private void setName(){
     model.setLayerName(associatedLayerIndex, textField.getText());
     textField.setEditable(false);
-    this.requestFocus();
+    requestFocus();
   }
 }
