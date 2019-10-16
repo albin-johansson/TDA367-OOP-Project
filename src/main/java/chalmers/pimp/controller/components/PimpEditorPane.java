@@ -68,7 +68,7 @@ public final class PimpEditorPane extends AnchorPane {
     AnchorPanes.setZeroAnchors(palettePane);
 
     // Info pane (DOWN)
-    var infoPane = new InfoPane(controller, model);
+    var infoPane = new InfoPane();
     bottomAnchorPane.getChildren().add(infoPane);
     AnchorPanes.setZeroAnchors(infoPane);
 
