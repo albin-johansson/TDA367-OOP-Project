@@ -2,7 +2,6 @@ package chalmers.pimp.service;
 
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.IReadOnlyColor;
 import java.util.Objects;
 import javafx.scene.paint.Color;
 
@@ -22,7 +21,7 @@ public final class ColorConverterService {
    * @return a JavaFX color that is a copy of the supplied color.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  public static Color toFXColor(IReadOnlyColor color) {
+  public static Color toFXColor(IColor color) {
     return new Color(color.getRedPercentage(),
         color.getGreenPercentage(),
         color.getBluePercentage(),

@@ -1,6 +1,6 @@
 package chalmers.pimp.model.pixeldata;
 
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.IColor;
 
 public interface IReadOnlyPixel {
 
@@ -44,5 +44,5 @@ public interface IReadOnlyPixel {
    *
    * @return a readable color.
    */
-  IReadOnlyColor getColor();
+  IColor getColor();
 }

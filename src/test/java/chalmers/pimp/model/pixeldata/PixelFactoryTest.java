@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.color.ColorFactory;
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.IColor;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("MagicNumber")
@@ -62,7 +62,7 @@ class PixelFactoryTest {
   void createPixel2() {
     assertThrows(NullPointerException.class, () -> PixelFactory.createPixel(0, 0, null));
 
-    IReadOnlyColor color = ColorFactory.createColor();
+    IColor color = ColorFactory.createColor();
 
     final int x = 812;
     final int y = 192;

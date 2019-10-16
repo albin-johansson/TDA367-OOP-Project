@@ -2,7 +2,6 @@ package chalmers.pimp.model;
 
 import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
@@ -50,7 +49,7 @@ public final class Stroke {
    * @param pixel the pixel affected by the stroke.
    * @throws NullPointerException if any references are {@code null}.
    */
-  public void updatePixels(ICanvas model, IPixel pixel, IReadOnlyColor color) {
+  public void updatePixels(ICanvas model, IPixel pixel, IColor color) {
     Objects.requireNonNull(model);
     Objects.requireNonNull(pixel);
 
@@ -90,7 +89,7 @@ public final class Stroke {
    *
    * @return the color of the stroke.
    */
-  public IReadOnlyColor getColor() {
+  public IColor getColor() {
     return color;
   }
 }
