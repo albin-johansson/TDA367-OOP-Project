@@ -53,7 +53,7 @@ final class Rectangle implements ILayer {
     layerDelegate = new LayerDelegate(rectangle.layerDelegate);
     width = rectangle.width;
     height = rectangle.height;
-    color = ColorFactory.createColor(rectangle.color);
+    color = rectangle.color;
   }
 
   @Override
