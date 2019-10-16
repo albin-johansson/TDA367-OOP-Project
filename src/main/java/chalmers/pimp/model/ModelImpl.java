@@ -13,8 +13,11 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.colorchangeobserver.IColorChangeListener;
+import chalmers.pimp.model.color.colormodel.ColorModelFactory;
+import chalmers.pimp.model.color.colormodel.IColorModel;
 import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
@@ -33,12 +36,13 @@ final class ModelImpl implements IModel {
   private LayerMovement layerMovement;
   private Stroke stroke;
   private ITool selectedTool;
-  private IColor selectedColor;
+  private IColorModel colorModel;
 
   ModelImpl() {
     canvas = CanvasFactory.createCanvas();
     commandManager = new CommandManager();
     stroke = null;
+    colorModel = ColorModelFactory.createColorModel(Colors.TRANSPARENT);
   }
 
   /**
@@ -108,7 +112,7 @@ final class ModelImpl implements IModel {
   @Override
   public void startStroke(IPixel pixel, int diameter) {
     Objects.requireNonNull(pixel);
-    stroke = new Stroke(createSnapShot(), diameter, selectedColor);
+    stroke = new Stroke(createSnapShot(), diameter, colorModel.getColor());
     updateStroke(pixel);
   }
 
@@ -117,7 +121,7 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(canvas, pixel, selectedColor);
+      stroke.updatePixels(canvas, pixel, colorModel.getColor());
       notifyCanvasUpdateListeners();
     }
   }
@@ -127,7 +131,7 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(canvas, pixel, selectedColor);
+      stroke.updatePixels(canvas, pixel, colorModel.getColor());
 
       // We don't need to explicitly execute the created command, the effect is already present
       ICommand cmd = createStrokeCommand(canvas, this, stroke);
@@ -248,15 +252,19 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void addColorChangeListener(IColorChangeListener listener) {
+    colorModel.addColorChangeListener(listener);
+  }
+
+  @Override
   public void restore(ModelMemento modelMemento) {
     canvas.restore(modelMemento.getCanvasMemento());
-    selectedColor = ColorFactory.createColor(modelMemento.getColor());
-    System.out.println("selected color" + selectedColor.toString());
+    colorModel.restore(modelMemento.getColorModelMemento());
   }
 
   @Override
   public ModelMemento createSnapShot() {
-    return new ModelMemento(canvas.createSnapShot(), selectedColor);
+    return new ModelMemento(canvas.createSnapShot(), colorModel.createSnapShot());
   }
 
   @Override
@@ -278,16 +286,13 @@ final class ModelImpl implements IModel {
       return;
     }
 
-    var cmd = CommandFactory.createChangeColorCommand(canvas, this, color);
+    var cmd = CommandFactory.createChangeColorCommand(this, colorModel, color);
     cmd.execute();
-    System.out.println("changing color to: " + color);
     commandManager.insertCommand(cmd);
-
-//    this.selectedColor = color;
   }
 
   @Override
   public IColor getSelectedColor() {
-    return selectedColor;
+    return colorModel.getColor();
   }
 }
