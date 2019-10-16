@@ -18,7 +18,7 @@ class DoodleTest {
 
   @BeforeEach
   void init() {
-    doodle = LayerFactory.createDoodle(10, ColorFactory.createColor(0,0,0));
+    doodle = LayerFactory.createDoodle(10, ColorFactory.createColor(0, 0, 0));
   }
 
   @Test
