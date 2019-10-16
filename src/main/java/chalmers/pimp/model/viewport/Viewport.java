@@ -44,12 +44,18 @@ final class Viewport implements IReadOnlyViewport {
   }
 
   /**
-   * Centers the viewport over the are with the supplied dimensions.
+   * Centers the viewport over the area with the supplied dimensions.
    *
    * @param areaWidth  the width of the area.
    * @param areaHeight the height of the area.
+   * @throws IllegalArgumentException if either of the supplied dimensions aren't greater than
+   *                                  zero.
    */
   void center(int areaWidth, int areaHeight) {
+    if ((areaWidth < 1) || (areaHeight < 1)) {
+      throw new IllegalArgumentException("Bad area dimensions: (" + width + "x" + height + ")");
+    }
+
     int x = (areaWidth - width) / 2;
     int y = (areaHeight - height) / 2;
     this.x = x;

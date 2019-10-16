@@ -18,6 +18,9 @@ class ViewportModelImplTest {
 
   @Test
   void center() {
+    assertThrows(IllegalArgumentException.class, () -> model.center(0, 10));
+    assertThrows(IllegalArgumentException.class, () -> model.center(10, 0));
+
     int width = 77;
     int height = 123;
 

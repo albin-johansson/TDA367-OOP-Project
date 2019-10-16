@@ -61,18 +61,28 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void moveViewport(int dx, int dy);
 
   /**
-   * @param areaWidth
-   * @param areaHeight
+   * Centers the viewport over the area with the supplied dimensions.
+   *
+   * @param areaWidth  the width of the area.
+   * @param areaHeight the height of the area.
+   * @throws IllegalArgumentException if either of the supplied dimensions aren't greater than
+   *                                  zero.
    */
   void centerViewport(int areaWidth, int areaHeight);
 
   /**
-   * @param width
+   * Sets the width of the viewport.
+   *
+   * @param width the new height of the viewport.
+   * @throws IllegalArgumentException if the supplied width isn't greater than one.
    */
   void setViewportWidth(int width);
 
   /**
-   * @param height
+   * Sets the height of the viewport.
+   *
+   * @param height the new height of the viewport.
+   * @throws IllegalArgumentException if the supplied height isn't greater than one.
    */
   void setViewportHeight(int height);
 

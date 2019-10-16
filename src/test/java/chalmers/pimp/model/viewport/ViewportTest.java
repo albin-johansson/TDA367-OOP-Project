@@ -18,6 +18,9 @@ class ViewportTest {
 
   @Test
   void center() {
+    assertThrows(IllegalArgumentException.class, () -> viewport.center(0, 10));
+    assertThrows(IllegalArgumentException.class, () -> viewport.center(10, 0));
+
     int width = 212;
     int height = 512;
 

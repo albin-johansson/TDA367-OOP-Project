@@ -18,6 +18,8 @@ public interface IViewportModel extends IMementoTarget<ViewportModelMemento> {
    *
    * @param areaWidth  the width of the area.
    * @param areaHeight the height of the area.
+   * @throws IllegalArgumentException if either of the supplied dimensions aren't greater than
+   *                                  zero.
    */
   void center(int areaWidth, int areaHeight);
 
