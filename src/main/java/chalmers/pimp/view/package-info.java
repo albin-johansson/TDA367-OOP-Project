@@ -1,5 +1,5 @@
 /**
- * The chalmers.pimp.view package contains components related to the chalmers.pimp.view aspect of
+ * The model package contains components related to the model aspect of
  * the Pimp application.
  *
  * @see chalmers.pimp.view.IView

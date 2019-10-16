@@ -12,10 +12,10 @@ public final class ViewFactory {
   }
 
   /**
-   * Creates and returns a chalmers.pimp.view instance.
+   * Creates and returns a model instance.
    *
    * @param model the associated model instance.
-   * @return a chalmers.pimp.view instance.
+   * @return a model instance.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   public static IView createView(IModel model) {

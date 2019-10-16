@@ -34,7 +34,7 @@ final class ControllerImpl implements IController {
 
   /**
    * @param model the associated model instance.
-   * @param view  the associated chalmers.pimp.view instance.
+   * @param view  the associated model instance.
    * @param stage the parent stage instance.
    * @throws NullPointerException if any arguments are {@code null}.
    */
