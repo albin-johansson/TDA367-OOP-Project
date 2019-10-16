@@ -123,12 +123,12 @@ public final class ColorImpl implements IColor {
 
   @Override
   public IColor setPercentageBlue(double percentageBlue) {
-    return new ColorImpl(red, green, convertPercentage(blue), alpha);
+    return new ColorImpl(red, green, convertPercentage(percentageBlue), alpha);
   }
 
   @Override
   public IColor setPercentageAlpha(double percentageAlpha) {
-    return new ColorImpl(red, green, blue, convertPercentage(alpha));
+    return new ColorImpl(red, green, blue, convertPercentage(percentageAlpha));
   }
 
   @Override
