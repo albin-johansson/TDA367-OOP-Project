@@ -1,5 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.controller.components.ImageChooser;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IReadOnlyColor;
@@ -8,6 +9,7 @@ import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A layer which has a list of points and draws straight lines between the points.
@@ -18,8 +20,6 @@ final class Doodle implements ILayer {
   private final LayerDelegate layerDelegate;
   private final IReadOnlyColor color;
   private final int lineWidth;
-  private int width;
-  private int height;
 
   /**
    * Creates a layer which has a list of points and draws straight lines between the points.
@@ -34,8 +34,6 @@ final class Doodle implements ILayer {
     layerDelegate.setName("Doodle");
     this.lineWidth = lineWidth;
     this.color = Objects.requireNonNull(color);
-    width = 0;
-    height = 0;
   }
 
   /**
@@ -57,13 +55,8 @@ final class Doodle implements ILayer {
 
   @Override
   public void setPixel(IPixel pixel) {
-    points.add(new Point(pixel.getX(), pixel.getY()));
-    if (pixel.getX() > width - lineWidth) {
-      width = pixel.getX() + lineWidth;
-    }
-    if (pixel.getY() > height - lineWidth) {
-      height = pixel.getY() + lineWidth;
-    }
+    Point p = new Point(pixel.getX() - getX(), pixel.getY()- getY());
+    points.add(p);
     setRotationAnchorToCenter();
   }
 
@@ -106,8 +99,8 @@ final class Doodle implements ILayer {
 
   @Override
   public void setRotationAnchorToCenter() {
-    Point temp = new Point(layerDelegate.getX() + (width / 2),
-        layerDelegate.getY() + (height / 2));
+    Point temp = new Point(layerDelegate.getX() + (getWidth() / 2),
+        layerDelegate.getY() + (getHeight()/ 2));
     layerDelegate.setRotationAnchor(temp);
   }
 
@@ -159,12 +152,28 @@ final class Doodle implements ILayer {
 
   @Override
   public int getWidth() {
-    return width;
+    List<Integer> list = new ArrayList<>();
+    for (Point point : points) {
+      Integer x = point.getX();
+      list.add(x);
+    }
+    int xMin = getLowest(list);
+    List<Integer> result = new ArrayList<>();
+    for (Point point : points) {
+      Integer x = point.getX();
+      result.add(x);
+    }
+    int xMax = getHighest(result);
+
+    return xMax - xMin + lineWidth*2;
   }
 
   @Override
   public int getHeight() {
-    return height;
+    int yMin = getLowest(points.stream().map(Point::getY).collect(Collectors.toList()));
+    int yMax = getHighest(points.stream().map(Point::getY).collect(Collectors.toList()));
+
+    return yMax - yMin + lineWidth*2;
   }
 
   @Override
@@ -212,5 +221,43 @@ final class Doodle implements ILayer {
     }
     renderer.setGlobalAlpha(0);
     renderer.endTransform();
+  }
+
+  /**
+   * Returns the lowest integer in a list of integers
+   *
+   * @param list the specified list of integers
+   * @return the smallest integer
+   */
+  private int getHighest(List<Integer> list) {
+    Objects.requireNonNull(list);
+    if (list.isEmpty()) {
+      return 0;
+    }
+
+    int highest = list.get(0);
+    for (Integer i : list) {
+      highest = (highest < i) ? i : highest;
+    }
+    return highest;
+  }
+
+  /**
+   * Returns the lowest integer in a list of integers
+   *
+   * @param list the specified list of integers
+   * @return the smallest integer
+   */
+  private int getLowest(List<Integer> list) {
+    Objects.requireNonNull(list);
+    if (list.isEmpty()) {
+      return 0;
+    }
+
+    int lowest = list.get(0);
+    for (Integer i : list) {
+      lowest = (lowest > i) ? i : lowest;
+    }
+    return lowest;
   }
 }
