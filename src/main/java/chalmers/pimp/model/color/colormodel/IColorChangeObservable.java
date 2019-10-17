@@ -1,4 +1,4 @@
-package chalmers.pimp.model.color.colorchangeobserver;
+package chalmers.pimp.model.color.colormodel;
 
 /**
  * The {@code IColorChangeObservable} class represents something that can be observed for when

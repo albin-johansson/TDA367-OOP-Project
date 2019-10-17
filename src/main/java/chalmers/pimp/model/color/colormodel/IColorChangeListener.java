@@ -1,4 +1,4 @@
-package chalmers.pimp.model.color.colorchangeobserver;
+package chalmers.pimp.model.color.colormodel;
 
 import chalmers.pimp.model.color.IColor;
 

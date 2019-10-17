@@ -2,7 +2,6 @@ package chalmers.pimp.model.color.colormodel;
 
 import chalmers.pimp.model.AbstractComposite;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.colorchangeobserver.IColorChangeListener;
 import java.util.Objects;
 
 /**

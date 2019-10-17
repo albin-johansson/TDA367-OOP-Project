@@ -15,7 +15,7 @@ import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.colorchangeobserver.IColorChangeListener;
+import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.color.colormodel.ColorModelFactory;
 import chalmers.pimp.model.color.colormodel.IColorModel;
 import chalmers.pimp.model.command.CommandFactory;

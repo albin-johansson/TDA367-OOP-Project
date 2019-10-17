@@ -2,7 +2,6 @@ package chalmers.pimp.model.color.colormodel;
 
 import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.colorchangeobserver.IColorChangeObservable;
 
 /**
  * The {@code IColorModel} interface specifies objects that represent the color model (information
@@ -10,7 +9,7 @@ import chalmers.pimp.model.color.colorchangeobserver.IColorChangeObservable;
  * IColorChangeObservable} interface and is thus observable and can notify its listeners when its
  * color has been modified.
  *
- * @see chalmers.pimp.model.color.colorchangeobserver.IColorChangeListener
+ * @see IColorChangeListener
  */
 public interface IColorModel extends IMementoTarget<ColorModelMemento>, IColorChangeObservable {
 
