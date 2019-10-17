@@ -1,6 +1,5 @@
 package chalmers.pimp.model.canvas.layer;
 
-import chalmers.pimp.controller.components.ImageChooser;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IReadOnlyColor;
@@ -49,20 +48,15 @@ final class Doodle implements ILayer {
     color = doodle.color;
     lineWidth = doodle.lineWidth;
 
-    doodle.points.forEach(p -> points.add(p));
+    doodle.points.forEach(points::add);
     setRotationAnchorToCenter();
   }
 
   @Override
   public void setPixel(IPixel pixel) {
-    Point p = new Point(pixel.getX() - getX(), pixel.getY()- getY());
+    Point p = new Point(pixel.getX() - getX(), pixel.getY() - getY());
     points.add(p);
     setRotationAnchorToCenter();
-  }
-
-  @Override
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
   }
 
   @Override
@@ -72,46 +66,10 @@ final class Doodle implements ILayer {
   }
 
   @Override
-  public void setX(int x) {
-    layerDelegate.setX(x);
-  }
-
-  @Override
-  public void setY(int y) {
-    layerDelegate.setY(y);
-  }
-
-  @Override
-  public void setName(String name) {
-    layerDelegate.setName(name);
-  }
-
-  @Override
-  public void setDepthIndex(int depthIndex) {
-    layerDelegate.setDepthIndex(depthIndex);
-  }
-
-  @Override
-  public void setRotationAnchor(Point rotationAnchor) {
-    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
-    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
-  }
-
-  @Override
   public void setRotationAnchorToCenter() {
     Point temp = new Point(layerDelegate.getX() + (getWidth() / 2),
-        layerDelegate.getY() + (getHeight()/ 2));
+        layerDelegate.getY() + (getHeight() / 2));
     layerDelegate.setRotationAnchor(temp);
-  }
-
-  @Override
-  public void setRotation(double rotation) {
-    layerDelegate.setRotationDegrees(rotation);
-  }
-
-  @Override
-  public void setAlpha(double alpha) {
-    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -120,13 +78,28 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public void setVisible(boolean isVisible) {
+    layerDelegate.setVisible(isVisible);
+  }
+
+  @Override
   public int getX() {
     return layerDelegate.getX();
   }
 
   @Override
+  public void setX(int x) {
+    layerDelegate.setX(x);
+  }
+
+  @Override
   public int getY() {
     return layerDelegate.getY();
+  }
+
+  @Override
+  public void setY(int y) {
+    layerDelegate.setY(y);
   }
 
   @Override
@@ -146,8 +119,18 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public void setRotation(double rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
   public double getAlpha() {
     return layerDelegate.getAlpha();
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -165,7 +148,7 @@ final class Doodle implements ILayer {
     }
     int xMax = getHighest(result);
 
-    return xMax - xMin + lineWidth*2;
+    return xMax - xMin + lineWidth * 2;
   }
 
   @Override
@@ -173,7 +156,7 @@ final class Doodle implements ILayer {
     int yMin = getLowest(points.stream().map(Point::getY).collect(Collectors.toList()));
     int yMax = getHighest(points.stream().map(Point::getY).collect(Collectors.toList()));
 
-    return yMax - yMin + lineWidth*2;
+    return yMax - yMin + lineWidth * 2;
   }
 
   @Override
@@ -182,13 +165,29 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
   public int getDepthIndex() {
     return layerDelegate.getDepthIndex();
   }
 
   @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
   public Point getRotationAnchor() {
     return layerDelegate.getRotationAnchor();
+  }
+
+  @Override
+  public void setRotationAnchor(Point rotationAnchor) {
+    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
+    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
   }
 
   @Override
@@ -202,7 +201,8 @@ final class Doodle implements ILayer {
       return;
     }
     renderer
-        .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(), getWidth(),
+        .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(),
+            getWidth(),
             getHeight());
     renderer.setGlobalAlpha(color.getAlphaPercentage());
     renderer.setLineWidth(lineWidth);
