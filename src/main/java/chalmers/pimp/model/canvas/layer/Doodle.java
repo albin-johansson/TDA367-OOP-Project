@@ -116,8 +116,18 @@ final class Doodle implements ILayer {
 
   @Override
   public int getWidth() {
-    int xMin = getLowest(points.stream().map(Point::getX).collect(Collectors.toList()));
-    int xMax = getHighest(points.stream().map(Point::getX).collect(Collectors.toList()));
+    List<Integer> list = new ArrayList<>();
+    for (Point point : points) {
+      Integer x = point.getX();
+      list.add(x);
+    }
+    int xMin = getLowest(list);
+    List<Integer> result = new ArrayList<>();
+    for (Point point : points) {
+      Integer x = point.getX();
+      result.add(x);
+    }
+    int xMax = getHighest(result);
 
     return xMax - xMin + lineWidth*2;
   }
@@ -181,7 +191,7 @@ final class Doodle implements ILayer {
 
     int highest = list.get(0);
     for (Integer i : list) {
-      highest = highest < i ? i : highest;
+      highest = (highest < i) ? i : highest;
     }
     return highest;
   }
@@ -200,7 +210,7 @@ final class Doodle implements ILayer {
 
     int lowest = list.get(0);
     for (Integer i : list) {
-      lowest = lowest > i ? i : lowest;
+      lowest = (lowest > i) ? i : lowest;
     }
     return lowest;
   }
