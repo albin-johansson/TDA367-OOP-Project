@@ -1,6 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.PixelData;
 
@@ -86,5 +87,14 @@ public final class LayerFactory {
    */
   public static ILayer createDoodle(int lineWidth, IColor color) {
     return new Doodle(lineWidth, color);
+  }
+
+  /**
+   * Creates and returns a layer that is a black text.
+   *
+   * @return a layer that is a text.
+   */
+  public static ILayer createText() {
+    return new Text(Colors.BLACK);
   }
 }
