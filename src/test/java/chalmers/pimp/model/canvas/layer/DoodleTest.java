@@ -1,17 +1,12 @@
 package chalmers.pimp.model.canvas.layer;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.color.ColorFactory;
-import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.mock.Line;
 import chalmers.pimp.model.mock.RendererMock;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +18,7 @@ class DoodleTest {
 
   @BeforeEach
   void init() {
-    doodle = LayerFactory.createDoodle(10, ColorFactory.createColor(0,0,0));
+    doodle = LayerFactory.createDoodle(10, ColorFactory.createColor(0, 0, 0));
   }
 
   @Test

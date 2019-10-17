@@ -6,6 +6,8 @@ import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.Stroke;
 import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.colormodel.IColorModel;
 
 /**
  * The {@code CommandFactory} class is a factory for creating instances of the {@link ICommand}
@@ -96,5 +98,21 @@ public final class CommandFactory {
   public static ICommand createChangeLayerDepthCommand(ICanvas canvas,
       IMementoTarget<ModelMemento> mementoTarget, int baseDepthIndex, int dz) {
     return new ChangeLayerDepthCommand(canvas, mementoTarget, baseDepthIndex, dz);
+  }
+
+  /**
+   * Creates and returns a command that represents the action of changing the color.
+   *
+   * @param mementoTarget the memento target that will be used.
+   * @param colorModel    the color model.
+   * @param color         the new color.
+   * @throws NullPointerException if any references are {@code null}.
+   */
+  public static ICommand createChangeColorCommand(
+      IMementoTarget<ModelMemento> mementoTarget,
+      IColorModel colorModel,
+      IColor color
+  ) {
+    return new ChangeColorCommand(mementoTarget, colorModel, color);
   }
 }

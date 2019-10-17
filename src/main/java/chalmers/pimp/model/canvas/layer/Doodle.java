@@ -2,7 +2,7 @@ package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ final class Doodle implements ILayer {
 
   private final List<Point> points;
   private final LayerDelegate layerDelegate;
-  private final IReadOnlyColor color;
+  private final IColor color;
   private final int lineWidth;
   private int width;
   private int height;
@@ -28,7 +28,7 @@ final class Doodle implements ILayer {
    * @param color     the color of the lines
    * @throws NullPointerException if color is null
    */
-  Doodle(int lineWidth, IReadOnlyColor color) {
+  Doodle(int lineWidth, IColor color) {
     points = new ArrayList<>();
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
     layerDelegate.setName("Doodle");
