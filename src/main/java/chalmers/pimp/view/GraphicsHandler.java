@@ -2,8 +2,7 @@ package chalmers.pimp.view;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.IRenderer;
-import chalmers.pimp.model.color.ColorFactory;
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.Objects;
 
@@ -12,10 +11,6 @@ import java.util.Objects;
  * model canvas.
  */
 final class GraphicsHandler {
-
-  private static final IReadOnlyColor BLACK = ColorFactory.createColor(0, 0, 0);
-  private static final IReadOnlyColor LIGHT_GRAY = ColorFactory.createColor(0xCC, 0xCC, 0xCC);
-  private static final IReadOnlyColor WHITE = ColorFactory.createColor(0xFF, 0xFF, 0xFF);
 
   private final IRenderer renderer;
   private final IModel model;
@@ -38,7 +33,7 @@ final class GraphicsHandler {
   private void drawCanvasArea() {
     IReadOnlyViewport viewport = model.getViewport();
 
-    renderer.setFillColor(WHITE);
+    renderer.setFillColor(Colors.WHITE);
 
     int x = viewport.getRelativeX(0);
     int y = viewport.getRelativeY(0);
@@ -46,6 +41,21 @@ final class GraphicsHandler {
     int height = Math.max(model.getHeight(), renderer.getCanvasHeight());
 
     renderer.fillRect(x, y, width, height);
+  }
+
+  private void drawTransparencyGrid(int vx, int vy) {
+    final int size = 20;
+    for (int row = 0; row < 40; row++) {
+      for (int col = 0; col < 40; col++) {
+        int x = vx + (row * size);
+        int y = vy + (col * size);
+
+        if ((row % 2 == 0) == (col % 2 == 0)) {
+          renderer.setFillColor(Colors.LIGHT_GRAY);
+          renderer.fillRect(x, y, size, size);
+        }
+      }
+    }
   }
 
   /**
@@ -56,7 +66,7 @@ final class GraphicsHandler {
     final int canvasWidth = renderer.getCanvasWidth();
     final int canvasHeight = renderer.getCanvasHeight();
 
-    renderer.setFillColor(LIGHT_GRAY);
+    renderer.setFillColor(Colors.DARK_GRAY);
 
     // left hand side
     renderer.fillRect(0, 0, vx, canvasHeight);
@@ -80,7 +90,7 @@ final class GraphicsHandler {
    * @param modelHeight the height of the model height.
    */
   private void drawCanvasShadow(int vx, int vy, int modelWidth, int modelHeight) {
-    renderer.setFillColor(BLACK);
+    renderer.setFillColor(Colors.BLACK);
     renderer.fillRect((vx + modelWidth), vy, shadowSize, modelHeight);
     renderer.fillRect(vx, (vy + modelHeight), modelWidth + shadowSize, shadowSize);
   }
@@ -95,6 +105,7 @@ final class GraphicsHandler {
     final int modelHeight = model.getHeight();
 
     drawCanvasArea();
+    drawTransparencyGrid(vx, vy);
     model.draw(renderer);
     fillCanvasSurroundingArea(vx, vy, modelWidth, modelHeight);
     drawCanvasShadow(vx, vy, modelWidth, modelHeight);

@@ -1,6 +1,7 @@
 package chalmers.pimp.model;
 
 import static chalmers.pimp.model.command.CommandFactory.createAddLayerCommand;
+import static chalmers.pimp.model.command.CommandFactory.createChangeColorCommand;
 import static chalmers.pimp.model.command.CommandFactory.createChangeLayerDepthCommand;
 import static chalmers.pimp.model.command.CommandFactory.createLayerSelectionCommand;
 import static chalmers.pimp.model.command.CommandFactory.createMoveCommand;
@@ -13,17 +14,14 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.color.colormodel.ColorModelFactory;
+import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.color.colormodel.IColorModel;
-import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.tools.ITool;
-import chalmers.pimp.model.tools.ToolFactory;
 import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import chalmers.pimp.model.viewport.IViewportModel;
 import chalmers.pimp.model.viewport.ViewportModelFactory;
@@ -60,7 +58,7 @@ final class ModelImpl implements IModel {
     height = 600;
 
     stroke = null;
-    colorModel = ColorModelFactory.createColorModel(Colors.TRANSPARENT);
+    colorModel = ColorModelFactory.createColorModel();
   }
 
   /**
@@ -327,6 +325,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void notifyColorUpdateListeners() {
+    colorModel.notifyAllColorChangeListeners();
+  }
+
+  @Override
   public void restore(ModelMemento modelMemento) {
     canvas.restore(modelMemento.getCanvasMemento());
     viewportModel.restore(modelMemento.getViewportModelMemento());
@@ -335,7 +338,8 @@ final class ModelImpl implements IModel {
 
   @Override
   public ModelMemento createSnapShot() {
-    return new ModelMemento(canvas.createSnapShot(), viewportModel.createSnapShot(),colorModel.createSnapShot());
+    return new ModelMemento(canvas.createSnapShot(), viewportModel.createSnapShot(),
+        colorModel.createSnapShot());
   }
 
   @Override
@@ -348,12 +352,11 @@ final class ModelImpl implements IModel {
     commandManager.redo();
   }
 
-  static int loops = 0;
-
   @Override
   public void setSelectedColor(IColor color) {
-    ICommand cmd = CommandFactory
-        .createChangeColorCommand(this, colorModel, Objects.requireNonNull(color));
+    Objects.requireNonNull(color);
+
+    ICommand cmd = createChangeColorCommand(this, colorModel, color);
     cmd.execute();
     commandManager.insertCommand(cmd);
   }

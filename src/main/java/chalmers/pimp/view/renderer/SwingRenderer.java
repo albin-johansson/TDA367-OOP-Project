@@ -7,7 +7,7 @@ import static java.awt.RenderingHints.VALUE_RENDER_QUALITY;
 import chalmers.pimp.model.IArea;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -58,7 +58,7 @@ final class SwingRenderer implements IRenderer {
    * @return a Swing/AWT equivalent of the supplied color.
    * @throws NullPointerException if the supplied color is {@code null}.
    */
-  private Color toSwingColor(IReadOnlyColor color) {
+  private Color toSwingColor(IColor color) {
     Objects.requireNonNull(color);
     return new Color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
   }
@@ -91,10 +91,10 @@ final class SwingRenderer implements IRenderer {
   }
 
   @Override
-  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width, int height) {
+  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
     if (readOnlyPixelData != null) {
       Image img = SwingFXUtils.fromFXImage(getFXImage(readOnlyPixelData), null);
-      graphics.drawImage(img, x, y, width, height, null);
+      graphics.drawImage(img, x, y, null);
     }
   }
 
@@ -122,14 +122,14 @@ final class SwingRenderer implements IRenderer {
   }
 
   @Override
-  public void setFillColor(IReadOnlyColor color) {
+  public void setFillColor(IColor color) {
     if (color != null) {
       fillColor = toSwingColor(color);
     }
   }
 
   @Override
-  public void setBorderColor(IReadOnlyColor color) {
+  public void setBorderColor(IColor color) {
     if (color != null) {
       borderColor = toSwingColor(color);
     }

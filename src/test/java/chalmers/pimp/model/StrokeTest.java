@@ -25,7 +25,7 @@ class StrokeTest {
   void setUp() {
     ICanvas canvas = CanvasFactory.createCanvas();
     IViewportModel viewportModel = ViewportModelFactory.createViewportModel();
-    ColorModelMemento colorModel = ColorModelFactory.createColorModel(Colors.BLACK).createSnapShot();
+    ColorModelMemento colorModel = ColorModelFactory.createColorModel().createSnapShot();
     memento = new ModelMemento(canvas.createSnapShot(), viewportModel.createSnapShot(), colorModel);
     stroke = new Stroke(memento, 10, Colors.BLACK);
   }

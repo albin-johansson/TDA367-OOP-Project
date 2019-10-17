@@ -4,6 +4,7 @@ import chalmers.pimp.controller.ControllerFactory;
 import chalmers.pimp.controller.IController;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.ModelFactory;
+import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.view.IView;
 import chalmers.pimp.view.ViewFactory;
 import javafx.application.Application;
@@ -34,6 +35,8 @@ public final class PimpApp extends Application {
     controller.run();
 
     controller.centerViewport();
+    model.notifyColorUpdateListeners();
+
     view.repaint();
   }
 }

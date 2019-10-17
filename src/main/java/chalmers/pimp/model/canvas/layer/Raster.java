@@ -148,7 +148,7 @@ final class Raster implements ILayer {
     if (isVisible()) {
       int drawX = viewport.getRelativeX(getX());
       int drawY = viewport.getRelativeY(getY());
-      renderer.drawImage(pixelData, drawX, drawY, pixelData.getWidth(), pixelData.getHeight());
+      renderer.drawImage(pixelData, drawX, drawY);
     }
   }
 

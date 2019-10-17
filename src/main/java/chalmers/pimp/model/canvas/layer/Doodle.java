@@ -27,7 +27,7 @@ final class Doodle implements ILayer {
    * @param color     the color of the doodle layer.
    * @throws NullPointerException if the supplied color is {@code null}.
    */
-  Doodle(int lineWidth, IReadOnlyColor color) {
+  Doodle(int lineWidth, IColor color) {
     this.lineWidth = lineWidth;
     this.color = Objects.requireNonNull(color);
 

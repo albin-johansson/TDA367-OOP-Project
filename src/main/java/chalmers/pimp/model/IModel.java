@@ -336,4 +336,6 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * @throws NullPointerException if the provided observer is null.
    */
   void addColorChangeListener(IColorChangeListener listener);
+
+  void notifyColorUpdateListeners();
 }

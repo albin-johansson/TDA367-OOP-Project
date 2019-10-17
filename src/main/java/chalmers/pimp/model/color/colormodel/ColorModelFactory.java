@@ -1,8 +1,5 @@
 package chalmers.pimp.model.color.colormodel;
 
-import chalmers.pimp.model.color.IColor;
-import java.util.Objects;
-
 /**
  * The {@code ColorModelFactory} class is used to create instances of the IColorModel interface.
  *
@@ -14,13 +11,11 @@ public final class ColorModelFactory {
   }
 
   /**
-   * Creates and returns a implementation of the IColorModel interface.
+   * Creates and returns a color model instance.
    *
-   * @param color the color the color model should hold.
-   * @return a color model with the provided color.
-   * @throws NullPointerException if the provided color is {@code null}.
+   * @return a color model instance.
    */
-  public static IColorModel createColorModel(IColor color) {
-    return new ColorModelImpl(Objects.requireNonNull(color));
+  public static IColorModel createColorModel() {
+    return new ColorModelImpl();
   }
 }

@@ -42,7 +42,7 @@ final class DoodleTool implements ITool {
     int x = model.getViewport().getRelativeX(mouseStatus.getX());
     int y = model.getViewport().getRelativeY(mouseStatus.getY());
 
-    doodle.setPixel(PixelFactory.createPixel(x, y, color));
+    doodle.setPixel(PixelFactory.createPixel(x, y));
     doodle.draw(model.getRenderer(), model.getViewport());
 
     // doodle.setPixel(
