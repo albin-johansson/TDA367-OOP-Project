@@ -2,7 +2,7 @@ package chalmers.pimp.view.renderer;
 
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.service.ColorConverterService;
 import chalmers.pimp.service.PixelDataToFXService;
@@ -73,7 +73,7 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width, int height) {
+  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
     Image image = PixelDataToFXService.getFXImage(readOnlyPixelData);
     graphicsContext.drawImage(image, x, y);
   }
@@ -98,12 +98,12 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void setFillColor(IReadOnlyColor color) {
+  public void setFillColor(IColor color) {
     graphicsContext.setFill(ColorConverterService.toFXColor(color));
   }
 
   @Override
-  public void setBorderColor(IReadOnlyColor color) {
+  public void setBorderColor(IColor color) {
     graphicsContext.setStroke(ColorConverterService.toFXColor(color));
   }
 

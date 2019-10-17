@@ -18,6 +18,8 @@ import javafx.scene.layout.AnchorPane;
 public final class PimpEditorPane extends AnchorPane {
 
   private final CanvasPane canvasPane;
+  private final UtilityPane utilityPane;
+
   @FXML
   @SuppressWarnings("unused")
   private AnchorPane topAnchorPane;
@@ -45,29 +47,31 @@ public final class PimpEditorPane extends AnchorPane {
     Objects.requireNonNull(model);
     Objects.requireNonNull(controller);
 
+    // Toolbar (TOP)
     var toolbarPane = new ToolbarPane(controller);
     topAnchorPane.getChildren().add(toolbarPane);
-    AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(toolbarPane);
     model.addUndoRedoListener(toolbarPane);
 
-    var canvasPane = new CanvasPane(controller);
+    // Utility (RIGHT)
+    utilityPane = new UtilityPane(model);
+    rightAnchorPane.getChildren().add(utilityPane);
+    AnchorPanes.setZeroAnchors(utilityPane);
+
+    // Canvas (CENTER)
+    canvasPane = new CanvasPane(controller);
     centerPane.getChildren().add(canvasPane);
-    AnchorPanes.setAnchors(canvasPane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(canvasPane);
 
-    this.canvasPane = canvasPane;
-
-    var layerItemManagerPane = new LayerItemContainerPane(model);
-    model.addLayerUpdateListener(layerItemManagerPane);
-    rightAnchorPane.getChildren().add(layerItemManagerPane);
-    AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
-
+    // Palette pane (LEFT)
     var palettePane = new PalettePane(controller);
     leftAnchorPane.getChildren().add(palettePane);
-    AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(palettePane);
 
+    // Info pane (DOWN)
     var infoPane = new InfoPane();
     bottomAnchorPane.getChildren().add(infoPane);
-    AnchorPanes.setAnchors(infoPane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(infoPane);
 
     initiateInfoPane(infoPane, controller, model);
   }

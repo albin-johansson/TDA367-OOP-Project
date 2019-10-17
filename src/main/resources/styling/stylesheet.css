@@ -12,6 +12,8 @@
   -background-hover-color: derive(-background-color, 15%);
   -background-pressed-color: derive(-background-color, 25%);
 
+  -background-secondary: #383838;
+
   -text-color: white; /* Used for text that is directly placed on something that uses the background color. */
   -component-text-color: white; /* Used for text contained in a component (which used the accent color). */
 }
@@ -159,12 +161,16 @@
   -fx-cursor: CLOSED_HAND;
 }
 
+.color-picker {
+  -fx-background-color: -background-pressed-color;
+}
+
 #info-pane {
-  -fx-background-color: linear-gradient(-background-pressed-color, -background-color);
+  -fx-background-color: linear-gradient(-background-secondary, -background-color);
 }
 
 #toolbar-pane {
-  -fx-background-color: linear-gradient(-background-pressed-color, -background-color);
+  -fx-background-color: linear-gradient(-background-secondary, -background-color);
 }
 
 .separator {

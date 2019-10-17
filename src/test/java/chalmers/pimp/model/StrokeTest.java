@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.canvas.CanvasFactory;
 import chalmers.pimp.model.canvas.ICanvas;
+import chalmers.pimp.model.color.Colors;
+import chalmers.pimp.model.color.colormodel.ColorModelFactory;
+import chalmers.pimp.model.color.colormodel.ColorModelMemento;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import chalmers.pimp.model.viewport.IViewportModel;
@@ -22,8 +25,9 @@ class StrokeTest {
   void setUp() {
     ICanvas canvas = CanvasFactory.createCanvas();
     IViewportModel viewportModel = ViewportModelFactory.createViewportModel();
-    memento = new ModelMemento(canvas.createSnapShot(), viewportModel.createSnapShot());
-    stroke = new Stroke(memento, 10);
+    ColorModelMemento colorModel = ColorModelFactory.createColorModel(Colors.BLACK).createSnapShot();
+    memento = new ModelMemento(canvas.createSnapShot(), viewportModel.createSnapShot(), colorModel);
+    stroke = new Stroke(memento, 10, Colors.BLACK);
   }
 
   @Test
@@ -38,9 +42,9 @@ class StrokeTest {
 
   @Test
   void updatePixels() {
-    assertThrows(NullPointerException.class, () -> stroke.updatePixels(null, null));
+    assertThrows(NullPointerException.class, () -> stroke.updatePixels(null, null, null));
     assertThrows(NullPointerException.class,
-        () -> stroke.updatePixels(CanvasFactory.createCanvas(), null));
+        () -> stroke.updatePixels(CanvasFactory.createCanvas(), null, null));
   }
 
   @Test

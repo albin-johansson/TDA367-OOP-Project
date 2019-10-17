@@ -4,7 +4,6 @@ import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
-import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 
@@ -17,25 +16,22 @@ import java.util.Objects;
 final class DoodleTool implements ITool {
 
   private final IModel model;
-  private final IColor color;
   private final int lineWidth;
   private ILayer doodle;
 
   /**
    * @param lineWidth the line width of the doodle.
-   * @param color     the color of the doodle.
    * @param model     the associated model instance.
    * @throws NullPointerException if any references are {@code null}.
    */
-  DoodleTool(int lineWidth, IColor color, IModel model) {
+  DoodleTool(int lineWidth, IModel model) {
     this.lineWidth = lineWidth;
-    this.color = Objects.requireNonNull(color);
     this.model = Objects.requireNonNull(model);
   }
 
   @Override
   public void pressed(MouseStatus mouseStatus) {
-    doodle = LayerFactory.createDoodle(lineWidth, color);
+    doodle = LayerFactory.createDoodle(lineWidth, model.getSelectedColor());
     dragged(mouseStatus);
   }
 
@@ -48,6 +44,10 @@ final class DoodleTool implements ITool {
 
     doodle.setPixel(PixelFactory.createPixel(x, y, color));
     doodle.draw(model.getRenderer(), model.getViewport());
+
+    // doodle.setPixel(
+    //     PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), model.getSelectedColor()));
+    // doodle.draw(model.getRenderer());
   }
 
   @Override

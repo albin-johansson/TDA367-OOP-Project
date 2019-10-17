@@ -1,6 +1,6 @@
 package chalmers.pimp.model;
 
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 
 /**
@@ -59,10 +59,8 @@ public interface IRenderer {
    * @param readOnlyPixelData the image to draw.
    * @param x                 the zero-indexed x coordinate of the image.
    * @param y                 the zero-indexed y coordinate of the image.
-   * @param width             the width of the image.
-   * @param height            the height of the image.
    */
-  void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width, int height);
+  void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y);
 
   /**
    * Draws a text.
@@ -94,14 +92,14 @@ public interface IRenderer {
    *
    * @param color the color to be set.
    */
-  void setFillColor(IReadOnlyColor color);
+  void setFillColor(IColor color);
 
   /**
    * Sets the color of the border.
    *
    * @param color the color to be set.
    */
-  void setBorderColor(IReadOnlyColor color);
+  void setBorderColor(IColor color);
 
   /**
    * Sets the border width.

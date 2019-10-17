@@ -4,6 +4,8 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.viewport.IReadOnlyViewport;
@@ -306,9 +308,32 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   IReadOnlyLayer getActiveLayer(); // TODO remove, high risk of invalid use
 
   /**
+   * Sets the color that should be used for drawing items on the canvas.
+   *
+   * @param color the new color.
+   * @throws NullPointerException if the provided color is {@code null}.
+   */
+  void setSelectedColor(IColor color);
+
+  /**
+   * Returns the selected color that is used for when creating new shapes, drawings etc.
+   *
+   * @return the selected color that is used for when creating new shapes, drawings etc.
+   */
+  IColor getSelectedColor();
+
+  /**
    * Returns all of the layers in the model.
    *
    * @return all of the layers in the model.
    */
   Iterable<? extends IReadOnlyLayer> getLayers();
+
+  /**
+   * Adds a listener.
+   *
+   * @param listener a listener that listens to color changes.
+   * @throws NullPointerException if the provided observer is null.
+   */
+  void addColorChangeListener(IColorChangeListener listener);
 }
