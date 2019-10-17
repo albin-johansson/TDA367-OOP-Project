@@ -149,13 +149,11 @@
 #layer-item {
   -fx-background-color: #4e4e4e;
   -fx-border-width: 3px 0px 0px 0px;
-
 }
 
 #layer-item:hover {
   -fx-cursor: OPEN_HAND;
 }
-
 
 #layer-item:pressed {
   -fx-cursor: CLOSED_HAND;
@@ -169,6 +167,15 @@
   -fx-background-color: linear-gradient(-background-pressed-color, -background-color);
 }
 
+.separator {
+  -fx-background-color: transparent;
+}
+
+.separator:vertical .line {
+  -fx-border-color: transparent transparent transparent transparent,
+  transparent transparent -text-color transparent;
+}
+
 .text-field {
   -fx-background-color: transparent;
 }
@@ -179,4 +186,3 @@
   -fx-font-weight: normal;
   /*-fx-text-fill: white !important;*/
 }
-
