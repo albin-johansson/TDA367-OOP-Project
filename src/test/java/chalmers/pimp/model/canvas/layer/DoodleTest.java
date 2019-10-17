@@ -14,12 +14,12 @@ import org.junit.jupiter.api.Test;
 
 class DoodleTest {
 
-  private ILayer doodle;
   private static final int lineWidth = 10;
+  private ILayer doodle;
 
   @BeforeEach
   void init() {
-    doodle = LayerFactory.createDoodle(lineWidth, ColorFactory.createColor(0,0,0));
+    doodle = LayerFactory.createDoodle(lineWidth, ColorFactory.createColor(0, 0, 0));
   }
 
   @Test
@@ -130,21 +130,20 @@ class DoodleTest {
   }
 
   @Test
-  void getHeight(){
-    assertEquals(doodle.getHeight(), lineWidth*2);
+  void getHeight() {
+    assertEquals(doodle.getHeight(), lineWidth * 2);
     doodle.setPixel(PixelFactory.createPixel(10, 10));
     doodle.setPixel(PixelFactory.createPixel(10, 20));
 
-    assertEquals(doodle.getHeight(), 10 + lineWidth*2);
+    assertEquals(doodle.getHeight(), 10 + lineWidth * 2);
   }
 
   @Test
-  void getWidth(){
-    assertEquals(doodle.getWidth(), lineWidth*2);
+  void getWidth() {
+    assertEquals(doodle.getWidth(), lineWidth * 2);
     doodle.setPixel(PixelFactory.createPixel(10, 10));
     doodle.setPixel(PixelFactory.createPixel(20, 10));
 
-    assertEquals(doodle.getWidth(), 10 + lineWidth*2);
+    assertEquals(doodle.getWidth(), 10 + lineWidth * 2);
   }
-
 }

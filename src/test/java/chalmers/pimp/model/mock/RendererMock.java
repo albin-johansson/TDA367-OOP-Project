@@ -54,7 +54,6 @@ public class RendererMock implements IRenderer {
     lines.add(new Line(p1, p2));
   }
 
-
   @Override
   public void endTransform() {
   }
