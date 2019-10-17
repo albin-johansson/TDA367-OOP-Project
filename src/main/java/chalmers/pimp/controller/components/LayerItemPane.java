@@ -82,8 +82,6 @@ final class LayerItemPane extends AnchorPane {
   @SuppressWarnings("unused")
   private Button renameButton;
 
-
-
   private final IModel model;
   private final int associatedLayerIndex;
 
@@ -132,8 +130,8 @@ final class LayerItemPane extends AnchorPane {
     }*/
 
     layerName.setContextMenu(contextMenu);
-    renameField.focusedProperty().addListener((observable,oldvalue, newvalue) -> {
-      if(!newvalue && !renameButton.isFocused()){
+    renameField.focusedProperty().addListener((observable, oldvalue, newvalue) -> {
+      if (!newvalue && !renameButton.isFocused()) {
         standardPane.toFront();
       }
     });
@@ -278,19 +276,19 @@ final class LayerItemPane extends AnchorPane {
    *
    * @param image the new Image.
    */
-  void setImage(Image image){
+  void setImage(Image image) {
     layerPreview.setImage(image);
   }
 
   @FXML
-  private void renameLayer(){
+  private void renameLayer() {
     renamePane.toFront();
     renameField.clear();
     renameField.requestFocus();
   }
 
   @FXML
-  private void setName(){
+  private void setName() {
     model.setLayerName(associatedLayerIndex, renameField.getText());
     layerName.setText(renameField.getText());
     standardPane.toFront();
@@ -298,8 +296,8 @@ final class LayerItemPane extends AnchorPane {
   }
 
   @FXML
-  private void checkIfCancel(KeyEvent event){
-    if(event.getCode().equals(KeyCode.ESCAPE)){
+  private void checkIfCancel(KeyEvent event) {
+    if (event.getCode().equals(KeyCode.ESCAPE)) {
       standardPane.toFront();
     }
   }
