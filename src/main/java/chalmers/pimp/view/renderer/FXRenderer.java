@@ -52,6 +52,9 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width, int height) {
+    if(readOnlyPixelData == null){
+      return;
+    }
     Image image = PixelDataToFXService.getFXImage(readOnlyPixelData);
     graphicsContext.drawImage(image, x, y);
   }
@@ -65,6 +68,9 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void startTransform(double rotation, Point startPoint, int width, int height) {
+    if(startPoint == null){
+      return;
+    }
     endTransform();
     graphicsContext.save(); // Save default transform
     Affine rotate = new Affine();
@@ -76,6 +82,9 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void drawLine(Point p1, Point p2) {
+    if(p1 == null || p2 == null){
+      return;
+    }
     graphicsContext.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
   }
 
