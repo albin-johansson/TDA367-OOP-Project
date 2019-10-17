@@ -8,6 +8,7 @@ import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 /**
@@ -54,7 +55,7 @@ final class Doodle implements ILayer {
 
   @Override
   public void setPixel(IPixel pixel) {
-    Point p = new Point(pixel.getX() - getX(), pixel.getY() - getY());
+    Point p = new Point(pixel.getX(), pixel.getY());
     points.add(p);
     setRotationAnchorToCenter();
   }
@@ -83,23 +84,27 @@ final class Doodle implements ILayer {
   }
 
   @Override
-  public int getX() {
-    return layerDelegate.getX();
-  }
-
-  @Override
   public void setX(int x) {
     layerDelegate.setX(x);
   }
 
   @Override
-  public int getY() {
-    return layerDelegate.getY();
+  public void setY(int y) {
+    layerDelegate.setY(y);
   }
 
   @Override
-  public void setY(int y) {
-    layerDelegate.setY(y);
+  public int getX() {
+    List<Integer> xVlaues = points.stream().map(Point::getX).collect(Collectors.toList());
+    int min = getExtreme(xVlaues, (a, b) -> a > b);
+    return min + layerDelegate.getX();
+  }
+
+  @Override
+  public int getY() {
+    List<Integer> yVlaues = points.stream().map(Point::getY).collect(Collectors.toList());
+    int min = getExtreme(yVlaues, (a, b) -> a > b);
+    return min + layerDelegate.getY();
   }
 
   @Override
@@ -135,28 +140,20 @@ final class Doodle implements ILayer {
 
   @Override
   public int getWidth() {
-    List<Integer> list = new ArrayList<>();
-    for (Point point : points) {
-      Integer x = point.getX();
-      list.add(x);
-    }
-    int xMin = getLowest(list);
-    List<Integer> result = new ArrayList<>();
-    for (Point point : points) {
-      Integer x = point.getX();
-      result.add(x);
-    }
-    int xMax = getHighest(result);
+    //Returns a list of the values returned from getX() for each item in points
+    //.stream() returns a sequential stream considering collection as its source
+    List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
 
-    return xMax - xMin + lineWidth * 2;
+    return getMostDiff(xValues) + lineWidth * 2;
   }
 
   @Override
   public int getHeight() {
-    int yMin = getLowest(points.stream().map(Point::getY).collect(Collectors.toList()));
-    int yMax = getHighest(points.stream().map(Point::getY).collect(Collectors.toList()));
+    //Returns a list of the values returned from getY() for each item in points
+    //.stream() returns a sequential stream considering collection as its source
+    List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
 
-    return yMax - yMin + lineWidth * 2;
+    return getMostDiff(yValues) + lineWidth * 2;
   }
 
   @Override
@@ -200,8 +197,12 @@ final class Doodle implements ILayer {
     if (!isVisible() || points.isEmpty()) {
       return;
     }
+
+    int offsX = layerDelegate.getX();
+    int offSY = layerDelegate.getY();
     renderer
-        .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(),
+        .startTransform(layerDelegate.getRotationDegrees(),
+            new Point(getX(), getY()),
             getWidth(),
             getHeight());
     renderer.setGlobalAlpha(color.getAlphaPercentage());
@@ -210,54 +211,51 @@ final class Doodle implements ILayer {
     renderer.setBorderColor(color);
 
     if (points.size() == 1) {
-      renderer.drawLine(points.get(0).addX(getX()).addY(getY()),
-          points.get(0).addX(getX()).addY(getY()));
+      renderer.drawLine(points.get(0).addX(offsX).addY(offSY),
+          points.get(0).addX(offsX).addY(offSY));
       return;
     }
 
     for (int i = 1; i < points.size(); i++) {
-      renderer.drawLine(points.get(i).addX(getX()).addY(getY()),
-          points.get(i - 1).addX(getX()).addY(getY()));
+      renderer.drawLine(points.get(i).addX(offsX).addY(offSY),
+          points.get(i - 1).addX(offsX).addY(offSY));
     }
     renderer.setGlobalAlpha(0);
     renderer.endTransform();
   }
 
   /**
-   * Returns the lowest integer in a list of integers
+   * Returns the largest difference between two integers in the specified list
    *
-   * @param list the specified list of integers
-   * @return the smallest integer
+   * @param list the specified list
+   * @return the largest difference between two integers in the specified list
    */
-  private int getHighest(List<Integer> list) {
-    Objects.requireNonNull(list);
-    if (list.isEmpty()) {
-      return 0;
-    }
+  private Integer getMostDiff(List<? extends Integer> list) {
+    int max = getExtreme(list, (a, b) -> a < b);
+    int min = getExtreme(list, (a, b) -> a > b);
 
-    int highest = list.get(0);
-    for (Integer i : list) {
-      highest = (highest < i) ? i : highest;
-    }
-    return highest;
+    return max - min;
   }
 
   /**
-   * Returns the lowest integer in a list of integers
+   * Comparing each element and returns element e which satisfies ∀a ∈ list : e ≺ a where ≺ is the
+   * predicate function
    *
-   * @param list the specified list of integers
-   * @return the smallest integer
+   * @param list      the list of elements to be compared
+   * @param predicate the method witch will make the comparison
+   * @return the element e which satisfies ∀a ∈ list : e ≺ a
    */
-  private int getLowest(List<Integer> list) {
+  private int getExtreme(List<? extends Integer> list,
+      BiPredicate<? super Integer, ? super Integer> predicate) {
     Objects.requireNonNull(list);
     if (list.isEmpty()) {
       return 0;
     }
 
-    int lowest = list.get(0);
+    Integer extreme = list.get(0);
     for (Integer i : list) {
-      lowest = (lowest > i) ? i : lowest;
+      extreme = predicate.test(extreme, i) ? i : extreme;
     }
-    return lowest;
+    return extreme;
   }
 }

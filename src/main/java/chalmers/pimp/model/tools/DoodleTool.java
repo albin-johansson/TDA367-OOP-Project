@@ -4,6 +4,7 @@ import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 
@@ -14,7 +15,6 @@ final class DoodleTool implements ITool {
 
   private final IModel model;
   private final int lineWidth;
-  private int x, y;
   private ILayer doodle;
 
   /**
