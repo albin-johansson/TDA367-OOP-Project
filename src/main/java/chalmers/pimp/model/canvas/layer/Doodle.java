@@ -202,8 +202,8 @@ final class Doodle implements ILayer {
       return;
     }
     renderer
-        .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(), width,
-            height);
+        .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(), getWidth(),
+            getHeight());
     renderer.setGlobalAlpha(color.getAlphaPercentage());
     renderer.setLineWidth(lineWidth);
     renderer.setFillColor(color);
