@@ -34,7 +34,7 @@ final class FXRenderer implements IRenderer {
     lineBlurEffect = new BoxBlur();
     lineBlurEffect.setWidth(1);
     lineBlurEffect.setHeight(1);
-    lineBlurEffect.setIterations(1);
+    lineBlurEffect.setIterations(3);
 
     graphicsContext.setLineJoin(StrokeLineJoin.ROUND); // should make strokes a little bit smoother
   }
