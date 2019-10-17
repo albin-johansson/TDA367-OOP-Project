@@ -175,14 +175,16 @@
   -fx-background-color: linear-gradient(-background-secondary, -background-color);
 }
 
-.text-field {
-  -fx-background-color: transparent;
-}
+
 
 /* TODO: Set color to permanently white*/
 .text-input {
   -fx-font-size: 12pt;
   -fx-font-weight: normal;
  /*-fx-text-fill: white !important;*/
+}
+
+#rename-box{
+  -fx-background-color: rgba(0, 0, 0, 0.40);
 }
 

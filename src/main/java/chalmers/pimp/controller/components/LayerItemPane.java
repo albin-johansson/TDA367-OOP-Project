@@ -3,15 +3,16 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerType;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -20,6 +21,9 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -52,7 +56,7 @@ final class LayerItemPane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")
-  private TextField textField;
+  private Label layerName;
   @FXML
   @SuppressWarnings("unused")
   private ToggleButton toggleButton;
@@ -65,6 +69,20 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private ContextMenu contextMenu;
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane standardPane;
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane renamePane;
+  @FXML
+  @SuppressWarnings("unused")
+  private TextField renameField;
+  @FXML
+  @SuppressWarnings("unused")
+  private Button renameButton;
+
+
 
   private final IModel model;
   private final int associatedLayerIndex;
@@ -81,7 +99,7 @@ final class LayerItemPane extends AnchorPane {
 
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
 
-    textField.setText(model.getLayerName(associatedLayerIndex));
+    layerName.setText(model.getLayerName(associatedLayerIndex));
 
     IReadOnlyLayer activeLayer = model.getActiveLayer();
     if ((activeLayer != null) && (activeLayer.getDepthIndex() == associatedLayerIndex)) {
@@ -112,6 +130,13 @@ final class LayerItemPane extends AnchorPane {
     } catch (Exception e) {
       System.err.println("Failed to load layerTypeIcon icon! Exception: " + e);
     }*/
+
+    layerName.setContextMenu(contextMenu);
+    renameField.focusedProperty().addListener((observable,oldvalue, newvalue) -> {
+      if(!newvalue && !renameButton.isFocused()){
+        standardPane.toFront();
+      }
+    });
   }
 
   /**
@@ -222,11 +247,11 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private void updateLayerName() {
-    String temp = textField.getText();
+    String temp = layerName.getText();
     if (temp.isEmpty()) {
-      textField.setText(model.getLayerName(associatedLayerIndex));
+      layerName.setText(model.getLayerName(associatedLayerIndex));
     } else {
-      model.setLayerName(associatedLayerIndex, textField.getText());
+      model.setLayerName(associatedLayerIndex, layerName.getText());
     }
   }
 
@@ -259,14 +284,23 @@ final class LayerItemPane extends AnchorPane {
 
   @FXML
   private void renameLayer(){
-    textField.setEditable(true);
-    textField.requestFocus();
+    renamePane.toFront();
+    renameField.clear();
+    renameField.requestFocus();
   }
 
   @FXML
   private void setName(){
-    model.setLayerName(associatedLayerIndex, textField.getText());
-    textField.setEditable(false);
+    model.setLayerName(associatedLayerIndex, renameField.getText());
+    layerName.setText(renameField.getText());
+    standardPane.toFront();
     requestFocus();
+  }
+
+  @FXML
+  private void checkIfCancel(KeyEvent event){
+    if(event.getCode().equals(KeyCode.ESCAPE)){
+      standardPane.toFront();
+    }
   }
 }
