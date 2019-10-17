@@ -43,10 +43,19 @@ final class GraphicsHandler {
     renderer.fillRect(x, y, width, height);
   }
 
+  /**
+   * Renders the transparency grid (a checkerboard).
+   *
+   * @param vx the viewport x-coordinate.
+   * @param vy the viewport y-coordinate.
+   */
   private void drawTransparencyGrid(int vx, int vy) {
     final int size = 20;
-    for (int row = 0; row < 40; row++) {
-      for (int col = 0; col < 40; col++) {
+    final int nRows = Math.min(model.getWidth() / size, renderer.getCanvasWidth() / size);
+    final int nCols = Math.min(model.getHeight() / size, renderer.getCanvasHeight() / size);
+
+    for (int row = 0; row < nRows; row++) {
+      for (int col = 0; col < nCols; col++) {
         int x = vx + (row * size);
         int y = vy + (col * size);
 
