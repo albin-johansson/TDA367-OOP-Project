@@ -28,19 +28,20 @@ final class Rectangle implements ILayer {
    * @param y      the zero-indexed y coordinate of the rectangle.
    * @param width  the width of the rectangle.
    * @param height the height of the rectangle.
+   * @param color  the color of the rectangle.
+   * @throws NullPointerException if the provided color is null.
    */
-  Rectangle(int x, int y, int width, int height) {
+  Rectangle(int x, int y, int width, int height, IColor color) {
     layerDelegate = new LayerDelegate(LayerType.SHAPE);
     layerDelegate.setX(x);
     layerDelegate.setY(y);
     this.width = width;
     this.height = height;
+    this.color = Objects.requireNonNull(color);
     setRotationAnchorToCenter();
 
     // OBVIOUSLY not a good solution. Just a fun easter egg :)
     layerDelegate.setName((width == height) ? "Square" : "Rectangle");
-
-    color = ColorFactory.createColor(255, 137, 243); // FIXME
   }
 
   /**
@@ -54,7 +55,7 @@ final class Rectangle implements ILayer {
     layerDelegate = new LayerDelegate(rectangle.layerDelegate);
     width = rectangle.width;
     height = rectangle.height;
-    color = ColorFactory.createColor(rectangle.color);
+    color = rectangle.color;
   }
 
   @Override

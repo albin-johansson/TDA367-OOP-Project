@@ -30,7 +30,6 @@ public final class PimpApp extends Application {
     IController controller = ControllerFactory.createController(model, view, stage);
     model.addCanvasUpdateListener(view);
     controller.run();
-
     view.repaint();
   }
 }

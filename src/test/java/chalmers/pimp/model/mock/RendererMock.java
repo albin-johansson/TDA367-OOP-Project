@@ -2,7 +2,7 @@ package chalmers.pimp.model.mock;
 
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,12 +65,12 @@ public class RendererMock implements IRenderer {
   }
 
   @Override
-  public void setFillColor(IReadOnlyColor color) {
+  public void setFillColor(IColor color) {
 
   }
 
   @Override
-  public void setBorderColor(IReadOnlyColor color) {
+  public void setBorderColor(IColor color) {
 
   }
 
