@@ -1,7 +1,7 @@
 dist: trusty
 language: java
 jdk:
-  - oraclejdk12
+  - openjdk12
 notifications:
   email: false
   slack: smash-bros-workspace:IRqJyRAcRp0P6hAxhyw3edEo
