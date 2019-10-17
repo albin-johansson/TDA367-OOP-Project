@@ -33,6 +33,7 @@ final class Doodle implements ILayer {
     layerDelegate.setName("Doodle");
     this.lineWidth = lineWidth;
     this.color = Objects.requireNonNull(color);
+    setRotationAnchorToCenter();
   }
 
   /**
