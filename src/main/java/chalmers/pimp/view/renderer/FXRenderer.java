@@ -2,7 +2,6 @@ package chalmers.pimp.view.renderer;
 
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
-import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.IReadOnlyColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.service.ColorConverterService;
@@ -81,8 +80,6 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void setRotation(int rotation) {
-
   public void endTransform() {
     graphicsContext.restore();
   }
