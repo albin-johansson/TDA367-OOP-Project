@@ -53,4 +53,11 @@ public final class ToolFactory {
   public static ITool createDoodleTool(int diameter, IModel model) {
     return new DoodleTool(diameter, model);
   }
+
+  /**
+   * Creates and returns a text tool.
+   */
+  public static ITool createTextTool() {
+    return new TextTool();
+  }
 }
