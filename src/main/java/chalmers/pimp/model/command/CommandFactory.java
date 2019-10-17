@@ -2,6 +2,7 @@ package chalmers.pimp.model.command;
 
 import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.LayerMovement;
+import chalmers.pimp.model.LayerRotation;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.Stroke;
 import chalmers.pimp.model.canvas.ICanvas;
@@ -45,6 +46,20 @@ public final class CommandFactory {
   public static ICommand createMoveCommand(ICanvas canvas,
       IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex, LayerMovement movement) {
     return new MoveCommand(canvas, mementoTarget, layerDepthIndex, movement);
+  }
+
+  /**
+   * Creates and returns a command that represents the action of rotating a layer.
+   *
+   * @param canvas          the associated canvas instance.
+   * @param mementoTarget   the memento target that will be used.
+   * @param layerDepthIndex the layer depth index of the affected layer.
+   * @param rotate        the layer rotate instance that describes the rotation.
+   * @throws NullPointerException if any references are {@code null}.
+   */
+  public static ICommand createRotateCommand(ICanvas canvas,
+      IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex, LayerRotation rotate) {
+    return new RotateCommand(canvas, mementoTarget, layerDepthIndex, rotate);
   }
 
   /**

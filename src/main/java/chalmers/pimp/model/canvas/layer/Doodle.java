@@ -8,6 +8,7 @@ import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A layer which has a list of points and draws straight lines between the points.
@@ -18,8 +19,6 @@ final class Doodle implements ILayer {
   private final LayerDelegate layerDelegate;
   private final IColor color;
   private final int lineWidth;
-  private int width;
-  private int height;
 
   /**
    * Creates a layer which has a list of points and draws straight lines between the points.
@@ -34,8 +33,6 @@ final class Doodle implements ILayer {
     layerDelegate.setName("Doodle");
     this.lineWidth = lineWidth;
     this.color = Objects.requireNonNull(color);
-    width = 0;
-    height = 0;
   }
 
   /**
@@ -51,48 +48,28 @@ final class Doodle implements ILayer {
     color = doodle.color;
     lineWidth = doodle.lineWidth;
 
-    doodle.points.forEach(p -> points.add(p));
+    doodle.points.forEach(points::add);
+    setRotationAnchorToCenter();
   }
 
   @Override
   public void setPixel(IPixel pixel) {
-    points.add(new Point(pixel.getX(), pixel.getY()));
-    if (pixel.getX() > width - lineWidth) {
-      width = pixel.getX() + lineWidth;
-    }
-    if (pixel.getY() > height - lineWidth) {
-      height = pixel.getY() + lineWidth;
-    }
-  }
-
-  @Override
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
+    Point p = new Point(pixel.getX() - getX(), pixel.getY() - getY());
+    points.add(p);
+    setRotationAnchorToCenter();
   }
 
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
+    setRotationAnchorToCenter();
   }
 
   @Override
-  public void setX(int x) {
-    layerDelegate.setX(x);
-  }
-
-  @Override
-  public void setY(int y) {
-    layerDelegate.setY(y);
-  }
-
-  @Override
-  public void setName(String name) {
-    layerDelegate.setName(name);
-  }
-
-  @Override
-  public void setDepthIndex(int depthIndex) {
-    layerDelegate.setDepthIndex(depthIndex);
+  public void setRotationAnchorToCenter() {
+    Point temp = new Point(layerDelegate.getX() + (getWidth() / 2),
+        layerDelegate.getY() + (getHeight() / 2));
+    layerDelegate.setRotationAnchor(temp);
   }
 
   @Override
@@ -101,13 +78,28 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public void setVisible(boolean isVisible) {
+    layerDelegate.setVisible(isVisible);
+  }
+
+  @Override
   public int getX() {
     return layerDelegate.getX();
   }
 
   @Override
+  public void setX(int x) {
+    layerDelegate.setX(x);
+  }
+
+  @Override
   public int getY() {
     return layerDelegate.getY();
+  }
+
+  @Override
+  public void setY(int y) {
+    layerDelegate.setY(y);
   }
 
   @Override
@@ -122,13 +114,49 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public double getRotation() {
+    return layerDelegate.getRotationDegrees();
+  }
+
+  @Override
+  public void setRotation(double rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
+  public double getAlpha() {
+    return layerDelegate.getAlpha();
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
+  }
+
+  @Override
   public int getWidth() {
-    return width;
+    List<Integer> list = new ArrayList<>();
+    for (Point point : points) {
+      Integer x = point.getX();
+      list.add(x);
+    }
+    int xMin = getLowest(list);
+    List<Integer> result = new ArrayList<>();
+    for (Point point : points) {
+      Integer x = point.getX();
+      result.add(x);
+    }
+    int xMax = getHighest(result);
+
+    return xMax - xMin + lineWidth * 2;
   }
 
   @Override
   public int getHeight() {
-    return height;
+    int yMin = getLowest(points.stream().map(Point::getY).collect(Collectors.toList()));
+    int yMax = getHighest(points.stream().map(Point::getY).collect(Collectors.toList()));
+
+    return yMax - yMin + lineWidth * 2;
   }
 
   @Override
@@ -137,8 +165,29 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
   public int getDepthIndex() {
     return layerDelegate.getDepthIndex();
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
+  public Point getRotationAnchor() {
+    return layerDelegate.getRotationAnchor();
+  }
+
+  @Override
+  public void setRotationAnchor(Point rotationAnchor) {
+    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
+    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
   }
 
   @Override
@@ -151,7 +200,11 @@ final class Doodle implements ILayer {
     if (!isVisible() || points.isEmpty()) {
       return;
     }
-
+    renderer
+        .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(),
+            getWidth(),
+            getHeight());
+    renderer.setGlobalAlpha(color.getAlphaPercentage());
     renderer.setLineWidth(lineWidth);
     renderer.setFillColor(color);
     renderer.setBorderColor(color);
@@ -166,5 +219,45 @@ final class Doodle implements ILayer {
       renderer.drawLine(points.get(i).addX(getX()).addY(getY()),
           points.get(i - 1).addX(getX()).addY(getY()));
     }
+    renderer.setGlobalAlpha(0);
+    renderer.endTransform();
+  }
+
+  /**
+   * Returns the lowest integer in a list of integers
+   *
+   * @param list the specified list of integers
+   * @return the smallest integer
+   */
+  private int getHighest(List<Integer> list) {
+    Objects.requireNonNull(list);
+    if (list.isEmpty()) {
+      return 0;
+    }
+
+    int highest = list.get(0);
+    for (Integer i : list) {
+      highest = (highest < i) ? i : highest;
+    }
+    return highest;
+  }
+
+  /**
+   * Returns the lowest integer in a list of integers
+   *
+   * @param list the specified list of integers
+   * @return the smallest integer
+   */
+  private int getLowest(List<Integer> list) {
+    Objects.requireNonNull(list);
+    if (list.isEmpty()) {
+      return 0;
+    }
+
+    int lowest = list.get(0);
+    for (Integer i : list) {
+      lowest = (lowest > i) ? i : lowest;
+    }
+    return lowest;
   }
 }

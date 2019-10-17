@@ -9,6 +9,7 @@ import chalmers.pimp.service.PixelDataToFXService;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.transform.Affine;
 
 /**
  * The {@code FXRenderer} is a implementation of the {@code IRenderer} interface.
@@ -27,6 +28,7 @@ final class FXRenderer implements IRenderer {
    */
   FXRenderer(GraphicsContext graphicsContext) {
     this.graphicsContext = Objects.requireNonNull(graphicsContext);
+    graphicsContext.save(); // Save default transform
   }
 
   @Override
@@ -48,8 +50,11 @@ final class FXRenderer implements IRenderer {
   public void fillEllipse(int x, int y, int radiusX, int radiusY) {
   }
 
-  @Override
+  @Override   
   public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
+    if(readOnlyPixelData == null){
+      return;
+    }
     Image image = PixelDataToFXService.getFXImage(readOnlyPixelData);
     graphicsContext.drawImage(image, x, y);
   }
@@ -62,13 +67,35 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
+  public void startTransform(double rotation, Point startPoint, int width, int height) {
+    if(startPoint == null){
+      return;
+    }
+    endTransform();
+    graphicsContext.save(); // Save default transform
+    Affine rotate = new Affine();
+    double centerX = startPoint.getX() + width / 2;
+    double centerY = startPoint.getY() + height / 2;
+    rotate.appendRotation(rotation, centerX, centerY);
+    graphicsContext.setTransform(rotate);
+  }
+
+  @Override
   public void drawLine(Point p1, Point p2) {
+    if(p1 == null || p2 == null){
+      return;
+    }
     graphicsContext.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
   }
 
   @Override
-  public void setRotation(int rotation) {
+  public void endTransform() {
+    graphicsContext.restore();
+  }
 
+  @Override
+  public void setGlobalAlpha(double alpha) {
+    graphicsContext.setGlobalAlpha(alpha);
   }
 
   @Override

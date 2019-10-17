@@ -11,7 +11,7 @@ public class RendererMock implements IRenderer {
 
   public final List<Line> lines;
 
-  public RendererMock(){
+  public RendererMock() {
     lines = new ArrayList<>();
   }
 
@@ -46,13 +46,20 @@ public class RendererMock implements IRenderer {
   }
 
   @Override
+  public void startTransform(double rotation, Point startPoint, int width, int height) {
+  }
+
+  @Override
   public void drawLine(Point p1, Point p2) {
     lines.add(new Line(p1, p2));
   }
 
   @Override
-  public void setRotation(int rotation) {
+  public void endTransform() {
+  }
 
+  @Override
+  public void setGlobalAlpha(double alpha) {
   }
 
   @Override
