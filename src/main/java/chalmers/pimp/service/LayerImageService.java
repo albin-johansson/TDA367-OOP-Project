@@ -1,7 +1,6 @@
 package chalmers.pimp.service;
 
 import chalmers.pimp.model.IRenderer;
-import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.view.renderer.RendererFactory;
 import javafx.scene.SnapshotParameters;
@@ -27,34 +26,30 @@ public final class LayerImageService {
    */
   public static Image getLayerImage(IReadOnlyLayer layer) {
 
-    int size = 20;
-    size += Math.max(layer.getHeight(), layer.getWidth());
-
-    int x = layer.getX() - (size - layer.getWidth()) / 2;
-    int y = layer.getY() - (size - layer.getHeight()) / 2;
-
-    if(x<0||y<0){
-      size -= 20;
-      if(x<0){
-        x = 0;
-      }
-      if (y<0){
-        y = 0;
-      }
-    }
-
-    Canvas canvas = new Canvas(layer.getX()+layer.getWidth() + 200, layer.getY()+layer.getHeight() + 200);
+    //Draws the Layer on Canvas and takes a snapshot
+    Canvas canvas = new Canvas(layer.getX() + layer.getWidth(),
+        layer.getY() + layer.getHeight());
     IRenderer renderer = RendererFactory.createFXRenderer(canvas.getGraphicsContext2D());
     layer.draw(renderer);
     WritableImage image = canvas.snapshot(new SnapshotParameters(), null);
 
-
+    //Crops the Image so it's only portraying the layer.
     PixelReader reader = image.getPixelReader();
-    System.out.println(image.getWidth());
-    System.out.println(image.getHeight());
+    WritableImage croppedImage = new WritableImage(reader, layer.getX(), layer.getY(), layer.getWidth(), layer.getHeight());
+    PixelReader croppedReader = croppedImage.getPixelReader();
 
-    WritableImage croppedImage = new WritableImage(reader, x, y, size, size);
+    //Creates a new Image slightly larger than the layer, and in the dimensions of the preview.
+    int size = Math.max(layer.getHeight(), layer.getWidth());
+    size += 20;
+    WritableImage newImage = new WritableImage(size,size);
 
-    return croppedImage;
+    //Draws the Layer centered on to the new canvas
+    int x = (size - layer.getWidth()) / 2;
+    int y = (size - layer.getHeight()) / 2;
+    newImage.getPixelWriter().setPixels(x,y,layer.getWidth(),layer.getHeight(),croppedReader,0,0);
+
+    return newImage;
   }
+
+
 }
