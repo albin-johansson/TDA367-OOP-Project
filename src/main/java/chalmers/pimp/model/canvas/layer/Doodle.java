@@ -52,6 +52,7 @@ final class Doodle implements ILayer {
     lineWidth = doodle.lineWidth;
 
     doodle.points.forEach(p -> points.add(p));
+    setRotationAnchorToCenter();
   }
 
   @Override
@@ -63,6 +64,7 @@ final class Doodle implements ILayer {
     if (pixel.getY() > height - lineWidth) {
       height = pixel.getY() + lineWidth;
     }
+    setRotationAnchorToCenter();
   }
 
   @Override
@@ -73,6 +75,7 @@ final class Doodle implements ILayer {
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
+    setRotationAnchorToCenter();
   }
 
   @Override
@@ -93,6 +96,29 @@ final class Doodle implements ILayer {
   @Override
   public void setDepthIndex(int depthIndex) {
     layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
+  public void setRotationAnchor(Point rotationAnchor) {
+    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
+    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
+  }
+
+  @Override
+  public void setRotationAnchorToCenter() {
+    Point temp = new Point(layerDelegate.getX() + (width / 2),
+        layerDelegate.getY() + (height / 2));
+    layerDelegate.setRotationAnchor(temp);
+  }
+
+  @Override
+  public void setRotation(double rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -122,6 +148,16 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public double getRotation() {
+    return layerDelegate.getRotationDegrees();
+  }
+
+  @Override
+  public double getAlpha() {
+    return layerDelegate.getAlpha();
+  }
+
+  @Override
   public int getWidth() {
     return width;
   }
@@ -142,6 +178,11 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public Point getRotationAnchor() {
+    return layerDelegate.getRotationAnchor();
+  }
+
+  @Override
   public ILayer copy() {
     return new Doodle(this);
   }
@@ -151,7 +192,10 @@ final class Doodle implements ILayer {
     if (!isVisible() || points.isEmpty()) {
       return;
     }
-
+    renderer
+        .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(), width,
+            height);
+    renderer.setGlobalAlpha(color.getAlphaPercentage());
     renderer.setLineWidth(lineWidth);
     renderer.setFillColor(color);
     renderer.setBorderColor(color);
@@ -166,5 +210,7 @@ final class Doodle implements ILayer {
       renderer.drawLine(points.get(i).addX(getX()).addY(getY()),
           points.get(i - 1).addX(getX()).addY(getY()));
     }
+    renderer.setGlobalAlpha(0);
+    renderer.endTransform();
   }
 }
