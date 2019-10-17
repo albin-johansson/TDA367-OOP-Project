@@ -73,6 +73,6 @@ final class UtilityPane extends AnchorPane {
    * @param color the new color of the color picker.
    */
   public void setColor(IColor color) {
-    colorPickerPane.setColor(color);
+    colorPickerPane.colorChanged(color);
   }
 }
