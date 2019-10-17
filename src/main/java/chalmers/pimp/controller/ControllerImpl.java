@@ -57,6 +57,7 @@ final class ControllerImpl implements IController {
     model.setRenderer(renderer);
 
     prepareStage(new Scene(pane, 800, 600));
+    selectPencil();
   }
 
   /**
@@ -134,7 +135,7 @@ final class ControllerImpl implements IController {
   @Override
   public void selectDoodleTool() {
     model.setSelectedTool(
-        ToolFactory.createDoodleTool(10, ColorFactory.createColor(255, 100, 50, 255), model));
+        ToolFactory.createDoodleTool(10, model));
   }
 
   @Override

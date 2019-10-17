@@ -2,7 +2,6 @@ package chalmers.pimp.model.pixeldata;
 
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.IReadOnlyColor;
 import java.util.Objects;
 
 /**
@@ -14,7 +13,7 @@ final class PixelImpl implements IPixel {
 
   private final int x;
   private final int y;
-  private final IColor color;
+  private IColor color;
 
   /**
    * @param x the x-coordinate of the pixel (the column index).
@@ -37,7 +36,7 @@ final class PixelImpl implements IPixel {
     Objects.requireNonNull(pixel);
     x = pixel.getX();
     y = pixel.getY();
-    color = ColorFactory.createColor(pixel.getColor());
+    color = pixel.getColor();
   }
 
   @Override
@@ -52,26 +51,26 @@ final class PixelImpl implements IPixel {
 
   @Override
   public void setRed(double red) {
-    color.setPercentageRed(red);
+    color = color.setPercentageRed(red);
   }
 
   @Override
   public void setGreen(double green) {
-    color.setPercentageGreen(green);
+    color = color.setPercentageGreen(green);
   }
 
   @Override
   public void setBlue(double blue) {
-    color.setPercentageBlue(blue);
+    color = color.setPercentageBlue(blue);
   }
 
   @Override
   public void setAlpha(double alpha) {
-    color.setPercentageAlpha(alpha);
+    color = color.setPercentageAlpha(alpha);
   }
 
   @Override
-  public IReadOnlyColor getColor() {
+  public IColor getColor() {
     return color;
   }
 
