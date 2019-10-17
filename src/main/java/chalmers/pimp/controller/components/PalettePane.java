@@ -46,6 +46,12 @@ final class PalettePane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")
+  private void selectTextTool() {
+    controller.selectTextCool();
+  }
+
+  @FXML
+  @SuppressWarnings("unused")
   private void selectMoveTool() {
     controller.selectMoveTool();
   }

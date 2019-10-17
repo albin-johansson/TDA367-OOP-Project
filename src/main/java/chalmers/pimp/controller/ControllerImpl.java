@@ -159,6 +159,11 @@ final class ControllerImpl implements IController {
   }
 
   @Override
+  public void selectTextCool() {
+    model.setSelectedTool(ToolFactory.createTextTool());
+  }
+
+  @Override
   public void openImageChooser() {
     try {
       var imageChooser = new ImageChooser();

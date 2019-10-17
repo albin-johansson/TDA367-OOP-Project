@@ -75,6 +75,11 @@ public interface IController {
   void selectedToolReleased(MouseEvent mouseEvent);
 
   /**
+   * Sets the TextTool as selected tool in model.
+   */
+  void selectTextCool();
+
+  /**
    * Creates a new raster layer.
    */
   void createNewLayer();
