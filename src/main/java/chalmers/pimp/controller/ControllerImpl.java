@@ -133,6 +133,12 @@ final class ControllerImpl implements IController {
   }
 
   @Override
+  public void selectRotateTool() {
+    ITool rotateTool = ToolFactory.createRotateTool(model);
+    model.setSelectedTool(rotateTool);
+  }
+  
+  @Override
   public void selectDoodleTool() {
     model.setSelectedTool(
         ToolFactory.createDoodleTool(10, model));

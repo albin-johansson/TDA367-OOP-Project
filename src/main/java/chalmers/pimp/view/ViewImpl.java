@@ -10,7 +10,7 @@ import java.util.Objects;
  * The {@code ViewImpl} class is an implementation of the {@code IView} interface.
  */
 final class ViewImpl implements IView {
-
+  
   private final IModel model;
   private IRenderer renderer;
 

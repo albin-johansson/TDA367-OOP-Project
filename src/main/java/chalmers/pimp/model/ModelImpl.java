@@ -5,6 +5,7 @@ import static chalmers.pimp.model.command.CommandFactory.createChangeLayerDepthC
 import static chalmers.pimp.model.command.CommandFactory.createLayerSelectionCommand;
 import static chalmers.pimp.model.command.CommandFactory.createMoveCommand;
 import static chalmers.pimp.model.command.CommandFactory.createRemoveLayerCommand;
+import static chalmers.pimp.model.command.CommandFactory.createRotateCommand;
 import static chalmers.pimp.model.command.CommandFactory.createStrokeCommand;
 
 import chalmers.pimp.model.canvas.CanvasFactory;
@@ -15,8 +16,8 @@ import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.color.colormodel.ColorModelFactory;
+import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.color.colormodel.IColorModel;
 import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
@@ -34,6 +35,7 @@ final class ModelImpl implements IModel {
   private final CommandManager commandManager;
   private IRenderer renderer;
   private LayerMovement layerMovement;
+  private LayerRotation layerRotation;
   private Stroke stroke;
   private ITool selectedTool;
   private IColorModel colorModel;
@@ -193,6 +195,47 @@ final class ModelImpl implements IModel {
   @Override
   public void moveActiveLayer(int dx, int dy) {
     canvas.moveActiveLayer(dx, dy);
+  }
+
+  @Override
+  public void startRotatingActiveLayer(int x, int y) {
+    if (getActiveLayer() == null) {
+      return;
+    }
+
+    layerRotation = new LayerRotation();
+    Point tempPoint = new Point(x, y);
+    layerRotation
+        .start(canvas.getActiveLayer().getRotationAnchor(), canvas.getActiveLayer().getRotation(),
+            tempPoint,
+            createSnapShot());
+  }
+
+  @Override
+  public void updateRotatingActiveLayer(int x, int y) {
+    if (layerRotation == null) {
+      return;
+    }
+    layerRotation.update(x, y);
+    rotateActiveLayer(layerRotation.getCurrentDegree());
+  }
+
+  @Override
+  public void stopRotatingActiveLayer() {
+    if (layerRotation == null) {
+      return;
+    }
+    layerRotation.stop();
+    ICommand cmd = createRotateCommand(canvas, this, getActiveLayer().getDepthIndex(),
+        layerRotation);
+    commandManager.insertCommand(cmd);
+    layerRotation = null;
+  }
+
+  @Override
+  public void rotateActiveLayer(double alpha) {
+    canvas.setActiveLayerRotation(alpha);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
