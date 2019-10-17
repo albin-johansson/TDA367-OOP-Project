@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -132,18 +133,14 @@
                 <Tooltip text="Redo" />
               </tooltip>
             </Button>
-                  <Button mnemonicParsing="false" onAction="#createNewLayer">
-                     <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/light/eye_open.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Create new layer" />
-                     </tooltip>
-                  </Button>
+                  <Separator orientation="VERTICAL">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="5.0" top="10.0" />
+                     </HBox.margin>
+                  </Separator>
                   <Button layoutX="148.0" layoutY="21.0" mnemonicParsing="false" onAction="#centerViewport">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
@@ -160,6 +157,9 @@
           <padding>
             <Insets left="10.0" />
           </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
         </HBox>
       </children>
     </VBox>
