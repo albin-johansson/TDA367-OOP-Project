@@ -170,6 +170,10 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * Starts rotating the currently active layer. This method has no effect if there is no active
    * layer.
    *
+   * @param x the x-coordinate of the initial mouse point to calculate rotation in relation to said
+   *          mouse point.
+   * @param y the y-coordinate of the initial mouse point to calculate rotation in relation to said
+   *          mouse point.
    */
   void startRotatingActiveLayer(int x, int y);
 
@@ -189,6 +193,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * method.
    */
   void stopRotatingActiveLayer();
+
   /**
    * Rotates the active layer by alpha degrees.
    *
