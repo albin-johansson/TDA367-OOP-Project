@@ -28,7 +28,14 @@ public final class LayerImageService {
   public static Image getLayerImage(IReadOnlyLayer layer) {
     //Makes a Copy of the layer and changes X and Y values so it's well inside the canvas
     ILayer layerCopy = layer.copy();
-    int size = (int) Math.hypot(layerCopy.getWidth(), layerCopy.getHeight());
+    int size;
+
+    if(layerCopy.getRotation() != 0 ){
+      size = (int) Math.hypot(layerCopy.getWidth(), layerCopy.getHeight());
+    }else{
+      size = Math.max(layer.getWidth(),layer.getHeight()) + 10;
+    }
+
     layerCopy.setX(size);
     layerCopy.setY(size);
     int cropX = layerCopy.getX() - ((size - layerCopy.getWidth()) / 2);
