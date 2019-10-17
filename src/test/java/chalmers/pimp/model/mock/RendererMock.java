@@ -36,8 +36,7 @@ public class RendererMock implements IRenderer {
   }
 
   @Override
-  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width,
-      int height) {
+  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
 
   }
 
