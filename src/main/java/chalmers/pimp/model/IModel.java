@@ -45,6 +45,15 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void addLayerUpdateListener(ILayerUpdateListener listener);
 
   /**
+   * Adds a canvas size listener to the model.
+   *
+   * @param listener the listener that will be added, may not be {@code null}.
+   * @throws NullPointerException     if any arguments are {@code null}.
+   * @throws IllegalArgumentException if the supplied listener has been added previously.
+   */
+  void addModelSizeListener(IModelSizeListener listener);
+
+  /**
    * Draws all of the drawables contained in the model.
    *
    * @param renderer the renderer that will be used.

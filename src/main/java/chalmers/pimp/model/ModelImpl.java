@@ -35,6 +35,7 @@ final class ModelImpl implements IModel {
   private final CommandManager commandManager;
   private final ICanvas canvas;
   private final IViewportModel viewportModel;
+  private final ModelSizeListenerComposite modelSizeListeners; // Not used as of yet
 
   private IRenderer renderer;
   private LayerMovement layerMovement;
@@ -48,6 +49,7 @@ final class ModelImpl implements IModel {
 
     canvas = CanvasFactory.createCanvas();
     viewportModel = ViewportModelFactory.createViewportModel();
+    modelSizeListeners = new ModelSizeListenerComposite();
 
     width = 800;
     height = 600;
@@ -83,6 +85,11 @@ final class ModelImpl implements IModel {
   @Override
   public void addLayerUpdateListener(ILayerUpdateListener listener) {
     canvas.addLayerUpdateListener(listener);
+  }
+
+  @Override
+  public void addModelSizeListener(IModelSizeListener listener) {
+    modelSizeListeners.add(listener);
   }
 
   @Override
