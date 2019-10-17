@@ -101,7 +101,7 @@ final class LayerItemPane extends AnchorPane {
 
     IReadOnlyLayer activeLayer = model.getActiveLayer();
     if ((activeLayer != null) && (activeLayer.getDepthIndex() == associatedLayerIndex)) {
-      setStyle("-fx-background-color: -selected-color;");
+      standardPane.setStyle("-fx-background-color: -selected-color;");
     }
 
     addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -193,7 +193,7 @@ final class LayerItemPane extends AnchorPane {
   private void handleDragOver(DragEvent event) {
     if (event.getGestureSource() != this && event.getDragboard().hasString()) {
       event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-      setStyle("-fx-border-color: -accent-color;");
+      standardPane.setStyle("-fx-border-color: -accent-color;");
     }
     event.consume();
   }
@@ -204,7 +204,7 @@ final class LayerItemPane extends AnchorPane {
    * @param event the associated drag event.
    */
   private void handleDragExited(DragEvent event) {
-    setStyle("-fx-border-width: 0,0,0,0");
+    standardPane.setStyle("-fx-border-width: 0,0,0,0");
   }
 
   /**
