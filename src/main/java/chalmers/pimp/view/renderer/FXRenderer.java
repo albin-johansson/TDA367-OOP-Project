@@ -50,8 +50,8 @@ final class FXRenderer implements IRenderer {
   public void fillEllipse(int x, int y, int radiusX, int radiusY) {
   }
 
-  @Override
-  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width, int height) {
+  @Override   
+  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
     if(readOnlyPixelData == null){
       return;
     }
