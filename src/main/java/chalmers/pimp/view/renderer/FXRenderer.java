@@ -49,7 +49,7 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y, int width, int height) {
+  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
     Image image = PixelDataToFXService.getFXImage(readOnlyPixelData);
     graphicsContext.drawImage(image, x, y);
   }
