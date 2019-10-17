@@ -1,6 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.IRenderer;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
@@ -36,6 +37,7 @@ final class Rectangle implements ILayer {
     this.width = width;
     this.height = height;
     this.color = Objects.requireNonNull(color);
+    setRotationAnchorToCenter();
 
     // OBVIOUSLY not a good solution. Just a fun easter egg :)
     layerDelegate.setName((width == height) ? "Square" : "Rectangle");
@@ -67,6 +69,7 @@ final class Rectangle implements ILayer {
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
+    setRotationAnchorToCenter();
   }
 
   @Override
@@ -87,6 +90,28 @@ final class Rectangle implements ILayer {
   @Override
   public void setDepthIndex(int depthIndex) {
     layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
+  public void setRotationAnchor(Point rotationAnchor) {
+    layerDelegate.setRotationAnchor(rotationAnchor);
+  }
+
+  @Override
+  public void setRotationAnchorToCenter() {
+    Point temp = new Point(layerDelegate.getX() + width / 2,
+        layerDelegate.getY() + height / 2);
+    layerDelegate.setRotationAnchor(temp);
+  }
+
+  @Override
+  public void setRotation(double rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -115,8 +140,23 @@ final class Rectangle implements ILayer {
   }
 
   @Override
+  public Point getRotationAnchor() {
+    return layerDelegate.getRotationAnchorPoint();
+  }
+
+  @Override
   public LayerType getLayerType() {
     return layerDelegate.getLayerType();
+  }
+
+  @Override
+  public double getRotation() {
+    return layerDelegate.getRotationDegrees();
+  }
+
+  @Override
+  public double getAlpha() {
+    return layerDelegate.getAlpha();
   }
 
   @Override
@@ -145,9 +185,15 @@ final class Rectangle implements ILayer {
   @Override
   public void draw(IRenderer renderer) {
     if (isVisible()) {
+      renderer
+          .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(), width,
+              height);
+      renderer.setGlobalAlpha(color.getAlphaPercentage());
       renderer.setFillColor(color);
       renderer.setBorderColor(color);
       renderer.fillRect(getX(), getY(), width, height);
+      renderer.setGlobalAlpha(0);
+      renderer.endTransform();
     }
   }
 

@@ -262,6 +262,17 @@ final class LayerManager {
   }
 
   /**
+   * Rotates the currently active layer. This method has no effect if there is no active layer.
+   *
+   * @param alpha the rotation in degrees.
+   */
+  void rotateActiveLayer(double alpha){
+    if (activeLayer != null){
+      activeLayer.setRotation(alpha);
+    }
+  }
+
+  /**
    * Sets the x-coordinate of the currently active layer. This method has no effect if there is no
    * active layer.
    *

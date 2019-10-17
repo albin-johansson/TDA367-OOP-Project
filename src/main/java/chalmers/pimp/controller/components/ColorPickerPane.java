@@ -53,7 +53,7 @@ final class ColorPickerPane extends AnchorPane implements IColorChangeListener {
    *
    * @param color the new color.
    */
-  public void setColor(IColor color) {
+  private void setColor(IColor color) {
     Color fxColor = ColorConverterService.toFXColor(color);
     colorPicker.setValue(fxColor);
   }

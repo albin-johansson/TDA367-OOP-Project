@@ -6,7 +6,7 @@ package chalmers.pimp.model.color;
 public interface IColor {
 
   /**
-   * Returns a new color with with the supplied RGBA values.
+   * Returns a new color with the supplied RGBA values.
    *
    * @param red   the red component [0, 255].
    * @param green the green component [0, 255].
@@ -17,7 +17,7 @@ public interface IColor {
   IColor setColor(int red, int green, int blue, int alpha);
 
   /**
-   * Returns a new color with with the supplied RGBA values.
+   * Returns a new color with the supplied RGBA values.
    *
    * @param red   the red component in the range [0, 255].
    * @param green the green component [0, 255].

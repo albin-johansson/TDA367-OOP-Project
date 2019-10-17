@@ -58,11 +58,11 @@ public final class FXToPixelDataService {
 
       Color fxColor = reader.getColor(col, rowIndex);
 
-      IColor color = ColorFactory.createColor();
-      color.setPercentageRed(fxColor.getRed());
-      color.setPercentageGreen(fxColor.getGreen());
-      color.setPercentageBlue(fxColor.getBlue());
-      color.setPercentageAlpha(fxColor.getOpacity());
+      IColor color = ColorFactory.createColor()
+          .setPercentageRed(fxColor.getRed())
+          .setPercentageGreen(fxColor.getGreen())
+          .setPercentageBlue(fxColor.getBlue())
+          .setPercentageAlpha(fxColor.getOpacity());
 
       pixelData.setPixel(PixelFactory.createPixel(col, rowIndex, color));
     }

@@ -1,5 +1,7 @@
 package chalmers.pimp.model;
 
+import java.util.Objects;
+
 /**
  * The {@code Point} class represents a point. The point is immutable.
  */
@@ -55,8 +57,7 @@ public final class Point {
    */
   public int getY() {
     return y;
-  }
-
+  }  
   /**
    * Returns a new point with xOffset offset in the x-direction
    *
@@ -75,5 +76,31 @@ public final class Point {
    */
   public Point addY(int yOffset) {
     return new Point(x, y + yOffset);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(x, y);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Point)) {
+      return false;
+    }
+    if (obj == this) {
+      return true;
+    }
+
+    var c = (Point) obj;
+
+    return (c.getX() == x) && (c.getY() == y);
+  }
+
+  @Override
+  public String toString() {
+    String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
+    String state = "X: " + x + ", Y: " + y;
+    return "(" + id + " | " + state + ")";
   }
 }

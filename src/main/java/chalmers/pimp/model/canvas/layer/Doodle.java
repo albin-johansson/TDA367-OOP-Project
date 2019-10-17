@@ -49,23 +49,38 @@ final class Doodle implements ILayer {
     color = doodle.color;
     lineWidth = doodle.lineWidth;
 
-    doodle.points.forEach(p -> points.add(p));
+    doodle.points.forEach(points::add);
+    setRotationAnchorToCenter();
   }
 
   @Override
   public void setPixel(IPixel pixel) {
     Point p = new Point(pixel.getX(), pixel.getY());
     points.add(p);
-  }
-
-  @Override
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
+    setRotationAnchorToCenter();
   }
 
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
+    setRotationAnchorToCenter();
+  }
+
+  @Override
+  public void setRotationAnchorToCenter() {
+    Point temp = new Point(layerDelegate.getX() + (getWidth() / 2),
+        layerDelegate.getY() + (getHeight() / 2));
+    layerDelegate.setRotationAnchor(temp);
+  }
+
+  @Override
+  public boolean isVisible() {
+    return layerDelegate.isVisible();
+  }
+
+  @Override
+  public void setVisible(boolean isVisible) {
+    layerDelegate.setVisible(isVisible);
   }
 
   @Override
@@ -76,21 +91,6 @@ final class Doodle implements ILayer {
   @Override
   public void setY(int y) {
     layerDelegate.setY(y);
-  }
-
-  @Override
-  public void setName(String name) {
-    layerDelegate.setName(name);
-  }
-
-  @Override
-  public void setDepthIndex(int depthIndex) {
-    layerDelegate.setDepthIndex(depthIndex);
-  }
-
-  @Override
-  public boolean isVisible() {
-    return layerDelegate.isVisible();
   }
 
   @Override
@@ -119,6 +119,26 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public double getRotation() {
+    return layerDelegate.getRotationDegrees();
+  }
+
+  @Override
+  public void setRotation(double rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
+  public double getAlpha() {
+    return layerDelegate.getAlpha();
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
+  }
+
+  @Override
   public int getWidth() {
     //Returns a list of the values returned from getX() for each item in points
     //.stream() returns a sequential stream considering collection as its source
@@ -142,8 +162,29 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
   public int getDepthIndex() {
     return layerDelegate.getDepthIndex();
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
+  public Point getRotationAnchor() {
+    return layerDelegate.getRotationAnchor();
+  }
+
+  @Override
+  public void setRotationAnchor(Point rotationAnchor) {
+    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
+    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
   }
 
   @Override
@@ -159,7 +200,11 @@ final class Doodle implements ILayer {
 
     int offsX = layerDelegate.getX();
     int offSY = layerDelegate.getY();
-
+    renderer
+        .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(),
+            getWidth(),
+            getHeight());
+    renderer.setGlobalAlpha(color.getAlphaPercentage());
     renderer.setLineWidth(lineWidth);
     renderer.setFillColor(color);
     renderer.setBorderColor(color);
@@ -174,6 +219,8 @@ final class Doodle implements ILayer {
       renderer.drawLine(points.get(i).addX(offsX).addY(offSY),
           points.get(i - 1).addX(offsX).addY(offSY));
     }
+    renderer.setGlobalAlpha(0);
+    renderer.endTransform();
   }
 
   /**
