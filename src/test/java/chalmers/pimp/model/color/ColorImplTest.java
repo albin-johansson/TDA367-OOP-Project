@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class ColorImplTest {
 
-  private ColorImpl colorImpl;
+  private IColor colorImpl;
   private int val;
   private double percentage;
 
@@ -24,45 +24,45 @@ class ColorImplTest {
 
   @Test
   void setRed() {
-    colorImpl.setRed(val);
+    colorImpl = colorImpl.setRed(val);
     assertEquals(colorImpl.getRed(), val);
     assertEquals(colorImpl.getRedPercentage(), percentage);
-    colorImpl.setRed(-val);
+    colorImpl = colorImpl.setRed(-val);
     assertEquals(colorImpl.getRed(), 0);
-    colorImpl.setRed(256);
+    colorImpl = colorImpl.setRed(256);
     assertEquals(colorImpl.getRed(), 255);
   }
 
   @Test
   void setGreen() {
-    colorImpl.setGreen(val);
+    colorImpl = colorImpl.setGreen(val);
     assertEquals(colorImpl.getGreen(), val);
     assertEquals(colorImpl.getGreenPercentage(), percentage);
-    colorImpl.setGreen(-val);
+    colorImpl = colorImpl.setGreen(-val);
     assertEquals(colorImpl.getGreen(), 0);
-    colorImpl.setGreen(256);
+    colorImpl = colorImpl.setGreen(256);
     assertEquals(colorImpl.getGreen(), 255);
   }
 
   @Test
   void setBlue() {
-    colorImpl.setBlue(val);
+    colorImpl = colorImpl.setBlue(val);
     assertEquals(colorImpl.getBlue(), val);
     assertEquals(colorImpl.getBluePercentage(), percentage);
-    colorImpl.setBlue(-val);
+    colorImpl = colorImpl.setBlue(-val);
     assertEquals(colorImpl.getBlue(), 0);
-    colorImpl.setBlue(256);
+    colorImpl = colorImpl.setBlue(256);
     assertEquals(colorImpl.getBlue(), 255);
   }
 
   @Test
   void setAlpha() {
-    colorImpl.setAlpha(val);
+    colorImpl = colorImpl.setAlpha(val);
     assertEquals(colorImpl.getAlpha(), val);
     assertEquals(colorImpl.getAlphaPercentage(), percentage);
-    colorImpl.setAlpha(-val);
+    colorImpl = colorImpl.setAlpha(-val);
     assertEquals(colorImpl.getAlpha(), 0);
-    colorImpl.setAlpha(256);
+    colorImpl = colorImpl.setAlpha(256);
     assertEquals(colorImpl.getAlpha(), 255);
   }
 }

@@ -1,6 +1,6 @@
 package chalmers.pimp.model.pixeldata;
 
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.IColor;
 import java.util.Objects;
 
 /**
@@ -43,7 +43,7 @@ public final class PixelFactory {
    * @return a pixel instance.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  public static IPixel createPixel(int x, int y, IReadOnlyColor color) {
+  public static IPixel createPixel(int x, int y, IColor color) {
     Objects.requireNonNull(color);
 
     IPixel pixel = new PixelImpl(x, y);

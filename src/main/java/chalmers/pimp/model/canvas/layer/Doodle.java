@@ -1,11 +1,10 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.IRenderer;
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.Point;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
-import chalmers.pimp.model.pixeldata.PixelData;
-import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,9 +14,9 @@ import java.util.Objects;
  */
 final class Doodle implements ILayer {
 
-  private final List<IPixel> pixels;
+  private final List<Point> points;
   private final LayerDelegate layerDelegate;
-  private final IReadOnlyColor color;
+  private final IColor color;
   private final int lineWidth;
   private int width;
   private int height;
@@ -29,8 +28,8 @@ final class Doodle implements ILayer {
    * @param color     the color of the lines
    * @throws NullPointerException if color is null
    */
-  Doodle(int lineWidth, IReadOnlyColor color) {
-    pixels = new ArrayList<>();
+  Doodle(int lineWidth, IColor color) {
+    points = new ArrayList<>();
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
     layerDelegate.setName("Doodle");
     this.lineWidth = lineWidth;
@@ -48,18 +47,16 @@ final class Doodle implements ILayer {
   Doodle(Doodle doodle) throws NullPointerException {
     Objects.requireNonNull(doodle);
     this.layerDelegate = new LayerDelegate(doodle.layerDelegate);
-    pixels = new ArrayList<>();
+    points = new ArrayList<>();
     color = doodle.color;
     lineWidth = doodle.lineWidth;
 
-    for (IPixel i : doodle.pixels) {
-      pixels.add(PixelFactory.createPixel(i));
-    }
+    doodle.points.forEach(p -> points.add(p));
   }
 
   @Override
   public void setPixel(IPixel pixel) {
-    pixels.add(pixel);
+    points.add(new Point(pixel.getX(), pixel.getY()));
     if (pixel.getX() > width - lineWidth) {
       width = pixel.getX() + lineWidth;
     }
@@ -151,7 +148,7 @@ final class Doodle implements ILayer {
 
   @Override
   public void draw(IRenderer renderer) {
-    if (!isVisible() || pixels.isEmpty()) {
+    if (!isVisible() || points.isEmpty()) {
       return;
     }
 
@@ -159,16 +156,15 @@ final class Doodle implements ILayer {
     renderer.setFillColor(color);
     renderer.setBorderColor(color);
 
-    if (pixels.size() == 1) {
-      int x = pixels.get(0).getX() + getX();
-      int y = pixels.get(0).getY() + getY();
-      renderer.drawLine(x, y, x, y);
+    if (points.size() == 1) {
+      renderer.drawLine(points.get(0).addX(getX()).addY(getY()),
+          points.get(0).addX(getX()).addY(getY()));
       return;
     }
 
-    for (int i = 1; i < pixels.size(); i++) {
-      renderer.drawLine(pixels.get(i).getX() + getX(), pixels.get(i).getY() + getY(),
-          pixels.get(i - 1).getX() + getX(), pixels.get(i - 1).getY() + getY());
+    for (int i = 1; i < points.size(); i++) {
+      renderer.drawLine(points.get(i).addX(getX()).addY(getY()),
+          points.get(i - 1).addX(getX()).addY(getY()));
     }
   }
 }

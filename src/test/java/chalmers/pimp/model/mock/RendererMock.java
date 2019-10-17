@@ -1,7 +1,8 @@
 package chalmers.pimp.model.mock;
 
 import chalmers.pimp.model.IRenderer;
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.Point;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,8 @@ public class RendererMock implements IRenderer {
   }
 
   @Override
-  public void drawLine(int x1, int y1, int x2, int y2) {
-    lines.add(new Line(x1, y1, x2, y2));
+  public void drawLine(Point p1, Point p2) {
+    lines.add(new Line(p1, p2));
   }
 
   @Override
@@ -56,12 +57,12 @@ public class RendererMock implements IRenderer {
   }
 
   @Override
-  public void setFillColor(IReadOnlyColor color) {
+  public void setFillColor(IColor color) {
 
   }
 
   @Override
-  public void setBorderColor(IReadOnlyColor color) {
+  public void setBorderColor(IColor color) {
 
   }
 

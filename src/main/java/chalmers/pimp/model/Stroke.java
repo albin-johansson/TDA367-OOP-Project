@@ -1,7 +1,7 @@
 package chalmers.pimp.model;
 
 import chalmers.pimp.model.canvas.ICanvas;
-import chalmers.pimp.model.color.IReadOnlyColor;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
@@ -17,16 +17,19 @@ public final class Stroke {
   private final List<IPixel> pixels;
   private final ModelMemento modelMemento;
   private final int diameter;
+  private final IColor color;
 
   /**
    * @param modelMemento the model memento object, that represents the current model state.
    * @param diameter     the diameter of the stroke, in pixels.
+   * @param color        the strokes color.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  Stroke(ModelMemento modelMemento, int diameter) {
+  Stroke(ModelMemento modelMemento, int diameter, IColor color) {
     this.modelMemento = Objects.requireNonNull(modelMemento);
     this.diameter = diameter;
     pixels = new ArrayList<>(10);
+    this.color = Objects.requireNonNull(color);
   }
 
   /**
@@ -45,14 +48,14 @@ public final class Stroke {
    *
    * @param model the associated model instance.
    * @param pixel the pixel affected by the stroke.
+   * @param color the color that the updated pixels should be colored with.
    * @throws NullPointerException if any references are {@code null}.
    */
-  public void updatePixels(ICanvas model, IPixel pixel) {
+  public void updatePixels(ICanvas model, IPixel pixel, IColor color) {
     Objects.requireNonNull(model);
     Objects.requireNonNull(pixel);
 
     var pixels = new PixelData(diameter, diameter);
-    IReadOnlyColor color = pixel.getColor();
 
     for (int row = 0; row < diameter; row++) {
       for (int col = 0; col < diameter; col++) {
@@ -81,5 +84,14 @@ public final class Stroke {
    */
   public Iterable<IPixel> getPixels() {
     return pixels;
+  }
+
+  /**
+   * Returns the color of the stroke.
+   *
+   * @return the color of the stroke.
+   */
+  public IColor getColor() {
+    return color;
   }
 }
