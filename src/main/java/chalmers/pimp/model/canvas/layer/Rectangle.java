@@ -2,7 +2,6 @@ package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
-import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
@@ -159,7 +158,7 @@ final class Rectangle implements ILayer {
   public double getAlpha() {
     return layerDelegate.getAlpha();
   }
-  
+
   @Override
   public int getWidth() {
     return width;
