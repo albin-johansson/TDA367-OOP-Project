@@ -69,23 +69,25 @@ public final class PimpEditorPane extends AnchorPane {
     bottomAnchorPane.getChildren().add(infoPane);
     AnchorPanes.setAnchors(infoPane, 0, 0, 0, 0);
 
-    initiateInfoPane(canvasPane, infoPane, controller, model);
+    initiateInfoPane(infoPane, controller, model);
   }
 
   /**
-   * Adds listeners to the Canvas which in turn call for the infoPane to update itself.
+   * Prepares the supplied info pane for usage.
+   *
+   * @param infoPane   the info pane that will be prepared.
+   * @param controller the associated controller instance.
+   * @param model      the associated model instance.
+   * @throws NullPointerException if any references are {@code null}.
    */
-  private void initiateInfoPane(CanvasPane canvasPane, InfoPane infoPane, IController controller,
-      IModel model) {
+  private void initiateInfoPane(InfoPane infoPane, IController controller, IModel model) {
+    Objects.requireNonNull(infoPane);
+    Objects.requireNonNull(controller);
+    Objects.requireNonNull(model);
+    Objects.requireNonNull(canvasPane);
 
-//    Canvas canvas = canvasPane.getGraphics().getCanvas();
-
-//    // FIXME
-//    canvas.heightProperty().addListener((observable, oldvalue, newvalue) ->
-//        infoPane.setCanvasHeightLabel(newvalue.intValue()));
-//
-//    canvas.widthProperty().addListener((observable, oldvalue, newvalue) ->
-//        infoPane.setCanvasWidthLabel(newvalue.intValue()));
+    infoPane.setCanvasWidthLabel(model.getWidth());
+    infoPane.setCanvasHeightLabel(model.getHeight());
 
     canvasPane.setOnMouseDragged((e) -> {
       infoPane.updateCoordinates(e);
@@ -104,6 +106,8 @@ public final class PimpEditorPane extends AnchorPane {
         infoPane.setLayerHeightLabel(layer.getHeight());
       }
     });
+
+    model.addModelSizeListener(infoPane);
   }
 
   /**
