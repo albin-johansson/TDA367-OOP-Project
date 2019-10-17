@@ -201,7 +201,8 @@ final class Doodle implements ILayer {
     int offsX = layerDelegate.getX();
     int offSY = layerDelegate.getY();
     renderer
-        .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(),
+        .startTransform(layerDelegate.getRotationDegrees(),
+            new Point(getX(), getY()),
             getWidth(),
             getHeight());
     renderer.setGlobalAlpha(color.getAlphaPercentage());
