@@ -24,7 +24,7 @@ public interface IController {
   void selectEraser();
 
   /**
-   * Sets s bucket as selected tool in model
+   * Sets a bucket as selected tool in model
    */
   void selectBucket();
 

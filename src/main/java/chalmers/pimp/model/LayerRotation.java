@@ -29,6 +29,8 @@ public final class LayerRotation {
    * has been called on the layer rotation instance.
    *
    * @param rotationAnchorPoint the center point for the layer to rotate.
+   * @param baseDegree          the start rotation for the layer before the rotation has started.
+   * @param mouseStartPoint     the start position of the mouse.
    * @param memento             a model memento instance that represents the state of the model
    *                            before the rotation has begun.
    * @throws NullPointerException if the supplied model memento is {@code null}.
@@ -41,8 +43,10 @@ public final class LayerRotation {
     if (!isFinished) {
       this.rotationAnchorPoint = rotationAnchorPoint;
       this.memento = Objects.requireNonNull(memento);
+      //The new rotation is added to the old rotation of this layer, think of it as a mouse pad. Same movement can be repeated several times and add movement to the mouse position.
       this.baseDegree = baseDegree;
       currentDegree = baseDegree;
+      //All rotation is based on the movement of the mouse, regardless of it's distance to the layer center.
       setMouseStartDegree(mouseStartPoint.getX(), mouseStartPoint.getY());
     }
   }
