@@ -320,8 +320,6 @@ final class ModelImpl implements IModel {
     commandManager.redo();
   }
 
-  static int loops = 0;
-
   @Override
   public void setSelectedColor(IColor color) {
     ICommand cmd = CommandFactory
