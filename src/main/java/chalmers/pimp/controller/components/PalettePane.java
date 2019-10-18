@@ -37,7 +37,7 @@ final class PalettePane extends AnchorPane {
   PalettePane(IController controller) throws IOException {
     this.controller = Objects.requireNonNull(controller);
     ControllerUtils.makeController(this, Resources.find(getClass(), "palette_pane.fxml"));
-   enableRasterTools(false);
+    enableRasterTools(false);
   }
 
   @FXML
@@ -89,11 +89,22 @@ final class PalettePane extends AnchorPane {
    * @param activeLayer the currently selected Layer.
    */
   void updateEnabledTools(IReadOnlyLayer activeLayer) {
-    boolean showRasterTools = activeLayer != null && activeLayer.getLayerType() == LayerType.RASTER;
-    enableRasterTools(showRasterTools);
-    if (!showRasterTools && (pixelPenButton.isSelected() || eraserButton.isSelected())) {
+    boolean activeLayerIsRaster = activeLayer.getLayerType() == LayerType.RASTER;
+    boolean enableRasterTools = activeLayer != null && activeLayerIsRaster;
+    enableRasterTools(enableRasterTools);
+    
+    if (!enableRasterTools && rasterToolIsSelected()) {
       doodleButton.fire();
     }
+  }
+
+  /**
+   * Checks if a raster tool is selected.
+   *
+   * @return true if any raster tool is currently selected.
+   */
+  private boolean rasterToolIsSelected() {
+    return (pixelPenButton.isSelected() || eraserButton.isSelected());
   }
 
   /**
