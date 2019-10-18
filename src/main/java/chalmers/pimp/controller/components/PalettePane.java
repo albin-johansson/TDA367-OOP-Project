@@ -84,7 +84,8 @@ final class PalettePane extends AnchorPane {
   }
 
   /**
-   * Disables raster layer tools if selected layer is not a raster, enables them if it is.
+   * Disables raster layer tools if selected layer is not a raster, enables them if it is. Will also
+   * fire the doodle button if an invalid button was active.
    *
    * @param activeLayer the currently selected Layer.
    */
