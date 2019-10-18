@@ -86,12 +86,18 @@ final class Doodle implements ILayer {
 
   @Override
   public void setX(int x) {
-    layerDelegate.setX(x);
+    List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
+    int min = getExtreme(xValues, (a, b) -> a > b);
+
+    layerDelegate.setX(x - min);
   }
 
   @Override
   public void setY(int y) {
-    layerDelegate.setY(y);
+    List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
+    int min = getExtreme(yValues, (a, b) -> a > b);
+
+    layerDelegate.setY(y - min);
   }
 
   @Override

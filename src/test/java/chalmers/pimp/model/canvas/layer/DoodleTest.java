@@ -32,6 +32,10 @@ class DoodleTest {
 
   @Test
   void setX() {
+    doodle.setPixel(PixelFactory.createPixel(10,10));
+    doodle.setPixel(PixelFactory.createPixel(20,20));
+    doodle.setPixel(PixelFactory.createPixel(30,5));
+
     doodle.setX(10);
     assertEquals(doodle.getX(), 10);
     doodle.setX(20);
@@ -40,6 +44,10 @@ class DoodleTest {
 
   @Test
   void setY() {
+    doodle.setPixel(PixelFactory.createPixel(10,10));
+    doodle.setPixel(PixelFactory.createPixel(20,20));
+    doodle.setPixel(PixelFactory.createPixel(30,5));
+
     doodle.setY(10);
     assertEquals(doodle.getY(), 10);
     doodle.setY(20);
@@ -79,7 +87,7 @@ class DoodleTest {
     doodle.setY(20);
     doodle.draw(renderer);
     assertEquals(renderer.lines.size(), 1);
-    assertEquals(new Line(p.getX() + 10, p.getY() + 20, p.getX() + 10, p.getY() + 20),
+    assertEquals(new Line(10, 20, 10, 20),
         renderer.lines.get(0));
   }
 
