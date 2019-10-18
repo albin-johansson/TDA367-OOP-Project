@@ -18,8 +18,6 @@ import javafx.scene.layout.AnchorPane;
 public final class PimpEditorPane extends AnchorPane {
 
   private final CanvasPane canvasPane;
-  private final UtilityPane utilityPane;
-
   @FXML
   @SuppressWarnings("unused")
   private AnchorPane topAnchorPane;
@@ -54,7 +52,7 @@ public final class PimpEditorPane extends AnchorPane {
     model.addUndoRedoListener(toolbarPane);
 
     // Utility (RIGHT)
-    utilityPane = new UtilityPane(model);
+    var utilityPane = new UtilityPane(model);
     rightAnchorPane.getChildren().add(utilityPane);
     AnchorPanes.setZeroAnchors(utilityPane);
 
@@ -93,17 +91,19 @@ public final class PimpEditorPane extends AnchorPane {
     infoPane.setCanvasWidthLabel(model.getWidth());
     infoPane.setCanvasHeightLabel(model.getHeight());
 
-    canvasPane.setOnMouseDragged((e) -> {
-      infoPane.updateCoordinates(e);
+    canvasPane.setOnMouseDragged(e -> {
+      infoPane.updateMouseCoordinates((int) e.getX(), (int) e.getY(), model.getViewport());
       controller.selectedToolDragged(e);
     });
 
-    canvasPane.setOnMouseMoved(infoPane::updateCoordinates);
-    canvasPane.setOnMouseExited(event -> infoPane.turnOffCoordinates());
+    canvasPane.setOnMouseMoved(e -> {
+      infoPane.updateMouseCoordinates((int) e.getX(), (int) e.getY(), model.getViewport());
+    });
+    canvasPane.setOnMouseExited(event -> infoPane.disableMouseCoordinates());
 
     model.addLayerUpdateListener(event -> {
       if (model.getActiveLayer() == null) {
-        infoPane.turnOffCoordinates();
+        infoPane.disableMouseCoordinates();
       } else {
         IReadOnlyLayer layer = model.getActiveLayer();
         infoPane.setLayerWidthLabel(layer.getWidth());
