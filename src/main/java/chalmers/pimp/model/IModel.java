@@ -196,12 +196,8 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    */
   void stopRotatingActiveLayer();
 
-  /**
-   * Rotates the active layer by alpha degrees.
-   *
-   * @param alpha the rotation in degrees.
-   */
-  void rotateActiveLayer(double alpha);
+
+  //void rotateActiveLayer(double alpha);
 
   /**
    * Can be Null if user chooses to deselect a tool.

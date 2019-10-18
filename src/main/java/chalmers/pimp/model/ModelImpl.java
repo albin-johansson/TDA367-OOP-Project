@@ -232,8 +232,12 @@ final class ModelImpl implements IModel {
     layerRotation = null;
   }
 
-  @Override
-  public void rotateActiveLayer(double alpha) {
+  /**
+   * Rotates the active layer by alpha degrees.
+   *
+   * @param alpha the rotation in degrees.
+   */
+  private void rotateActiveLayer(double alpha) {
     canvas.setActiveLayerRotation(alpha);
     notifyCanvasUpdateListeners();
   }
