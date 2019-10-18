@@ -23,6 +23,9 @@ final class PalettePane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private ToggleButton eraserButton;
+  @FXML
+  @SuppressWarnings("unused")
+  private ToggleButton doodleButton;
 
   private final IController controller;
 
@@ -86,17 +89,20 @@ final class PalettePane extends AnchorPane {
    * @param activeLayer the currently selected Layer.
    */
   void updateEnabledTools(IReadOnlyLayer activeLayer) {
-    if (activeLayer != null) {
-      if (activeLayer.getLayerType() == LayerType.RASTER) {
-        pixelPenButton.setDisable(false);
-        eraserButton.setDisable(false);
-      } else {
-        pixelPenButton.setDisable(true);
-        eraserButton.setDisable(true);
-      }
-    } else {
-      pixelPenButton.setDisable(true);
-      eraserButton.setDisable(true);
+    boolean showRasterTools = activeLayer != null && activeLayer.getLayerType() == LayerType.RASTER;
+    enableRasterTools(showRasterTools);
+    if (!showRasterTools && (pixelPenButton.isSelected() || eraserButton.isSelected())) {
+      doodleButton.fire();
     }
+  }
+
+  /**
+   * Sets if raster tools should be enabled {@code True} or not {@code False}
+   *
+   * @param bool the {@code boolean} to decide if the raster tools should be set or not.
+   */
+  private void enableRasterTools(boolean bool) {
+    pixelPenButton.setDisable(!bool);
+    eraserButton.setDisable(!bool);
   }
 }

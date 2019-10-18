@@ -88,7 +88,7 @@
                 <Tooltip text="Rotate Tool" />
                </tooltip>
             </ToggleButton>
-            <ToggleButton mnemonicParsing="false" onAction="#selectDoodleTool" toggleGroup="$palette">
+            <ToggleButton fx:id="doodleButton" mnemonicParsing="false" onAction="#selectDoodleTool" toggleGroup="$palette">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
