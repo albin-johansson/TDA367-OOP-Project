@@ -162,7 +162,7 @@
 }
 
 .color-picker {
-  -fx-background-color: -background-pressed-color;
+  -fx-background-color: -background-color;
 }
 
 #info-pane {
