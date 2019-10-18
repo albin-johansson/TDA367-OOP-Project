@@ -45,6 +45,5 @@ final class DoodleTool implements ITool {
   @Override
   public void released(MouseStatus mouseStatus) {
     model.addLayer(doodle);
-    model.selectLayer(doodle.getDepthIndex());
   }
 }
