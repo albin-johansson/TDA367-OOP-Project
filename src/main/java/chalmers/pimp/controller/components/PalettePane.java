@@ -37,8 +37,7 @@ final class PalettePane extends AnchorPane {
   PalettePane(IController controller) throws IOException {
     this.controller = Objects.requireNonNull(controller);
     ControllerUtils.makeController(this, Resources.find(getClass(), "palette_pane.fxml"));
-    pixelPenButton.setDisable(true);
-    eraserButton.setDisable(true);
+   enableRasterTools(false);
   }
 
   @FXML
