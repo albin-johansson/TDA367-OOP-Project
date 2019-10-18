@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 final class ViewportModelImpl implements IViewportModel {
 
-  private Viewport viewport;
+  private final Viewport viewport;
 
   ViewportModelImpl() {
     viewport = new Viewport();
@@ -74,7 +74,10 @@ final class ViewportModelImpl implements IViewportModel {
   @Override
   public void restore(ViewportModelMemento memento) {
     Objects.requireNonNull(memento);
-    viewport = memento.getViewport();
+
+    // All that is restored is the viewport width and height
+    viewport.setWidth(memento.getViewport().getWidth());
+    viewport.setHeight(memento.getViewport().getHeight());
   }
 
   @Override
