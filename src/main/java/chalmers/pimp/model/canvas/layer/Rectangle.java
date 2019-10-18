@@ -56,6 +56,7 @@ final class Rectangle implements ILayer {
     width = rectangle.width;
     height = rectangle.height;
     color = rectangle.color;
+    setRotationAnchorToCenter();
   }
 
   @Override

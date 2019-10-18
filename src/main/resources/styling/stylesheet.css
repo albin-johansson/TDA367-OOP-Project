@@ -192,3 +192,7 @@
   -fx-font-weight: normal;
   /*-fx-text-fill: white !important;*/
 }
+
+#rename-box{
+  -fx-background-color: rgba(0, 0, 0, 0.40);
+}

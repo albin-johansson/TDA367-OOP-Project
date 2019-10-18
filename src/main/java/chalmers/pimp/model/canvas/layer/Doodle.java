@@ -34,8 +34,8 @@ final class Doodle implements ILayer {
     points = new ArrayList<>(16);
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
     layerDelegate.setName("Doodle");
-    // width = 0;
-    // height = 0;
+
+    setRotationAnchorToCenter();
   }
 
   /**
@@ -73,8 +73,8 @@ final class Doodle implements ILayer {
 
   @Override
   public void setRotationAnchorToCenter() {
-    Point temp = new Point(layerDelegate.getX() + (getWidth() / 2),
-        layerDelegate.getY() + (getHeight() / 2));
+    Point temp = new Point(getX() + (getWidth() / 2),
+        getY() + (getHeight() / 2));
     layerDelegate.setRotationAnchor(temp);
   }
 
@@ -90,12 +90,18 @@ final class Doodle implements ILayer {
 
   @Override
   public void setX(int x) {
-    layerDelegate.setX(x);
+    List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
+    int min = getExtreme(xValues, (a, b) -> a > b);
+
+    layerDelegate.setX(x - min);
   }
 
   @Override
   public void setY(int y) {
-    layerDelegate.setY(y);
+    List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
+    int min = getExtreme(yValues, (a, b) -> a > b);
+
+    layerDelegate.setY(y - min);
   }
 
   @Override
@@ -180,6 +186,7 @@ final class Doodle implements ILayer {
 
   @Override
   public Point getRotationAnchor() {
+    setRotationAnchorToCenter();
     return layerDelegate.getRotationAnchor();
   }
 
