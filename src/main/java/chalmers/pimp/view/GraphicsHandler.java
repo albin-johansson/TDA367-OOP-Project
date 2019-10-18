@@ -50,7 +50,7 @@ final class GraphicsHandler {
    * @param vy the viewport y-coordinate.
    */
   private void drawTransparencyGrid(int vx, int vy) {
-    final int size = 20;
+    final int size = 10;
     final int nRows = Math.min(model.getWidth() / size, renderer.getCanvasWidth() / size);
     final int nCols = Math.min(model.getHeight() / size, renderer.getCanvasHeight() / size);
 
