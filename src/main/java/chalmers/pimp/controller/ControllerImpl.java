@@ -137,7 +137,7 @@ final class ControllerImpl implements IController {
     ITool rotateTool = ToolFactory.createRotateTool(model);
     model.setSelectedTool(rotateTool);
   }
-  
+
   @Override
   public void selectDoodleTool() {
     model.setSelectedTool(
@@ -203,6 +203,11 @@ final class ControllerImpl implements IController {
         ex.printStackTrace();
       }
     }
+  }
+
+  @Override
+  public void togglePaintWaterMarkBoolean() {
+    view.setPaintWaterMarkBoolean(!view.getPaintWaterMarkBoolean());
   }
 
   @Override

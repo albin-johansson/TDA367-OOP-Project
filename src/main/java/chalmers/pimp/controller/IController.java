@@ -94,4 +94,9 @@ public interface IController {
    * Opens file chooser save dialog and allows you to save the Image.
    */
   void exportImage();
+
+  /**
+   * Toggles the paintWaterMarkBoolean in the view.
+   */
+  void togglePaintWaterMarkBoolean();
 }
