@@ -16,6 +16,7 @@ final class ViewImpl implements IView {
 
   private final IModel model;
   private IRenderer renderer;
+  private boolean paintWaterMarkBoolean;
 
   /**
    * @param model the associated chalmers.pimp.model instance.
@@ -36,6 +37,16 @@ final class ViewImpl implements IView {
   }
 
   @Override
+  public void setPaintWaterMarkBoolean(boolean flag) {
+    paintWaterMarkBoolean = flag;
+  }
+
+  @Override
+  public boolean getPaintWaterMarkBoolean() {
+    return paintWaterMarkBoolean;
+  }
+
+  @Override
   public void repaint() {
     renderer.setFillColor(ColorFactory.createColor(0xFF, 0xFF, 0xFF, 0xFF));
     renderer.fillRect(0, 0, renderer.getCanvasWidth(), renderer.getCanvasHeight());
@@ -43,7 +54,9 @@ final class ViewImpl implements IView {
     for (IDrawable drawable : model.getLayers()) {
       drawable.draw(renderer);
     }
-    paintWaterMark();
+    if (paintWaterMarkBoolean) {
+      paintWaterMark();
+    }
   }
 
   private void paintWaterMark() {
