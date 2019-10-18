@@ -48,12 +48,13 @@ final class Doodle implements ILayer {
     Objects.requireNonNull(doodle);
 
     layerDelegate = new LayerDelegate(doodle.layerDelegate);
+
     points = new ArrayList<>(doodle.points.size());
     points.addAll(doodle.points);
+
     color = doodle.color;
     lineWidth = doodle.lineWidth;
 
-    doodle.points.addAll(doodle.points);
     setRotationAnchorToCenter();
   }
 
@@ -99,15 +100,15 @@ final class Doodle implements ILayer {
 
   @Override
   public int getX() {
-    List<Integer> xVlaues = points.stream().map(Point::getX).collect(Collectors.toList());
-    int min = getExtreme(xVlaues, (a, b) -> a > b);
+    List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
+    int min = getExtreme(xValues, (a, b) -> a > b);
     return min + layerDelegate.getX();
   }
 
   @Override
   public int getY() {
-    List<Integer> yVlaues = points.stream().map(Point::getY).collect(Collectors.toList());
-    int min = getExtreme(yVlaues, (a, b) -> a > b);
+    List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
+    int min = getExtreme(yValues, (a, b) -> a > b);
     return min + layerDelegate.getY();
   }
 
@@ -146,8 +147,7 @@ final class Doodle implements ILayer {
     //Returns a list of the values returned from getX() for each item in points
     //.stream() returns a sequential stream considering collection as its source
     List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
-
-    return getMostDiff(xValues) + lineWidth * 2;
+    return getMostDiff(xValues) + (lineWidth * 2);
   }
 
   @Override
@@ -155,8 +155,7 @@ final class Doodle implements ILayer {
     //Returns a list of the values returned from getY() for each item in points
     //.stream() returns a sequential stream considering collection as its source
     List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
-
-    return getMostDiff(yValues) + lineWidth * 2;
+    return getMostDiff(yValues) + (lineWidth * 2);
   }
 
   @Override
@@ -201,13 +200,11 @@ final class Doodle implements ILayer {
       return;
     }
 
-    int offsX = layerDelegate.getX();
-    int offSY = layerDelegate.getY();
-    renderer
-        .startTransform(layerDelegate.getRotationDegrees(),
-            new Point(getX(), getY()),
-            getWidth(),
-            getHeight());
+    int x = layerDelegate.getX();
+    int y = layerDelegate.getY();
+    renderer.startTransform(layerDelegate.getRotationDegrees(), new Point(x, y), getWidth(),
+        getHeight());
+
     renderer.setGlobalAlpha(color.getAlphaPercentage());
     renderer.setLineWidth(lineWidth);
     renderer.setFillColor(color);
@@ -215,24 +212,22 @@ final class Doodle implements ILayer {
 
     if (points.size() == 1) {
       Point point = points.get(0);
-      point = point.addX(viewport.getRelativeX(getX()));
-      point = point.addY(viewport.getRelativeY(getY()));
+      point = point.addX(viewport.getRelativeX(x));
+      point = point.addY(viewport.getRelativeY(y));
       renderer.drawLine(point, point); // basically renders a single point
       return;
     }
 
     for (int i = 1; i < points.size(); i++) {
       Point point1 = points.get(i);
-      point1 = point1.addX(viewport.getRelativeX(getX()));
-      point1 = point1.addY(viewport.getRelativeY(getY()));
+      point1 = point1.addX(viewport.getRelativeX(x));
+      point1 = point1.addY(viewport.getRelativeY(y));
 
       Point point2 = points.get(i - 1);
-      point2 = point2.addX(viewport.getRelativeX(getX()));
-      point2 = point2.addY(viewport.getRelativeY(getY()));
+      point2 = point2.addX(viewport.getRelativeX(x));
+      point2 = point2.addY(viewport.getRelativeY(y));
 
       renderer.drawLine(point1, point2);
-      // renderer.drawLine(points.get(i).addX(offsX).addY(offSY),
-      //     points.get(i - 1).addX(offsX).addY(offSY));
     }
     renderer.setGlobalAlpha(0);
     renderer.endTransform();

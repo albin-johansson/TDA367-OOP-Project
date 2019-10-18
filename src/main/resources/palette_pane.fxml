@@ -52,6 +52,18 @@
                   <Tooltip text="Move Tool" />
                </tooltip>
             </ToggleButton>
+            <ToggleButton layoutX="16.0" layoutY="268.0" mnemonicParsing="false" onAction="#selectRotateTool" toggleGroup="$palette">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/light/rotate.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Rotate Tool" />
+               </tooltip>
+            </ToggleButton>
         <ToggleButton disable="true" mnemonicParsing="false" onAction="#selectBucket" toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">

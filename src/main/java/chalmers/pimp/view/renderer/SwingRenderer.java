@@ -116,9 +116,18 @@ final class SwingRenderer implements IRenderer {
   }
 
   @Override
-  public void setRotation(int rotation) {
-    this.rotation = rotation;
-    graphics.rotate(Math.toRadians(rotation));
+  public void startTransform(double rotation, Point startPoint, int width, int height) {
+
+  }
+
+  @Override
+  public void endTransform() {
+
+  }
+
+  @Override
+  public void setGlobalAlpha(double alpha) {
+
   }
 
   @Override

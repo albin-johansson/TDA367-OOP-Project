@@ -45,10 +45,6 @@ final class DoodleTool implements ITool {
 
     doodle.setPixel(PixelFactory.createPixel(x, y));
     doodle.draw(model.getRenderer(), model.getViewport());
-
-    // doodle.setPixel(
-    //     PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), model.getSelectedColor()));
-    // doodle.draw(model.getRenderer());
   }
 
   @Override
