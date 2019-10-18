@@ -89,4 +89,9 @@ final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
     undoMenuItem.setText("Undo " + event.getUndoCommandName());
     redoMenuItem.setText("Redo " + event.getRedoCommandName());
   }
+
+  @FXML
+  private void togglePaintWaterMarkBoolean() {
+    controller.togglePaintWaterMarkBoolean();
+  }
 }
