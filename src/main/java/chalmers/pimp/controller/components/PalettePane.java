@@ -2,10 +2,13 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
+import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.canvas.layer.LayerType;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.fxml.FXML;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -13,6 +16,11 @@ import javafx.scene.layout.AnchorPane;
  * tools (the "palette").
  */
 final class PalettePane extends AnchorPane {
+
+  @FXML
+  private ToggleButton pixelPenButton;
+  @FXML
+  private ToggleButton eraserButton;
 
   private final IController controller;
 
@@ -24,6 +32,9 @@ final class PalettePane extends AnchorPane {
   PalettePane(IController controller) throws IOException {
     this.controller = Objects.requireNonNull(controller);
     ControllerUtils.makeController(this, Resources.find(getClass(), "palette_pane.fxml"));
+    pixelPenButton.setDisable(true);
+    eraserButton.setDisable(true);
+
   }
 
   @FXML
@@ -66,5 +77,21 @@ final class PalettePane extends AnchorPane {
   @SuppressWarnings("unused")
   private void selectDoodleTool() {
     controller.selectDoodleTool();
+  }
+
+  void updateEnabledTools(IReadOnlyLayer activeLayer){
+    if (activeLayer != null){
+      if(activeLayer.getLayerType() == LayerType.RASTER){
+        pixelPenButton.setDisable(false);
+        eraserButton.setDisable(false);
+      }else{
+        pixelPenButton.setDisable(true);
+        eraserButton.setDisable(true);
+      }
+    }else {
+      pixelPenButton.setDisable(true);
+      eraserButton.setDisable(true);
+    }
+
   }
 }

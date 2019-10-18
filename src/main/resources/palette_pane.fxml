@@ -13,7 +13,7 @@
   <children>
     <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <ToggleButton mnemonicParsing="false" onAction="#selectPencil">
+        <ToggleButton fx:id="pixelPenButton" mnemonicParsing="false" onAction="#selectPencil">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
@@ -28,7 +28,7 @@
             <ToggleGroup fx:id="palette" />
           </toggleGroup>
         </ToggleButton>
-        <ToggleButton mnemonicParsing="false" onAction="#selectEraser" toggleGroup="$palette">
+        <ToggleButton fx:id="eraserButton" mnemonicParsing="false" onAction="#selectEraser" toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
