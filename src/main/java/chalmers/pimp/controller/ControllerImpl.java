@@ -30,7 +30,6 @@ final class ControllerImpl implements IController {
   private final IModel model;
   private final IView view;
   private final Stage stage;
-  private final PimpEditorPane pane;
 
   /**
    * @param model the associated model instance.
@@ -43,7 +42,7 @@ final class ControllerImpl implements IController {
     this.view = Objects.requireNonNull(view);
     this.stage = Objects.requireNonNull(stage);
 
-    pane = new PimpEditorPane(model, this);
+    var pane = new PimpEditorPane(model, this);
     IRenderer renderer = RendererFactory.createFXRenderer(pane.getGraphics());
     view.setRenderer(renderer);
     model.setRenderer(renderer);
