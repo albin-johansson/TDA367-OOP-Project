@@ -64,18 +64,6 @@
                   <Tooltip text="Rotate Tool" />
                </tooltip>
             </ToggleButton>
-        <ToggleButton disable="true" mnemonicParsing="false" onAction="#selectBucket" toggleGroup="$palette">
-          <graphic>
-            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-              <image>
-                <Image url="@images/light/bucket.png" />
-              </image>
-            </ImageView>
-          </graphic>
-          <tooltip>
-            <Tooltip text="Bucket Tool" />
-          </tooltip>
-        </ToggleButton>
         <ToggleButton mnemonicParsing="false" onAction="#selectEraser" toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">

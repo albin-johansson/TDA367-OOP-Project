@@ -41,19 +41,14 @@ public interface IController {
   void setViewportHeight(int height);
 
   /**
-   * Sets Pencil as the selected tool.
+   * Sets a raster pen as the selected tool.
    */
-  void selectPencil();
+  void selectRasterPen();
 
   /**
    * Sets a transparent pencil as the selected tool.
    */
   void selectEraser();
-
-  /**
-   * Sets a bucket as the selected tool.
-   */
-  void selectBucket();
 
   /**
    * Sets the rectangle tool as the selected tool in model

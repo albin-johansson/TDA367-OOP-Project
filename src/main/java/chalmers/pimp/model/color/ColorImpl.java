@@ -3,8 +3,8 @@ package chalmers.pimp.model.color;
 import java.util.Objects;
 
 /**
- * The {@code ColorImp} class is an implementation of the {@code IColor} interface.
- * A immutable color.
+ * The {@code ColorImp} class is an implementation of the {@code IColor} interface. A immutable
+ * color.
  *
  * @see IColor
  */
@@ -47,16 +47,17 @@ final class ColorImpl implements IColor {
   /**
    * Returns the closest percentage between [0, 1].
    *
+   * @param percentage the percentage that will be checked, in the range [0, 1].
    * @return the closest percentage.
    */
-  private double getClosestPercentage(double val) {
+  private double getClosestPercentage(double percentage) {
     double max = 1;
     double min = 0;
 
-    if (val >= max) {
+    if (percentage >= max) {
       return max;
     } else {
-      return Math.max(min, val);
+      return Math.max(min, percentage);
     }
   }
 

@@ -8,6 +8,8 @@ public interface ILayerUpdateListener { // TODO move to layer package
 
   /**
    * Invoked when the layers has been updated.
+   *
+   * @param event the layer update event that contains the layer state.
    */
-  void layersUpdated(LayerUpdateEvent e);
+  void layersUpdated(LayerUpdateEvent event);
 }

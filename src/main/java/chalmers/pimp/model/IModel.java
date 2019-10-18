@@ -142,10 +142,12 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   /**
    * Starts a stroke.
    *
-   * @param pixel the pixel affected by the stroke.
+   * @param pixel    the pixel affected by the stroke.
+   * @param diameter the diameter of the stroke.
+   * @param color    the color that will be used.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  void startStroke(IPixel pixel, int diameter);
+  void startStroke(IPixel pixel, int diameter, IColor color);
 
   /**
    * Updates an ongoing stroke. This method has no effect if there is no ongoing stroke.

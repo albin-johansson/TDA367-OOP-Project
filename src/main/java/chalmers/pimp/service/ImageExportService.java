@@ -40,6 +40,8 @@ public final class ImageExportService {
    * Attempts to export the supplied layers into an image. This method has no effect if the
    * operation is unsuccessful.
    *
+   * @param width  the width of the created image.
+   * @param height the height of the created image.
    * @param layers the layers that will be used when creating the image.
    * @throws NullPointerException if any references are {@code null}.
    */

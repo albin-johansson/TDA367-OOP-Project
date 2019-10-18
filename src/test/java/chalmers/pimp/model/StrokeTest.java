@@ -42,9 +42,9 @@ class StrokeTest {
 
   @Test
   void updatePixels() {
-    assertThrows(NullPointerException.class, () -> stroke.updatePixels(null, null, null));
+    assertThrows(NullPointerException.class, () -> stroke.updatePixels(null, null));
     assertThrows(NullPointerException.class,
-        () -> stroke.updatePixels(CanvasFactory.createCanvas(), null, null));
+        () -> stroke.updatePixels(CanvasFactory.createCanvas(), null));
   }
 
   @Test

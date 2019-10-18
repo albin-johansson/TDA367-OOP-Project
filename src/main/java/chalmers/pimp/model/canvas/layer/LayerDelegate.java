@@ -45,6 +45,7 @@ final class LayerDelegate {
   /**
    * Creates a copy of the supplied layer delegate.
    *
+   * @param layerDelegate the layer delegate that will be copied.
    * @throws NullPointerException if the supplied layer delegate is {@code null}.
    */
   LayerDelegate(LayerDelegate layerDelegate) {

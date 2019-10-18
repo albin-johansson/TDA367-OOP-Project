@@ -5,8 +5,6 @@ import chalmers.pimp.controller.components.PimpEditorPane;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
-import chalmers.pimp.model.color.ColorFactory;
-import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
@@ -36,6 +34,7 @@ final class ControllerImpl implements IController {
    * @param view  the associated model instance.
    * @param stage the parent stage instance.
    * @throws NullPointerException if any arguments are {@code null}.
+   * @throws IOException          if an error occurs when creating the controller panes.
    */
   ControllerImpl(IModel model, IView view, Stage stage) throws IOException {
     this.model = Objects.requireNonNull(model);
@@ -48,7 +47,7 @@ final class ControllerImpl implements IController {
     model.setRenderer(renderer);
 
     prepareStage(new Scene(pane, 800, 600));
-    selectPencil();
+    selectRasterPen();
   }
 
   /**
@@ -108,20 +107,14 @@ final class ControllerImpl implements IController {
   }
 
   @Override
-  public void selectPencil() {
-    ITool pencil = ToolFactory.createPencil(10, ColorFactory.createColor(255, 100, 50, 255), model);
+  public void selectRasterPen() {
+    ITool pencil = ToolFactory.createRasterPen(2, model);
     model.setSelectedTool(pencil);
   }
 
   @Override
   public void selectEraser() {
-    IColor color = ColorFactory.createColor(0, 0, 0, 0);
-    model.setSelectedTool(ToolFactory.createPencil(10, color, model));
-  }
-
-  @Override
-  public void selectBucket() {
-    // TODO implement
+    model.setSelectedTool(ToolFactory.createRasterEraser(2, model));
   }
 
   @Override
@@ -135,10 +128,10 @@ final class ControllerImpl implements IController {
     ITool rotateTool = ToolFactory.createRotateTool(model);
     model.setSelectedTool(rotateTool);
   }
-  
+
   @Override
   public void selectDoodleTool() {
-    model.setSelectedTool(ToolFactory.createDoodleTool(10, model));
+    model.setSelectedTool(ToolFactory.createDoodleTool(2, model));
   }
 
   @Override

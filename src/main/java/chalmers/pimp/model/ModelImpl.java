@@ -41,11 +41,13 @@ final class ModelImpl implements IModel {
   private final IViewportModel viewportModel;
   private final IColorModel colorModel;
   private final ModelSizeListenerComposite modelSizeListeners; // Not used as of yet
+
   private IRenderer renderer;
   private LayerMovement layerMovement;
   private LayerRotation layerRotation;
   private Stroke stroke;
   private ITool selectedTool;
+
   private int width;
   private int height;
 
@@ -180,9 +182,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void startStroke(IPixel pixel, int diameter) {
+  public void startStroke(IPixel pixel, int diameter, IColor color) {
     Objects.requireNonNull(pixel);
-    stroke = new Stroke(createSnapShot(), diameter, colorModel.getColor());
+    Objects.requireNonNull(color);
+
+    stroke = new Stroke(createSnapShot(), diameter, color);
     updateStroke(pixel);
   }
 
@@ -191,7 +195,7 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(canvas, pixel, colorModel.getColor());
+      stroke.updatePixels(canvas, pixel);
       notifyCanvasUpdateListeners();
     }
   }
@@ -201,7 +205,7 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(canvas, pixel, colorModel.getColor());
+      stroke.updatePixels(canvas, pixel);
 
       // We don't need to explicitly execute the created command, the effect is already present
       ICommand cmd = createStrokeCommand(canvas, this, stroke);
@@ -272,11 +276,10 @@ final class ModelImpl implements IModel {
     }
 
     layerRotation = new LayerRotation();
-    Point tempPoint = new Point(x, y);
-    layerRotation
-        .start(canvas.getActiveLayer().getRotationAnchor(), canvas.getActiveLayer().getRotation(),
-            tempPoint,
-            createSnapShot());
+    var point = new Point(x, y);
+    Point anchor = canvas.getActiveLayer().getRotationAnchor();
+    double rotation = canvas.getActiveLayer().getRotation();
+    layerRotation.start(anchor, rotation, point, createSnapShot());
   }
 
   @Override

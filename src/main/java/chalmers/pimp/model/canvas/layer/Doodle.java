@@ -261,8 +261,8 @@ final class Doodle implements ILayer {
       return 0;
     }
 
-    Integer extreme = list.get(0);
-    for (Integer i : list) {
+    int extreme = list.get(0);
+    for (int i : list) {
       extreme = predicate.test(extreme, i) ? i : extreme;
     }
     return extreme;

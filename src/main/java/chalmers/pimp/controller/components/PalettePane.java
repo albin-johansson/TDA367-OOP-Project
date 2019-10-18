@@ -32,19 +32,13 @@ final class PalettePane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private void selectPencil() {
-    controller.selectPencil();
+    controller.selectRasterPen();
   }
 
   @FXML
   @SuppressWarnings("unused")
   private void selectEraser() {
     controller.selectEraser();
-  }
-
-  @FXML
-  @SuppressWarnings("unused")
-  private void selectBucket() {
-    controller.selectBucket();
   }
 
   @FXML

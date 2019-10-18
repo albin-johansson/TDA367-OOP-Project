@@ -70,6 +70,11 @@ final class GraphicsHandler {
   /**
    * Fills the surrounding area of the model canvas. This method should be called <b>after</b>
    * rendering the model.
+   *
+   * @param vx          the x-coordinate of the viewport.
+   * @param vy          the y-coordinate of the viewport.
+   * @param modelWidth  the width of the model canvas.
+   * @param modelHeight the height of the model canvas.
    */
   private void fillCanvasSurroundingArea(int vx, int vy, int modelWidth, int modelHeight) {
     final int canvasWidth = renderer.getCanvasWidth();
