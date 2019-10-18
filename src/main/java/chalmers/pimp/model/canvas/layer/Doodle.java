@@ -9,6 +9,8 @@ import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
 /**
  * A layer which has a list of points and draws straight lines between the points.
@@ -19,8 +21,6 @@ final class Doodle implements ILayer {
   private final LayerDelegate layerDelegate;
   private final IColor color;
   private final int lineWidth;
-  private int width;
-  private int height;
 
   /**
    * @param lineWidth the width of the lines that are drawn.
@@ -34,8 +34,8 @@ final class Doodle implements ILayer {
     points = new ArrayList<>(16);
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
     layerDelegate.setName("Doodle");
-    width = 0;
-    height = 0;
+    // width = 0;
+    // height = 0;
   }
 
   /**
@@ -52,29 +52,39 @@ final class Doodle implements ILayer {
     points.addAll(doodle.points);
     color = doodle.color;
     lineWidth = doodle.lineWidth;
-    width = doodle.width;
-    height = doodle.height;
+
+    doodle.points.addAll(doodle.points);
+    setRotationAnchorToCenter();
   }
 
   @Override
   public void setPixel(IPixel pixel) {
-    points.add(new Point(pixel.getX(), pixel.getY()));
-    if (pixel.getX() > width - lineWidth) {
-      width = pixel.getX() + lineWidth;
-    }
-    if (pixel.getY() > height - lineWidth) {
-      height = pixel.getY() + lineWidth;
-    }
-  }
-
-  @Override
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
+    Point p = new Point(pixel.getX(), pixel.getY());
+    points.add(p);
+    setRotationAnchorToCenter();
   }
 
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
+    setRotationAnchorToCenter();
+  }
+
+  @Override
+  public void setRotationAnchorToCenter() {
+    Point temp = new Point(layerDelegate.getX() + (getWidth() / 2),
+        layerDelegate.getY() + (getHeight() / 2));
+    layerDelegate.setRotationAnchor(temp);
+  }
+
+  @Override
+  public boolean isVisible() {
+    return layerDelegate.isVisible();
+  }
+
+  @Override
+  public void setVisible(boolean isVisible) {
+    layerDelegate.setVisible(isVisible);
   }
 
   @Override
@@ -88,28 +98,17 @@ final class Doodle implements ILayer {
   }
 
   @Override
-  public void setName(String name) {
-    layerDelegate.setName(name);
-  }
-
-  @Override
-  public void setDepthIndex(int depthIndex) {
-    layerDelegate.setDepthIndex(depthIndex);
-  }
-
-  @Override
-  public boolean isVisible() {
-    return layerDelegate.isVisible();
-  }
-
-  @Override
   public int getX() {
-    return layerDelegate.getX();
+    List<Integer> xVlaues = points.stream().map(Point::getX).collect(Collectors.toList());
+    int min = getExtreme(xVlaues, (a, b) -> a > b);
+    return min + layerDelegate.getX();
   }
 
   @Override
   public int getY() {
-    return layerDelegate.getY();
+    List<Integer> yVlaues = points.stream().map(Point::getY).collect(Collectors.toList());
+    int min = getExtreme(yVlaues, (a, b) -> a > b);
+    return min + layerDelegate.getY();
   }
 
   @Override
@@ -123,13 +122,41 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public double getRotation() {
+    return layerDelegate.getRotationDegrees();
+  }
+
+  @Override
+  public void setRotation(double rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
+  public double getAlpha() {
+    return layerDelegate.getAlpha();
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
+  }
+
+  @Override
   public int getWidth() {
-    return width;
+    //Returns a list of the values returned from getX() for each item in points
+    //.stream() returns a sequential stream considering collection as its source
+    List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
+
+    return getMostDiff(xValues) + lineWidth * 2;
   }
 
   @Override
   public int getHeight() {
-    return height;
+    //Returns a list of the values returned from getY() for each item in points
+    //.stream() returns a sequential stream considering collection as its source
+    List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
+
+    return getMostDiff(yValues) + lineWidth * 2;
   }
 
   @Override
@@ -138,8 +165,29 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
   public int getDepthIndex() {
     return layerDelegate.getDepthIndex();
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
+  public Point getRotationAnchor() {
+    return layerDelegate.getRotationAnchor();
+  }
+
+  @Override
+  public void setRotationAnchor(Point rotationAnchor) {
+    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
+    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
   }
 
   @Override
@@ -153,6 +201,14 @@ final class Doodle implements ILayer {
       return;
     }
 
+    int offsX = layerDelegate.getX();
+    int offSY = layerDelegate.getY();
+    renderer
+        .startTransform(layerDelegate.getRotationDegrees(),
+            new Point(getX(), getY()),
+            getWidth(),
+            getHeight());
+    renderer.setGlobalAlpha(color.getAlphaPercentage());
     renderer.setLineWidth(lineWidth);
     renderer.setFillColor(color);
     renderer.setBorderColor(color);
@@ -175,6 +231,45 @@ final class Doodle implements ILayer {
       point2 = point2.addY(viewport.getRelativeY(getY()));
 
       renderer.drawLine(point1, point2);
+      // renderer.drawLine(points.get(i).addX(offsX).addY(offSY),
+      //     points.get(i - 1).addX(offsX).addY(offSY));
     }
+    renderer.setGlobalAlpha(0);
+    renderer.endTransform();
+  }
+
+  /**
+   * Returns the largest difference between two integers in the specified list
+   *
+   * @param list the specified list
+   * @return the largest difference between two integers in the specified list
+   */
+  private Integer getMostDiff(List<? extends Integer> list) {
+    int max = getExtreme(list, (a, b) -> a < b);
+    int min = getExtreme(list, (a, b) -> a > b);
+
+    return max - min;
+  }
+
+  /**
+   * Comparing each element and returns element e which satisfies ∀a ∈ list : e ≺ a where ≺ is the
+   * predicate function
+   *
+   * @param list      the list of elements to be compared
+   * @param predicate the method witch will make the comparison
+   * @return the element e which satisfies ∀a ∈ list : e ≺ a
+   */
+  private int getExtreme(List<? extends Integer> list,
+      BiPredicate<? super Integer, ? super Integer> predicate) {
+    Objects.requireNonNull(list);
+    if (list.isEmpty()) {
+      return 0;
+    }
+
+    Integer extreme = list.get(0);
+    for (Integer i : list) {
+      extreme = predicate.test(extreme, i) ? i : extreme;
+    }
+    return extreme;
   }
 }

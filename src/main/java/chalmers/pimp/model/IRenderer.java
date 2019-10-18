@@ -54,7 +54,7 @@ public interface IRenderer {
   void fillEllipse(int x, int y, int radiusX, int radiusY);
 
   /**
-   * Draws an image.
+   * Draws an image. This method has no effect if startPoint is {@code Null}.
    *
    * @param readOnlyPixelData the image to draw.
    * @param x                 the zero-indexed x coordinate of the image.
@@ -73,7 +73,8 @@ public interface IRenderer {
   void drawText(String content, int x, int y, int fontSize);
 
   /**
-   * Draws a line from point p1 to point p2
+   * Draws a line from point p1 to point p2. This method has no effect if startPoint is {@code
+   * Null}.
    *
    * @param p1 first point
    * @param p2 second point
@@ -81,11 +82,28 @@ public interface IRenderer {
   void drawLine(Point p1, Point p2);
 
   /**
-   * Sets the rotation.
+   * Creates and starts a new rotation transform. Will also save the previous transform. This method
+   * has no effect if startPoint is {@code Null}.
    *
-   * @param rotation the rotation in degrees.
+   * @param rotation   the rotation to use (degrees).
+   * @param startPoint the point for the coordinates.
+   * @param width      the width of the object.
+   * @param height     the height of the object.
    */
-  void setRotation(int rotation);
+  void startTransform(double rotation, Point startPoint, int width, int height);
+
+  /**
+   * Restores the transform to the previous saved state, thus ending the transform from affecting
+   * more objects.
+   */
+  void endTransform();
+
+  /**
+   * Sets the transparency alpha value. 1 is no transparency, 0 is completely transparent.
+   *
+   * @param alpha the new alpha value [0, 1].
+   */
+  void setGlobalAlpha(double alpha);
 
   /**
    * Sets the fill color.

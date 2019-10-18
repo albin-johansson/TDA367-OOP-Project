@@ -3,8 +3,8 @@ package chalmers.pimp.controller;
 import javafx.scene.input.MouseEvent;
 
 /**
- * The {@code IController} interface specifies the facade for the controller component
- * in the MVC architecture that the Pimp application uses.
+ * The {@code IController} interface specifies the facade for the controller component in the MVC
+ * architecture that the Pimp application uses.
  */
 public interface IController {
 
@@ -41,17 +41,17 @@ public interface IController {
   void setViewportHeight(int height);
 
   /**
-   * Sets Pencil as selectedTool in model
+   * Sets Pencil as the selected tool.
    */
   void selectPencil();
 
   /**
-   * Sets a Transparent Pencil as selected tool in model
+   * Sets a transparent pencil as the selected tool.
    */
   void selectEraser();
 
   /**
-   * Sets Bucket as selected tool in model
+   * Sets a bucket as the selected tool.
    */
   void selectBucket();
 
@@ -59,6 +59,11 @@ public interface IController {
    * Sets the rectangle tool as the selected tool in model
    */
   void selectRectangleTool();
+
+  /**
+   * Sets the rotate tool as the selected tool in model.
+   */
+  void selectRotateTool();
 
   /**
    * Sets the doodle tool as the selected tool in model
@@ -76,7 +81,7 @@ public interface IController {
   void redo();
 
   /**
-   * Sets the MoveTool as selected tool in model.
+   * Sets a move tool as selected tool in model.
    */
   void selectMoveTool();
 

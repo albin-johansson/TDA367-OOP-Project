@@ -4,6 +4,7 @@ import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 

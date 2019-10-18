@@ -1,5 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.Point;
 import java.util.Objects;
 
 /**
@@ -19,9 +20,11 @@ final class LayerDelegate {
   private final LayerType layerType;
   private String name;
   private boolean isVisible;
-  private int x;
-  private int y;
+  private Point startPoint;
+  private Point rotationAnchorPoint;
   private int depthIndex;
+  private double rotationDegrees;
+  private double alpha;
 
   /**
    * @param layerType the layer type that will be used by the layer delegate.
@@ -32,9 +35,11 @@ final class LayerDelegate {
 
     name = "";
     isVisible = DEFAULT_VISIBILITY_VALUE;
-    x = 0;
-    y = 0;
+    startPoint = new Point(0, 0);
+    rotationAnchorPoint = new Point(0, 0);
     depthIndex = 0;
+    rotationDegrees = 0;
+    alpha = 1;
   }
 
   /**
@@ -46,29 +51,50 @@ final class LayerDelegate {
     Objects.requireNonNull(layerDelegate);
 
     layerType = layerDelegate.layerType;
-    x = layerDelegate.x;
-    y = layerDelegate.y;
+    startPoint = new Point(layerDelegate.startPoint.getX(), layerDelegate.startPoint.getY());
+    rotationAnchorPoint = new Point(layerDelegate.rotationAnchorPoint
+        .getX(), layerDelegate.rotationAnchorPoint.getY());
     depthIndex = layerDelegate.depthIndex;
     name = layerDelegate.name;
     isVisible = layerDelegate.isVisible;
+    rotationDegrees = layerDelegate.rotationDegrees;
+    alpha = layerDelegate.alpha;
   }
 
   /**
-   * Sets the x-coordinate of the layer.
+   * Sets the x-coordinate of the layer's point.
    *
-   * @param x the new x-coordinate of the layer.
+   * @param x the new x-coordinate of the layer's point.
    */
   void setX(int x) {
-    this.x = x;
+    startPoint = startPoint.setX(x);
   }
 
   /**
-   * Sets the y-coordinate of the layer.
+   * Sets the y-coordinate of the layer's point.
    *
-   * @param y the new y-coordinate of the layer.
+   * @param y the new y-coordinate of the layer's point.
    */
   void setY(int y) {
-    this.y = y;
+    startPoint = startPoint.setY(y);
+  }
+
+  /**
+   * Sets the y-coordinate of the layer's rotation anchor point.
+   *
+   * @param y the new y-coordinate of the layer's rotation anchor point.
+   */
+  void setRotationAnchorY(int y) {
+    rotationAnchorPoint = rotationAnchorPoint.setY(y);
+  }
+
+  /**
+   * Sets the x-coordinate of the layer's rotation anchor point.
+   *
+   * @param x the new x-coordinate of the layer's rotation anchor point.
+   */
+  void setRotationAnchorX(int x) {
+    rotationAnchorPoint = rotationAnchorPoint.setX(x);
   }
 
   /**
@@ -78,8 +104,8 @@ final class LayerDelegate {
    * @param dy the y-axis offset, may be negative.
    */
   void move(int dx, int dy) {
-    x += dx;
-    y += dy;
+    startPoint = startPoint.setX(startPoint.getX() + dx);
+    startPoint = startPoint.setY(startPoint.getY() + dy);
   }
 
   /**
@@ -117,7 +143,7 @@ final class LayerDelegate {
    * @return the x-coordinate of the layer.
    */
   int getX() {
-    return x;
+    return startPoint.getX();
   }
 
   /**
@@ -126,7 +152,61 @@ final class LayerDelegate {
    * @return the y-coordinate of the layer.
    */
   int getY() {
-    return y;
+    return startPoint.getY();
+  }
+
+  /**
+   * Returns the x-coordinate of the layer's rotation anchor point.
+   *
+   * @return the x-coordinate of the layer's rotation anchor point.
+   */
+  int getRotationAnchorX() {
+    return rotationAnchorPoint.getX();
+  }
+
+  /**
+   * Returns the y-coordinate of the layer's rotation anchor point.
+   *
+   * @return the y-coordinate of the layer's rotation anchor point.
+   */
+  int getRotationAnchorY() {
+    return rotationAnchorPoint.getY();
+  }
+
+  /**
+   * Returns the layer's rotation anchor point.
+   *
+   * @return the layer's rotation anchor point.
+   */
+  Point getRotationAnchor() {
+    return rotationAnchorPoint;
+  }
+
+  /**
+   * Sets the layer's rotation anchor point.
+   *
+   * @param point the layer's rotation anchor point.
+   */
+  void setRotationAnchor(Point point) {
+    rotationAnchorPoint = point;
+  }
+
+  /**
+   * Returns the coordinate point.
+   *
+   * @return the coordinate point.
+   */
+  Point getStartPoint() {
+    return startPoint;
+  }
+
+  /**
+   * Returns the coordinate center point.
+   *
+   * @return the coordinate center point.
+   */
+  Point getRotationAnchorPoint() {
+    return rotationAnchorPoint;
   }
 
   /**
@@ -165,9 +245,46 @@ final class LayerDelegate {
     this.depthIndex = depthIndex;
   }
 
+  /**
+   * Sets the rotation for this layer.
+   *
+   * @param rotationDegrees the new rotation.
+   */
+  void setRotationDegrees(double rotationDegrees) {
+    this.rotationDegrees = rotationDegrees;
+  }
+
+  /**
+   * Returns the rotation value for this layer.
+   *
+   * @return the rotation value.
+   */
+  double getRotationDegrees() {
+    return rotationDegrees;
+  }
+
+  /**
+   * Returns the alpha value for this layer.
+   *
+   * @return the alpha value.
+   */
+
+  public double getAlpha() {
+    return alpha;
+  }
+
+  /**
+   * Sets the alpha value for this layer.
+   *
+   * @param alpha the new alpha.
+   */
+  public void setAlpha(double alpha) {
+    this.alpha = alpha;
+  }
+
   @Override
   public int hashCode() {
-    return Objects.hash(x, y, name, depthIndex, isVisible);
+    return Objects.hash(startPoint, name, depthIndex, isVisible);
   }
 
   /**
@@ -198,8 +315,8 @@ final class LayerDelegate {
     var layerDelegate = (LayerDelegate) object;
 
     return (layerType == layerDelegate.layerType)
-        && (x == layerDelegate.x)
-        && (y == layerDelegate.y)
+        && (startPoint.getX() == layerDelegate.startPoint.getX())
+        && (startPoint.getY() == layerDelegate.startPoint.getY())
         && (depthIndex == layerDelegate.depthIndex);
   }
 }

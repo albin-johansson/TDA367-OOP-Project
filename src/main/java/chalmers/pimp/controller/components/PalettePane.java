@@ -58,6 +58,12 @@ final class PalettePane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")
+  private void selectRotateTool() {
+    controller.selectRotateTool();
+  }
+  
+  @FXML
+  @SuppressWarnings("unused")
   private void selectDoodleTool() {
     controller.selectDoodleTool();
   }
