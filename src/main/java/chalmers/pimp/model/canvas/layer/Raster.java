@@ -51,6 +51,7 @@ final class Raster implements ILayer {
     this.pixelData = Objects.requireNonNull(pixelData);
     layerDelegate = new LayerDelegate(LayerType.RASTER);
     layerDelegate.setName(Objects.requireNonNull(pixelDataName));
+    setRotationAnchorToCenter();
   }
 
   /**
