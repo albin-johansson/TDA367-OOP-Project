@@ -18,8 +18,10 @@ import javafx.scene.layout.AnchorPane;
 final class PalettePane extends AnchorPane {
 
   @FXML
+  @SuppressWarnings("unused")
   private ToggleButton pixelPenButton;
   @FXML
+  @SuppressWarnings("unused")
   private ToggleButton eraserButton;
 
   private final IController controller;
@@ -34,7 +36,6 @@ final class PalettePane extends AnchorPane {
     ControllerUtils.makeController(this, Resources.find(getClass(), "palette_pane.fxml"));
     pixelPenButton.setDisable(true);
     eraserButton.setDisable(true);
-
   }
 
   @FXML
@@ -72,26 +73,30 @@ final class PalettePane extends AnchorPane {
   private void selectRotateTool() {
     controller.selectRotateTool();
   }
-  
+
   @FXML
   @SuppressWarnings("unused")
   private void selectDoodleTool() {
     controller.selectDoodleTool();
   }
 
-  void updateEnabledTools(IReadOnlyLayer activeLayer){
-    if (activeLayer != null){
-      if(activeLayer.getLayerType() == LayerType.RASTER){
+  /**
+   * Disables raster layer tools if selected layer is not a raster, enables them if it is.
+   *
+   * @param activeLayer the currently selected Layer.
+   */
+  void updateEnabledTools(IReadOnlyLayer activeLayer) {
+    if (activeLayer != null) {
+      if (activeLayer.getLayerType() == LayerType.RASTER) {
         pixelPenButton.setDisable(false);
         eraserButton.setDisable(false);
-      }else{
+      } else {
         pixelPenButton.setDisable(true);
         eraserButton.setDisable(true);
       }
-    }else {
+    } else {
       pixelPenButton.setDisable(true);
       eraserButton.setDisable(true);
     }
-
   }
 }
