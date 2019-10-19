@@ -35,8 +35,8 @@ final class GraphicsHandler {
 
     renderer.setFillColor(Colors.WHITE);
 
-    int x = viewport.getRelativeX(0);
-    int y = viewport.getRelativeY(0);
+    int x = viewport.getTranslatedX(0);
+    int y = viewport.getTranslatedY(0);
     int width = Math.max(model.getWidth(), renderer.getCanvasWidth());
     int height = Math.max(model.getHeight(), renderer.getCanvasHeight());
 

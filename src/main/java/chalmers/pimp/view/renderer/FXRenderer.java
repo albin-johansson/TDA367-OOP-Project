@@ -73,9 +73,9 @@ final class FXRenderer implements IRenderer {
   public void fillEllipse(int x, int y, int radiusX, int radiusY) {
   }
 
-  @Override   
+  @Override
   public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
-    if(readOnlyPixelData == null){
+    if (readOnlyPixelData == null) {
       return;
     }
     Image image = PixelDataToFXService.getFXImage(readOnlyPixelData);
@@ -90,22 +90,21 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void startTransform(double rotation, Point startPoint, int width, int height) {
-    if(startPoint == null){
+  public void startTransform(double rotation, Point centerPoint) {
+    if (centerPoint == null) {
       return;
     }
     endTransform();
     graphicsContext.save(); // Save default transform
-    Affine rotate = new Affine();
-    double centerX = startPoint.getX() + width / 2;
-    double centerY = startPoint.getY() + height / 2;
-    rotate.appendRotation(rotation, centerX, centerY);
+
+    var rotate = new Affine();
+    rotate.appendRotation(rotation, centerPoint.getX(), centerPoint.getY());
     graphicsContext.setTransform(rotate);
   }
 
   @Override
   public void drawLine(Point p1, Point p2) {
-    if(p1 == null || p2 == null){
+    if ((p1 == null) || (p2 == null)) {
       return;
     }
     graphicsContext.setEffect(lineBlurEffect);

@@ -116,7 +116,7 @@ final class SwingRenderer implements IRenderer {
   }
 
   @Override
-  public void startTransform(double rotation, Point startPoint, int width, int height) {
+  public void startTransform(double rotation, Point centerPoint) {
 
   }
 

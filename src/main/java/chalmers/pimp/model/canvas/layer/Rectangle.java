@@ -38,7 +38,6 @@ final class Rectangle implements ILayer {
     this.width = width; // FIXME don't allow width/height to be < 0
     this.height = height;
     this.color = Objects.requireNonNull(color);
-    setRotationAnchorToCenter();
 
     // OBVIOUSLY not a good solution. Just a fun easter egg :)
     layerDelegate.setName((width == height) ? "Square" : "Rectangle");
@@ -56,7 +55,6 @@ final class Rectangle implements ILayer {
     width = rectangle.width;
     height = rectangle.height;
     color = rectangle.color;
-    setRotationAnchorToCenter();
   }
 
   @Override
@@ -71,7 +69,6 @@ final class Rectangle implements ILayer {
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
-    setRotationAnchorToCenter();
   }
 
   @Override
@@ -92,18 +89,6 @@ final class Rectangle implements ILayer {
   @Override
   public void setDepthIndex(int depthIndex) {
     layerDelegate.setDepthIndex(depthIndex);
-  }
-
-  @Override
-  public void setRotationAnchor(Point rotationAnchor) {
-    layerDelegate.setRotationAnchor(rotationAnchor);
-  }
-
-  @Override
-  public void setRotationAnchorToCenter() {
-    Point temp = new Point(layerDelegate.getX() + width / 2,
-        layerDelegate.getY() + height / 2);
-    layerDelegate.setRotationAnchor(temp);
   }
 
   @Override
@@ -142,8 +127,8 @@ final class Rectangle implements ILayer {
   }
 
   @Override
-  public Point getRotationAnchor() {
-    return layerDelegate.getRotationAnchorPoint();
+  public Point getCenterPoint() {
+    return new Point(getX() + (width / 2), getY() + (height / 2));
   }
 
   @Override
@@ -177,11 +162,11 @@ final class Rectangle implements ILayer {
     int dx = (width < 1) ? 1 : 0;
     int dy = (height < 1) ? 1 : 0;
 
-    PixelData pixelData = new PixelData(width + dx, height + dy);
+    var pixelData = new PixelData(width + dx, height + dy);
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
-        pixelData.setPixel(PixelFactory.createPixel(col, row, 1, 0, 1, 1));
+        pixelData.setPixel(PixelFactory.createPixel(col, row, color));
       }
     }
 
@@ -191,19 +176,19 @@ final class Rectangle implements ILayer {
   @Override
   public void draw(IRenderer renderer, IReadOnlyViewport viewport) {
     if (isVisible()) {
-      renderer
-          .startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(), width,
-              height);
-      renderer.setGlobalAlpha(color.getAlphaPercentage());
-      renderer.setFillColor(color);
-      renderer.setBorderColor(color);
 
-      int drawX = viewport.getRelativeX(getX());
-      int drawY = viewport.getRelativeY(getY());
+      Point center = getCenterPoint();
+      int rotationAnchorX = viewport.getTranslatedX(center.getX());
+      int rotationAnchorY = viewport.getTranslatedY(center.getY());
+
+      renderer.startTransform(getRotation(), new Point(rotationAnchorX, rotationAnchorY));
+      renderer.setGlobalAlpha(getAlpha());
+      renderer.setFillColor(color);
+
+      int drawX = viewport.getTranslatedX(getX());
+      int drawY = viewport.getTranslatedY(getY());
       renderer.fillRect(drawX, drawY, width, height);
 
-      // renderer.fillRect(getX(), getY(), width, height);
-      // renderer.setGlobalAlpha(0);
       renderer.endTransform();
     }
   }
@@ -211,6 +196,13 @@ final class Rectangle implements ILayer {
   @Override
   public ILayer copy() {
     return new Rectangle(this);
+  }
+
+  @Override
+  public String toString() {
+    String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
+    String state = "X: " + getX() + ", Y: " + getY() + ", Width: " + width + ", Height: " + height;
+    return "(" + id + " | " + state + ")";
   }
 
   @Override

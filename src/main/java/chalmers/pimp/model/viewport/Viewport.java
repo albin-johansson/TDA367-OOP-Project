@@ -139,12 +139,12 @@ final class Viewport implements IReadOnlyViewport {
   }
 
   @Override
-  public int getRelativeX(int x) {
+  public int getTranslatedX(int x) {
     return this.x + x;
   }
 
   @Override
-  public int getRelativeY(int y) {
+  public int getTranslatedY(int y) {
     return this.y + y;
   }
 }

@@ -17,7 +17,7 @@ public class RendererMock implements IRenderer {
 
   @Override
   public void clear() {
-    
+
   }
 
   @Override
@@ -51,12 +51,13 @@ public class RendererMock implements IRenderer {
   }
 
   @Override
-  public void startTransform(double rotation, Point startPoint, int width, int height) {
+  public void drawLine(Point p1, Point p2) {
+    lines.add(new Line(p1, p2));
   }
 
   @Override
-  public void drawLine(Point p1, Point p2) {
-    lines.add(new Line(p1, p2));
+  public void startTransform(double rotation, Point centerPoint) {
+
   }
 
   @Override

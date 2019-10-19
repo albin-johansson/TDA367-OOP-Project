@@ -141,7 +141,7 @@ class ViewportTest {
     int expected = x + viewportX;
 
     viewport.setX(viewportX);
-    assertEquals(expected, viewport.getRelativeX(x));
+    assertEquals(expected, viewport.getTranslatedX(x));
   }
 
   @Test
@@ -151,6 +151,6 @@ class ViewportTest {
     int expected = y + viewportY;
 
     viewport.setY(viewportY);
-    assertEquals(expected, viewport.getRelativeY(y));
+    assertEquals(expected, viewport.getTranslatedY(y));
   }
 }

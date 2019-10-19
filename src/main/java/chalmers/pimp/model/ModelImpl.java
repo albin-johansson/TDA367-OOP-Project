@@ -277,9 +277,10 @@ final class ModelImpl implements IModel {
 
     layerRotation = new LayerRotation();
     var point = new Point(x, y);
-    Point anchor = canvas.getActiveLayer().getRotationAnchor();
+
+    Point centerPoint = canvas.getActiveLayer().getCenterPoint();
     double rotation = canvas.getActiveLayer().getRotation();
-    layerRotation.start(anchor, rotation, point, createSnapShot());
+    layerRotation.start(centerPoint, rotation, point, createSnapShot());
   }
 
   @Override
@@ -297,8 +298,8 @@ final class ModelImpl implements IModel {
       return;
     }
     layerRotation.stop();
-    ICommand cmd = createRotateCommand(canvas, this, getActiveLayer().getDepthIndex(),
-        layerRotation);
+    int id = getActiveLayer().getDepthIndex();
+    ICommand cmd = createRotateCommand(canvas, this, id, layerRotation);
     commandManager.insertCommand(cmd);
     layerRotation = null;
   }

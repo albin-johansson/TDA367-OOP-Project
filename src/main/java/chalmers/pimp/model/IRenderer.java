@@ -83,14 +83,12 @@ public interface IRenderer {
 
   /**
    * Creates and starts a new rotation transform. Will also save the previous transform. This method
-   * has no effect if startPoint is {@code Null}.
+   * has no effect if the supplied point is {@code Null}.
    *
-   * @param rotation   the rotation to use (degrees).
-   * @param startPoint the point for the coordinates.
-   * @param width      the width of the object.
-   * @param height     the height of the object.
+   * @param rotation    the rotation to use (degrees).
+   * @param centerPoint a point that represents the center of the content that will be rotated.
    */
-  void startTransform(double rotation, Point startPoint, int width, int height);
+  void startTransform(double rotation, Point centerPoint);
 
   /**
    * Restores the transform to the previous saved state, thus ending the transform from affecting

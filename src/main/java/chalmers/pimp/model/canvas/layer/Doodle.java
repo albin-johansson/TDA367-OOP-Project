@@ -34,8 +34,6 @@ final class Doodle implements ILayer {
     points = new ArrayList<>(16);
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
     layerDelegate.setName("Doodle");
-
-    setRotationAnchorToCenter();
   }
 
   /**
@@ -54,28 +52,17 @@ final class Doodle implements ILayer {
 
     color = doodle.color;
     lineWidth = doodle.lineWidth;
-
-    setRotationAnchorToCenter();
   }
 
   @Override
   public void setPixel(IPixel pixel) {
     Point p = new Point(pixel.getX(), pixel.getY());
     points.add(p);
-    setRotationAnchorToCenter();
   }
 
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
-    setRotationAnchorToCenter();
-  }
-
-  @Override
-  public void setRotationAnchorToCenter() {
-    Point temp = new Point(getX() + (getWidth() / 2),
-        getY() + (getHeight() / 2));
-    layerDelegate.setRotationAnchor(temp);
   }
 
   @Override
@@ -180,20 +167,13 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public Point getCenterPoint() {
+    return new Point(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
+  }
+
+  @Override
   public void setDepthIndex(int depthIndex) {
     layerDelegate.setDepthIndex(depthIndex);
-  }
-
-  @Override
-  public Point getRotationAnchor() {
-    setRotationAnchorToCenter();
-    return layerDelegate.getRotationAnchor();
-  }
-
-  @Override
-  public void setRotationAnchor(Point rotationAnchor) {
-    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
-    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
   }
 
   @Override
@@ -207,36 +187,38 @@ final class Doodle implements ILayer {
       return;
     }
 
+    Point center = getCenterPoint();
+    int rotationAnchorX = viewport.getTranslatedX(center.getX());
+    int rotationAnchorY = viewport.getTranslatedY(center.getY());
+
+    renderer.startTransform(getRotation(), new Point(rotationAnchorX, rotationAnchorY));
+    renderer.setGlobalAlpha(getAlpha());
+    renderer.setBorderColor(color);
+    renderer.setLineWidth(lineWidth);
+
     int x = layerDelegate.getX();
     int y = layerDelegate.getY();
-    renderer.startTransform(layerDelegate.getRotationDegrees(), new Point(x, y), getWidth(),
-        getHeight());
-
-    renderer.setGlobalAlpha(color.getAlphaPercentage());
-    renderer.setLineWidth(lineWidth);
-    renderer.setFillColor(color);
-    renderer.setBorderColor(color);
 
     if (points.size() == 1) {
       Point point = points.get(0);
-      point = point.addX(viewport.getRelativeX(x));
-      point = point.addY(viewport.getRelativeY(y));
+      point = point.addX(viewport.getTranslatedX(x));
+      point = point.addY(viewport.getTranslatedY(y));
       renderer.drawLine(point, point); // basically renders a single point
       return;
     }
 
     for (int i = 1; i < points.size(); i++) {
       Point point1 = points.get(i);
-      point1 = point1.addX(viewport.getRelativeX(x));
-      point1 = point1.addY(viewport.getRelativeY(y));
+      point1 = point1.addX(viewport.getTranslatedX(x));
+      point1 = point1.addY(viewport.getTranslatedY(y));
 
       Point point2 = points.get(i - 1);
-      point2 = point2.addX(viewport.getRelativeX(x));
-      point2 = point2.addY(viewport.getRelativeY(y));
+      point2 = point2.addX(viewport.getTranslatedX(x));
+      point2 = point2.addY(viewport.getTranslatedY(y));
 
       renderer.drawLine(point1, point2);
     }
-    renderer.setGlobalAlpha(0);
+
     renderer.endTransform();
   }
 

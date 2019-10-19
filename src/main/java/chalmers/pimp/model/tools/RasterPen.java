@@ -57,8 +57,8 @@ final class RasterPen implements ITool {
    */
   private IPixel createPixel(MouseStatus mouseStatus) {
     Objects.requireNonNull(mouseStatus);
-    int x = model.getViewport().getRelativeX(mouseStatus.getX());
-    int y = model.getViewport().getRelativeY(mouseStatus.getY());
+    int x = model.getViewport().getTranslatedX(mouseStatus.getX());
+    int y = model.getViewport().getTranslatedY(mouseStatus.getY());
     return PixelFactory.createPixel(x, y, getColor());
   }
 

@@ -25,7 +25,6 @@ final class Raster implements ILayer {
     layerDelegate = new LayerDelegate(LayerType.RASTER);
     layerDelegate.setName("Raster");
     pixelData = new PixelData(width, height);
-    setRotationAnchorToCenter();
   }
 
   /**
@@ -37,7 +36,6 @@ final class Raster implements ILayer {
   Raster(PixelData pixelData) {
     this.pixelData = Objects.requireNonNull(pixelData);
     layerDelegate = new LayerDelegate(LayerType.RASTER);
-    setRotationAnchorToCenter();
     layerDelegate.setName("Import");
   }
 
@@ -52,7 +50,6 @@ final class Raster implements ILayer {
     this.pixelData = Objects.requireNonNull(pixelData);
     layerDelegate = new LayerDelegate(LayerType.RASTER);
     layerDelegate.setName(Objects.requireNonNull(pixelDataName));
-    setRotationAnchorToCenter();
   }
 
   /**
@@ -80,7 +77,6 @@ final class Raster implements ILayer {
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
-    setRotationAnchorToCenter();
   }
 
   @Override
@@ -101,19 +97,6 @@ final class Raster implements ILayer {
   @Override
   public void setDepthIndex(int depthIndex) {
     layerDelegate.setDepthIndex(depthIndex);
-  }
-
-  @Override
-  public void setRotationAnchor(Point rotationAnchor) {
-    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
-    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
-  }
-
-  @Override
-  public void setRotationAnchorToCenter() {
-    Point temp = new Point(layerDelegate.getX() + (pixelData.getWidth() / 2),
-        layerDelegate.getY() + (pixelData.getHeight() / 2));
-    layerDelegate.setRotationAnchor(temp);
   }
 
   @Override
@@ -152,8 +135,8 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public Point getRotationAnchor() {
-    return layerDelegate.getRotationAnchorPoint();
+  public Point getCenterPoint() {
+    return new Point(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
   }
 
   @Override
@@ -190,18 +173,18 @@ final class Raster implements ILayer {
   public void draw(IRenderer renderer, IReadOnlyViewport viewport) {
     if (isVisible()) {
 
-      renderer.setGlobalAlpha(layerDelegate.getAlpha());
-      renderer.startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(),
-          pixelData.getWidth(), pixelData.getHeight());
+      Point center = getCenterPoint();
+      int rotationAnchorX = viewport.getTranslatedX(center.getX());
+      int rotationAnchorY = viewport.getTranslatedY(center.getY());
 
-      int drawX = viewport.getRelativeX(getX());
-      int drawY = viewport.getRelativeY(getY());
+      renderer.startTransform(getRotation(), new Point(rotationAnchorX, rotationAnchorY));
+      renderer.setGlobalAlpha(getAlpha());
+
+      int drawX = viewport.getTranslatedX(getX());
+      int drawY = viewport.getTranslatedY(getY());
       renderer.drawImage(pixelData, drawX, drawY);
 
-      // renderer.setGlobalAlpha(layerDelegate.getAlpha());
-      //  renderer.drawImage(pixelData, getX(), getY());
-      // renderer.setGlobalAlpha(0);
-      renderer.endTransform();     
+      renderer.endTransform();
     }
   }
 

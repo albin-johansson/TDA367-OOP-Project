@@ -4,7 +4,6 @@ import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
-import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 
@@ -40,8 +39,8 @@ final class DoodleTool implements ITool {
   public void dragged(MouseStatus mouseStatus) {
     model.notifyCanvasUpdateListeners();
 
-    int x = model.getViewport().getRelativeX(mouseStatus.getX());
-    int y = model.getViewport().getRelativeY(mouseStatus.getY());
+    int x = model.getViewport().getTranslatedX(mouseStatus.getX());
+    int y = model.getViewport().getTranslatedY(mouseStatus.getY());
 
     doodle.setPixel(PixelFactory.createPixel(x, y));
     doodle.draw(model.getRenderer(), model.getViewport());

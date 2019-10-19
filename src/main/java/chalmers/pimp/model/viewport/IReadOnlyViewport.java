@@ -35,20 +35,20 @@ public interface IReadOnlyViewport {
   int getHeight();
 
   /**
-   * Calculates and returns the relative x-coordinate to the supplied x-coordinate. This method
+   * Calculates and returns the translated x-coordinate to the supplied x-coordinate. This method
    * basically adds the viewport x-coordinate and the supplied x-coordinate and returns the result.
    *
    * @param x the x-coordinate that will be translated.
-   * @return the relative x-coordinate to the supplied x-coordinate.
+   * @return the translated x-coordinate.
    */
-  int getRelativeX(int x);
+  int getTranslatedX(int x);
 
   /**
-   * Calculates and returns the relative y-coordinate to the supplied x-coordinate. This method
+   * Calculates and returns the translated y-coordinate to the supplied x-coordinate. This method
    * basically adds the viewport y-coordinate and the supplied y-coordinate and returns the result.
    *
    * @param y the y-coordinate that will be translated.
-   * @return the relative y-coordinate to the supplied y-coordinate.
+   * @return the translated y-coordinate.
    */
-  int getRelativeY(int y);
+  int getTranslatedY(int y);
 }
