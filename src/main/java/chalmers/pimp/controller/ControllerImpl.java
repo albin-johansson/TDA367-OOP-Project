@@ -175,9 +175,4 @@ final class ControllerImpl implements IController {
   public void exportImage() {
     ImageExportService.exportImage(model.getWidth(), model.getHeight(), model.getLayers());
   }
-
-  @Override
-  public void createNewLayer() { // TODO remove
-    model.addLayer(LayerFactory.createRasterLayer(800, 600));
-  }
 }
