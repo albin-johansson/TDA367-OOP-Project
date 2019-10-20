@@ -1,4 +1,4 @@
 /**
- * The components package contains GUI-related chalmers.pimp.controller components.
+ * The components package contains GUI-related model components.
  */
 package chalmers.pimp.controller.components;

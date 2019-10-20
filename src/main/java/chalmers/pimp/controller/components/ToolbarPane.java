@@ -62,8 +62,8 @@ final class ToolbarPane extends AnchorPane implements IUndoRedoListener {
 
   @FXML
   @SuppressWarnings("unused")
-  private void createNewLayer() {
-    controller.createNewLayer();
+  private void centerViewport() {
+    controller.centerViewport();
   }
 
   @FXML

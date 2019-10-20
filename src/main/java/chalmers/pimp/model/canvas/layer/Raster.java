@@ -5,6 +5,7 @@ import chalmers.pimp.model.Point;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.Objects;
 
 /**
@@ -24,7 +25,6 @@ final class Raster implements ILayer {
     layerDelegate = new LayerDelegate(LayerType.RASTER);
     layerDelegate.setName("Raster");
     pixelData = new PixelData(width, height);
-    setRotationAnchorToCenter();
   }
 
   /**
@@ -36,7 +36,6 @@ final class Raster implements ILayer {
   Raster(PixelData pixelData) {
     this.pixelData = Objects.requireNonNull(pixelData);
     layerDelegate = new LayerDelegate(LayerType.RASTER);
-    setRotationAnchorToCenter();
     layerDelegate.setName("Import");
   }
 
@@ -51,7 +50,6 @@ final class Raster implements ILayer {
     this.pixelData = Objects.requireNonNull(pixelData);
     layerDelegate = new LayerDelegate(LayerType.RASTER);
     layerDelegate.setName(Objects.requireNonNull(pixelDataName));
-    setRotationAnchorToCenter();
   }
 
   /**
@@ -79,7 +77,6 @@ final class Raster implements ILayer {
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
-    setRotationAnchorToCenter();
   }
 
   @Override
@@ -100,19 +97,6 @@ final class Raster implements ILayer {
   @Override
   public void setDepthIndex(int depthIndex) {
     layerDelegate.setDepthIndex(depthIndex);
-  }
-
-  @Override
-  public void setRotationAnchor(Point rotationAnchor) {
-    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
-    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
-  }
-
-  @Override
-  public void setRotationAnchorToCenter() {
-    Point temp = new Point(layerDelegate.getX() + (pixelData.getWidth() / 2),
-        layerDelegate.getY() + (pixelData.getHeight() / 2));
-    layerDelegate.setRotationAnchor(temp);
   }
 
   @Override
@@ -151,8 +135,8 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public Point getRotationAnchor() {
-    return layerDelegate.getRotationAnchorPoint();
+  public Point getCenterPoint() {
+    return new Point(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
   }
 
   @Override
@@ -186,14 +170,16 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public void draw(IRenderer renderer) {
+  public void draw(IRenderer renderer, IReadOnlyViewport viewport) {
     if (isVisible()) {
-      renderer.startTransform(layerDelegate.getRotationDegrees(), layerDelegate.getStartPoint(),
-          pixelData.getWidth(), pixelData.getHeight());
-      renderer.setGlobalAlpha(layerDelegate.getAlpha());
-       renderer.drawImage(pixelData, getX(), getY());
-      renderer.setGlobalAlpha(0);
-      renderer.endTransform();     
+      renderer.startTransform(getRotation(), viewport.translate(getCenterPoint()));
+      renderer.setGlobalAlpha(getAlpha());
+
+      int drawX = viewport.getTranslatedX(getX());
+      int drawY = viewport.getTranslatedY(getY());
+      renderer.drawImage(pixelData, drawX, drawY);
+
+      renderer.endTransform();
     }
   }
 

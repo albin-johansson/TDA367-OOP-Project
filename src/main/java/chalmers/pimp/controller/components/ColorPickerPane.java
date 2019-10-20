@@ -2,7 +2,6 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.service.ColorConverterService;
@@ -20,23 +19,21 @@ import javafx.scene.paint.Color;
 final class ColorPickerPane extends AnchorPane implements IColorChangeListener {
 
   @FXML
+  @SuppressWarnings("unused")
   private ColorPicker colorPicker;
-  private final IModel model;
 
   /**
    * @param model the model.
-   * @throws IOException if the color picker pane fxml file is not found.
+   * @throws IOException          if the color picker pane fxml file is not found.
    * @throws NullPointerException if the provided model is {@code null}.
    */
   ColorPickerPane(IModel model) throws IOException {
-    this.model = Objects.requireNonNull(model);
+    Objects.requireNonNull(model);
     ControllerUtils.makeController(this, Resources.find(getClass(), "color_picker.fxml"));
 
-    colorPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-      model.setSelectedColor(ColorConverterService.fxToIColor(newValue));
+    colorPicker.setOnAction(event -> {
+      model.setSelectedColor(ColorConverterService.fxToIColor(colorPicker.getValue()));
     });
-    
-    setColor(Colors.BLACK);
   }
 
   /**
@@ -48,18 +45,9 @@ final class ColorPickerPane extends AnchorPane implements IColorChangeListener {
     return ColorConverterService.fxToIColor(colorPicker.getValue());
   }
 
-  /**
-   * Sets the color of the color picker.
-   *
-   * @param color the new color.
-   */
-  private void setColor(IColor color) {
-    Color fxColor = ColorConverterService.toFXColor(color);
-    colorPicker.setValue(fxColor);
-  }
-
   @Override
   public void colorChanged(IColor color) {
-    setColor(color);
+    Color fxColor = ColorConverterService.toFXColor(color);
+    colorPicker.setValue(fxColor);
   }
 }

@@ -34,7 +34,9 @@ final class LayerItemContainerPane extends AnchorPane implements ILayerUpdateLis
   private VBox layerItemVBox;
 
   /**
-   * @throws IOException if the associated FXML file cannot be found.
+   * @param model the associated model instance.
+   * @throws NullPointerException if the supplied model is {@code null}.
+   * @throws IOException          if the associated FXML file cannot be found.
    */
   LayerItemContainerPane(IModel model) throws IOException {
     this.model = Objects.requireNonNull(model);

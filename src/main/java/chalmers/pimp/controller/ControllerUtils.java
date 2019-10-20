@@ -14,9 +14,9 @@ public final class ControllerUtils {
   }
 
   /**
-   * Makes the supplied node the chalmers.pimp.controller for the specified FXML-file.
+   * Makes the supplied node the model for the specified FXML-file.
    *
-   * @param node the node instance that will made the chalmers.pimp.controller for the FXML-file.
+   * @param node the node instance that will made the model for the FXML-file.
    * @param url  the path of the FXML-file.
    * @throws NullPointerException if any arguments are {@code null}.
    */

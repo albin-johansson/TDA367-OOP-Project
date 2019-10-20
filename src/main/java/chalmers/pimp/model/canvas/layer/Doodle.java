@@ -5,6 +5,7 @@ import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,56 +23,46 @@ final class Doodle implements ILayer {
   private final int lineWidth;
 
   /**
-   * Creates a layer which has a list of points and draws straight lines between the points.
-   *
-   * @param lineWidth the width of the line between the points
-   * @param color     the color of the lines
-   * @throws NullPointerException if color is null
+   * @param lineWidth the width of the lines that are drawn.
+   * @param color     the color of the doodle layer.
+   * @throws NullPointerException if the supplied color is {@code null}.
    */
   Doodle(int lineWidth, IColor color) {
-    points = new ArrayList<>();
-    layerDelegate = new LayerDelegate(LayerType.DOODLE);
-    layerDelegate.setName("Doodle");
     this.lineWidth = lineWidth;
     this.color = Objects.requireNonNull(color);
-    setRotationAnchorToCenter();
+
+    points = new ArrayList<>(20);
+    layerDelegate = new LayerDelegate(LayerType.DOODLE);
+    layerDelegate.setName("Doodle");
   }
 
   /**
-   * Creates a copy of the specified doodle
+   * Creates a copy of the supplied doodle.
    *
-   * @param doodle the specified doodle to be copied
-   * @throws NullPointerException if color is null
+   * @param doodle the doodle that will be copied.
+   * @throws NullPointerException if the supplied doodle is {@code null}.
    */
-  Doodle(Doodle doodle) throws NullPointerException {
+  private Doodle(Doodle doodle) {
     Objects.requireNonNull(doodle);
-    this.layerDelegate = new LayerDelegate(doodle.layerDelegate);
-    points = new ArrayList<>();
+
+    layerDelegate = new LayerDelegate(doodle.layerDelegate);
+
+    points = new ArrayList<>(doodle.points.size());
+    points.addAll(doodle.points);
+
     color = doodle.color;
     lineWidth = doodle.lineWidth;
-
-    doodle.points.forEach(points::add);
-    setRotationAnchorToCenter();
   }
 
   @Override
   public void setPixel(IPixel pixel) {
     Point p = new Point(pixel.getX(), pixel.getY());
     points.add(p);
-    setRotationAnchorToCenter();
   }
 
   @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
-    setRotationAnchorToCenter();
-  }
-
-  @Override
-  public void setRotationAnchorToCenter() {
-    Point temp = new Point(getX() + (getWidth() / 2),
-        getY() + (getHeight() / 2));
-    layerDelegate.setRotationAnchor(temp);
   }
 
   @Override
@@ -116,8 +107,7 @@ final class Doodle implements ILayer {
 
   @Override
   public IReadOnlyPixelData getPixelData() {
-    //TODO: convert the lines to PixelData
-    return null;
+    return null; // FIXME remove
   }
 
   @Override
@@ -150,8 +140,7 @@ final class Doodle implements ILayer {
     //Returns a list of the values returned from getX() for each item in points
     //.stream() returns a sequential stream considering collection as its source
     List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
-
-    return getMostDiff(xValues) + lineWidth * 2;
+    return getMostDiff(xValues) + (lineWidth * 2);
   }
 
   @Override
@@ -159,8 +148,7 @@ final class Doodle implements ILayer {
     //Returns a list of the values returned from getY() for each item in points
     //.stream() returns a sequential stream considering collection as its source
     List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
-
-    return getMostDiff(yValues) + lineWidth * 2;
+    return getMostDiff(yValues) + (lineWidth * 2);
   }
 
   @Override
@@ -179,20 +167,13 @@ final class Doodle implements ILayer {
   }
 
   @Override
+  public Point getCenterPoint() {
+    return new Point(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
+  }
+
+  @Override
   public void setDepthIndex(int depthIndex) {
     layerDelegate.setDepthIndex(depthIndex);
-  }
-
-  @Override
-  public Point getRotationAnchor() {
-    setRotationAnchorToCenter();
-    return layerDelegate.getRotationAnchor();
-  }
-
-  @Override
-  public void setRotationAnchor(Point rotationAnchor) {
-    layerDelegate.setRotationAnchorY(rotationAnchor.getY());
-    layerDelegate.setRotationAnchorX(rotationAnchor.getX());
   }
 
   @Override
@@ -201,34 +182,28 @@ final class Doodle implements ILayer {
   }
 
   @Override
-  public void draw(IRenderer renderer) {
+  public void draw(IRenderer renderer, IReadOnlyViewport viewport) {
     if (!isVisible() || points.isEmpty()) {
       return;
     }
-
-    int offsX = layerDelegate.getX();
-    int offSY = layerDelegate.getY();
-    renderer
-        .startTransform(layerDelegate.getRotationDegrees(),
-            new Point(getX(), getY()),
-            getWidth(),
-            getHeight());
-    renderer.setGlobalAlpha(color.getAlphaPercentage());
-    renderer.setLineWidth(lineWidth);
-    renderer.setFillColor(color);
+    renderer.startTransform(getRotation(), viewport.translate(getCenterPoint()));
+    renderer.setGlobalAlpha(getAlpha());
     renderer.setBorderColor(color);
+    renderer.setLineWidth(lineWidth);
+
+    var position = new Point(layerDelegate.getX(), layerDelegate.getY());
+    var translatedPoint = viewport.translate(position);
 
     if (points.size() == 1) {
-      renderer.drawLine(points.get(0).addX(offsX).addY(offSY),
-          points.get(0).addX(offsX).addY(offSY));
-      return;
+      Point point = translatedPoint.add(points.get(0));
+      renderer.drawLine(point, point); // basically renders a single point
+    } else {
+      for (int i = 1; i < points.size(); i++) {
+        Point startPoint = translatedPoint.add(points.get(i - 1));
+        Point endPoint = translatedPoint.add(points.get(i));
+        renderer.drawLine(startPoint, endPoint);
+      }
     }
-
-    for (int i = 1; i < points.size(); i++) {
-      renderer.drawLine(points.get(i).addX(offsX).addY(offSY),
-          points.get(i - 1).addX(offsX).addY(offSY));
-    }
-    renderer.setGlobalAlpha(0);
     renderer.endTransform();
   }
 
@@ -260,8 +235,8 @@ final class Doodle implements ILayer {
       return 0;
     }
 
-    Integer extreme = list.get(0);
-    for (Integer i : list) {
+    int extreme = list.get(0);
+    for (int i : list) {
       extreme = predicate.test(extreme, i) ? i : extreme;
     }
     return extreme;

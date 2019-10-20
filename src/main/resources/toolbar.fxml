@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,43 +13,51 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
-<fx:root id="toolbar-pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root id="toolbar-pane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0"
+  prefWidth="600.0" stylesheets="@styling/stylesheet.css" type="AnchorPane"
+  xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0"
+      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <MenuBar>
           <menus>
             <Menu mnemonicParsing="false" text="File">
               <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openImageChooser" text="Import Image">
-                           <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/light/open_folder.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator></MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#exportImage" text="Export Image">
-                           <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/light/save.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator>
-                        </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#openImageChooser" text="Import Image">
+                  <graphic>
+                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                      preserveRatio="true">
+                      <image>
+                        <Image url="@images/light/open_folder.png"/>
+                      </image>
+                    </ImageView>
+                  </graphic>
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP"
+                      shortcut="UP"/>
+                  </accelerator>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#exportImage" text="Export Image">
+                  <graphic>
+                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                      preserveRatio="true">
+                      <image>
+                        <Image url="@images/light/save.png"/>
+                      </image>
+                    </ImageView>
+                  </graphic>
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP"
+                      shortcut="UP"/>
+                  </accelerator>
+                </MenuItem>
                 <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit">
                   <graphic>
-                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                      preserveRatio="true">
                       <image>
-                        <Image url="@images/light/exit.png" />
+                        <Image url="@images/light/exit.png"/>
                       </image>
                     </ImageView>
                   </graphic>
@@ -56,36 +65,60 @@
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
-                     <items>
-                        <MenuItem fx:id="undoMenuItem" disable="true" mnemonicParsing="false" onAction="#undo" text="Undo N/A">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator>
-                           <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/light/undo.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem fx:id="redoMenuItem" disable="true" mnemonicParsing="false" onAction="#redo" text="Redo N/A">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                           </accelerator>
-                           <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@images/light/redo.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                     </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Help">
               <items>
-                <MenuItem mnemonicParsing="false" text="About" />
+                <MenuItem fx:id="undoMenuItem" disable="true" mnemonicParsing="false"
+                  onAction="#undo" text="Undo N/A">
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP"
+                      shortcut="UP"/>
+                  </accelerator>
+                  <graphic>
+                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                      preserveRatio="true">
+                      <image>
+                        <Image url="@images/light/undo.png"/>
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
+                <MenuItem fx:id="redoMenuItem" disable="true" mnemonicParsing="false"
+                  onAction="#redo" text="Redo N/A">
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP"
+                      shortcut="UP"/>
+                  </accelerator>
+                  <graphic>
+                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                      preserveRatio="true">
+                      <image>
+                        <Image url="@images/light/redo.png"/>
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="View">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#centerViewport" text="Center Viewport">
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="SPACE" control="DOWN" meta="UP" shift="UP"
+                      shortcut="UP"/>
+                  </accelerator>
+                  <graphic>
+                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                      preserveRatio="true">
+                      <image>
+                        <Image url="@images/light/center.png"/>
+                      </image>
+                    </ImageView>
+                  </graphic>
+                </MenuItem>
+              </items>
+            </Menu>
+            <Menu disable="true" mnemonicParsing="false" text="Help">
+              <items>
+                <MenuItem mnemonicParsing="false" text="About"/>
               </items>
             </Menu>
           </menus>
@@ -94,44 +127,59 @@
           <children>
             <Button fx:id="undoButton" disable="true" mnemonicParsing="false" onAction="#undo">
               <graphic>
-                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                  preserveRatio="true">
                   <image>
-                    <Image url="@images/light/undo.png" />
+                    <Image url="@images/light/undo.png"/>
                   </image>
                 </ImageView>
               </graphic>
               <tooltip>
-                <Tooltip text="Undo" />
+                <Tooltip text="Undo"/>
               </tooltip>
             </Button>
             <Button fx:id="redoButton" disable="true" mnemonicParsing="false" onAction="#redo">
               <graphic>
-                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                  preserveRatio="true">
                   <image>
-                    <Image url="@images/light/redo.png" />
+                    <Image url="@images/light/redo.png"/>
                   </image>
                 </ImageView>
               </graphic>
               <tooltip>
-                <Tooltip text="Redo" />
+                <Tooltip text="Redo"/>
               </tooltip>
             </Button>
-                  <Button mnemonicParsing="false" onAction="#createNewLayer">
-                     <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/light/eye_open.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip text="Create new layer" />
-                     </tooltip>
-                  </Button>
+            <Separator orientation="VERTICAL">
+              <opaqueInsets>
+                <Insets/>
+              </opaqueInsets>
+              <HBox.margin>
+                <Insets bottom="10.0" left="5.0" top="10.0"/>
+              </HBox.margin>
+            </Separator>
+            <Button layoutX="148.0" layoutY="21.0" mnemonicParsing="false"
+              onAction="#centerViewport">
+              <graphic>
+                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true"
+                  preserveRatio="true">
+                  <image>
+                    <Image url="@images/light/center.png"/>
+                  </image>
+                </ImageView>
+              </graphic>
+              <tooltip>
+                <Tooltip text="Center Viewport"/>
+              </tooltip>
+            </Button>
           </children>
           <padding>
-            <Insets left="10.0" />
+            <Insets left="10.0"/>
           </padding>
+          <VBox.margin>
+            <Insets/>
+          </VBox.margin>
         </HBox>
       </children>
     </VBox>

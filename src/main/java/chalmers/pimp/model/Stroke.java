@@ -22,14 +22,14 @@ public final class Stroke {
   /**
    * @param modelMemento the model memento object, that represents the current model state.
    * @param diameter     the diameter of the stroke, in pixels.
-   * @param color        the strokes color.
+   * @param color        the color that will be used.
    * @throws NullPointerException if any arguments are {@code null}.
    */
   Stroke(ModelMemento modelMemento, int diameter, IColor color) {
     this.modelMemento = Objects.requireNonNull(modelMemento);
     this.diameter = diameter;
-    pixels = new ArrayList<>(10);
     this.color = Objects.requireNonNull(color);
+    pixels = new ArrayList<>(10);
   }
 
   /**
@@ -46,14 +46,14 @@ public final class Stroke {
   /**
    * Updates the state of the pixels in the model.
    *
-   * @param model the associated model instance.
-   * @param pixel the pixel affected by the stroke.
-   * @param color the color that the updated pixels should be colored with.
+   * @param canvas the associated model instance.
+   * @param pixel  the pixel affected by the stroke.
    * @throws NullPointerException if any references are {@code null}.
    */
-  public void updatePixels(ICanvas model, IPixel pixel, IColor color) {
-    Objects.requireNonNull(model);
+  public void updatePixels(ICanvas canvas, IPixel pixel) {
+    Objects.requireNonNull(canvas);
     Objects.requireNonNull(pixel);
+    Objects.requireNonNull(color);
 
     var pixels = new PixelData(diameter, diameter);
 
@@ -65,7 +65,7 @@ public final class Stroke {
     }
 
     int radius = (int) (diameter / 2.0);
-    model.setActiveLayerPixels(pixel.getX() - radius, pixel.getY() - radius, pixels);
+    canvas.setActiveLayerPixels(pixel.getX() - radius, pixel.getY() - radius, pixels);
   }
 
   /**

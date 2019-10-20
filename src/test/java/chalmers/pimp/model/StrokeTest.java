@@ -11,6 +11,8 @@ import chalmers.pimp.model.color.colormodel.ColorModelFactory;
 import chalmers.pimp.model.color.colormodel.ColorModelMemento;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelFactory;
+import chalmers.pimp.model.viewport.IViewportModel;
+import chalmers.pimp.model.viewport.ViewportModelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,9 +24,9 @@ class StrokeTest {
   @BeforeEach
   void setUp() {
     ICanvas canvas = CanvasFactory.createCanvas();
-    ColorModelMemento colorModel = ColorModelFactory.createColorModel(Colors.BLACK)
-        .createSnapShot();
-    memento = new ModelMemento(canvas.createSnapShot(), colorModel);
+    IViewportModel viewportModel = ViewportModelFactory.createViewportModel();
+    ColorModelMemento colorModel = ColorModelFactory.createColorModel().createSnapShot();
+    memento = new ModelMemento(canvas.createSnapShot(), viewportModel.createSnapShot(), colorModel);
     stroke = new Stroke(memento, 10, Colors.BLACK);
   }
 
@@ -40,9 +42,9 @@ class StrokeTest {
 
   @Test
   void updatePixels() {
-    assertThrows(NullPointerException.class, () -> stroke.updatePixels(null, null, null));
+    assertThrows(NullPointerException.class, () -> stroke.updatePixels(null, null));
     assertThrows(NullPointerException.class,
-        () -> stroke.updatePixels(CanvasFactory.createCanvas(), null, null));
+        () -> stroke.updatePixels(CanvasFactory.createCanvas(), null));
   }
 
   @Test
