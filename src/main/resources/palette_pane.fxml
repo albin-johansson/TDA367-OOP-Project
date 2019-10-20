@@ -15,7 +15,7 @@
       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
       AnchorPane.topAnchor="0.0">
       <children>
-        <ToggleButton mnemonicParsing="false" onAction="#selectDoodleTool">
+        <ToggleButton fx:id="doodleButton" mnemonicParsing="false" onAction="#selectDoodleTool">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
@@ -68,7 +68,8 @@
             <Tooltip text="Rotate Tool"/>
           </tooltip>
         </ToggleButton>
-        <ToggleButton  fx:id="eraserButton" mnemonicParsing="false" onAction="#selectEraser" toggleGroup="$palette">
+        <ToggleButton fx:id="eraserButton" mnemonicParsing="false" onAction="#selectEraser"
+          toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
@@ -80,7 +81,8 @@
             <Tooltip text="Eraser Tool"/>
           </tooltip>
         </ToggleButton>
-        <ToggleButton mnemonicParsing="false" onAction="#selectPencil" toggleGroup="$palette">
+        <ToggleButton fx:id="pixelPenButton" mnemonicParsing="false" onAction="#selectRasterPen"
+          toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
