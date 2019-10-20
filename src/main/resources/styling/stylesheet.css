@@ -179,7 +179,7 @@
 
 .separator:vertical .line {
   -fx-border-color: transparent transparent transparent transparent,
-  transparent transparent -text-color transparent;
+  transparent transparent transparent -text-color;
 }
 
 .text-field {

@@ -57,22 +57,36 @@ public final class Point {
    */
   public int getY() {
     return y;
-  }  
+  }
+
   /**
-   * Returns a new point with xOffset offset in the x-direction
+   * Returns a new point with coordinates that are the result of adding the x-coordinates and
+   * y-coordinates respectively.
+   *
+   * @param point the point that will be added to the point.
+   * @return a new point with the coordinates (x + point.x, y + point.y).
+   * @throws NullPointerException if the supplied point is {@code null}.
+   */
+  public Point add(Point point) {
+    Objects.requireNonNull(point);
+    return new Point(x + point.x, y + point.y);
+  }
+
+  /**
+   * Returns a new point that is offset in the x-axis.
    *
    * @param xOffset the x offset to be added
-   * @return a new point with with coordinates (x + xOffset, y)
+   * @return a new point with the coordinates (x + xOffset, y)
    */
   public Point addX(int xOffset) {
     return new Point(x + xOffset, y);
   }
 
   /**
-   * Returns a new point with yOffset offset in the y-direction
+   * Returns a new point that is offset in the y-axis.
    *
    * @param yOffset the y offset to be added
-   * @return a new point with with coordinates (x, y + yOffset)
+   * @return a new point with the coordinates (x, y + yOffset)
    */
   public Point addY(int yOffset) {
     return new Point(x, y + yOffset);

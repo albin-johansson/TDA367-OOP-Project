@@ -31,7 +31,7 @@ final class Doodle implements ILayer {
     this.lineWidth = lineWidth;
     this.color = Objects.requireNonNull(color);
 
-    points = new ArrayList<>(16);
+    points = new ArrayList<>(20);
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
     layerDelegate.setName("Doodle");
   }
@@ -186,39 +186,24 @@ final class Doodle implements ILayer {
     if (!isVisible() || points.isEmpty()) {
       return;
     }
-
-    Point center = getCenterPoint();
-    int rotationAnchorX = viewport.getTranslatedX(center.getX());
-    int rotationAnchorY = viewport.getTranslatedY(center.getY());
-
-    renderer.startTransform(getRotation(), new Point(rotationAnchorX, rotationAnchorY));
+    renderer.startTransform(getRotation(), viewport.translate(getCenterPoint()));
     renderer.setGlobalAlpha(getAlpha());
     renderer.setBorderColor(color);
     renderer.setLineWidth(lineWidth);
 
-    int x = layerDelegate.getX();
-    int y = layerDelegate.getY();
+    var position = new Point(layerDelegate.getX(), layerDelegate.getY());
+    var translatedPoint = viewport.translate(position);
 
     if (points.size() == 1) {
-      Point point = points.get(0);
-      point = point.addX(viewport.getTranslatedX(x));
-      point = point.addY(viewport.getTranslatedY(y));
+      Point point = translatedPoint.add(points.get(0));
       renderer.drawLine(point, point); // basically renders a single point
-      return;
+    } else {
+      for (int i = 1; i < points.size(); i++) {
+        Point startPoint = translatedPoint.add(points.get(i - 1));
+        Point endPoint = translatedPoint.add(points.get(i));
+        renderer.drawLine(startPoint, endPoint);
+      }
     }
-
-    for (int i = 1; i < points.size(); i++) {
-      Point point1 = points.get(i);
-      point1 = point1.addX(viewport.getTranslatedX(x));
-      point1 = point1.addY(viewport.getTranslatedY(y));
-
-      Point point2 = points.get(i - 1);
-      point2 = point2.addX(viewport.getTranslatedX(x));
-      point2 = point2.addY(viewport.getTranslatedY(y));
-
-      renderer.drawLine(point1, point2);
-    }
-
     renderer.endTransform();
   }
 

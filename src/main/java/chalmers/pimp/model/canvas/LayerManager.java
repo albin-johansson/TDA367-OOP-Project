@@ -44,7 +44,7 @@ final class LayerManager implements IColorChangeListener {
       layers.add(layer.copy());
     }
 
-    if (layerManager.activeLayer != null) {
+    if (layerManager.hasActiveLayer()) {
       activeLayer = layers.get(layerManager.activeLayer.getDepthIndex());
     }
 
@@ -189,8 +189,7 @@ final class LayerManager implements IColorChangeListener {
   void removeLayer(int index) {
     if (inBounds(index)) {
 
-      boolean removedLayerWasActive = (activeLayer != null)
-          && (index == activeLayer.getDepthIndex());
+      boolean removedLayerWasActive = hasActiveLayer() && (index == activeLayer.getDepthIndex());
 
       if (removedLayerWasActive) {
         if (inBounds(index - 1)) {
@@ -222,7 +221,7 @@ final class LayerManager implements IColorChangeListener {
    */
   void setActiveLayerPixel(IPixel pixel) {
     Objects.requireNonNull(pixel);
-    if (activeLayer != null) {
+    if (hasActiveLayer()) {
       activeLayer.setPixel(pixel);
     }
   }
@@ -239,7 +238,7 @@ final class LayerManager implements IColorChangeListener {
   void setActiveLayerPixels(int x, int y, IReadOnlyPixelData pixelData) {
     Objects.requireNonNull(pixelData);
 
-    if (activeLayer == null) {
+    if (!hasActiveLayer()) {
       return;
     }
 
@@ -260,7 +259,7 @@ final class LayerManager implements IColorChangeListener {
    * @param dy the y-axis offset that will be used.
    */
   void moveActiveLayer(int dx, int dy) {
-    if (activeLayer != null) {
+    if (hasActiveLayer()) {
       activeLayer.move(dx, dy);
     }
   }
@@ -270,8 +269,8 @@ final class LayerManager implements IColorChangeListener {
    *
    * @param alpha the rotation in degrees.
    */
-  void rotateActiveLayer(double alpha){
-    if (activeLayer != null){
+  void rotateActiveLayer(double alpha) {
+    if (hasActiveLayer()) {
       activeLayer.setRotation(alpha);
     }
   }
@@ -283,7 +282,7 @@ final class LayerManager implements IColorChangeListener {
    * @param x the new x-coordinate of the currently active layer.
    */
   void setActiveLayerX(int x) {
-    if (activeLayer != null) {
+    if (hasActiveLayer()) {
       activeLayer.setX(x);
     }
   }
@@ -295,7 +294,7 @@ final class LayerManager implements IColorChangeListener {
    * @param y the new y-coordinate of the currently active layer.
    */
   void setActiveLayerY(int y) {
-    if (activeLayer != null) {
+    if (hasActiveLayer()) {
       activeLayer.setY(y);
     }
   }
@@ -384,6 +383,15 @@ final class LayerManager implements IColorChangeListener {
     if (layer instanceof IColorable) {
       ((IColorable) layer).setColor(color);
     }
+  }
+
+  /**
+   * Indicates whether or not there is an active layer.
+   *
+   * @return {@code true} if there is an active layer; {@code false} otherwise.
+   */
+  boolean hasActiveLayer() {
+    return activeLayer != null;
   }
 
   /**

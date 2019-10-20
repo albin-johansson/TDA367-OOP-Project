@@ -1,10 +1,13 @@
 package chalmers.pimp.model.viewport;
 
+import chalmers.pimp.model.IArea;
+import chalmers.pimp.model.Point;
+
 /**
  * The {@code IReadOnlyViewport} interface specifies objects that may act as read-only viewports
  * that provide methods to obtain relative coordinates to.
  */
-public interface IReadOnlyViewport {
+public interface IReadOnlyViewport extends IArea {
 
   /**
    * Returns the x-coordinate of the viewport.
@@ -21,18 +24,13 @@ public interface IReadOnlyViewport {
   int getY();
 
   /**
-   * Returns the width of the viewport.
+   * Returns a point that represents a translated version of the supplied point.
    *
-   * @return the width of the viewport.
+   * @param point the point that will be translated.
+   * @return a point that represents a translated version of the supplied point.
+   * @throws NullPointerException if the supplied point is {@code null}.
    */
-  int getWidth();
-
-  /**
-   * Returns the height of the viewport.
-   *
-   * @return the height of the viewport.
-   */
-  int getHeight();
+  Point translate(Point point);
 
   /**
    * Calculates and returns the translated x-coordinate to the supplied x-coordinate. This method

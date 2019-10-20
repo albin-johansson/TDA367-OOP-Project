@@ -1,5 +1,6 @@
 package chalmers.pimp.model.viewport;
 
+import chalmers.pimp.model.Point;
 import java.util.Objects;
 
 /**
@@ -129,13 +130,9 @@ final class Viewport implements IReadOnlyViewport {
   }
 
   @Override
-  public int getWidth() {
-    return width;
-  }
-
-  @Override
-  public int getHeight() {
-    return height;
+  public Point translate(Point point) {
+    Objects.requireNonNull(point);
+    return new Point(getTranslatedX(point.getX()), getTranslatedY(point.getY()));
   }
 
   @Override
@@ -146,5 +143,15 @@ final class Viewport implements IReadOnlyViewport {
   @Override
   public int getTranslatedY(int y) {
     return this.y + y;
+  }
+
+  @Override
+  public int getWidth() {
+    return width;
+  }
+
+  @Override
+  public int getHeight() {
+    return height;
   }
 }

@@ -64,21 +64,21 @@ final class RasterPen implements ITool {
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
-    if (model.getActiveLayer() != null) {
+    if (model.hasActiveLayer()) {
       model.updateStroke(createPixel(mouseStatus));
     }
   }
 
   @Override
   public void pressed(MouseStatus mouseStatus) {
-    if (model.getActiveLayer() != null) {
+    if (model.hasActiveLayer()) {
       model.startStroke(createPixel(mouseStatus), diameter, getColor());
     }
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
-    if (model.getActiveLayer() != null) {
+    if (model.hasActiveLayer()) {
       model.endStroke(createPixel(mouseStatus));
     }
   }
