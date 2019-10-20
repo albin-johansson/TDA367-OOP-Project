@@ -102,12 +102,12 @@ public final class PimpEditorPane extends AnchorPane {
     canvasPane.setOnMouseExited(event -> infoPane.disableMouseCoordinates());
 
     model.addLayerUpdateListener(event -> {
-      if (model.getActiveLayer() == null) {
-        infoPane.disableMouseCoordinates();
-      } else {
+      if (model.hasActiveLayer()) {
         IReadOnlyLayer layer = model.getActiveLayer();
         infoPane.setLayerWidthLabel(layer.getWidth());
         infoPane.setLayerHeightLabel(layer.getHeight());
+      } else {
+        infoPane.disableMouseCoordinates();
       }
     });
 

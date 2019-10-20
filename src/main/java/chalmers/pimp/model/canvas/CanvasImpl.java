@@ -133,6 +133,11 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
+  public boolean hasActiveLayer() {
+    return layerManager.hasActiveLayer();
+  }
+
+  @Override
   public String getLayerName(int layerIndex) {
     return layerManager.getLayerName(layerIndex);
   }

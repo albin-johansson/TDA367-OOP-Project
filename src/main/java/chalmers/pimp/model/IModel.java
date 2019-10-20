@@ -320,6 +320,13 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   boolean isLayerVisible(int layerIndex);
 
   /**
+   * Indicates whether or not there is a currently active layer.
+   *
+   * @return {@code true} if there is an active layer; {@code false} otherwise.
+   */
+  boolean hasActiveLayer();
+
+  /**
    * Returns the name of the layer associated with the supplied layer depth index. This method
    * returns an empty string if there is no corresponding layer.
    *

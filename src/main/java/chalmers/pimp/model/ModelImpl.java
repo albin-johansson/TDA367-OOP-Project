@@ -148,12 +148,10 @@ final class ModelImpl implements IModel {
 
   @Override
   public void startMovingActiveLayer(int x, int y) {
-    if (getActiveLayer() == null) {
-      return;
+    if (hasActiveLayer()) {
+      layerMovement = new LayerMovement();
+      layerMovement.start(x, y, createSnapShot());
     }
-
-    layerMovement = new LayerMovement();
-    layerMovement.start(x, y, createSnapShot());
   }
 
   @Override
@@ -271,16 +269,14 @@ final class ModelImpl implements IModel {
 
   @Override
   public void startRotatingActiveLayer(int x, int y) {
-    if (getActiveLayer() == null) {
-      return;
+    if (hasActiveLayer()) {
+      layerRotation = new LayerRotation();
+      var point = new Point(x, y);
+
+      Point centerPoint = canvas.getActiveLayer().getCenterPoint();
+      double rotation = canvas.getActiveLayer().getRotation();
+      layerRotation.start(centerPoint, rotation, point, createSnapShot());
     }
-
-    layerRotation = new LayerRotation();
-    var point = new Point(x, y);
-
-    Point centerPoint = canvas.getActiveLayer().getCenterPoint();
-    double rotation = canvas.getActiveLayer().getRotation();
-    layerRotation.start(centerPoint, rotation, point, createSnapShot());
   }
 
   @Override
@@ -345,6 +341,11 @@ final class ModelImpl implements IModel {
   @Override
   public boolean isLayerVisible(int layerIndex) {
     return canvas.isLayerVisible(layerIndex);
+  }
+
+  @Override
+  public boolean hasActiveLayer() {
+    return canvas.hasActiveLayer();
   }
 
   @Override
