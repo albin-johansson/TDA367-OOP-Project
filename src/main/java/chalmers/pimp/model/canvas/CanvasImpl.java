@@ -150,7 +150,7 @@ final class CanvasImpl implements ICanvas {
 
   @Override
   public void setActiveLayerColor(IColor color) {
-    layerManager.setColor(color);
+    layerManager.setActiveLayerColor(color);
     notifyCanvasUpdateListeners();
   }
 
@@ -182,7 +182,7 @@ final class CanvasImpl implements ICanvas {
 
   @Override
   public void colorChanged(IColor color) {
-    layerManager.setColor(color);
+    layerManager.setActiveLayerColor(color);
     notifyCanvasUpdateListeners();
   }
 }

@@ -148,6 +148,7 @@ final class LayerManager implements IColorChangeListener {
       activeLayer = layers.get(index);
 
       var event = new LayerUpdateEvent(layers, layers.size());
+      event.setSelectedLayer(index);
       event.setSelectionUpdated(true);
 
       layerUpdateListeners.layersUpdated(event);
@@ -374,13 +375,12 @@ final class LayerManager implements IColorChangeListener {
    *
    * @param color the color to be set. Does nothing if the color is {@code null}.
    */
-  public void setColor(IColor color) {
+  void setActiveLayerColor(IColor color) {
     if (color == null) {
       return;
     }
 
     var layer = getActiveLayer();
-
     if (layer instanceof IColorable) {
       ((IColorable) layer).setColor(color);
     }
@@ -418,6 +418,6 @@ final class LayerManager implements IColorChangeListener {
 
   @Override
   public void colorChanged(IColor color) {
-    setColor(color);
+    setActiveLayerColor(color);
   }
 }
