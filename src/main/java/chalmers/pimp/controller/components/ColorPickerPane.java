@@ -2,6 +2,7 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.canvas.layer.IColorable;
 import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.IColorChangeListener;
@@ -32,11 +33,9 @@ final class ColorPickerPane extends AnchorPane implements IColorChangeListener {
     this.model = Objects.requireNonNull(model);
     ControllerUtils.makeController(this, Resources.find(getClass(), "color_picker.fxml"));
 
-    colorPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-      model.setSelectedColor(ColorConverterService.fxToIColor(newValue));
+    colorPicker.setOnAction(event -> {
+      model.setSelectedColor(ColorConverterService.fxToIColor(colorPicker.getValue()));
     });
-    
-    setColor(Colors.BLACK);
   }
 
   /**
@@ -48,18 +47,9 @@ final class ColorPickerPane extends AnchorPane implements IColorChangeListener {
     return ColorConverterService.fxToIColor(colorPicker.getValue());
   }
 
-  /**
-   * Sets the color of the color picker.
-   *
-   * @param color the new color.
-   */
-  private void setColor(IColor color) {
-    Color fxColor = ColorConverterService.toFXColor(color);
-    colorPicker.setValue(fxColor);
-  }
-
   @Override
   public void colorChanged(IColor color) {
-    setColor(color);
+    Color fxColor = ColorConverterService.toFXColor(color);
+    colorPicker.setValue(fxColor);
   }
 }
