@@ -45,6 +45,7 @@ final class ModelImpl implements IModel {
     commandManager = new CommandManager();
     stroke = null;
     colorModel = ColorModelFactory.createColorModel(Colors.TRANSPARENT);
+    colorModel.addColorChangeListener(canvas);
   }
 
   /**

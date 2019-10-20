@@ -4,6 +4,8 @@ import chalmers.pimp.model.ICopiable;
 import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 
@@ -17,7 +19,8 @@ import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
  * @see CanvasFactory
  * @see ILayer
  */
-public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanvas> {
+public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanvas>,
+    IColorChangeListener {
 
   /**
    * Notifies all registered canvas update listeners.
@@ -194,4 +197,11 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    * @return all of the layers contained in the canvas.
    */
   Iterable<? extends IReadOnlyLayer> getLayers();
+
+  /**
+   * Sets the color of the active layer if the active layer is colorable.
+   *
+   * @param color the color to be set. Does nothing if the color is {@code null}.
+   */
+  void setActiveLayerColor(IColor color);
 }
