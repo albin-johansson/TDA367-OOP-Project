@@ -172,12 +172,7 @@ final class Raster implements ILayer {
   @Override
   public void draw(IRenderer renderer, IReadOnlyViewport viewport) {
     if (isVisible()) {
-
-      Point center = getCenterPoint();
-      int rotationAnchorX = viewport.getTranslatedX(center.getX());
-      int rotationAnchorY = viewport.getTranslatedY(center.getY());
-
-      renderer.startTransform(getRotation(), new Point(rotationAnchorX, rotationAnchorY));
+      renderer.startTransform(getRotation(), viewport.translate(getCenterPoint()));
       renderer.setGlobalAlpha(getAlpha());
 
       int drawX = viewport.getTranslatedX(getX());

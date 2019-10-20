@@ -186,12 +186,7 @@ final class Doodle implements ILayer {
     if (!isVisible() || points.isEmpty()) {
       return;
     }
-
-    Point center = getCenterPoint();
-    int rotationAnchorX = viewport.getTranslatedX(center.getX());
-    int rotationAnchorY = viewport.getTranslatedY(center.getY());
-
-    renderer.startTransform(getRotation(), new Point(rotationAnchorX, rotationAnchorY));
+    renderer.startTransform(getRotation(), viewport.translate(getCenterPoint()));
     renderer.setGlobalAlpha(getAlpha());
     renderer.setBorderColor(color);
     renderer.setLineWidth(lineWidth);
