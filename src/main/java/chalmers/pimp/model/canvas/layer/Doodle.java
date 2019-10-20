@@ -31,7 +31,7 @@ final class Doodle implements ILayer {
     this.lineWidth = lineWidth;
     this.color = Objects.requireNonNull(color);
 
-    points = new ArrayList<>(16);
+    points = new ArrayList<>(20);
     layerDelegate = new LayerDelegate(LayerType.DOODLE);
     layerDelegate.setName("Doodle");
   }
