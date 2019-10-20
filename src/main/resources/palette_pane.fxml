@@ -68,7 +68,7 @@
             <Tooltip text="Rotate Tool"/>
           </tooltip>
         </ToggleButton>
-        <ToggleButton mnemonicParsing="false" onAction="#selectEraser" toggleGroup="$palette">
+        <ToggleButton  fx:id="eraserButton" mnemonicParsing="false" onAction="#selectEraser" toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
