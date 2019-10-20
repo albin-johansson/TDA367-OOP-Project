@@ -151,20 +151,18 @@
 #layer-item {
   -fx-background-color: #4e4e4e;
   -fx-border-width: 3px 0px 0px 0px;
-
 }
 
 #layer-item:hover {
   -fx-cursor: OPEN_HAND;
 }
 
-
 #layer-item:pressed {
   -fx-cursor: CLOSED_HAND;
 }
 
 .color-picker {
-  -fx-background-color: -background-pressed-color;
+  -fx-background-color: -background-color;
 }
 
 #info-pane {
@@ -175,6 +173,15 @@
   -fx-background-color: linear-gradient(-background-secondary, -background-color);
 }
 
+.separator {
+  -fx-background-color: transparent;
+}
+
+.separator:vertical .line {
+  -fx-border-color: transparent transparent transparent transparent,
+  transparent transparent -text-color transparent;
+}
+
 .text-field {
   -fx-background-color: transparent;
 }
@@ -183,6 +190,9 @@
 .text-input {
   -fx-font-size: 12pt;
   -fx-font-weight: normal;
- /*-fx-text-fill: white !important;*/
+  /*-fx-text-fill: white !important;*/
 }
 
+#rename-box{
+  -fx-background-color: rgba(0, 0, 0, 0.40);
+}

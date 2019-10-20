@@ -3,7 +3,9 @@ package chalmers.pimp.model.tools;
 import chalmers.pimp.model.MouseStatus;
 
 /**
- * A tool is a tool that manipulates a layer.
+ * The {@code ITool} interface specifies objects that represent some sort of mouse-related tool.
+ *
+ * @see ToolFactory
  */
 public interface ITool {
 

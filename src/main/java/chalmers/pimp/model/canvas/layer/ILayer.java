@@ -1,6 +1,5 @@
 package chalmers.pimp.model.canvas.layer;
 
-import chalmers.pimp.model.Point;
 import chalmers.pimp.model.pixeldata.IPixel;
 
 /**
@@ -27,6 +26,12 @@ public interface ILayer extends IReadOnlyLayer {
    */
   void setVisible(boolean isVisible);
 
+  /**
+   * Moves the layer.
+   *
+   * @param dx the x-axis offset, may be negative.
+   * @param dy the y-axis offset, may be negative.
+   */
   void move(int dx, int dy);
 
   /**
@@ -56,18 +61,6 @@ public interface ILayer extends IReadOnlyLayer {
    * @param depthIndex the new depth index.
    */
   void setDepthIndex(int depthIndex);
-
-  /**
-   * Sets the rotation anchor point for this layer.
-   *
-   * @param rotationAnchor the new rotation anchor point.
-   */
-  void setRotationAnchor(Point rotationAnchor);
-
-  /**
-   * Sets the rotation anchor to the center of the layer.
-   */
-  void setRotationAnchorToCenter();
 
   /**
    * Sets the rotation for this layer.

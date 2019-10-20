@@ -21,16 +21,16 @@ import javafx.scene.paint.Color;
 final class ColorPickerPane extends AnchorPane implements IColorChangeListener {
 
   @FXML
+  @SuppressWarnings("unused")
   private ColorPicker colorPicker;
-  private final IModel model;
 
   /**
    * @param model the model.
-   * @throws IOException if the color picker pane fxml file is not found.
+   * @throws IOException          if the color picker pane fxml file is not found.
    * @throws NullPointerException if the provided model is {@code null}.
    */
   ColorPickerPane(IModel model) throws IOException {
-    this.model = Objects.requireNonNull(model);
+    Objects.requireNonNull(model);
     ControllerUtils.makeController(this, Resources.find(getClass(), "color_picker.fxml"));
 
     colorPicker.setOnAction(event -> {

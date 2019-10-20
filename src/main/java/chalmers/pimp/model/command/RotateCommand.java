@@ -1,7 +1,6 @@
 package chalmers.pimp.model.command;
 
 import chalmers.pimp.model.IMementoTarget;
-import chalmers.pimp.model.LayerMovement;
 import chalmers.pimp.model.LayerRotation;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.canvas.ICanvas;

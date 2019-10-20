@@ -14,19 +14,41 @@ public interface IController {
   void run();
 
   /**
-   * Sets a pencil as selected tool in model
+   * Centers the viewport over the canvas.
    */
-  void selectPencil();
+  void centerViewport();
 
   /**
-   * Sets a transparent pencil as selected tool in model
+   * Moves the viewport.
+   *
+   * @param dx the x-axis offset, may be negative.
+   * @param dy the y-axis offset, may be negative.
+   */
+  void moveViewport(int dx, int dy);
+
+  /**
+   * Sets the width of the viewport.
+   *
+   * @param width the new width of the viewport.
+   */
+  void setViewportWidth(int width);
+
+  /**
+   * Sets the height of the viewport.
+   *
+   * @param height the new width of the viewport.
+   */
+  void setViewportHeight(int height);
+
+  /**
+   * Sets a raster pen as the selected tool.
+   */
+  void selectRasterPen();
+
+  /**
+   * Sets a transparent pencil as the selected tool.
    */
   void selectEraser();
-
-  /**
-   * Sets a bucket as selected tool in model
-   */
-  void selectBucket();
 
   /**
    * Sets the rectangle tool as the selected tool in model
@@ -80,18 +102,14 @@ public interface IController {
   void selectedToolReleased(MouseEvent mouseEvent);
 
   /**
-   * Creates a new raster layer.
-   */
-  void createNewLayer();
-
-  /**
    * Opens a file chooser dialog, which allows the user to import an image. If an image is selected,
    * it's injected into the model.
    */
   void openImageChooser();
 
   /**
-   * Opens file chooser save dialog and allows you to save the Image.
+   * Attempts to save the current canvas state into an image. Invoking this method will open a modal
+   * dialog. This method has no effect if the save operation fails.
    */
   void exportImage();
 }

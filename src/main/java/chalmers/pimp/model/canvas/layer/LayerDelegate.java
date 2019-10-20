@@ -19,12 +19,11 @@ final class LayerDelegate {
 
   private final LayerType layerType;
   private String name;
+  private Point position;
   private boolean isVisible;
-  private Point startPoint;
-  private Point rotationAnchorPoint;
-  private int depthIndex;
   private double rotationDegrees;
   private double alpha;
+  private int depthIndex;
 
   /**
    * @param layerType the layer type that will be used by the layer delegate.
@@ -35,8 +34,8 @@ final class LayerDelegate {
 
     name = "";
     isVisible = DEFAULT_VISIBILITY_VALUE;
-    startPoint = new Point(0, 0);
-    rotationAnchorPoint = new Point(0, 0);
+    position = new Point(0, 0);
+
     depthIndex = 0;
     rotationDegrees = 0;
     alpha = 1;
@@ -45,15 +44,14 @@ final class LayerDelegate {
   /**
    * Creates a copy of the supplied layer delegate.
    *
+   * @param layerDelegate the layer delegate that will be copied.
    * @throws NullPointerException if the supplied layer delegate is {@code null}.
    */
   LayerDelegate(LayerDelegate layerDelegate) {
     Objects.requireNonNull(layerDelegate);
 
     layerType = layerDelegate.layerType;
-    startPoint = new Point(layerDelegate.startPoint.getX(), layerDelegate.startPoint.getY());
-    rotationAnchorPoint = new Point(layerDelegate.rotationAnchorPoint
-        .getX(), layerDelegate.rotationAnchorPoint.getY());
+    position = layerDelegate.position;
     depthIndex = layerDelegate.depthIndex;
     name = layerDelegate.name;
     isVisible = layerDelegate.isVisible;
@@ -67,7 +65,7 @@ final class LayerDelegate {
    * @param x the new x-coordinate of the layer's point.
    */
   void setX(int x) {
-    startPoint = startPoint.setX(x);
+    position = position.setX(x);
   }
 
   /**
@@ -76,25 +74,7 @@ final class LayerDelegate {
    * @param y the new y-coordinate of the layer's point.
    */
   void setY(int y) {
-    startPoint = startPoint.setY(y);
-  }
-
-  /**
-   * Sets the y-coordinate of the layer's rotation anchor point.
-   *
-   * @param y the new y-coordinate of the layer's rotation anchor point.
-   */
-  void setRotationAnchorY(int y) {
-    rotationAnchorPoint = rotationAnchorPoint.setY(y);
-  }
-
-  /**
-   * Sets the x-coordinate of the layer's rotation anchor point.
-   *
-   * @param x the new x-coordinate of the layer's rotation anchor point.
-   */
-  void setRotationAnchorX(int x) {
-    rotationAnchorPoint = rotationAnchorPoint.setX(x);
+    position = position.setY(y);
   }
 
   /**
@@ -104,8 +84,8 @@ final class LayerDelegate {
    * @param dy the y-axis offset, may be negative.
    */
   void move(int dx, int dy) {
-    startPoint = startPoint.setX(startPoint.getX() + dx);
-    startPoint = startPoint.setY(startPoint.getY() + dy);
+    position = position.addX(dx);
+    position = position.addY(dy);
   }
 
   /**
@@ -138,96 +118,6 @@ final class LayerDelegate {
   }
 
   /**
-   * Returns the x-coordinate of the layer. By default, this property is set to {@code 0}.
-   *
-   * @return the x-coordinate of the layer.
-   */
-  int getX() {
-    return startPoint.getX();
-  }
-
-  /**
-   * Returns the y-coordinate of the layer. By default, this property is set to {@code 0}.
-   *
-   * @return the y-coordinate of the layer.
-   */
-  int getY() {
-    return startPoint.getY();
-  }
-
-  /**
-   * Returns the x-coordinate of the layer's rotation anchor point.
-   *
-   * @return the x-coordinate of the layer's rotation anchor point.
-   */
-  int getRotationAnchorX() {
-    return rotationAnchorPoint.getX();
-  }
-
-  /**
-   * Returns the y-coordinate of the layer's rotation anchor point.
-   *
-   * @return the y-coordinate of the layer's rotation anchor point.
-   */
-  int getRotationAnchorY() {
-    return rotationAnchorPoint.getY();
-  }
-
-  /**
-   * Returns the layer's rotation anchor point.
-   *
-   * @return the layer's rotation anchor point.
-   */
-  Point getRotationAnchor() {
-    return rotationAnchorPoint;
-  }
-
-  /**
-   * Sets the layer's rotation anchor point.
-   *
-   * @param point the layer's rotation anchor point.
-   */
-  void setRotationAnchor(Point point) {
-    rotationAnchorPoint = point;
-  }
-
-  /**
-   * Returns the coordinate point.
-   *
-   * @return the coordinate point.
-   */
-  Point getStartPoint() {
-    return startPoint;
-  }
-
-  /**
-   * Returns the coordinate center point.
-   *
-   * @return the coordinate center point.
-   */
-  Point getRotationAnchorPoint() {
-    return rotationAnchorPoint;
-  }
-
-  /**
-   * Returns the name of the layer.
-   *
-   * @return the name of the layer as a {@code String}
-   */
-  String getName() {
-    return name;
-  }
-
-  /**
-   * Returns the layer type associated with this layer delegate.
-   *
-   * @return the layer type associated with this layer delegate.
-   */
-  LayerType getLayerType() {
-    return layerType;
-  }
-
-  /**
    * Returns the depth index for this layer.
    *
    * @return the depth index.
@@ -255,6 +145,24 @@ final class LayerDelegate {
   }
 
   /**
+   * Returns the x-coordinate of the layer. By default, this property is set to {@code 0}.
+   *
+   * @return the x-coordinate of the layer.
+   */
+  int getX() {
+    return position.getX();
+  }
+
+  /**
+   * Returns the y-coordinate of the layer. By default, this property is set to {@code 0}.
+   *
+   * @return the y-coordinate of the layer.
+   */
+  int getY() {
+    return position.getY();
+  }
+
+  /**
    * Returns the rotation value for this layer.
    *
    * @return the rotation value.
@@ -268,8 +176,7 @@ final class LayerDelegate {
    *
    * @return the alpha value.
    */
-
-  public double getAlpha() {
+  double getAlpha() {
     return alpha;
   }
 
@@ -278,13 +185,31 @@ final class LayerDelegate {
    *
    * @param alpha the new alpha.
    */
-  public void setAlpha(double alpha) {
+  void setAlpha(double alpha) {
     this.alpha = alpha;
+  }
+
+  /**
+   * Returns the name of the layer.
+   *
+   * @return the name of the layer as a {@code String}
+   */
+  String getName() {
+    return name;
+  }
+
+  /**
+   * Returns the layer type associated with this layer delegate.
+   *
+   * @return the layer type associated with this layer delegate.
+   */
+  LayerType getLayerType() {
+    return layerType;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(startPoint, name, depthIndex, isVisible);
+    return Objects.hash(position, name, depthIndex, isVisible);
   }
 
   /**
@@ -315,8 +240,8 @@ final class LayerDelegate {
     var layerDelegate = (LayerDelegate) object;
 
     return (layerType == layerDelegate.layerType)
-        && (startPoint.getX() == layerDelegate.startPoint.getX())
-        && (startPoint.getY() == layerDelegate.startPoint.getY())
+        && (position.getX() == layerDelegate.position.getX())
+        && (position.getY() == layerDelegate.position.getY())
         && (depthIndex == layerDelegate.depthIndex);
   }
 }

@@ -10,9 +10,9 @@ public final class ModelFactory {
   }
 
   /**
-   * Creates and returns a chalmers.pimp.model instance.
+   * Creates and returns a model instance.
    *
-   * @return a chalmers.pimp.model instance.
+   * @return a model instance.
    */
   public static IModel createModel() {
     return new ModelImpl();

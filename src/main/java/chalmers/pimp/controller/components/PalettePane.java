@@ -10,7 +10,10 @@ import javafx.scene.layout.AnchorPane;
 
 /**
  * The {@code PalettePane} class represents the pane that holds the buttons for the various mouse
- * tools (the "palette").
+ * tools (the "palette"). This class is designed to be used to delegate tool selection calls to a
+ * controller.
+ *
+ * @see IController
  */
 final class PalettePane extends AnchorPane {
 
@@ -29,19 +32,13 @@ final class PalettePane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private void selectPencil() {
-    controller.selectPencil();
+    controller.selectRasterPen();
   }
 
   @FXML
   @SuppressWarnings("unused")
   private void selectEraser() {
     controller.selectEraser();
-  }
-
-  @FXML
-  @SuppressWarnings("unused")
-  private void selectBucket() {
-    controller.selectBucket();
   }
 
   @FXML
@@ -61,7 +58,7 @@ final class PalettePane extends AnchorPane {
   private void selectRotateTool() {
     controller.selectRotateTool();
   }
-  
+
   @FXML
   @SuppressWarnings("unused")
   private void selectDoodleTool() {

@@ -1,6 +1,7 @@
 package chalmers.pimp.model;
 
 import chalmers.pimp.model.canvas.CanvasMemento;
+import chalmers.pimp.model.viewport.ViewportModelMemento;
 import chalmers.pimp.model.color.colormodel.ColorModelMemento;
 import java.util.Objects;
 
@@ -12,16 +13,18 @@ import java.util.Objects;
 public final class ModelMemento {
 
   private final CanvasMemento canvasMemento;
+  private final ViewportModelMemento viewportModelMemento;
   private final ColorModelMemento colorModelMemento;
 
   /**
-   * @param canvasMemento     a memento object for a canvas instance.
+   * @param canvasMemento        a memento object for a canvas instance.
+   * @param viewportModelMemento a memento object for a viewport model instance.
    * @param colorModelMemento the selected color.
    * @throws NullPointerException if any references are {@code null}.
    */
-  ModelMemento(CanvasMemento canvasMemento, ColorModelMemento colorModelMemento) {
+  ModelMemento(CanvasMemento canvasMemento, ViewportModelMemento viewportModelMemento, ColorModelMemento colorModelMemento) {
     this.canvasMemento = Objects.requireNonNull(canvasMemento);
-    this.colorModelMemento = Objects.requireNonNull(colorModelMemento);
+    this.viewportModelMemento = Objects.requireNonNull(viewportModelMemento);    this.colorModelMemento = Objects.requireNonNull(colorModelMemento);
   }
 
   /**
@@ -33,6 +36,15 @@ public final class ModelMemento {
     return canvasMemento;
   }
 
+  /**
+   * Returns the viewport model memento instance contained by this model memento instance.
+   *
+   * @return the viewport model memento instance contained by this model memento instance.
+   */
+  ViewportModelMemento getViewportModelMemento() {
+    return viewportModelMemento;
+  }
+    
   /**
    * Returns the color model memento instance contained by this model memento instance.
    *

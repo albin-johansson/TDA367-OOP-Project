@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -83,7 +84,23 @@
                         </MenuItem>
                      </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
+                  <Menu mnemonicParsing="false" text="View">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#centerViewport" text="Center Viewport">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="SPACE" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/light/center.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                  </Menu>
+            <Menu disable="true" mnemonicParsing="false" text="Help">
               <items>
                 <MenuItem mnemonicParsing="false" text="About" />
               </items>
@@ -116,22 +133,33 @@
                 <Tooltip text="Redo" />
               </tooltip>
             </Button>
-                  <Button mnemonicParsing="false" onAction="#createNewLayer">
+                  <Separator orientation="VERTICAL">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="5.0" top="10.0" />
+                     </HBox.margin>
+                  </Separator>
+                  <Button layoutX="148.0" layoutY="21.0" mnemonicParsing="false" onAction="#centerViewport">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/light/eye_open.png" />
+                              <Image url="@images/light/center.png" />
                            </image>
                         </ImageView>
                      </graphic>
                      <tooltip>
-                        <Tooltip text="Create new layer" />
+                        <Tooltip text="Center Viewport" />
                      </tooltip>
                   </Button>
           </children>
           <padding>
             <Insets left="10.0" />
           </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
         </HBox>
       </children>
     </VBox>
