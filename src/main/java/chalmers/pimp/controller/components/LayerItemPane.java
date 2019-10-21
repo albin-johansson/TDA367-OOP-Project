@@ -102,6 +102,25 @@ final class LayerItemPane extends AnchorPane {
       standardPane.setStyle("-fx-background-color: -selected-color;");
     }
 
+    updateVisibilityHint();
+
+    layerName.setContextMenu(contextMenu);
+
+    addListeners();
+  }
+
+  private void addListeners() {
+    setOnDragDetected(this::handleDragDetected);
+    setOnDragOver(this::handleDragOver);
+    setOnDragDropped(this::handleDragDropped);
+    setOnDragExited(this::handleDragExited);
+
+    renameField.focusedProperty().addListener((observable, oldvalue, newvalue) -> {
+      if (!newvalue && !renameButton.isFocused()) {
+        standardPane.toFront();
+      }
+    });
+
     addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
       if (event.getButton() == MouseButton.PRIMARY) {
         selectLayer();
@@ -109,32 +128,8 @@ final class LayerItemPane extends AnchorPane {
         openContextMenu(event.getSceneX(), event.getSceneY());
       }
     });
-
-    updateVisibilityHint();
-
-    setOnDragDetected(this::handleDragDetected);
-    setOnDragOver(this::handleDragOver);
-    setOnDragDropped(this::handleDragDropped);
-    setOnDragExited(this::handleDragExited);
-
-    /*// FIXME replace with service
-    String path = "images/light/" + LayerType.RASTER.name().toLowerCase() + ".png";
-
-    // TODO create service for creating JavaFX images from a URL
-    try {
-      layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
-    } catch (Exception e) {
-      System.err.println("Failed to load layerTypeIcon icon! Exception: " + e);
-    }*/
-
-    layerName.setContextMenu(contextMenu);
-    renameField.focusedProperty().addListener((observable, oldvalue, newvalue) -> {
-      if (!newvalue && !renameButton.isFocused()) {
-        standardPane.toFront();
-      }
-    });
   }
-
+  
   /**
    * Handles a mouse event triggered by initiating a mouse drag on the layer item pane.
    *
