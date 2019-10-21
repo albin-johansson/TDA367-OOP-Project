@@ -14,7 +14,7 @@ import java.util.Objects;
  * The {@code Rectangle} class is an implementation of the {@code ILayer} interface that represents
  * a rectangle.
  */
-final class Rectangle implements ILayer {
+final class Rectangle implements ILayer, IColorable {
 
   private final LayerDelegate layerDelegate;
   private IColor color;
@@ -215,5 +215,15 @@ final class Rectangle implements ILayer {
         && (width == rectangle.width)
         && (height == rectangle.height)
         && color.equals(rectangle.color);
+  }
+
+  @Override
+  public void setColor(IColor color) {
+    this.color = Objects.requireNonNull(color);
+  }
+
+  @Override
+  public IColor getColor() {
+    return color;
   }
 }

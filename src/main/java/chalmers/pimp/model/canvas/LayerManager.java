@@ -1,7 +1,10 @@
 package chalmers.pimp.model.canvas;
 
+import chalmers.pimp.model.canvas.layer.IColorable;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
@@ -15,7 +18,7 @@ import java.util.Objects;
  *
  * @see ILayer
  */
-final class LayerManager {
+final class LayerManager implements IColorChangeListener {
 
   private final LayerUpdateListenerComposite layerUpdateListeners;
   private final List<ILayer> layers;
@@ -145,6 +148,7 @@ final class LayerManager {
       activeLayer = layers.get(index);
 
       var event = new LayerUpdateEvent(layers, layers.size());
+      event.setSelectedLayer(index);
       event.setSelectionUpdated(true);
 
       layerUpdateListeners.layersUpdated(event);
@@ -366,6 +370,22 @@ final class LayerManager {
   }
 
   /**
+   * Sets the color of the active layer if the active layer is colorable.
+   *
+   * @param color the color to be set. Does nothing if the color is {@code null}.
+   */
+  void setActiveLayerColor(IColor color) {
+    if (color == null) {
+      return;
+    }
+
+    var layer = getActiveLayer();
+    if (layer instanceof IColorable) {
+      ((IColorable) layer).setColor(color);
+    }
+  }
+
+  /**
    * Indicates whether or not there is an active layer.
    *
    * @return {@code true} if there is an active layer; {@code false} otherwise.
@@ -402,5 +422,10 @@ final class LayerManager {
     String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
     String state = "Active layer: " + activeLayer + ", #layers: " + layers.size();
     return "(" + id + " | " + state + ")";
+  }
+
+  @Override
+  public void colorChanged(IColor color) {
+    setActiveLayerColor(color);
   }
 }

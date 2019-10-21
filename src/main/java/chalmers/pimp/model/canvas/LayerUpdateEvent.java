@@ -10,6 +10,7 @@ public final class LayerUpdateEvent {
 
   private final Iterable<? extends IReadOnlyLayer> layers;
   private final int nLayers;
+  private IReadOnlyLayer selectedLayer;
   private IReadOnlyLayer removedLayer;
   private IReadOnlyLayer addedLayer;
   private boolean visibilityUpdated;
@@ -24,6 +25,7 @@ public final class LayerUpdateEvent {
     this.layers = Objects.requireNonNull(layers);
     this.nLayers = nLayers;
 
+    selectedLayer = null;
     removedLayer = null;
     addedLayer = null;
     visibilityUpdated = false;
@@ -116,6 +118,31 @@ public final class LayerUpdateEvent {
    */
   public int getAmountOfLayers() {
     return nLayers;
+  }
+
+  /**
+   * Returns the selected layer. Returns {@code null} if there is no selected layer.
+   *
+   * @return the selected layer.
+   */
+  public IReadOnlyLayer getSelectedLayer() {
+    return selectedLayer;
+  }
+
+  /**
+   * Sets the the selected layer by its index. Does nothing if the index is outside the range: [0,
+   * amount of layers).
+   *
+   * @param index the index of the selected layer.
+   */
+  void setSelectedLayer(int index) {
+    int i = 0;
+    for (IReadOnlyLayer layer : layers) {
+      if (index == i) {
+        selectedLayer = layer;
+      }
+      i++;
+    }
   }
 
   /**

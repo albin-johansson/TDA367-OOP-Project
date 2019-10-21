@@ -110,6 +110,7 @@ final class SwingRenderer implements IRenderer {
   @Override
   public void drawLine(Point p1, Point p2) {
     if ((p1 != null) && (p2 != null)) {
+      graphics.setColor(fillColor);
       graphics.setStroke(new BasicStroke(lineWidth));
       graphics.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
     }
