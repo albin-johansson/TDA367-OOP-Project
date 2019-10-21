@@ -44,8 +44,7 @@ final class DoodleTool implements ITool {
     int x = model.getViewport().getTranslatedX(mouseStatus.getX());
     int y = model.getViewport().getTranslatedY(mouseStatus.getY());
 
-    doodle.addPoint(new Point(mouseStatus.getX() + model.getViewport().getX(),
-        mouseStatus.getY() + model.getViewport().getY()));
+    doodle.addPoint(new Point(x, y));
     doodle.draw(model.getRenderer(), model.getViewport());
   }
 

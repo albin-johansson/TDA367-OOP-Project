@@ -2,6 +2,12 @@ package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.pixeldata.IPixel;
 
+/**
+ * The {@code IRasterLayer} is a subinterface of {@code ILayer} and extends its functionality
+ * suitable for a raster.
+ *
+ * @see ILayer
+ */
 public interface IRasterLayer extends ILayer {
 
   /**

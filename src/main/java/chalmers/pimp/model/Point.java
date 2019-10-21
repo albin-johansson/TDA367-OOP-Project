@@ -99,6 +99,7 @@ public final class Point {
    * @return the distance this point and point p
    */
   public double distance(Point p) {
+    Objects.requireNonNull(p);
     double dy = p.y - y;
     double dx = p.x - x;
     return Math.sqrt(dy * dy + dx * dx);

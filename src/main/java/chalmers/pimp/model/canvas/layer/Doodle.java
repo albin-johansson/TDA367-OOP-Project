@@ -238,6 +238,7 @@ final class Doodle implements IDoodleLayer {
 
   @Override
   public void addPoint(Point p) {
+    Objects.requireNonNull(p);
     points.add(p);
   }
 
