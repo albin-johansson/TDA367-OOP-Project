@@ -188,13 +188,7 @@ final class LayerManager {
       boolean removedLayerWasActive = hasActiveLayer() && (index == activeLayer.getDepthIndex());
 
       if (removedLayerWasActive) {
-        if (inBounds(index - 1)) {
-          activeLayer = layers.get(index - 1);
-        } else if (inBounds(index + 1)) {
-          activeLayer = layers.get(index + 1);
-        } else {
-          activeLayer = null;
-        }
+        selectNewActiveLayer(index);
       }
 
       ILayer removedLayer = layers.remove(index);
@@ -206,6 +200,16 @@ final class LayerManager {
       event.setRemovedLayer(removedLayer);
 
       layerUpdateListeners.layersUpdated(event);
+    }
+  }
+
+  private void selectNewActiveLayer(int index){
+    if (inBounds(index - 1)) {
+      activeLayer = layers.get(index - 1);
+    } else if (inBounds(index + 1)) {
+      activeLayer = layers.get(index + 1);
+    } else {
+      activeLayer = null;
     }
   }
 
