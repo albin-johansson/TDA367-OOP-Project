@@ -203,7 +203,12 @@ final class LayerManager {
     }
   }
 
-  private void selectNewActiveLayer(int index){
+  /**
+   * Selects a new active layer after having removed the currently active one.
+   *
+   * @param index index of the removed layer
+   */
+  private void selectNewActiveLayer(int index) {
     if (inBounds(index - 1)) {
       activeLayer = layers.get(index - 1);
     } else if (inBounds(index + 1)) {
