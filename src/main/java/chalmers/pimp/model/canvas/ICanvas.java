@@ -94,6 +94,13 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
   void moveActiveLayer(int dx, int dy);
 
   /**
+   * Rotates the currently active layer. This method has no effect if there is no active layer.
+   *
+   * @param alpha the rotation in degrees.
+   */
+  void setActiveLayerRotation(double alpha);
+
+  /**
    * Sets the visibility property of the layer associated with the supplied depth index. This method
    * has no effect if the supplied index isn't associated with a layer.
    *
@@ -163,6 +170,13 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    * otherwise.
    */
   boolean isLayerVisible(int layerIndex);
+
+  /**
+   * Indicates whether or not there is a currently active layer.
+   *
+   * @return {@code true} if there is an active layer; {@code false} otherwise.
+   */
+  boolean hasActiveLayer();
 
   /**
    * Returns the name of the layer associated with the supplied layer depth index. This method

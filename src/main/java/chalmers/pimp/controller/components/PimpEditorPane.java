@@ -3,6 +3,7 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.controller.IController;
 import chalmers.pimp.model.IModel;
+import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.util.AnchorPanes;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
@@ -34,8 +35,8 @@ public final class PimpEditorPane extends AnchorPane {
   private AnchorPane bottomAnchorPane;
 
   /**
-   * @param model      the associated chalmers.pimp.model instance.
-   * @param controller the parent chalmers.pimp.controller instance.
+   * @param model      the associated model instance.
+   * @param controller the parent model instance.
    * @throws IOException          if the associated FXML file cannot be found.
    * @throws NullPointerException if any arguments are {@code null}.
    */
@@ -44,60 +45,77 @@ public final class PimpEditorPane extends AnchorPane {
     Objects.requireNonNull(model);
     Objects.requireNonNull(controller);
 
+    // Toolbar (TOP)
     var toolbarPane = new ToolbarPane(controller);
     topAnchorPane.getChildren().add(toolbarPane);
-    AnchorPanes.setAnchors(toolbarPane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(toolbarPane);
     model.addUndoRedoListener(toolbarPane);
 
-    var canvasPane = new CanvasPane(controller);
+    // Utility (RIGHT)
+    var utilityPane = new UtilityPane(model);
+    rightAnchorPane.getChildren().add(utilityPane);
+    AnchorPanes.setZeroAnchors(utilityPane);
+
+    // Canvas (CENTER)
+    canvasPane = new CanvasPane(controller);
     centerPane.getChildren().add(canvasPane);
-    AnchorPanes.setAnchors(canvasPane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(canvasPane);
 
-    this.canvasPane = canvasPane;
-
-    var layerItemManagerPane = new LayerItemContainerPane(model);
-    model.addLayerUpdateListener(layerItemManagerPane);
-    rightAnchorPane.getChildren().add(layerItemManagerPane);
-    AnchorPanes.setAnchors(layerItemManagerPane, 0, 0, 0, 0);
-
+    // Palette pane (LEFT)
     var palettePane = new PalettePane(controller);
     leftAnchorPane.getChildren().add(palettePane);
-    AnchorPanes.setAnchors(palettePane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(palettePane);
+    model.addLayerUpdateListener(event -> {
+      palettePane.updateEnabledTools(model.getActiveLayer());
+    });
 
-    var infoPane = new InfoPane(controller, model);
+
+    // Info pane (DOWN)
+    var infoPane = new InfoPane();
     bottomAnchorPane.getChildren().add(infoPane);
-    AnchorPanes.setAnchors(infoPane, 0, 0, 0, 0);
+    AnchorPanes.setZeroAnchors(infoPane);
 
-    initiateInfoPane(canvasPane, infoPane, controller, model);
-
+    initiateInfoPane(infoPane, controller, model);
   }
 
   /**
-   * Adds listeners to the Canvas which in turn call for the infoPane to update itself.
+   * Prepares the supplied info pane for usage.
+   *
+   * @param infoPane   the info pane that will be prepared.
+   * @param controller the associated controller instance.
+   * @param model      the associated model instance.
+   * @throws NullPointerException if any references are {@code null}.
    */
-  private void initiateInfoPane(CanvasPane canvasPane, InfoPane infoPane, IController controller, IModel model) {
-    canvasPane.getGraphics().getCanvas().heightProperty()
-        .addListener((observable, oldvalue, newvalue) ->
-            infoPane.setCanvasHeightLabel(String.valueOf(newvalue.intValue()))
-        );
+  private void initiateInfoPane(InfoPane infoPane, IController controller, IModel model) {
+    Objects.requireNonNull(infoPane);
+    Objects.requireNonNull(controller);
+    Objects.requireNonNull(model);
+    Objects.requireNonNull(canvasPane);
 
-    canvasPane.getGraphics().getCanvas().widthProperty()
-        .addListener((observable, oldvalue, newvalue) ->
-            infoPane.setCanvasWidthLabel(String.valueOf(newvalue.intValue()))
-        );
+    infoPane.setCanvasWidthLabel(model.getWidth());
+    infoPane.setCanvasHeightLabel(model.getHeight());
 
-    canvasPane.setOnMouseDragged((e) -> {
-      infoPane.updateCoordinates(e);
+    canvasPane.setOnMouseDragged(e -> {
+      infoPane.updateMouseCoordinates((int) e.getX(), (int) e.getY(), model.getViewport());
       controller.selectedToolDragged(e);
     });
 
-    canvasPane.setOnMouseMoved(infoPane::updateCoordinates);
-    canvasPane.setOnMouseExited(infoPane::turnOffCoordinates);
-
-    model.addLayerUpdateListener(event->{
-      infoPane.setLayerHeightLabel(String.valueOf(model.getActiveLayer().getHeight()));
-      infoPane.setLayerWidthLabel(String.valueOf(model.getActiveLayer().getWidth()));
+    canvasPane.setOnMouseMoved(e -> {
+      infoPane.updateMouseCoordinates((int) e.getX(), (int) e.getY(), model.getViewport());
     });
+    canvasPane.setOnMouseExited(event -> infoPane.disableMouseCoordinates());
+
+    model.addLayerUpdateListener(event -> {
+      if (model.hasActiveLayer()) {
+        IReadOnlyLayer layer = model.getActiveLayer();
+        infoPane.setLayerWidthLabel(layer.getWidth());
+        infoPane.setLayerHeightLabel(layer.getHeight());
+      } else {
+        infoPane.disableMouseCoordinates();
+      }
+    });
+
+    model.addModelSizeListener(infoPane);
   }
 
   /**
@@ -108,5 +126,4 @@ public final class PimpEditorPane extends AnchorPane {
   public GraphicsContext getGraphics() {
     return canvasPane.getGraphics();
   }
-
 }

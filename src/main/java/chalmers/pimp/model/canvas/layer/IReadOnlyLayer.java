@@ -2,6 +2,7 @@ package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.ICopiable;
 import chalmers.pimp.model.IDrawable;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 
 /**
@@ -52,11 +53,32 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
   int getDepthIndex();
 
   /**
+   * Returns a point that represents the center of the layer.
+   *
+   * @return a point that represents the center of the layer.
+   */
+  Point getCenterPoint();
+
+  /**
    * Returns the layer type of this layer.
    *
    * @return the layer type of this layer.
    */
   LayerType getLayerType();
+
+  /**
+   * Returns the rotation of this layer.
+   *
+   * @return the rotation of this layer.
+   */
+  double getRotation();
+
+  /**
+   * Returns the alpha value of this layer.
+   *
+   * @return the alpha value of this layer.
+   */
+  double getAlpha();
 
   /**
    * Returns the width of the layer.

@@ -3,8 +3,8 @@ package chalmers.pimp.controller;
 import javafx.scene.input.MouseEvent;
 
 /**
- * The {@code IController} interface specifies the facade for the controller component
- * in the MVC architecture that the Pimp application uses.
+ * The {@code IController} interface specifies the facade for the controller component in the MVC
+ * architecture that the Pimp application uses.
  */
 public interface IController {
 
@@ -14,24 +14,51 @@ public interface IController {
   void run();
 
   /**
-   * Sets Pencil as selected tool in model
+   * Centers the viewport over the canvas.
    */
-  void selectPencil();
+  void centerViewport();
 
   /**
-   * Sets a Transparent Pencil as selected tool in model
+   * Moves the viewport.
+   *
+   * @param dx the x-axis offset, may be negative.
+   * @param dy the y-axis offset, may be negative.
+   */
+  void moveViewport(int dx, int dy);
+
+  /**
+   * Sets the width of the viewport.
+   *
+   * @param width the new width of the viewport.
+   */
+  void setViewportWidth(int width);
+
+  /**
+   * Sets the height of the viewport.
+   *
+   * @param height the new width of the viewport.
+   */
+  void setViewportHeight(int height);
+
+  /**
+   * Sets a raster pen as the selected tool.
+   */
+  void selectRasterPen();
+
+  /**
+   * Sets a transparent pencil as the selected tool.
    */
   void selectEraser();
-
-  /**
-   * Sets Bucket as selected tool in model
-   */
-  void selectBucket();
 
   /**
    * Sets the rectangle tool as the selected tool in model
    */
   void selectRectangleTool();
+
+  /**
+   * Sets the rotate tool as the selected tool in model.
+   */
+  void selectRotateTool();
 
   /**
    * Sets the doodle tool as the selected tool in model
@@ -49,7 +76,7 @@ public interface IController {
   void redo();
 
   /**
-   * Sets the MoveTool as selected tool in model.
+   * Sets a move tool as selected tool in model.
    */
   void selectMoveTool();
 
@@ -75,18 +102,14 @@ public interface IController {
   void selectedToolReleased(MouseEvent mouseEvent);
 
   /**
-   * Creates a new raster layer.
-   */
-  void createNewLayer();
-
-  /**
    * Opens a file chooser dialog, which allows the user to import an image. If an image is selected,
    * it's injected into the model.
    */
   void openImageChooser();
 
   /**
-   * Opens file chooser save dialog and allows you to save the Image.
+   * Attempts to save the current canvas state into an image. Invoking this method will open a modal
+   * dialog. This method has no effect if the save operation fails.
    */
   void exportImage();
 }

@@ -7,7 +7,7 @@ import java.util.Deque;
 import java.util.Objects;
 
 /**
- * The {@code CommandManager} class is responsible for handling instances of the {@link IChangeable}
+ * The {@code CommandManager} class is responsible for handling instances of the {@link ICommand}
  * interface and tracking them in undo and redo stacks.
  */
 public final class CommandManager implements IChangeable {

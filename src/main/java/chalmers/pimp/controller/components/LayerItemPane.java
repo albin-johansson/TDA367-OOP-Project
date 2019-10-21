@@ -3,13 +3,13 @@ package chalmers.pimp.controller.components;
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.canvas.layer.LayerType;
 import chalmers.pimp.util.Resources;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,6 +20,8 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -52,7 +54,7 @@ final class LayerItemPane extends AnchorPane {
 
   @FXML
   @SuppressWarnings("unused")
-  private TextField textField;
+  private Label layerName;
   @FXML
   @SuppressWarnings("unused")
   private ToggleButton toggleButton;
@@ -61,10 +63,22 @@ final class LayerItemPane extends AnchorPane {
   private ImageView imageView;
   @FXML
   @SuppressWarnings("unused")
-  private ImageView layerTypeIcon;
+  private ImageView layerPreview;
   @FXML
   @SuppressWarnings("unused")
   private ContextMenu contextMenu;
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane standardPane;
+  @FXML
+  @SuppressWarnings("unused")
+  private AnchorPane renamePane;
+  @FXML
+  @SuppressWarnings("unused")
+  private TextField renameField;
+  @FXML
+  @SuppressWarnings("unused")
+  private Button renameButton;
 
   private final IModel model;
   private final int associatedLayerIndex;
@@ -81,11 +95,11 @@ final class LayerItemPane extends AnchorPane {
 
     ControllerUtils.makeController(this, Resources.find(getClass(), "layer_item.fxml"));
 
-    textField.setText(model.getLayerName(associatedLayerIndex));
+    layerName.setText(model.getLayerName(associatedLayerIndex));
 
     IReadOnlyLayer activeLayer = model.getActiveLayer();
     if ((activeLayer != null) && (activeLayer.getDepthIndex() == associatedLayerIndex)) {
-      setStyle("-fx-background-color: -selected-color;");
+      standardPane.setStyle("-fx-background-color: -selected-color;");
     }
 
     addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -103,7 +117,7 @@ final class LayerItemPane extends AnchorPane {
     setOnDragDropped(this::handleDragDropped);
     setOnDragExited(this::handleDragExited);
 
-    // FIXME replace with service
+    /*// FIXME replace with service
     String path = "images/light/" + LayerType.RASTER.name().toLowerCase() + ".png";
 
     // TODO create service for creating JavaFX images from a URL
@@ -111,7 +125,14 @@ final class LayerItemPane extends AnchorPane {
       layerTypeIcon.setImage(new Image(Resources.find(getClass(), path).toURI().toString()));
     } catch (Exception e) {
       System.err.println("Failed to load layerTypeIcon icon! Exception: " + e);
-    }
+    }*/
+
+    layerName.setContextMenu(contextMenu);
+    renameField.focusedProperty().addListener((observable, oldvalue, newvalue) -> {
+      if (!newvalue && !renameButton.isFocused()) {
+        standardPane.toFront();
+      }
+    });
   }
 
   /**
@@ -150,8 +171,8 @@ final class LayerItemPane extends AnchorPane {
     if (db.hasString()) {
       int originDepth = Integer.parseInt(db.getString());
 
-      IReadOnlyLayer activeLayer = model.getActiveLayer();
-      if (activeLayer != null) {
+      if (model.hasActiveLayer()) {
+        IReadOnlyLayer activeLayer = model.getActiveLayer();
         int dz = associatedLayerIndex - originDepth;
         model.changeLayerDepthIndex(activeLayer.getDepthIndex(), dz);
         success = true;
@@ -170,7 +191,7 @@ final class LayerItemPane extends AnchorPane {
   private void handleDragOver(DragEvent event) {
     if (event.getGestureSource() != this && event.getDragboard().hasString()) {
       event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-      setStyle("-fx-border-color: -accent-color;");
+      standardPane.setStyle("-fx-border-color: -accent-color;");
     }
     event.consume();
   }
@@ -181,7 +202,7 @@ final class LayerItemPane extends AnchorPane {
    * @param event the associated drag event.
    */
   private void handleDragExited(DragEvent event) {
-    setStyle("-fx-border-width: 0,0,0,0");
+    standardPane.setStyle("-fx-border-width: 0,0,0,0");
   }
 
   /**
@@ -222,11 +243,11 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private void updateLayerName() {
-    String temp = textField.getText();
+    String temp = layerName.getText();
     if (temp.isEmpty()) {
-      textField.setText(model.getLayerName(associatedLayerIndex));
+      layerName.setText(model.getLayerName(associatedLayerIndex));
     } else {
-      model.setLayerName(associatedLayerIndex, textField.getText());
+      model.setLayerName(associatedLayerIndex, layerName.getText());
     }
   }
 
@@ -248,16 +269,34 @@ final class LayerItemPane extends AnchorPane {
     model.removeLayer(associatedLayerIndex);
   }
 
-  @FXML
-  private void renameLayer(){
-    textField.setEditable(true);
-    textField.requestFocus();
+  /**
+   * Sets the layerPreviewImage.
+   *
+   * @param image the new Image.
+   */
+  void setImage(Image image) {
+    layerPreview.setImage(image);
   }
 
   @FXML
-  private void setName(){
-    model.setLayerName(associatedLayerIndex, textField.getText());
-    textField.setEditable(false);
+  private void renameLayer() {
+    renamePane.toFront();
+    renameField.clear();
+    renameField.requestFocus();
+  }
+
+  @FXML
+  private void setName() {
+    model.setLayerName(associatedLayerIndex, renameField.getText());
+    layerName.setText(renameField.getText());
+    standardPane.toFront();
     requestFocus();
+  }
+
+  @FXML
+  private void checkIfCancel(KeyEvent event) {
+    if (event.getCode().equals(KeyCode.ESCAPE)) {
+      standardPane.toFront();
+    }
   }
 }

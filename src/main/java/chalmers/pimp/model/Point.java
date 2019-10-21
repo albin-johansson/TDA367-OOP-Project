@@ -1,5 +1,7 @@
 package chalmers.pimp.model;
 
+import java.util.Objects;
+
 /**
  * The {@code Point} class represents a point. The point is immutable.
  */
@@ -26,7 +28,7 @@ public final class Point {
    * @return a new point with the same y component and the new x component.
    */
   public Point setX(int x) {
-    return new Point(x, getY());
+    return new Point(x, y);
   }
 
   /**
@@ -36,7 +38,7 @@ public final class Point {
    * @return a new point with the same x component and the new y component.
    */
   public Point setY(int y) {
-    return new Point(getX(), y);
+    return new Point(x, y);
   }
 
   /**
@@ -58,25 +60,39 @@ public final class Point {
   }
 
   /**
-   * Returns a new point with xOffset offset in the x-direction
+   * Returns a new point with coordinates that are the result of adding the x-coordinates and
+   * y-coordinates respectively.
+   *
+   * @param point the point that will be added to the point.
+   * @return a new point with the coordinates (x + point.x, y + point.y).
+   * @throws NullPointerException if the supplied point is {@code null}.
+   */
+  public Point add(Point point) {
+    Objects.requireNonNull(point);
+    return new Point(x + point.x, y + point.y);
+  }
+
+  /**
+   * Returns a new point that is offset in the x-axis.
    *
    * @param xOffset the x offset to be added
-   * @return a new point with with coordinates (x + xOffset, y)
+   * @return a new point with the coordinates (x + xOffset, y)
    */
   public Point addX(int xOffset) {
     return new Point(x + xOffset, y);
   }
 
   /**
-   * Returns a new point with yOffset offset in the y-direction
+   * Returns a new point that is offset in the y-axis.
    *
    * @param yOffset the y offset to be added
-   * @return a new point with with coordinates (x, y + yOffset)
+   * @return a new point with the coordinates (x, y + yOffset)
    */
   public Point addY(int yOffset) {
     return new Point(x, y + yOffset);
   }
 
+<<<<<<< HEAD
   /**
    * Returns the distance between this and point p
    *
@@ -87,5 +103,31 @@ public final class Point {
     double dy = p.y - y;
     double dx = p.x - x;
     return Math.sqrt(dy * dy + dx * dx);
+=======
+  @Override
+  public int hashCode() {
+    return Objects.hash(x, y);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Point)) {
+      return false;
+    }
+    if (obj == this) {
+      return true;
+    }
+
+    var c = (Point) obj;
+
+    return (c.getX() == x) && (c.getY() == y);
+  }
+
+  @Override
+  public String toString() {
+    String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
+    String state = "X: " + x + ", Y: " + y;
+    return "(" + id + " | " + state + ")";
+>>>>>>> dev
   }
 }

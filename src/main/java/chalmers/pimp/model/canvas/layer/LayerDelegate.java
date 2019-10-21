@@ -1,5 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
+import chalmers.pimp.model.Point;
 import java.util.Objects;
 
 /**
@@ -18,9 +19,10 @@ final class LayerDelegate {
 
   private final LayerType layerType;
   private String name;
+  private Point position;
   private boolean isVisible;
-  private int x;
-  private int y;
+  private double rotationDegrees;
+  private double alpha;
   private int depthIndex;
 
   /**
@@ -32,43 +34,47 @@ final class LayerDelegate {
 
     name = "";
     isVisible = DEFAULT_VISIBILITY_VALUE;
-    x = 0;
-    y = 0;
+    position = new Point(0, 0);
+
     depthIndex = 0;
+    rotationDegrees = 0;
+    alpha = 1;
   }
 
   /**
    * Creates a copy of the supplied layer delegate.
    *
+   * @param layerDelegate the layer delegate that will be copied.
    * @throws NullPointerException if the supplied layer delegate is {@code null}.
    */
   LayerDelegate(LayerDelegate layerDelegate) {
     Objects.requireNonNull(layerDelegate);
 
     layerType = layerDelegate.layerType;
-    x = layerDelegate.x;
-    y = layerDelegate.y;
+    position = layerDelegate.position;
     depthIndex = layerDelegate.depthIndex;
     name = layerDelegate.name;
     isVisible = layerDelegate.isVisible;
+    rotationDegrees = layerDelegate.rotationDegrees;
+    alpha = layerDelegate.alpha;
   }
 
   /**
-   * Sets the x-coordinate of the layer.
+   * Sets the x-coordinate of the layer's point.
    *
-   * @param x the new x-coordinate of the layer.
+   * @param x the new x-coordinate of the layer's point.
    */
   void setX(int x) {
-    this.x = x;
+    position = position.setX(x);
   }
 
   /**
-   * Sets the y-coordinate of the layer.
+   * Sets the y-coordinate of the layer's point.
    *
-   * @param y the new y-coordinate of the layer.
+   * @param y the new y-coordinate of the layer's point.
    */
   void setY(int y) {
-    this.y = y;
+    position = position.setY(y);
   }
 
   /**
@@ -78,8 +84,8 @@ final class LayerDelegate {
    * @param dy the y-axis offset, may be negative.
    */
   void move(int dx, int dy) {
-    x += dx;
-    y += dy;
+    position = position.addX(dx);
+    position = position.addY(dy);
   }
 
   /**
@@ -112,12 +118,39 @@ final class LayerDelegate {
   }
 
   /**
+   * Returns the depth index for this layer.
+   *
+   * @return the depth index.
+   */
+  int getDepthIndex() {
+    return depthIndex;
+  }
+
+  /**
+   * Sets the depth index for this layer.
+   *
+   * @param depthIndex the new depth index.
+   */
+  void setDepthIndex(int depthIndex) {
+    this.depthIndex = depthIndex;
+  }
+
+  /**
+   * Sets the rotation for this layer.
+   *
+   * @param rotationDegrees the new rotation.
+   */
+  void setRotationDegrees(double rotationDegrees) {
+    this.rotationDegrees = rotationDegrees;
+  }
+
+  /**
    * Returns the x-coordinate of the layer. By default, this property is set to {@code 0}.
    *
    * @return the x-coordinate of the layer.
    */
   int getX() {
-    return x;
+    return position.getX();
   }
 
   /**
@@ -126,7 +159,34 @@ final class LayerDelegate {
    * @return the y-coordinate of the layer.
    */
   int getY() {
-    return y;
+    return position.getY();
+  }
+
+  /**
+   * Returns the rotation value for this layer.
+   *
+   * @return the rotation value.
+   */
+  double getRotationDegrees() {
+    return rotationDegrees;
+  }
+
+  /**
+   * Returns the alpha value for this layer.
+   *
+   * @return the alpha value.
+   */
+  double getAlpha() {
+    return alpha;
+  }
+
+  /**
+   * Sets the alpha value for this layer.
+   *
+   * @param alpha the new alpha.
+   */
+  void setAlpha(double alpha) {
+    this.alpha = alpha;
   }
 
   /**
@@ -147,27 +207,9 @@ final class LayerDelegate {
     return layerType;
   }
 
-  /**
-   * Returns the depth index for this layer.
-   *
-   * @return the depth index.
-   */
-  int getDepthIndex() {
-    return depthIndex;
-  }
-
-  /**
-   * Sets the depth index for this layer.
-   *
-   * @param depthIndex the new depth index.
-   */
-  void setDepthIndex(int depthIndex) {
-    this.depthIndex = depthIndex;
-  }
-
   @Override
   public int hashCode() {
-    return Objects.hash(x, y, name, depthIndex, isVisible);
+    return Objects.hash(position, name, depthIndex, isVisible);
   }
 
   /**
@@ -198,8 +240,8 @@ final class LayerDelegate {
     var layerDelegate = (LayerDelegate) object;
 
     return (layerType == layerDelegate.layerType)
-        && (x == layerDelegate.x)
-        && (y == layerDelegate.y)
+        && (position.getX() == layerDelegate.position.getX())
+        && (position.getY() == layerDelegate.position.getY())
         && (depthIndex == layerDelegate.depthIndex);
   }
 }

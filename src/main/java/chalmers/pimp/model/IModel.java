@@ -4,8 +4,11 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.color.IColor;
+import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.tools.ITool;
+import chalmers.pimp.model.viewport.IReadOnlyViewport;
 
 /**
  * The {@code IModel} interface specifies the facade for the main model component in the
@@ -19,7 +22,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void notifyCanvasUpdateListeners();
 
   /**
-   * Adds a canvas update listener to the chalmers.pimp.model.
+   * Adds a canvas update listener to the model.
    *
    * @param listener the listener that will be added, may not be {@code null}.
    * @throws NullPointerException if any arguments are {@code null}.
@@ -42,6 +45,73 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * @throws IllegalArgumentException if the supplied listener has been added previously.
    */
   void addLayerUpdateListener(ILayerUpdateListener listener);
+
+  /**
+   * Adds a canvas size listener to the model.
+   *
+   * @param listener the listener that will be added, may not be {@code null}.
+   * @throws NullPointerException     if any arguments are {@code null}.
+   * @throws IllegalArgumentException if the supplied listener has been added previously.
+   */
+  void addModelSizeListener(IModelSizeListener listener);
+
+  /**
+   * Draws all of the drawables contained in the model.
+   *
+   * @param renderer the renderer that will be used.
+   * @throws NullPointerException if the supplied renderer is {@code null}.
+   */
+  void draw(IRenderer renderer);
+
+  /**
+   * Moves the viewport.
+   *
+   * @param dx the x-axis offset, may be negative.
+   * @param dy the y-axis offset, may be negative.
+   */
+  void moveViewport(int dx, int dy);
+
+  /**
+   * Centers the viewport over the model canvas.
+   */
+  void centerViewport();
+
+  /**
+   * Sets the width of the viewport.
+   *
+   * @param width the new height of the viewport.
+   * @throws IllegalArgumentException if the supplied width isn't greater than one.
+   */
+  void setViewportWidth(int width);
+
+  /**
+   * Sets the height of the viewport.
+   *
+   * @param height the new height of the viewport.
+   * @throws IllegalArgumentException if the supplied height isn't greater than one.
+   */
+  void setViewportHeight(int height);
+
+  /**
+   * Returns the width of the model canvas. Note! This is not the width of the viewport.
+   *
+   * @return the width of the model canvas.
+   */
+  int getWidth();
+
+  /**
+   * Returns the height of the model canvas. Note! This is not the height of the viewport.
+   *
+   * @return the height of the model canvas.
+   */
+  int getHeight();
+
+  /**
+   * Returns a copy of the current viewport.
+   *
+   * @return a copy of the current viewport.
+   */
+  IReadOnlyViewport getViewport();
 
   /**
    * Starts moving the currently active layer. This method has no effect if there is no active
@@ -72,10 +142,12 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   /**
    * Starts a stroke.
    *
-   * @param pixel the pixel affected by the stroke.
+   * @param pixel    the pixel affected by the stroke.
+   * @param diameter the diameter of the stroke.
+   * @param color    the color that will be used.
    * @throws NullPointerException if any arguments are {@code null}.
    */
-  void startStroke(IPixel pixel, int diameter);
+  void startStroke(IPixel pixel, int diameter, IColor color);
 
   /**
    * Updates an ongoing stroke. This method has no effect if there is no ongoing stroke.
@@ -167,6 +239,41 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void moveActiveLayer(int dx, int dy);
 
   /**
+   * Starts rotating the currently active layer. This method has no effect if there is no active
+   * layer.
+   *
+   * @param x the x-coordinate of the initial mouse point to calculate rotation in relation to said
+   *          mouse point.
+   * @param y the y-coordinate of the initial mouse point to calculate rotation in relation to said
+   *          mouse point.
+   */
+  void startRotatingActiveLayer(int x, int y);
+
+  /**
+   * Updates the rotation of the currently active layer. This method has no effect if the {@link
+   * IModel#startMovingActiveLayer(int, int)} method hasn't been invoked before invoking this
+   * method.
+   *
+   * @param x the new x-coordinate of the layer.
+   * @param y the new y-coordinate of the layer.
+   */
+  void updateRotatingActiveLayer(int x, int y);
+
+  /**
+   * Stops the rotation of the currently active layer. This method has no effect if the {@link
+   * IModel#startMovingActiveLayer(int, int)} method hasn't been invoked before invoking this
+   * method.
+   */
+  void stopRotatingActiveLayer();
+
+  /**
+   * Rotates the active layer by alpha degrees.
+   *
+   * @param alpha the rotation in degrees.
+   */
+  void rotateActiveLayer(double alpha);
+
+  /**
    * Can be Null if user chooses to deselect a tool.
    *
    * @param tool the tool to be selected.
@@ -213,6 +320,13 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   boolean isLayerVisible(int layerIndex);
 
   /**
+   * Indicates whether or not there is a currently active layer.
+   *
+   * @return {@code true} if there is an active layer; {@code false} otherwise.
+   */
+  boolean hasActiveLayer();
+
+  /**
    * Returns the name of the layer associated with the supplied layer depth index. This method
    * returns an empty string if there is no corresponding layer.
    *
@@ -238,9 +352,34 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   IReadOnlyLayer getActiveLayer(); // TODO remove, high risk of invalid use
 
   /**
+   * Sets the color that should be used for drawing items on the canvas.
+   *
+   * @param color the new color.
+   * @throws NullPointerException if the provided color is {@code null}.
+   */
+  void setSelectedColor(IColor color);
+
+  /**
+   * Returns the selected color that is used for when creating new shapes, drawings etc.
+   *
+   * @return the selected color that is used for when creating new shapes, drawings etc.
+   */
+  IColor getSelectedColor();
+
+  /**
    * Returns all of the layers in the model.
    *
    * @return all of the layers in the model.
    */
   Iterable<? extends IReadOnlyLayer> getLayers();
+
+  /**
+   * Adds a listener.
+   *
+   * @param listener a listener that listens to color changes.
+   * @throws NullPointerException if the provided observer is null.
+   */
+  void addColorChangeListener(IColorChangeListener listener);
+
+  void notifyColorUpdateListeners();
 }

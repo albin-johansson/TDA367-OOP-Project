@@ -7,7 +7,7 @@ import chalmers.pimp.model.canvas.ICanvas;
 import java.util.Objects;
 
 /**
- * The {@code StrokeCommand} class is a subclass of {@code AbstractCommand} that represents the
+ * The {@code MoveCommand} class is a subclass of {@code AbstractCommand} that represents the
  * action of moving a layer (by changing its x- and y-coordinates).
  *
  * @see AbstractCommand

@@ -83,6 +83,11 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
+  public void setActiveLayerRotation(double alpha) {
+    layerManager.rotateActiveLayer(alpha);
+  }
+
+  @Override
   public void setLayerVisibility(int layerIndex, boolean isVisible) {
     layerManager.setLayerVisibility(layerIndex, isVisible);
     notifyCanvasUpdateListeners();
@@ -125,6 +130,11 @@ final class CanvasImpl implements ICanvas {
   @Override
   public boolean isLayerVisible(int layerIndex) {
     return layerManager.isLayerVisible(layerIndex);
+  }
+
+  @Override
+  public boolean hasActiveLayer() {
+    return layerManager.hasActiveLayer();
   }
 
   @Override

@@ -28,9 +28,9 @@ final class LayerUpdateListenerComposite extends AbstractComposite<ILayerUpdateL
   }
 
   @Override
-  public void layersUpdated(LayerUpdateEvent e) {
+  public void layersUpdated(LayerUpdateEvent event) {
     for (ILayerUpdateListener listener : this) {
-      listener.layersUpdated(e);
+      listener.layersUpdated(event);
     }
   }
 }

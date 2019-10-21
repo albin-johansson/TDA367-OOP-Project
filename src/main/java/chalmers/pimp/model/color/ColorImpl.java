@@ -3,18 +3,19 @@ package chalmers.pimp.model.color;
 import java.util.Objects;
 
 /**
- * The {@code ColorImp} class is an implementation of the {@code IColor} interface.
+ * The {@code ColorImp} class is an implementation of the {@code IColor} interface. A immutable
+ * color.
  *
  * @see IColor
  */
-public final class ColorImpl implements IColor {
+final class ColorImpl implements IColor {
 
   private static final int MAX_VALUE = 255;
   private static final int MIN_VALUE = 0;
-  private int red;
-  private int green;
-  private int blue;
-  private int alpha;
+  private final int red;
+  private final int green;
+  private final int blue;
+  private final int alpha;
 
   /**
    * @param red   the red component [0, 255].
@@ -23,7 +24,10 @@ public final class ColorImpl implements IColor {
    * @param alpha the alpha component [0, 255].
    */
   ColorImpl(int red, int green, int blue, int alpha) {
-    setColor(red, green, blue, alpha);
+    this.red = getClosestValue(red);
+    this.green = getClosestValue(green);
+    this.blue = getClosestValue(blue);
+    this.alpha = getClosestValue(alpha);
   }
 
   /**
@@ -43,16 +47,17 @@ public final class ColorImpl implements IColor {
   /**
    * Returns the closest percentage between [0, 1].
    *
+   * @param percentage the percentage that will be checked, in the range [0, 1].
    * @return the closest percentage.
    */
-  private double getClosestPercentage(double val) {
+  private double getClosestPercentage(double percentage) {
     double max = 1;
     double min = 0;
 
-    if (val >= max) {
+    if (percentage >= max) {
       return max;
     } else {
-      return Math.max(min, val);
+      return Math.max(min, percentage);
     }
   }
 
@@ -78,56 +83,53 @@ public final class ColorImpl implements IColor {
   }
 
   @Override
-  public void setColor(int red, int green, int blue, int alpha) {
-    this.red = getClosestValue(red);
-    this.green = getClosestValue(green);
-    this.blue = getClosestValue(blue);
-    this.alpha = getClosestValue(alpha);
+  public IColor setColor(int red, int green, int blue, int alpha) {
+    return new ColorImpl(red, green, blue, alpha);
   }
 
   @Override
-  public void setColor(int red, int green, int blue) {
-    setColor(red, green, blue, MAX_VALUE);
+  public IColor setColor(int red, int green, int blue) {
+    return new ColorImpl(red, green, blue, alpha);
   }
 
   @Override
-  public void setRed(int red) {
-    this.red = getClosestValue(red);
+  public IColor setRed(int red) {
+    return new ColorImpl(red, green, blue, alpha);
   }
 
   @Override
-  public void setGreen(int green) {
-    this.green = getClosestValue(green);
+  public IColor setGreen(int green) {
+    return new ColorImpl(red, green, blue, alpha);
   }
 
   @Override
-  public void setBlue(int blue) {
-    this.blue = getClosestValue(blue);
+  public IColor setBlue(int blue) {
+    return new ColorImpl(red, green, blue, alpha);
   }
 
   @Override
-  public void setAlpha(int alpha) {
-    this.alpha = getClosestValue(alpha);
+  public IColor setAlpha(int alpha) {
+    return new ColorImpl(red, green, blue, alpha);
   }
 
   @Override
-  public void setPercentageRed(double percentageRed) {
-    red = convertPercentage(percentageRed);
+  public IColor setPercentageRed(double percentageRed) {
+    return new ColorImpl(convertPercentage(percentageRed), green, blue, alpha);
   }
 
   @Override
-  public void setPercentageGreen(double percentageGreen) {
-    green = convertPercentage(percentageGreen);
+  public IColor setPercentageGreen(double percentageGreen) {
+    return new ColorImpl(red, convertPercentage(percentageGreen), blue, alpha);
   }
 
   @Override
-  public void setPercentageBlue(double percentageBlue) {
-    blue = convertPercentage(percentageBlue);
+  public IColor setPercentageBlue(double percentageBlue) {
+    return new ColorImpl(red, green, convertPercentage(percentageBlue), alpha);
   }
 
   @Override
-  public void setPercentageAlpha(double percentageAlpha) {
-    alpha = convertPercentage(percentageAlpha);
+  public IColor setPercentageAlpha(double percentageAlpha) {
+    return new ColorImpl(red, green, blue, convertPercentage(percentageAlpha));
   }
 
   @Override
@@ -177,14 +179,14 @@ public final class ColorImpl implements IColor {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof IReadOnlyColor)) {
+    if (!(obj instanceof IColor)) {
       return false;
     }
     if (obj == this) {
       return true;
     }
 
-    var c = (IReadOnlyColor) obj;
+    var c = (IColor) obj;
 
     return (c.getRed() == red)
         && (c.getGreen() == green)

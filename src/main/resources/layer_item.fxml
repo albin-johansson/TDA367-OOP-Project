@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
@@ -11,40 +12,67 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<fx:root id="layer-item" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="76.0" prefWidth="225.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="280.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <HBox alignment="CENTER_LEFT" layoutX="-2.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
-      <children>
-            <TextField fx:id="textField" alignment="CENTER" editable="false" focusTraversable="false" onAction="#setName" prefHeight="30.0" prefWidth="100.0" text="Layer">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor></TextField>
-            <ImageView fx:id="layerTypeIcon" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/light/raster.png" />
-               </image>
-            </ImageView>
-        <ToggleButton fx:id="toggleButton" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#toggleVisibility" prefHeight="34.0" prefWidth="44.0" selected="true" textAlignment="CENTER">
-          <graphic>
-            <ImageView fx:id="imageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-          </graphic>
-          <tooltip>
-            <Tooltip text="Toggle visibility for this layer" />
-          </tooltip>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-               <contextMenu>
-                  <ContextMenu fx:id="contextMenu">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#removeLayer" text="Delete Layer" />
-                        <MenuItem mnemonicParsing="false" onAction="#renameLayer" text="Rename Layer" />
-                    </items>
-                  </ContextMenu>
-               </contextMenu>
-        </ToggleButton>
-      </children>
-    </HBox>
+      <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane id="rename-box" fx:id="renamePane" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane id="layer-item" layoutX="7.0" layoutY="11.0" prefHeight="55.0" prefWidth="263.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="12.0">
+                     <children>
+                        <TextField fx:id="renameField" onAction="#setName" onKeyPressed="#checkIfCancel" prefHeight="32.0" prefWidth="187.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="12.0" />
+                        <Button fx:id="renameButton" layoutX="211.0" layoutY="12.0" mnemonicParsing="false" onAction="#setName" prefHeight="32.0" prefWidth="44.0">
+                           <graphic>
+                              <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/light/checkmark.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane id="layer-item" fx:id="standardPane" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <children>
+                        <Label fx:id="layerName" alignment="CENTER" prefHeight="71.0" prefWidth="127.0" text="Label" textAlignment="CENTER" wrapText="true" />
+                        <ImageView fx:id="layerPreview" fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/light/raster.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                    <ToggleButton fx:id="toggleButton" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#toggleVisibility" prefHeight="34.0" prefWidth="44.0" selected="true" textAlignment="CENTER">
+                      <graphic>
+                        <ImageView fx:id="imageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                      </graphic>
+                      <tooltip>
+                        <Tooltip text="Toggle visibility for this layer" />
+                      </tooltip>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                           <contextMenu>
+                              <ContextMenu fx:id="contextMenu">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#removeLayer" text="Delete Layer" />
+                                    <MenuItem mnemonicParsing="false" onAction="#renameLayer" text="Rename Layer" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
+                    </ToggleButton>
+                  </children>
+                </HBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
   </children>
 </fx:root>

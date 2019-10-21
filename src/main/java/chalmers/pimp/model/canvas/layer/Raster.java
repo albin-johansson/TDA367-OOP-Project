@@ -1,9 +1,11 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.IRenderer;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.Objects;
 
 /**
@@ -98,6 +100,16 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
+  public void setRotation(double rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
+  }
+
+  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
   }
@@ -123,8 +135,23 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
+  public Point getCenterPoint() {
+    return new Point(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
+  }
+
+  @Override
   public LayerType getLayerType() {
     return layerDelegate.getLayerType();
+  }
+
+  @Override
+  public double getRotation() {
+    return layerDelegate.getRotationDegrees();
+  }
+
+  @Override
+  public double getAlpha() {
+    return layerDelegate.getAlpha();
   }
 
   @Override
@@ -143,9 +170,16 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
-  public void draw(IRenderer renderer) {
+  public void draw(IRenderer renderer, IReadOnlyViewport viewport) {
     if (isVisible()) {
-      renderer.drawImage(pixelData, getX(), getY(), pixelData.getWidth(), pixelData.getHeight());
+      renderer.startTransform(getRotation(), viewport.translate(getCenterPoint()));
+      renderer.setGlobalAlpha(getAlpha());
+
+      int drawX = viewport.getTranslatedX(getX());
+      int drawY = viewport.getTranslatedY(getY());
+      renderer.drawImage(pixelData, drawX, drawY);
+
+      renderer.endTransform();
     }
   }
 
