@@ -2,8 +2,6 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.canvas.layer.IColorable;
-import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.service.ColorConverterService;
