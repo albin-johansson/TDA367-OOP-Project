@@ -74,8 +74,8 @@ final class PalettePane extends AnchorPane {
    *                               otherwise.
    */
   private void enableRasterTools(boolean isRasterToolsAvailable) {
-    pixelPenButton.setDisable(isRasterToolsAvailable);
-    eraserButton.setDisable(isRasterToolsAvailable);
+    pixelPenButton.setDisable(!isRasterToolsAvailable);
+    eraserButton.setDisable(!isRasterToolsAvailable);
   }
 
   @FXML
