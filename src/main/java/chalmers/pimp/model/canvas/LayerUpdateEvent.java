@@ -138,9 +138,10 @@ public final class LayerUpdateEvent {
   void setSelectedLayer(int index) {
     int i = 0;
     for (IReadOnlyLayer layer : layers) {
-      if (i++ == index) {
+      if (index == i) {
         selectedLayer = layer;
       }
+      i++;
     }
   }
 
