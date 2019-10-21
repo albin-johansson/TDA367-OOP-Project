@@ -32,13 +32,6 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
   int getY();
 
   /**
-   * Returns a pixel representation of this layer, which is read-only.
-   *
-   * @return a pixel representation of this layer.
-   */
-  IReadOnlyPixelData getPixelData();
-
-  /**
    * Returns the layer's name
    *
    * @return the layer's name as a {@code String}

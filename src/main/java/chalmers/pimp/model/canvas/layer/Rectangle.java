@@ -157,23 +157,6 @@ final class Rectangle implements ILayer {
   }
 
   @Override
-  public IReadOnlyPixelData getPixelData() {
-    // Ensures that the pixel data is at least 1x1
-    int dx = (width < 1) ? 1 : 0;
-    int dy = (height < 1) ? 1 : 0;
-
-    var pixelData = new PixelData(width + dx, height + dy);
-
-    for (int row = 0; row < height; row++) {
-      for (int col = 0; col < width; col++) {
-        pixelData.setPixel(PixelFactory.createPixel(col, row, color));
-      }
-    }
-
-    return pixelData;
-  }
-
-  @Override
   public void draw(IRenderer renderer, IReadOnlyViewport viewport) {
     if (isVisible()) {
       renderer.startTransform(getRotation(), viewport.translate(getCenterPoint()));

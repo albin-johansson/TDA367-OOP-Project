@@ -109,6 +109,9 @@ final class LayerItemPane extends AnchorPane {
     addListeners();
   }
 
+  /**
+   * Adds all relevant listeners to the root pane and other components.
+   */
   private void addListeners() {
     setOnDragDetected(this::handleDragDetected);
     setOnDragOver(this::handleDragOver);
@@ -129,7 +132,7 @@ final class LayerItemPane extends AnchorPane {
       }
     });
   }
-  
+
   /**
    * Handles a mouse event triggered by initiating a mouse drag on the layer item pane.
    *

@@ -106,11 +106,6 @@ final class Doodle implements ILayer {
   }
 
   @Override
-  public IReadOnlyPixelData getPixelData() {
-    return null; // FIXME remove
-  }
-
-  @Override
   public LayerType getLayerType() {
     return layerDelegate.getLayerType();
   }

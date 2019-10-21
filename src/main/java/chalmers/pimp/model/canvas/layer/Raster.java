@@ -165,11 +165,6 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public IReadOnlyPixelData getPixelData() {
-    return pixelData;
-  }
-
-  @Override
   public void draw(IRenderer renderer, IReadOnlyViewport viewport) {
     if (isVisible()) {
       renderer.startTransform(getRotation(), viewport.translate(getCenterPoint()));
