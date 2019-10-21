@@ -16,9 +16,9 @@ public interface IColorable {
   void setColor(IColor color);
 
   /**
-   * Returns the selected color.
+   * Returns the color of the colorable object.
    *
-   * @return the selected color.
+   * @return the color of the colorable object.
    */
   IColor getColor();
 }
