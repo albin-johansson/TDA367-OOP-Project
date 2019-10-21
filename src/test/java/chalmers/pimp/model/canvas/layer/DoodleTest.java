@@ -77,8 +77,6 @@ class DoodleTest {
   void draw2() {
     Point p = new Point(10, 20);
     RendererMock renderer = new RendererMock();
-    doodle.addPoint(p);
-    doodle.draw(renderer, ViewportFactory.createViewport(0, 0, 100, 100));
 
     doodle.addPoint(p);
     doodle.draw(renderer, viewport);
@@ -95,8 +93,7 @@ class DoodleTest {
     doodle.setY(20);
     doodle.draw(renderer, ViewportFactory.createViewport(0, 0, 100, 100));
     assertEquals(renderer.lines.size(), 1);
-    assertEquals(new Line(p.getX() + 10, p.getY() + 20, p.getX() + 10, p.getY() + 20),
-        renderer.lines.get(0));
+    assertEquals(new Line(p, p), renderer.lines.get(0));
   }
 
   @Test
