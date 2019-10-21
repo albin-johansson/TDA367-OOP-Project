@@ -5,6 +5,7 @@ import chalmers.pimp.model.canvas.layer.IColorable;
 import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
 import java.util.Objects;
+import javax.swing.Icon;
 
 /**
  * The {@code ColorModelImpl} class is an implementation of the {@code IColorModel} interface.
@@ -16,9 +17,13 @@ final class ColorModelImpl implements IColorModel {
   private final ColorChangeListenerComposite colorChangeListeners;
   private IColor color;
 
-  ColorModelImpl() {
+  /**
+   * @param color the color.
+   * @throws NullPointerException if the provided color is {@code null}.
+   */
+  ColorModelImpl(IColor color) {
     colorChangeListeners = new ColorChangeListenerComposite();
-    color = Colors.BLACK;
+    this.color = Objects.requireNonNull(color);
   }
 
   @Override
