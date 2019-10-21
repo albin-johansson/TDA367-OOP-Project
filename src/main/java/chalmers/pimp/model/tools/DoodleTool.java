@@ -19,12 +19,7 @@ final class DoodleTool implements ITool {
 
   private final IModel model;
   private final int lineWidth;
-<<<<<<< HEAD
-  private int x, y;
   private IDoodleLayer doodle;
-=======
-  private ILayer doodle;
->>>>>>> dev
 
   /**
    * @param lineWidth the line width of the doodle.
@@ -45,17 +40,13 @@ final class DoodleTool implements ITool {
   @Override
   public void dragged(MouseStatus mouseStatus) {
     model.notifyCanvasUpdateListeners();
-<<<<<<< HEAD
-    doodle.addPoint(new Point(mouseStatus.getX(), mouseStatus.getY()));
-    doodle.draw(model.getRenderer());
-=======
 
     int x = model.getViewport().getTranslatedX(mouseStatus.getX());
     int y = model.getViewport().getTranslatedY(mouseStatus.getY());
 
-    doodle.setPixel(PixelFactory.createPixel(x, y));
+    doodle.addPoint(new Point(mouseStatus.getX() + model.getViewport().getX(),
+        mouseStatus.getY() + model.getViewport().getY()));
     doodle.draw(model.getRenderer(), model.getViewport());
->>>>>>> dev
   }
 
   @Override

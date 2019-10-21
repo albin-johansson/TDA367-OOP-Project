@@ -1,6 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.Point;
+import chalmers.pimp.model.viewport.IReadOnlyViewport;
 
 public interface IDoodleLayer extends ILayer {
 

@@ -55,17 +55,6 @@ final class Doodle implements IDoodleLayer {
   }
 
   @Override
-<<<<<<< HEAD
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
-=======
-  public void setPixel(IPixel pixel) {
-    Point p = new Point(pixel.getX(), pixel.getY());
-    points.add(p);
->>>>>>> dev
-  }
-
-  @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
   }
@@ -250,12 +239,6 @@ final class Doodle implements IDoodleLayer {
   @Override
   public void addPoint(Point p) {
     points.add(p);
-    if (p.getX() > width - lineWidth) {
-      width = p.getX() + lineWidth;
-    }
-    if (p.getY() > height - lineWidth) {
-      height = p.getY() + lineWidth;
-    }
   }
 
   @Override

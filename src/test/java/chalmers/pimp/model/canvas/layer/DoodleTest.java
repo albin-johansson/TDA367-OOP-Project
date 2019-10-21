@@ -2,35 +2,23 @@ package chalmers.pimp.model.canvas.layer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-<<<<<<< HEAD
-import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
-=======
->>>>>>> dev
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.mock.Line;
 import chalmers.pimp.model.mock.RendererMock;
-<<<<<<< HEAD
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
-=======
-import chalmers.pimp.model.pixeldata.IPixel;
->>>>>>> dev
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import chalmers.pimp.model.viewport.ViewportFactory;
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class DoodleTest {
 
-<<<<<<< HEAD
   private IDoodleLayer doodle;
-=======
   private IReadOnlyViewport viewport;
   private static final int lineWidth = 10;
-  private ILayer doodle;
->>>>>>> dev
 
   @BeforeEach
   void init() {
@@ -48,9 +36,9 @@ class DoodleTest {
 
   @Test
   void setX() {
-    doodle.setPixel(PixelFactory.createPixel(10,10));
-    doodle.setPixel(PixelFactory.createPixel(20,20));
-    doodle.setPixel(PixelFactory.createPixel(30,5));
+    doodle.addPoint(new Point(10,10));
+    doodle.addPoint(new Point(20,20));
+    doodle.addPoint(new Point(30,5));
 
     doodle.setX(10);
     assertEquals(doodle.getX(), 10);
@@ -60,9 +48,9 @@ class DoodleTest {
 
   @Test
   void setY() {
-    doodle.setPixel(PixelFactory.createPixel(10,10));
-    doodle.setPixel(PixelFactory.createPixel(20,20));
-    doodle.setPixel(PixelFactory.createPixel(30,5));
+    doodle.addPoint(new Point(10,10));
+    doodle.addPoint(new Point(20,20));
+    doodle.addPoint(new Point(30,5));
 
     doodle.setY(10);
     assertEquals(doodle.getY(), 10);
@@ -87,58 +75,34 @@ class DoodleTest {
 
   @Test
   void draw2() {
-<<<<<<< HEAD
     Point p = new Point(10, 20);
     RendererMock renderer = new RendererMock();
     doodle.addPoint(p);
-    doodle.draw(renderer);
-=======
-    IPixel pixel = PixelFactory.createPixel(10, 20);
-    var renderer = new RendererMock();
+    doodle.draw(renderer, ViewportFactory.createViewport(0, 0, 100, 100));
 
-    doodle.setPixel(pixel);
+    doodle.addPoint(p);
     doodle.draw(renderer, viewport);
->>>>>>> dev
     assertEquals(renderer.lines.size(), 1);
-    assertEquals(new Line(pixel, pixel), renderer.lines.get(0));
+    assertEquals(new Line(p, p), renderer.lines.get(0));
   }
 
   @Test
   void draw3() {
-<<<<<<< HEAD
     Point p = new Point(10, 20);
     RendererMock renderer = new RendererMock();
     doodle.addPoint(p);
     doodle.setX(10);
     doodle.setY(20);
-    doodle.draw(renderer);
+    doodle.draw(renderer, ViewportFactory.createViewport(0, 0, 100, 100));
     assertEquals(renderer.lines.size(), 1);
     assertEquals(new Line(p.getX() + 10, p.getY() + 20, p.getX() + 10, p.getY() + 20),
         renderer.lines.get(0));
-=======
-//    IPixel pixel = PixelFactory.createPixel(10, 20);
-//    doodle.setPixel(pixel);
-//    doodle.setX(10);
-//    doodle.setY(20);
-//
-//    var renderer = new RendererMock();
-//    doodle.draw(renderer, viewport);
-//    assertEquals(renderer.lines.size(), 1);
-//
-//    var line = new Line(pixel.getX() + 10, pixel.getY() + 20, pixel.getX() + 10, pixel.getY() + 20);
-//    assertEquals(line, renderer.lines.get(0));
-//    assertEquals(new Line(10, 20, 10, 20), renderer.lines.get(0));
->>>>>>> dev
   }
 
   @Test
   void draw4() {
-<<<<<<< HEAD
     List<Point> points = new ArrayList<>();
-=======
->>>>>>> dev
     int nPixels = 10;
-    var pixels = new ArrayList<IPixel>(nPixels);
 
     for (int i = 0; i < nPixels; i++) {
       points.add(new Point(i * 10, i * 10 + 5));
@@ -159,18 +123,15 @@ class DoodleTest {
 
   @Test
   void copy() {
-<<<<<<< HEAD
     List<Point> pixels = new ArrayList<>();
-=======
->>>>>>> dev
     int nPixels = 10;
-    var pixels = new ArrayList<IPixel>(nPixels);
+    var points = new ArrayList<Point>(nPixels);
 
     for (int i = 0; i < nPixels; i++) {
-      pixels.add(new Point(i * 10, i * 10 + 5));
+      points.add(new Point(i * 10, i * 10 + 5));
     }
 
-    for (Point p : pixels) {
+    for (Point p : points) {
       doodle.addPoint(p);
     }
 
@@ -182,15 +143,15 @@ class DoodleTest {
     assertEquals(renderer.lines.size(), nPixels - 1);
 
     for (int i = 1; i < nPixels; i++) {
-      assertEquals(new Line(pixels.get(i), pixels.get(i - 1)), renderer.lines.get(i - 1));
+      assertEquals(new Line(points.get(i), points.get(i - 1)), renderer.lines.get(i - 1));
     }
   }
 
   @Test
   void getHeight() {
     assertEquals(doodle.getHeight(), lineWidth * 2);
-    doodle.setPixel(PixelFactory.createPixel(10, 10));
-    doodle.setPixel(PixelFactory.createPixel(10, 20));
+    doodle.addPoint(new Point(10, 10));
+    doodle.addPoint(new Point(10, 20));
 
     assertEquals(doodle.getHeight(), 10 + lineWidth * 2);
   }
@@ -198,8 +159,8 @@ class DoodleTest {
   @Test
   void getWidth() {
     assertEquals(doodle.getWidth(), lineWidth * 2);
-    doodle.setPixel(PixelFactory.createPixel(10, 10));
-    doodle.setPixel(PixelFactory.createPixel(20, 10));
+    doodle.addPoint(new Point(10, 10));
+    doodle.addPoint(new Point(20, 10));
 
     assertEquals(doodle.getWidth(), 10 + lineWidth * 2);
   }

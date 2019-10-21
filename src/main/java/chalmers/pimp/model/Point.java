@@ -92,7 +92,6 @@ public final class Point {
     return new Point(x, y + yOffset);
   }
 
-<<<<<<< HEAD
   /**
    * Returns the distance between this and point p
    *
@@ -103,7 +102,8 @@ public final class Point {
     double dy = p.y - y;
     double dx = p.x - x;
     return Math.sqrt(dy * dy + dx * dx);
-=======
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(x, y);
@@ -128,6 +128,5 @@ public final class Point {
     String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
     String state = "X: " + x + ", Y: " + y;
     return "(" + id + " | " + state + ")";
->>>>>>> dev
   }
 }
