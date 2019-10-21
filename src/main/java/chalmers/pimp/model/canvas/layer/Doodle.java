@@ -189,6 +189,7 @@ final class Doodle implements ILayer, IColorable {
     renderer.startTransform(getRotation(), viewport.translate(getCenterPoint()));
     renderer.setGlobalAlpha(getAlpha());
     renderer.setBorderColor(color);
+    renderer.setFillColor(color);
     renderer.setLineWidth(lineWidth);
 
     var position = new Point(layerDelegate.getX(), layerDelegate.getY());
