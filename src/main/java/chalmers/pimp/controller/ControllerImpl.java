@@ -5,7 +5,7 @@ import chalmers.pimp.controller.components.PimpEditorPane;
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
-import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.pixeldata.IRasterData;
 import chalmers.pimp.model.tools.ITool;
 import chalmers.pimp.model.tools.ToolFactory;
 import chalmers.pimp.service.ImageExportService;
@@ -159,13 +159,13 @@ final class ControllerImpl implements IController {
     try {
       var imageChooser = new ImageChooser();
 
-      PixelData pixelData = imageChooser.openDialog(stage);
-      if (pixelData == null) {
+      IRasterData rasterData = imageChooser.openDialog(stage);
+      if (rasterData == null) {
         return;
       }
       String pixelDataName = imageChooser.getMostRecentFileName();
 
-      model.addLayer(LayerFactory.createRasterLayer(pixelData, pixelDataName));
+      model.addLayer(LayerFactory.createRasterLayer(rasterData, pixelDataName));
     } catch (Exception e) {
       System.err.println("Failed to import image! Exception: " + e);
     }

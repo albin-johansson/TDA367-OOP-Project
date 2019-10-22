@@ -3,19 +3,20 @@ package chalmers.pimp.model.canvas.layer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
-import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.pixeldata.IRasterData;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
+import chalmers.pimp.model.pixeldata.RasterDataFactory;
 import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.Objects;
 
 /**
- * The {@code Raster} class is an implementation of the {@code IRasterLayer} interface that represents a
- * layer that contains an arbitrary collection of pixels.
+ * The {@code Raster} class is an implementation of the {@code IRasterLayer} interface that
+ * represents a layer that contains an arbitrary collection of pixels.
  */
 final class Raster implements IRasterLayer {
 
   private final LayerDelegate layerDelegate;
-  private final PixelData pixelData;
+  private final IRasterData rasterData;
 
   /**
    * @param width  the width of the raster.
@@ -24,30 +25,30 @@ final class Raster implements IRasterLayer {
   Raster(int width, int height) {
     layerDelegate = new LayerDelegate(LayerType.RASTER);
     layerDelegate.setName("Raster");
-    pixelData = new PixelData(width, height);
+    rasterData = RasterDataFactory.createRasterData(width, height);
   }
 
   /**
    * Creates a raster that is a copy of the supplied pixel data.
    *
-   * @param pixelData the pixel data that will be copied.
-   * @throws NullPointerException if the supplied pixel data is {@code null}.
+   * @param rasterData the raster data that will be copied.
+   * @throws NullPointerException if the supplied raster data is {@code null}.
    */
-  Raster(PixelData pixelData) {
-    this.pixelData = Objects.requireNonNull(pixelData);
+  Raster(IRasterData rasterData) {
+    this.rasterData = Objects.requireNonNull(rasterData);
     layerDelegate = new LayerDelegate(LayerType.RASTER);
     layerDelegate.setName("Import");
   }
 
   /**
-   * Creates a raster that is a copy of the supplied pixel data and sets the name of the raster.
+   * Creates a raster that is a copy of the supplied raster data and sets the name of the raster.
    *
-   * @param pixelData     the pixel data that will be copied.
+   * @param rasterData    the raster data that will be copied.
    * @param pixelDataName the name of the new raster.
-   * @throws NullPointerException if the supplied pixel data or pixel data name is {@code null}.
+   * @throws NullPointerException if any references are {@code null}.
    */
-  Raster(PixelData pixelData, String pixelDataName) {
-    this.pixelData = Objects.requireNonNull(pixelData);
+  Raster(IRasterData rasterData, String pixelDataName) {
+    this.rasterData = Objects.requireNonNull(rasterData);
     layerDelegate = new LayerDelegate(LayerType.RASTER);
     layerDelegate.setName(Objects.requireNonNull(pixelDataName));
   }
@@ -60,13 +61,13 @@ final class Raster implements IRasterLayer {
    */
   private Raster(Raster raster) {
     Objects.requireNonNull(raster);
-    pixelData = new PixelData(raster.pixelData);
+    rasterData = RasterDataFactory.createRasterData(raster.rasterData);
     layerDelegate = new LayerDelegate(raster.layerDelegate);
   }
 
   @Override
   public void setPixel(IPixel pixel) {
-    pixelData.setPixel(pixel);
+    rasterData.setPixel(pixel);
   }
 
   @Override
@@ -156,17 +157,17 @@ final class Raster implements IRasterLayer {
 
   @Override
   public int getWidth() {
-    return pixelData.getWidth();
+    return rasterData.getWidth();
   }
 
   @Override
   public int getHeight() {
-    return pixelData.getHeight();
+    return rasterData.getHeight();
   }
 
   @Override
-  public IReadOnlyPixelData getPixelData() {
-    return pixelData;
+  public IReadOnlyRasterData getPixelData() {
+    return rasterData;
   }
 
   @Override
@@ -177,7 +178,7 @@ final class Raster implements IRasterLayer {
 
       int drawX = viewport.getTranslatedX(getX());
       int drawY = viewport.getTranslatedY(getY());
-      renderer.drawImage(pixelData, drawX, drawY);
+      renderer.drawImage(rasterData, drawX, drawY);
 
       renderer.endTransform();
     }
@@ -190,7 +191,7 @@ final class Raster implements IRasterLayer {
 
   @Override
   public int hashCode() {
-    return Objects.hash(layerDelegate, pixelData);
+    return Objects.hash(layerDelegate, rasterData);
   }
 
   @Override
@@ -204,6 +205,6 @@ final class Raster implements IRasterLayer {
 
     var raster = (Raster) object;
 
-    return layerDelegate.equals(raster.layerDelegate) && pixelData.equals(raster.pixelData);
+    return layerDelegate.equals(raster.layerDelegate) && rasterData.equals(raster.rasterData);
   }
 }
