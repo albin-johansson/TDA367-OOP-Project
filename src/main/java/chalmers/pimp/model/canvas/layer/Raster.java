@@ -3,7 +3,6 @@ package chalmers.pimp.model.canvas.layer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import chalmers.pimp.model.pixeldata.PixelData;
 import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.Objects;

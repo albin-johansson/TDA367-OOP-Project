@@ -8,21 +8,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefWidth="310.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <StackPane fx:id="stackPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label id="layers-label" alignment="CENTER" text="Label" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+    <StackPane fx:id="stackPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
       <children>
-        <ScrollPane>
+        <ScrollPane hbarPolicy="NEVER">
           <content>
             <VBox fx:id="layerItemVBox" alignment="TOP_RIGHT" spacing="5.0">
                      <padding>
                         <Insets left="5.0" />
-                     </padding></VBox>
+                     </padding>
+                  </VBox>
           </content>
         </ScrollPane>
             <AnchorPane fx:id="emptyLayerPane" StackPane.alignment="CENTER">
                <children>
-            <Label alignment="CENTER" text="Layer Manager" textAlignment="CENTER">
+            <Label alignment="CENTER" layoutX="19.0" prefHeight="62.0" prefWidth="272.0" text="You currently haver no layers, use the tools on the left to get started!" textAlignment="CENTER" wrapText="true">
               <font>
                 <Font size="36.0" />
               </font>
