@@ -191,7 +191,6 @@
 .text-input {
   -fx-font-size: 12pt;
   -fx-font-weight: normal;
-  /*-fx-text-fill: white !important;*/
 }
 
 #rename-box {
