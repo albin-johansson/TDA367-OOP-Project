@@ -5,12 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * The {@code PixelData} class is a representation of a collection of pixels. This class implements
- * the {@code IReadOnlyPixelData} interface.
+ * The {@code RasterDataImpl} class is an implementation of the {@code IRasterData} interface.
  */
-public final class PixelData implements IReadOnlyPixelData {
-
-  // FIXME this class should not be public (create interface)
+final class RasterDataImpl implements IRasterData {
 
   /**
    * The max width of the matrix.
@@ -33,7 +30,7 @@ public final class PixelData implements IReadOnlyPixelData {
    * @param height the amount of pixels in height.
    * @throws IndexOutOfBoundsException if width or height is smaller than or equal to zero.
    */
-  public PixelData(int width, int height) {
+  RasterDataImpl(int width, int height) {
     if ((width <= 0) || (width > MAX_WIDTH) || (height <= 0) || (height > MAX_HEIGHT)) {
       throw new IndexOutOfBoundsException("Bad dimensions: (" + width + "x" + height + ")");
     } else {
@@ -44,14 +41,14 @@ public final class PixelData implements IReadOnlyPixelData {
   /**
    * Creates a copy of the supplied pixel data instance.
    *
-   * @param pixelData the pixel data instance that will be copied.
+   * @param rasterData the pixel data instance that will be copied.
    * @throws NullPointerException if the supplied pixel data is {@code null}.
    */
-  public PixelData(PixelData pixelData) {
-    Objects.requireNonNull(pixelData);
-    pixels = createPixelDataMatrix(pixelData.getWidth(), pixelData.getHeight());
+  RasterDataImpl(IRasterData rasterData) {
+    Objects.requireNonNull(rasterData);
+    pixels = createPixelDataMatrix(rasterData.getWidth(), rasterData.getHeight());
 
-    for (Iterable<? extends IReadOnlyPixel> pixelRow : pixelData.getPixels()) {
+    for (Iterable<? extends IReadOnlyPixel> pixelRow : rasterData.getPixels()) {
       for (IReadOnlyPixel pixel : pixelRow) {
         setPixel(PixelFactory.createPixel(pixel));
       }
@@ -106,13 +103,7 @@ public final class PixelData implements IReadOnlyPixelData {
     return (x < 0) || (y < 0) || (x >= getWidth()) || (y >= getHeight());
   }
 
-  /**
-   * Sets a specific pixel in the pixel matrix. Origin is positioned at top left corner and is zero
-   * indexed.
-   *
-   * @param pixel the pixel to be set.
-   * @throws NullPointerException if any arguments are {@code null}.
-   */
+  @Override
   public void setPixel(IPixel pixel) {
     Objects.requireNonNull(pixel);
     if (!isBadCoordinate(pixel.getX(), pixel.getY())) {
@@ -148,14 +139,14 @@ public final class PixelData implements IReadOnlyPixelData {
 
   @Override
   public boolean equals(Object object) {
-    if (!(object instanceof PixelData)) {
+    if (!(object instanceof RasterDataImpl)) {
       return false;
     }
     if (object == this) {
       return true;
     }
 
-    var pixelData = (PixelData) object;
+    var pixelData = (RasterDataImpl) object;
 
     for (int row = 0; row < pixels.size(); row++) {
       for (int col = 0; col < pixels.get(row).size(); col++) {

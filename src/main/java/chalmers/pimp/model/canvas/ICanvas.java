@@ -7,7 +7,7 @@ import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 
 /**
  * The {@code ICanvas} interface specifies objects that represent and handle the various layers in
@@ -139,7 +139,7 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    * @param pixelData the pixel data that contains all of the pixels.
    * @throws NullPointerException if the supplied pixel data is {@code null}.
    */
-  void setActiveLayerPixels(int x, int y, IReadOnlyPixelData pixelData);
+  void setActiveLayerPixels(int x, int y, IReadOnlyRasterData pixelData);
 
   /**
    * Sets the x-coordinate of the currently active layer. This method has no effect if there is no

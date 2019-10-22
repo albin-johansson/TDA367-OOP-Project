@@ -3,8 +3,7 @@ package chalmers.pimp.model.canvas.layer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +99,7 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public IReadOnlyPixelData getPixelData() {
+  public IReadOnlyRasterData getPixelData() {
     return null; // FIXME remove
   }
 

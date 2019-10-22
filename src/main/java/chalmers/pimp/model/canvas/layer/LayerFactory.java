@@ -1,8 +1,8 @@
 package chalmers.pimp.model.canvas.layer;
 
-import chalmers.pimp.model.color.ColorFactory;
+import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.pixeldata.IRasterData;
 
 /**
  * The {@code LayerFactory} class is a factory for creating instances of the {@code ILayer}
@@ -27,27 +27,27 @@ public final class LayerFactory {
 
   /**
    * Creates and returns a raster layer that holds basic raster data. The created layer is based on
-   * the supplied pixel data.
+   * the supplied raster data.
    *
-   * @param pixelData the pixel data which holds the data that will be copied.
-   * @return a layer that holds raster data, copied from the supplied pixel data instance.
-   * @throws NullPointerException if the supplied pixel data is {@code null}.
+   * @param rasterData the raster data which holds the data that will be copied.
+   * @return a layer that holds raster data, copied from the supplied raster data instance.
+   * @throws NullPointerException if the supplied raster data is {@code null}.
    */
-  public static ILayer createRasterLayer(PixelData pixelData) {
-    return new Raster(pixelData);
+  public static ILayer createRasterLayer(IRasterData rasterData) {
+    return new Raster(rasterData);
   }
 
   /**
    * Creates and returns a raster layer that holds basic raster data. The created layer is based on
    * the supplied pixel data and a supplied name.
    *
-   * @param pixelData     the pixel data which holds the data that will be copied.
-   * @param pixelDataName the name of the pixel data that will be copied.
-   * @return a layer that holds raster data, copied from the supplied pixel data instance.
-   * @throws NullPointerException if the supplied pixel data or pixel data name is {@code null}.
+   * @param rasterData the raster data which holds the data that will be copied.
+   * @param name       the name of the raster data (usually a file name) that will be copied.
+   * @return a layer that holds raster data, copied from the supplied raster data instance.
+   * @throws NullPointerException if any references are {@code null}.
    */
-  public static ILayer createRasterLayer(PixelData pixelData, String pixelDataName) {
-    return new Raster(pixelData, pixelDataName);
+  public static ILayer createRasterLayer(IRasterData rasterData, String name) {
+    return new Raster(rasterData, name);
   }
 
   /**
@@ -60,7 +60,7 @@ public final class LayerFactory {
    * @return a rectangle layer.
    */
   public static ILayer createRectangle(int x, int y, int width, int height) {
-    return new Rectangle(x, y, width, height, ColorFactory.createColor(0xFF, 0xFF, 0xFF));
+    return new Rectangle(x, y, width, height, Colors.WHITE);
   }
 
   /**
@@ -81,7 +81,7 @@ public final class LayerFactory {
    * Creates and returns a layer that is a doodle.
    *
    * @param lineWidth the width of the line strokes.
-   * @param color the color of the line strokes.
+   * @param color     the color of the line strokes.
    * @return a doodle layer.
    */
   public static IDoodleLayer createDoodle(int lineWidth, IColor color) {

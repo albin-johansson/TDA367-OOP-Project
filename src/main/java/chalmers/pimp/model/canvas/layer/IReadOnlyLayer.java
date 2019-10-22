@@ -3,7 +3,7 @@ package chalmers.pimp.model.canvas.layer;
 import chalmers.pimp.model.ICopiable;
 import chalmers.pimp.model.IDrawable;
 import chalmers.pimp.model.Point;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 
 /**
  * The {@code IReadOnlyLayer} interface specifies the basic read-only methods for layers.
@@ -36,7 +36,7 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
    *
    * @return a pixel representation of this layer.
    */
-  IReadOnlyPixelData getPixelData();
+  IReadOnlyRasterData getPixelData();
 
   /**
    * Returns the layer's name
