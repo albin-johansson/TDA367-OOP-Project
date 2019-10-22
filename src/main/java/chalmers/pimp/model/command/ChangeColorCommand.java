@@ -7,41 +7,33 @@ import chalmers.pimp.model.color.colormodel.IColorModel;
 import java.util.Objects;
 
 /**
- * The {@code ChangeColorCommand} class is a command that represents a change of color.
+ * The {@code ChangeColorCommand} class represents the action of changing the canvas color.
  *
+ * @see AbstractCommand
  * @see ICommand
  */
-final class ChangeColorCommand implements ICommand {
+final class ChangeColorCommand extends AbstractCommand {
 
-  private final IMementoTarget<ModelMemento> mementoTarget;
   private final IColorModel colorModel;
   private final IColor color;
-  private ModelMemento modelMemento;
 
   /**
-   * @param mementoTarget the memento target that will be used.
    * @param colorModel    the representation of the color in the model.
+   * @param mementoTarget the memento target that will be used.
    * @param color         the mew color.
    * @throws NullPointerException if any references are {@code null}.
    */
-  ChangeColorCommand(IMementoTarget<ModelMemento> mementoTarget, IColorModel colorModel,
+  ChangeColorCommand(IColorModel colorModel, IMementoTarget<ModelMemento> mementoTarget,
       IColor color) {
-    this.mementoTarget = Objects.requireNonNull(mementoTarget);
+    super(mementoTarget);
     this.colorModel = Objects.requireNonNull(colorModel);
     this.color = Objects.requireNonNull(color);
   }
 
   @Override
   public void execute() {
-    modelMemento = mementoTarget.createSnapShot();
+    updateModelMemento();
     colorModel.setColor(color);
-  }
-
-  @Override
-  public void revert() {
-    if (modelMemento != null) {
-      mementoTarget.restore(modelMemento);
-    }
   }
 
   @Override

@@ -8,7 +8,7 @@ import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixel;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -247,7 +247,7 @@ final class LayerManager implements IColorChangeListener {
    * @param pixelData the pixel data that contains all of the pixels.
    * @throws NullPointerException if the supplied pixel data is {@code null}.
    */
-  void setActiveLayerPixels(int x, int y, IReadOnlyPixelData pixelData) {
+  void setActiveLayerPixels(int x, int y, IReadOnlyRasterData pixelData) {
     Objects.requireNonNull(pixelData);
 
     if (!hasActiveLayer()) {

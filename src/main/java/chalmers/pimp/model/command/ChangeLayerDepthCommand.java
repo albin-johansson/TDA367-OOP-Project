@@ -3,6 +3,7 @@ package chalmers.pimp.model.command;
 import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.canvas.ICanvas;
+import java.util.Objects;
 
 /**
  * The {@code ChangeLayerDepthCommand} class is a subclass of {@code AbstractCommand} that
@@ -13,6 +14,7 @@ import chalmers.pimp.model.canvas.ICanvas;
  */
 final class ChangeLayerDepthCommand extends AbstractCommand {
 
+  private final ICanvas canvas;
   private final int baseDepthIndex;
   private final int dz;
 
@@ -25,7 +27,8 @@ final class ChangeLayerDepthCommand extends AbstractCommand {
    */
   ChangeLayerDepthCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget,
       int baseDepthIndex, int dz) {
-    super(canvas, mementoTarget);
+    super(mementoTarget);
+    this.canvas = Objects.requireNonNull(canvas);
     this.baseDepthIndex = baseDepthIndex;
     this.dz = dz;
   }
@@ -33,7 +36,7 @@ final class ChangeLayerDepthCommand extends AbstractCommand {
   @Override
   public void execute() {
     updateModelMemento();
-    getCanvas().changeDepthIndex(baseDepthIndex, dz);
+    canvas.changeDepthIndex(baseDepthIndex, dz);
   }
 
   @Override
