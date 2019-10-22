@@ -21,8 +21,9 @@ public interface IRasterLayer extends ILayer {
   void setPixel(IPixel pixel);
 
   /**
-   * 
-   * @return
+   * Returns a pixel representation of this layer, which is read-only.
+   *
+   * @return a pixel representation of this layer.
    */
   IReadOnlyRasterData getPixelData();
 }
