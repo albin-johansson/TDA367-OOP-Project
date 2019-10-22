@@ -53,11 +53,11 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
   int getDepthIndex();
 
   /**
-   * Returns the layer's rotation anchor point.
+   * Returns a point that represents the center of the layer.
    *
-   * @return the rotation anchor point.
+   * @return a point that represents the center of the layer.
    */
-  Point getRotationAnchor();
+  Point getCenterPoint();
 
   /**
    * Returns the layer type of this layer.
@@ -79,7 +79,7 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
    * @return the alpha value of this layer.
    */
   double getAlpha();
-  
+
   /**
    * Returns the width of the layer.
    *

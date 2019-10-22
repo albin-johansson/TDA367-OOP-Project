@@ -1,6 +1,7 @@
 package chalmers.pimp.model;
 
 import static chalmers.pimp.model.command.CommandFactory.createAddLayerCommand;
+import static chalmers.pimp.model.command.CommandFactory.createChangeColorCommand;
 import static chalmers.pimp.model.command.CommandFactory.createChangeLayerDepthCommand;
 import static chalmers.pimp.model.command.CommandFactory.createLayerSelectionCommand;
 import static chalmers.pimp.model.command.CommandFactory.createMoveCommand;
@@ -14,37 +15,56 @@ import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 import chalmers.pimp.model.canvas.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
-import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.ColorModelFactory;
 import chalmers.pimp.model.color.colormodel.IColorChangeListener;
 import chalmers.pimp.model.color.colormodel.IColorModel;
-import chalmers.pimp.model.command.CommandFactory;
 import chalmers.pimp.model.command.CommandManager;
 import chalmers.pimp.model.command.ICommand;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.tools.ITool;
+import chalmers.pimp.model.viewport.IReadOnlyViewport;
+import chalmers.pimp.model.viewport.IViewportModel;
+import chalmers.pimp.model.viewport.ViewportModelFactory;
 import java.util.Objects;
 
 /**
  * The {@code ModelImpl} class is an implementation of the {@code IModel} interface.
+ *
+ * @see IModel
+ * @see ModelFactory
  */
 final class ModelImpl implements IModel {
 
-  private final ICanvas canvas;
   private final CommandManager commandManager;
+  private final ICanvas canvas;
+  private final IViewportModel viewportModel;
+  private final IColorModel colorModel;
+  private final ModelSizeListenerComposite modelSizeListeners; // Not used as of yet
+
   private IRenderer renderer;
   private LayerMovement layerMovement;
   private LayerRotation layerRotation;
   private Stroke stroke;
   private ITool selectedTool;
-  private IColorModel colorModel;
+
+  private int width;
+  private int height;
 
   ModelImpl() {
-    canvas = CanvasFactory.createCanvas();
     commandManager = new CommandManager();
+
+    canvas = CanvasFactory.createCanvas();
+    viewportModel = ViewportModelFactory.createViewportModel();
+    modelSizeListeners = new ModelSizeListenerComposite();
+
+    width = 800;
+    height = 600;
+
     stroke = null;
-    colorModel = ColorModelFactory.createColorModel(Colors.TRANSPARENT);
+    colorModel = ColorModelFactory.createColorModel();
+    colorModel.addColorChangeListener(canvas);
+    addLayerUpdateListener(colorModel);
   }
 
   /**
@@ -77,13 +97,63 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void startMovingActiveLayer(int x, int y) {
-    if (getActiveLayer() == null) {
-      return;
-    }
+  public void addModelSizeListener(IModelSizeListener listener) {
+    modelSizeListeners.add(listener);
+  }
 
-    layerMovement = new LayerMovement();
-    layerMovement.start(x, y, createSnapShot());
+  @Override
+  public void draw(IRenderer renderer) {
+    Objects.requireNonNull(renderer);
+    for (IDrawable drawable : getLayers()) {
+      drawable.draw(renderer, viewportModel.getViewport());
+    }
+  }
+
+  @Override
+  public void moveViewport(int dx, int dy) {
+    viewportModel.moveViewport(dx, dy);
+    notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public void centerViewport() {
+    viewportModel.center(width, height);
+    notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public void setViewportWidth(int width) {
+    viewportModel.setWidth(width);
+    notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public void setViewportHeight(int height) {
+    viewportModel.setHeight(height);
+    notifyCanvasUpdateListeners();
+  }
+
+  @Override
+  public int getWidth() {
+    return width;
+  }
+
+  @Override
+  public int getHeight() {
+    return height;
+  }
+
+  @Override
+  public IReadOnlyViewport getViewport() {
+    return viewportModel.getViewport();
+  }
+
+  @Override
+  public void startMovingActiveLayer(int x, int y) {
+    if (hasActiveLayer()) {
+      layerMovement = new LayerMovement();
+      layerMovement.start(x, y, createSnapShot());
+    }
   }
 
   @Override
@@ -103,8 +173,8 @@ final class ModelImpl implements IModel {
     }
 
     layerMovement.stop();
-    layerMovement.setEndX(getActiveLayer().getX());
-    layerMovement.setEndY(getActiveLayer().getY());
+    layerMovement.setEndX(canvas.getActiveLayer().getX());
+    layerMovement.setEndY(canvas.getActiveLayer().getY());
 
     ICommand cmd = createMoveCommand(canvas, this, getActiveLayer().getDepthIndex(), layerMovement);
     commandManager.insertCommand(cmd);
@@ -112,9 +182,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void startStroke(IPixel pixel, int diameter) {
+  public void startStroke(IPixel pixel, int diameter, IColor color) {
     Objects.requireNonNull(pixel);
-    stroke = new Stroke(createSnapShot(), diameter, colorModel.getColor());
+    Objects.requireNonNull(color);
+
+    stroke = new Stroke(createSnapShot(), diameter, color);
     updateStroke(pixel);
   }
 
@@ -123,7 +195,7 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(canvas, pixel, colorModel.getColor());
+      stroke.updatePixels(canvas, pixel);
       notifyCanvasUpdateListeners();
     }
   }
@@ -133,7 +205,7 @@ final class ModelImpl implements IModel {
     Objects.requireNonNull(pixel);
     if (stroke != null) {
       stroke.add(pixel);
-      stroke.updatePixels(canvas, pixel, colorModel.getColor());
+      stroke.updatePixels(canvas, pixel);
 
       // We don't need to explicitly execute the created command, the effect is already present
       ICommand cmd = createStrokeCommand(canvas, this, stroke);
@@ -199,16 +271,14 @@ final class ModelImpl implements IModel {
 
   @Override
   public void startRotatingActiveLayer(int x, int y) {
-    if (getActiveLayer() == null) {
-      return;
-    }
+    if (hasActiveLayer()) {
+      layerRotation = new LayerRotation();
+      var point = new Point(x, y);
 
-    layerRotation = new LayerRotation();
-    Point tempPoint = new Point(x, y);
-    layerRotation
-        .start(canvas.getActiveLayer().getRotationAnchor(), canvas.getActiveLayer().getRotation(),
-            tempPoint,
-            createSnapShot());
+      Point centerPoint = canvas.getActiveLayer().getCenterPoint();
+      double rotation = canvas.getActiveLayer().getRotation();
+      layerRotation.start(centerPoint, rotation, point, createSnapShot());
+    }
   }
 
   @Override
@@ -226,8 +296,8 @@ final class ModelImpl implements IModel {
       return;
     }
     layerRotation.stop();
-    ICommand cmd = createRotateCommand(canvas, this, getActiveLayer().getDepthIndex(),
-        layerRotation);
+    int id = getActiveLayer().getDepthIndex();
+    ICommand cmd = createRotateCommand(canvas, this, id, layerRotation);
     commandManager.insertCommand(cmd);
     layerRotation = null;
   }
@@ -276,6 +346,11 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public boolean hasActiveLayer() {
+    return canvas.hasActiveLayer();
+  }
+
+  @Override
   public String getLayerName(int layerIndex) {
     return canvas.getLayerName(layerIndex);
   }
@@ -301,14 +376,21 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public void notifyColorUpdateListeners() {
+    colorModel.notifyAllColorChangeListeners();
+  }
+
+  @Override
   public void restore(ModelMemento modelMemento) {
     canvas.restore(modelMemento.getCanvasMemento());
+    viewportModel.restore(modelMemento.getViewportModelMemento());
     colorModel.restore(modelMemento.getColorModelMemento());
   }
 
   @Override
   public ModelMemento createSnapShot() {
-    return new ModelMemento(canvas.createSnapShot(), colorModel.createSnapShot());
+    return new ModelMemento(canvas.createSnapShot(), viewportModel.createSnapShot(),
+        colorModel.createSnapShot());
   }
 
   @Override
@@ -321,12 +403,11 @@ final class ModelImpl implements IModel {
     commandManager.redo();
   }
 
-  static int loops = 0;
-
   @Override
   public void setSelectedColor(IColor color) {
-    ICommand cmd = CommandFactory
-        .createChangeColorCommand(this, colorModel, Objects.requireNonNull(color));
+    Objects.requireNonNull(color);
+
+    ICommand cmd = createChangeColorCommand(this, colorModel, color);
     cmd.execute();
     commandManager.insertCommand(cmd);
   }

@@ -27,6 +27,7 @@ public final class CommandFactory {
    * @param canvas        the associated canvas instance.
    * @param mementoTarget the memento target that will be used.
    * @param stroke        the stroke instance that describes the stroke.
+   * @return a command that represents the action of performing a pixel stroke.
    * @throws NullPointerException if any references are {@code null}.
    */
   public static ICommand createStrokeCommand(ICanvas canvas,
@@ -41,6 +42,7 @@ public final class CommandFactory {
    * @param mementoTarget   the memento target that will be used.
    * @param layerDepthIndex the layer depth index of the affected layer.
    * @param movement        the layer movement instance that describes the movement.
+   * @return a command that represents the action of moving a layer.
    * @throws NullPointerException if any references are {@code null}.
    */
   public static ICommand createMoveCommand(ICanvas canvas,
@@ -54,7 +56,8 @@ public final class CommandFactory {
    * @param canvas          the associated canvas instance.
    * @param mementoTarget   the memento target that will be used.
    * @param layerDepthIndex the layer depth index of the affected layer.
-   * @param rotate        the layer rotate instance that describes the rotation.
+   * @param rotate          the layer rotate instance that describes the rotation.
+   * @return a command that represents the action of rotating a layer.
    * @throws NullPointerException if any references are {@code null}.
    */
   public static ICommand createRotateCommand(ICanvas canvas,
@@ -68,6 +71,7 @@ public final class CommandFactory {
    * @param canvas        the associated canvas instance.
    * @param mementoTarget the memento target that will be used.
    * @param layer         the layer that will be added.
+   * @return a command that represents the action of adding a layer.
    * @throws NullPointerException if any references are {@code null}.
    */
   public static ICommand createAddLayerCommand(ICanvas canvas,
@@ -81,6 +85,7 @@ public final class CommandFactory {
    * @param canvas          the associated canvas instance.
    * @param mementoTarget   the memento target that will be used.
    * @param layerDepthIndex the layer depth index of the layer that will be removed.
+   * @return a command that represents the action of removing a layer.
    * @throws NullPointerException if any references are {@code null}.
    */
   public static ICommand createRemoveLayerCommand(ICanvas canvas,
@@ -94,6 +99,7 @@ public final class CommandFactory {
    * @param canvas           the associated canvas instance.
    * @param mementoTarget    the memento target that will be used.
    * @param targetLayerIndex the layer depth index of the layer that will be selected.
+   * @return a command that represents the action of selecting a command.
    * @throws NullPointerException if any references are {@code null}.
    */
   public static ICommand createLayerSelectionCommand(ICanvas canvas,
@@ -108,6 +114,7 @@ public final class CommandFactory {
    * @param mementoTarget  the memento target that will be used.
    * @param baseDepthIndex the layer depth index of the layer that will be "moved".
    * @param dz             the delta z value (the offset), may be either negative or positive.
+   * @return a command that represents the action of changing the z-value of a layer.
    * @throws NullPointerException if any references are {@code null}.
    */
   public static ICommand createChangeLayerDepthCommand(ICanvas canvas,
@@ -121,6 +128,7 @@ public final class CommandFactory {
    * @param mementoTarget the memento target that will be used.
    * @param colorModel    the color model.
    * @param color         the new color.
+   * @return a command that represents the action of changing the color.
    * @throws NullPointerException if any references are {@code null}.
    */
   public static ICommand createChangeColorCommand(

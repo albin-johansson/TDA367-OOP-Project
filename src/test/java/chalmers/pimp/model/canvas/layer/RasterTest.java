@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class RasterTest {
 
-  private ILayer raster;
+  private IRasterLayer raster;
 
   @BeforeEach
   private void setUp() {

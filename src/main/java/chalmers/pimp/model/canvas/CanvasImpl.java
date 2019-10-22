@@ -2,6 +2,7 @@ package chalmers.pimp.model.canvas;
 
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
 import java.util.Objects;
@@ -133,6 +134,11 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
+  public boolean hasActiveLayer() {
+    return layerManager.hasActiveLayer();
+  }
+
+  @Override
   public String getLayerName(int layerIndex) {
     return layerManager.getLayerName(layerIndex);
   }
@@ -145,6 +151,12 @@ final class CanvasImpl implements ICanvas {
   @Override
   public Iterable<? extends IReadOnlyLayer> getLayers() {
     return layerManager.getLayers();
+  }
+
+  @Override
+  public void setActiveLayerColor(IColor color) {
+    layerManager.setActiveLayerColor(color);
+    notifyCanvasUpdateListeners();
   }
 
   @Override
@@ -171,5 +183,11 @@ final class CanvasImpl implements ICanvas {
   @Override
   public ICanvas copy() {
     return new CanvasImpl(this);
+  }
+
+  @Override
+  public void colorChanged(IColor color) {
+    layerManager.setActiveLayerColor(color);
+    notifyCanvasUpdateListeners();
   }
 }

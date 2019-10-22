@@ -19,12 +19,6 @@ class RectangleTest {
   }
 
   @Test
-  void setPixel() {
-    // Should not actually manipulate anything.
-    assertDoesNotThrow(() -> rectangle.setPixel(PixelFactory.createPixel(0, 0)));
-  }
-
-  @Test
   void setVisible() {
     final boolean isVisible = false;
     rectangle.setVisible(isVisible);

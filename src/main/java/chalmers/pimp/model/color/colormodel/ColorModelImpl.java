@@ -1,23 +1,28 @@
 package chalmers.pimp.model.color.colormodel;
 
-import chalmers.pimp.model.AbstractComposite;
+import chalmers.pimp.model.canvas.LayerUpdateEvent;
+import chalmers.pimp.model.canvas.layer.IColorable;
+import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
 import java.util.Objects;
+import javax.swing.Icon;
 
 /**
- * The {@code ColorModelImpl} implements the IColorModel interface.
+ * The {@code ColorModelImpl} class is an implementation of the {@code IColorModel} interface.
  *
  * @see IColorModel
  */
-final class ColorModelImpl extends AbstractComposite<IColorChangeListener> implements IColorModel {
+final class ColorModelImpl implements IColorModel {
 
+  private final ColorChangeListenerComposite colorChangeListeners;
   private IColor color;
 
   /**
-   * @param color the color that the color model implementation should contain.
-   * @throws NullPointerException if the supplied color is null.
+   * @param color the color.
+   * @throws NullPointerException if the provided color is {@code null}.
    */
   ColorModelImpl(IColor color) {
+    colorChangeListeners = new ColorChangeListenerComposite();
     this.color = Objects.requireNonNull(color);
   }
 
@@ -34,7 +39,9 @@ final class ColorModelImpl extends AbstractComposite<IColorChangeListener> imple
 
   @Override
   public void restore(ColorModelMemento memento) {
+    Objects.requireNonNull(memento);
     color = memento.getColor();
+
     notifyAllColorChangeListeners();
   }
 
@@ -44,14 +51,29 @@ final class ColorModelImpl extends AbstractComposite<IColorChangeListener> imple
   }
 
   @Override
-  public void addColorChangeListener(IColorChangeListener observer) {
-    add(Objects.requireNonNull(observer));
+  public void addColorChangeListener(IColorChangeListener listener) {
+    colorChangeListeners.add(listener);
   }
 
   @Override
   public void notifyAllColorChangeListeners() {
-    for (IColorChangeListener colorChangeListener : this) {
-      colorChangeListener.colorChanged(color);
+    colorChangeListeners.colorChanged(color);
+  }
+
+  @Override
+  public void layersUpdated(LayerUpdateEvent event) {
+    // Do not update the color if there was a new layer created.
+    // Only care about selections.
+    if (event.wasLayerAdded() || !event.wasSelectionUpdated()) {
+      return;
+    }
+
+    var selectedLayer = event.getSelectedLayer();
+
+    // Update the selected color if the newly selected layer is colorable.
+    if (selectedLayer instanceof IColorable) {
+      setColor(((IColorable) selectedLayer).getColor());
+      notifyAllColorChangeListeners();
     }
   }
 }

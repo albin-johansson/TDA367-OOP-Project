@@ -19,27 +19,27 @@ final class UtilityPane extends AnchorPane {
 
   private final LayerItemContainerPane layerItemContainerPane;
   private final ColorPickerPane colorPickerPane;
-  private final IModel model;
 
   @FXML
   private VBox VBoxContainer;
 
   /**
-   * @param model the model.
-   * @throws IOException if the utility pane fxml file is not found.
+   * @param model the associated model instance.
+   * @throws IOException          if the utility pane fxml file is not found.
    * @throws NullPointerException if the provided model is {@code null}.
    */
   UtilityPane(IModel model) throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "utility_pane.fxml"));
-    this.model = Objects.requireNonNull(model);
+    Objects.requireNonNull(model);
 
     colorPickerPane = new ColorPickerPane(model);
-    model.addColorChangeListener(colorPickerPane);
     layerItemContainerPane = new LayerItemContainerPane(model);
-    model.addLayerUpdateListener(layerItemContainerPane);
 
     addColorPickerPane();
     addLayerItemContainerPane();
+
+    model.addColorChangeListener(colorPickerPane);
+    model.addLayerUpdateListener(layerItemContainerPane);
   }
 
   /**
@@ -65,14 +65,5 @@ final class UtilityPane extends AnchorPane {
    */
   public IColor getColor() {
     return colorPickerPane.getColor();
-  }
-
-  /**
-   * Sets the color of the color picker pane.
-   *
-   * @param color the new color of the color picker.
-   */
-  public void setColor(IColor color) {
-    colorPickerPane.colorChanged(color);
   }
 }

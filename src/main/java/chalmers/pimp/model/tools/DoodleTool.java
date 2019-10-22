@@ -2,26 +2,29 @@ package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.Point;
+import chalmers.pimp.model.canvas.layer.IDoodleLayer;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
-import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 
 /**
- * A tool which the user can deaw vectorised lines with
+ * The {@code DoodleTool} class is an implementation of the {@code ITool} interface that represents
+ * that is used to create "doodles". A doodle is basically a collection of interconnected points.
+ *
+ * @see ITool
  */
 final class DoodleTool implements ITool {
 
   private final IModel model;
   private final int lineWidth;
-  private ILayer doodle;
+  private IDoodleLayer doodle;
 
   /**
-   * Creates a doodle tool
-   *
-   * @param lineWidth the width of the doodle.
-   * @param model     reference back to the model.
+   * @param lineWidth the line width of the doodle.
+   * @param model     the associated model instance.
+   * @throws NullPointerException if any references are {@code null}.
    */
   DoodleTool(int lineWidth, IModel model) {
     this.lineWidth = lineWidth;
@@ -37,14 +40,16 @@ final class DoodleTool implements ITool {
   @Override
   public void dragged(MouseStatus mouseStatus) {
     model.notifyCanvasUpdateListeners();
-    doodle.setPixel(
-        PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), model.getSelectedColor()));
-    doodle.draw(model.getRenderer());
+
+    int x = model.getViewport().getTranslatedX(mouseStatus.getX());
+    int y = model.getViewport().getTranslatedY(mouseStatus.getY());
+
+    doodle.addPoint(new Point(x, y));
+    doodle.draw(model.getRenderer(), model.getViewport());
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
     model.addLayer(doodle);
-    model.selectLayer(doodle.getDepthIndex());
   }
 }

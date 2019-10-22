@@ -36,7 +36,7 @@ final class StrokeCommand extends AbstractCommand {
     updateModelMemento();
 
     for (IPixel pixel : stroke.getPixels()) {
-      stroke.updatePixels(getCanvas(), pixel, stroke.getColor());
+      stroke.updatePixels(getCanvas(), pixel);
     }
   }
 

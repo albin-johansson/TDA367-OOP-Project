@@ -12,7 +12,6 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -21,7 +20,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -173,8 +171,8 @@ final class LayerItemPane extends AnchorPane {
     if (db.hasString()) {
       int originDepth = Integer.parseInt(db.getString());
 
-      IReadOnlyLayer activeLayer = model.getActiveLayer();
-      if (activeLayer != null) {
+      if (model.hasActiveLayer()) {
+        IReadOnlyLayer activeLayer = model.getActiveLayer();
         int dz = associatedLayerIndex - originDepth;
         model.changeLayerDepthIndex(activeLayer.getDepthIndex(), dz);
         success = true;

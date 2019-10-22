@@ -8,7 +8,9 @@ import chalmers.pimp.service.ColorConverterService;
 import chalmers.pimp.service.PixelDataToFXService;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
+import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.transform.Affine;
 
 /**
@@ -19,6 +21,7 @@ import javafx.scene.transform.Affine;
 final class FXRenderer implements IRenderer {
 
   private final GraphicsContext graphicsContext;
+  private final BoxBlur lineBlurEffect;
 
   /**
    * Creates and returns a FX renderer.
@@ -28,12 +31,33 @@ final class FXRenderer implements IRenderer {
    */
   FXRenderer(GraphicsContext graphicsContext) {
     this.graphicsContext = Objects.requireNonNull(graphicsContext);
-    graphicsContext.save(); // Save default transform
+
+    lineBlurEffect = new BoxBlur();
+    lineBlurEffect.setWidth(1);
+    lineBlurEffect.setHeight(1);
+    lineBlurEffect.setIterations(3);
+
+    graphicsContext.setLineJoin(StrokeLineJoin.ROUND); // should make strokes a little bit smoother
+  }
+
+  @Override
+  public void clear() {
+    graphicsContext.fillRect(0, 0, getCanvasWidth(), getCanvasHeight());
   }
 
   @Override
   public void drawRect(int x, int y, int width, int height) {
-    graphicsContext.rect(x, y, width, height);
+    // Upper left -> Upper Right
+    graphicsContext.strokeLine(x, y, (x + width), y);
+
+    // Upper right -> Lower right
+    graphicsContext.strokeLine((x + width), y, (x + width), (y + height));
+
+    // Lower right -> lower left
+    graphicsContext.strokeLine((x + width), (y + height), x, (y + height));
+
+    // Lower left -> Upper left
+    graphicsContext.strokeLine(x, (y + height), x, y);
   }
 
   @Override
@@ -43,16 +67,15 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public void drawEllipse(int x, int y, int radiusX, int radiusY) {
-
   }
 
   @Override
   public void fillEllipse(int x, int y, int radiusX, int radiusY) {
   }
 
-  @Override   
+  @Override
   public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
-    if(readOnlyPixelData == null){
+    if (readOnlyPixelData == null) {
       return;
     }
     Image image = PixelDataToFXService.getFXImage(readOnlyPixelData);
@@ -67,25 +90,26 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void startTransform(double rotation, Point startPoint, int width, int height) {
-    if(startPoint == null){
+  public void startTransform(double rotation, Point centerPoint) {
+    if (centerPoint == null) {
       return;
     }
     endTransform();
     graphicsContext.save(); // Save default transform
-    Affine rotate = new Affine();
-    double centerX = startPoint.getX() + width / 2;
-    double centerY = startPoint.getY() + height / 2;
-    rotate.appendRotation(rotation, centerX, centerY);
+
+    var rotate = new Affine();
+    rotate.appendRotation(rotation, centerPoint.getX(), centerPoint.getY());
     graphicsContext.setTransform(rotate);
   }
 
   @Override
   public void drawLine(Point p1, Point p2) {
-    if(p1 == null || p2 == null){
+    if ((p1 == null) || (p2 == null)) {
       return;
     }
+    graphicsContext.setEffect(lineBlurEffect);
     graphicsContext.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+    graphicsContext.setEffect(null);
   }
 
   @Override
@@ -120,11 +144,11 @@ final class FXRenderer implements IRenderer {
 
   @Override
   public int getCanvasWidth() {
-    return (int) graphicsContext.getCanvas().getWidth();
+    return (int) graphicsContext.getCanvas().getWidth() + 1;
   }
 
   @Override
   public int getCanvasHeight() {
-    return (int) graphicsContext.getCanvas().getHeight();
+    return (int) graphicsContext.getCanvas().getHeight() + 1;
   }
 }
