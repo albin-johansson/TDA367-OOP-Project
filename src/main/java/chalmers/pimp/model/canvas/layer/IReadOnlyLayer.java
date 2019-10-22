@@ -71,7 +71,7 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
    *
    * @return the rotation of this layer.
    */
-  double getRotation();
+  int getRotation();
 
   /**
    * Returns the alpha value of this layer.

@@ -16,9 +16,9 @@ public final class LayerRotation {
   private ModelMemento memento;
   private boolean isFinished;
   private Point rotationAnchorPoint;
-  private double mouseStartDegree;
-  private double baseDegree;
-  private double currentDegree;
+  private int mouseStartDegree;
+  private int baseDegree;
+  private int currentDegree;
 
   LayerRotation() {
     isFinished = false;
@@ -35,7 +35,7 @@ public final class LayerRotation {
    *                            before the rotation has begun.
    * @throws NullPointerException if the supplied model memento is {@code null}.
    */
-  void start(Point rotationAnchorPoint, double baseDegree, Point mouseStartPoint,
+  void start(Point rotationAnchorPoint, int baseDegree, Point mouseStartPoint,
       ModelMemento memento) {
     Objects.requireNonNull(memento);
     Objects.requireNonNull(rotationAnchorPoint);
@@ -64,7 +64,7 @@ public final class LayerRotation {
     }
     double dx = x - rotationAnchorPoint.getX();
     double dy = y - rotationAnchorPoint.getY();
-    currentDegree = toDegrees(Math.atan(dy / dx));
+    currentDegree = (int) toDegrees(Math.atan(dy / dx));
 //    if (dx < 0) {
 //      currentDegree = 180 + currentDegree;
 //    }
@@ -82,7 +82,7 @@ public final class LayerRotation {
   private void setMouseStartDegree(int x, int y) {
     double dx = x - rotationAnchorPoint.getX();
     double dy = y - rotationAnchorPoint.getY();
-    mouseStartDegree = toDegrees(Math.atan(dy / dx));
+    mouseStartDegree = (int) toDegrees(Math.atan(dy / dx));
   }
 
   /**
@@ -110,7 +110,7 @@ public final class LayerRotation {
    *
    * @return the current degree.
    */
-  public double getCurrentDegree() {
+  public int getCurrentDegree() {
     return currentDegree;
   }
 
@@ -119,7 +119,7 @@ public final class LayerRotation {
    *
    * @param currentDegree the new current degree.
    */
-  public void setCurrentDegree(double currentDegree) {
+  public void setCurrentDegree(int currentDegree) {
     this.currentDegree = currentDegree;
   }
 }

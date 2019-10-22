@@ -88,7 +88,7 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public void setRotation(double rotation) {
+  public void setRotation(int rotation) {
     layerDelegate.setRotationDegrees(rotation);
   }
 
@@ -133,7 +133,7 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public double getRotation() {
+  public int getRotation() {
     return layerDelegate.getRotationDegrees();
   }
 

@@ -21,7 +21,7 @@ final class LayerDelegate {
   private String name;
   private Point position;
   private boolean isVisible;
-  private double rotationDegrees;
+  private int rotationDegrees;
   private double alpha;
   private int depthIndex;
 
@@ -140,8 +140,8 @@ final class LayerDelegate {
    *
    * @param rotationDegrees the new rotation.
    */
-  void setRotationDegrees(double rotationDegrees) {
-    this.rotationDegrees = rotationDegrees;
+  void setRotationDegrees(int rotationDegrees) {
+    this.rotationDegrees = rotationDegrees %  360;
   }
 
   /**
@@ -167,7 +167,7 @@ final class LayerDelegate {
    *
    * @return the rotation value.
    */
-  double getRotationDegrees() {
+  int getRotationDegrees() {
     return rotationDegrees;
   }
 

@@ -17,7 +17,7 @@ final class RotateCommand extends AbstractCommand {
 
   private final ICanvas canvas;
   private final int layerDepthIndex;
-  private final double angle;
+  private final int angle;
 
   /**
    * @param canvas          the associated canvas instance.

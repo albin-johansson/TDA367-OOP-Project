@@ -110,12 +110,12 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public double getRotation() {
+  public int getRotation() {
     return layerDelegate.getRotationDegrees();
   }
 
   @Override
-  public void setRotation(double rotation) {
+  public void setRotation(int rotation) {
     layerDelegate.setRotationDegrees(rotation);
   }
 
