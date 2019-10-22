@@ -15,8 +15,9 @@ import java.util.Objects;
  */
 final class RotateCommand extends AbstractCommand {
 
+  private final ICanvas canvas;
   private final int layerDepthIndex;
-  private final double alpha;
+  private final double angle;
 
   /**
    * @param canvas          the associated canvas instance.
@@ -27,11 +28,12 @@ final class RotateCommand extends AbstractCommand {
    */
   RotateCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex,
       LayerRotation movement) {
-    super(canvas, mementoTarget);
+    super(mementoTarget);
+    this.canvas = Objects.requireNonNull(canvas);
     this.layerDepthIndex = layerDepthIndex;
     Objects.requireNonNull(movement);
 
-    alpha = movement.getCurrentDegree();
+    angle = movement.getCurrentDegree();
     setModelMemento(movement.getModelMemento());
   }
 
@@ -39,8 +41,8 @@ final class RotateCommand extends AbstractCommand {
   public void execute() {
     updateModelMemento();
 
-    getCanvas().selectLayer(layerDepthIndex);
-    getCanvas().setActiveLayerRotation(alpha);
+    canvas.selectLayer(layerDepthIndex);
+    canvas.setActiveLayerRotation(angle);
   }
 
   @Override
