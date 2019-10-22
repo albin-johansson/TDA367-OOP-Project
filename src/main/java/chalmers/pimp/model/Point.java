@@ -97,6 +97,7 @@ public final class Point {
    *
    * @param p the point to be compared with
    * @return the distance this point and point p
+   * @throws NullPointerException if the specified point is {@ode null}
    */
   public double distance(Point p) {
     Objects.requireNonNull(p);

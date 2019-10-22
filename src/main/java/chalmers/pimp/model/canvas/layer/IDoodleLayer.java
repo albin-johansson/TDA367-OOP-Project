@@ -24,6 +24,7 @@ public interface IDoodleLayer extends ILayer {
    *
    * @param p         the specified point
    * @param threshold the threshold distance in pixels
+   * @throws NullPointerException if the specified point is {@code null}
    */
   void removePoint(Point p, double threshold);
 }
