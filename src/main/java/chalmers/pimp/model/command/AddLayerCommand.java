@@ -15,6 +15,7 @@ import java.util.Objects;
  */
 final class AddLayerCommand extends AbstractCommand {
 
+  private final ICanvas canvas;
   private final ILayer layer;
 
   /**
@@ -24,14 +25,15 @@ final class AddLayerCommand extends AbstractCommand {
    * @throws NullPointerException if any references are {@code null}.
    */
   AddLayerCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, ILayer layer) {
-    super(canvas, mementoTarget);
+    super(mementoTarget);
+    this.canvas = Objects.requireNonNull(canvas);
     this.layer = Objects.requireNonNull(layer);
   }
 
   @Override
   public void execute() {
     updateModelMemento();
-    getCanvas().addLayer(layer.copy());
+    canvas.addLayer(layer.copy());
   }
 
   @Override

@@ -407,7 +407,7 @@ final class ModelImpl implements IModel {
   public void setSelectedColor(IColor color) {
     Objects.requireNonNull(color);
 
-    ICommand cmd = createChangeColorCommand(this, colorModel, color);
+    ICommand cmd = createChangeColorCommand(colorModel, this, color);
     cmd.execute();
     commandManager.insertCommand(cmd);
   }

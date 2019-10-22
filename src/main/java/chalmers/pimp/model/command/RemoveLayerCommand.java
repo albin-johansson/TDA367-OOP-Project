@@ -3,6 +3,7 @@ package chalmers.pimp.model.command;
 import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.canvas.ICanvas;
+import java.util.Objects;
 
 /**
  * The {@code RemoveLayerCommand} class is a subclass of {@code AbstractCommand} that represents the
@@ -13,6 +14,7 @@ import chalmers.pimp.model.canvas.ICanvas;
  */
 final class RemoveLayerCommand extends AbstractCommand {
 
+  private final ICanvas canvas;
   private final int layerDepthIndex;
 
   /**
@@ -23,14 +25,15 @@ final class RemoveLayerCommand extends AbstractCommand {
    */
   RemoveLayerCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget,
       int layerDepthIndex) {
-    super(canvas, mementoTarget);
+    super(mementoTarget);
+    this.canvas = Objects.requireNonNull(canvas);
     this.layerDepthIndex = layerDepthIndex;
   }
 
   @Override
   public void execute() {
     updateModelMemento();
-    getCanvas().removeLayer(layerDepthIndex);
+    canvas.removeLayer(layerDepthIndex);
   }
 
   @Override

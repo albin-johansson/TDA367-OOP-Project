@@ -3,6 +3,7 @@ package chalmers.pimp.model.command;
 import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.ModelMemento;
 import chalmers.pimp.model.canvas.ICanvas;
+import java.util.Objects;
 
 /**
  * The {@code LayerSelectionCommand} class is a subclass of {@code AbstractCommand} that represents
@@ -13,6 +14,7 @@ import chalmers.pimp.model.canvas.ICanvas;
  */
 final class LayerSelectionCommand extends AbstractCommand {
 
+  private final ICanvas canvas;
   private final int targetLayerIndex;
 
   /**
@@ -23,14 +25,15 @@ final class LayerSelectionCommand extends AbstractCommand {
    */
   LayerSelectionCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget,
       int targetLayerIndex) {
-    super(canvas, mementoTarget);
+    super(mementoTarget);
+    this.canvas = Objects.requireNonNull(canvas);
     this.targetLayerIndex = targetLayerIndex;
   }
 
   @Override
   public void execute() {
     updateModelMemento();
-    getCanvas().selectLayer(targetLayerIndex);
+    canvas.selectLayer(targetLayerIndex);
   }
 
   @Override

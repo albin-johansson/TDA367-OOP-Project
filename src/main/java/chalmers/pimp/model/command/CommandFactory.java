@@ -132,10 +132,10 @@ public final class CommandFactory {
    * @throws NullPointerException if any references are {@code null}.
    */
   public static ICommand createChangeColorCommand(
-      IMementoTarget<ModelMemento> mementoTarget,
       IColorModel colorModel,
+      IMementoTarget<ModelMemento> mementoTarget,
       IColor color
   ) {
-    return new ChangeColorCommand(mementoTarget, colorModel, color);
+    return new ChangeColorCommand(colorModel, mementoTarget, color);
   }
 }
