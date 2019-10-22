@@ -382,6 +382,7 @@ final class LayerManager implements IColorChangeListener {
     var layer = getActiveLayer();
     if (layer instanceof IColorable) {
       ((IColorable) layer).setColor(color);
+      notifyListeners();
     }
   }
 
