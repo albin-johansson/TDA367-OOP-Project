@@ -2,6 +2,8 @@ package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.Point;
+import chalmers.pimp.model.canvas.layer.IDoodleLayer;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.pixeldata.PixelFactory;
@@ -17,7 +19,7 @@ final class DoodleTool implements ITool {
 
   private final IModel model;
   private final int lineWidth;
-  private ILayer doodle;
+  private IDoodleLayer doodle;
 
   /**
    * @param lineWidth the line width of the doodle.
@@ -42,7 +44,7 @@ final class DoodleTool implements ITool {
     int x = model.getViewport().getTranslatedX(mouseStatus.getX());
     int y = model.getViewport().getTranslatedY(mouseStatus.getY());
 
-    doodle.setPixel(PixelFactory.createPixel(x, y));
+    doodle.addPoint(new Point(x, y));
     doodle.draw(model.getRenderer(), model.getViewport());
   }
 

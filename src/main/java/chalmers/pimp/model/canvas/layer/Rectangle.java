@@ -58,10 +58,6 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public void setPixel(IPixel pixel) {
-  }
-
-  @Override
   public void setVisible(boolean isVisible) {
     layerDelegate.setVisible(isVisible);
   }
