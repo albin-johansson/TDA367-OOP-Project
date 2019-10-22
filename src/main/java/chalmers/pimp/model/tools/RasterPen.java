@@ -40,6 +40,15 @@ final class RasterPen implements ITool {
     this.customColor = Objects.requireNonNull(customColor);
   }
 
+  /**
+   * Rotates the given point opposite to the current active layer's rotation. This since the layer
+   * is never actually rotated in the model and thus the input mouse point will have to rotate to
+   * compensate. First the point is translated to origin, rotated, and then translated back. Note:
+   * Slight discrepancy after rounding and the limited amount of pixels used.
+   *
+   * @param point the point to be drawn in relation to the current active layer's center point and
+   *              rotation.
+   */
   private Point getRotatedPoint(Point point) {
 
     //Rotate the point around center point with the layers negative angle
@@ -85,7 +94,7 @@ final class RasterPen implements ITool {
     int y = model.getViewport().getTranslatedY(mouseStatus.getY());
     Point tempPoint = new Point(x, y);
     tempPoint = getRotatedPoint(tempPoint);
-;    return PixelFactory.createPixel(tempPoint.getX(), tempPoint.getY(), getColor());
+    return PixelFactory.createPixel(tempPoint.getX(), tempPoint.getY(), getColor());
   }
 
   @Override
