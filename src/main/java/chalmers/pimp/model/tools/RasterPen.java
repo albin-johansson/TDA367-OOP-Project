@@ -2,6 +2,7 @@ package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelFactory;
@@ -39,6 +40,29 @@ final class RasterPen implements ITool {
     this.customColor = Objects.requireNonNull(customColor);
   }
 
+  private Point getRotatedPoint(Point point) {
+
+    //Rotate the point around center point with the layers negative angle
+    double rotation = -model.getActiveLayer().getRotation();
+    double s = Math.sin(rotation);
+    double c = Math.cos(rotation);
+
+    //Translate point to origin.
+    Point layersCenter = model.getActiveLayer().getCenterPoint();
+    int xToRotate = point.getX() - layersCenter.getX();
+    int yToRotate = point.getY() - layersCenter.getY();
+
+    //Rotate point.
+    int xNew = (int) (xToRotate * c - yToRotate * s);
+    int yNew = (int) (xToRotate * s + yToRotate * c);
+
+    //Translate point back.
+    int translatedX = xNew + layersCenter.getX();
+    int translatedY = yNew + layersCenter.getY();
+
+    return new Point(translatedX, translatedY);
+  }
+
   /**
    * Returns the color that should be used.
    *
@@ -59,7 +83,9 @@ final class RasterPen implements ITool {
     Objects.requireNonNull(mouseStatus);
     int x = model.getViewport().getTranslatedX(mouseStatus.getX());
     int y = model.getViewport().getTranslatedY(mouseStatus.getY());
-    return PixelFactory.createPixel(x, y, getColor());
+    Point tempPoint = new Point(x, y);
+    tempPoint = getRotatedPoint(tempPoint);
+;    return PixelFactory.createPixel(tempPoint.getX(), tempPoint.getY(), getColor());
   }
 
   @Override
