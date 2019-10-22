@@ -63,6 +63,8 @@ final class ModelImpl implements IModel {
 
     stroke = null;
     colorModel = ColorModelFactory.createColorModel();
+    colorModel.addColorChangeListener(canvas);
+    addLayerUpdateListener(colorModel);
   }
 
   /**

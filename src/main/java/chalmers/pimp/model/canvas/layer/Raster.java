@@ -9,10 +9,10 @@ import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.Objects;
 
 /**
- * The {@code Raster} class is an implementation of the {@code ILayer} interface that represents a
+ * The {@code Raster} class is an implementation of the {@code IRasterLayer} interface that represents a
  * layer that contains an arbitrary collection of pixels.
  */
-final class Raster implements ILayer {
+final class Raster implements IRasterLayer {
 
   private final LayerDelegate layerDelegate;
   private final PixelData pixelData;
@@ -179,7 +179,7 @@ final class Raster implements ILayer {
   }
 
   @Override
-  public ILayer copy() {
+  public IRasterLayer copy() {
     return new Raster(this);
   }
 

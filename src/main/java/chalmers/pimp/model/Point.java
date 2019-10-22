@@ -92,6 +92,20 @@ public final class Point {
     return new Point(x, y + yOffset);
   }
 
+  /**
+   * Returns the distance between this and point p
+   *
+   * @param p the point to be compared with
+   * @return the distance this point and point p
+   * @throws NullPointerException if the specified point is {@ode null}
+   */
+  public double distance(Point p) {
+    Objects.requireNonNull(p);
+    double dy = p.y - y;
+    double dx = p.x - x;
+    return Math.sqrt(dy * dy + dx * dx);
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(x, y);

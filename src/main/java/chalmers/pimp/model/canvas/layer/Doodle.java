@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
 /**
  * A layer which has a list of points and draws straight lines between the points.
  */
-final class Doodle implements ILayer {
+final class Doodle implements IDoodleLayer, IColorable {
 
   private final List<Point> points;
   private final LayerDelegate layerDelegate;
-  private final IColor color;
   private final int lineWidth;
+  private IColor color;
 
   /**
    * @param lineWidth the width of the lines that are drawn.
@@ -52,12 +52,6 @@ final class Doodle implements ILayer {
 
     color = doodle.color;
     lineWidth = doodle.lineWidth;
-  }
-
-  @Override
-  public void setPixel(IPixel pixel) {
-    Point p = new Point(pixel.getX(), pixel.getY());
-    points.add(p);
   }
 
   @Override
@@ -184,6 +178,7 @@ final class Doodle implements ILayer {
     renderer.startTransform(getRotation(), viewport.translate(getCenterPoint()));
     renderer.setGlobalAlpha(getAlpha());
     renderer.setBorderColor(color);
+    renderer.setFillColor(color);
     renderer.setLineWidth(lineWidth);
 
     var position = new Point(layerDelegate.getX(), layerDelegate.getY());
@@ -235,5 +230,30 @@ final class Doodle implements ILayer {
       extreme = predicate.test(extreme, i) ? i : extreme;
     }
     return extreme;
+  }
+
+  @Override
+  public void addPoint(Point p) {
+    Objects.requireNonNull(p);
+    points.add(p);
+  }
+
+  @Override
+  public void removePoint(Point p, double threshold) {
+    for (Point po : points) {
+      if (po.distance(p) <= threshold) {
+        points.remove(po);
+      }
+    }
+  }
+
+  @Override
+  public void setColor(IColor color) {
+    this.color = Objects.requireNonNull(color);
+  }
+
+  @Override
+  public IColor getColor() {
+    return color;
   }
 }
