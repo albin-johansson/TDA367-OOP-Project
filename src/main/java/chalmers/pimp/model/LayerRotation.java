@@ -65,11 +65,11 @@ public final class LayerRotation {
     double dx = x - rotationAnchorPoint.getX();
     double dy = y - rotationAnchorPoint.getY();
     currentDegree = toDegrees(Math.atan(dy / dx));
-    if (dx < 0) {
-      currentDegree = 180 + currentDegree;
-    }
+//    if (dx < 0) {
+//      currentDegree = 180 + currentDegree;
+//    }
     //Any rotation is based on the start position of the mouse.
-    currentDegree = baseDegree - (mouseStartDegree - currentDegree);
+    currentDegree = baseDegree + (currentDegree - mouseStartDegree);
   }
 
   /**

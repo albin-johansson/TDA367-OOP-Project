@@ -2,6 +2,7 @@ package chalmers.pimp.model.tools;
 
 import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
+import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.PixelFactory;
@@ -30,17 +31,42 @@ final class Pencil implements ITool {
     this.model = Objects.requireNonNull(model);
   }
 
+  private Point getRotatedPoint(MouseStatus mouseStatus) {
+
+    //Rotate the point around center point with the layers negative angle
+    double rotation = model.getActiveLayer().getRotation();
+    double s = Math.sin(rotation);
+    double c = Math.cos(rotation);
+
+    //Translate point to origin.
+    Point layersCenter = model.getActiveLayer().getRotationAnchor();
+    int xToRotate = mouseStatus.getX() - layersCenter.getX();
+    int yToRotate = mouseStatus.getY() - layersCenter.getY();
+
+    //Rotate point.
+    int xNew = (int) (xToRotate * c - yToRotate * s);
+    int yNew = (int) (xToRotate * s + yToRotate * c);
+
+    //Translate point back.
+    int translatedX = xNew + layersCenter.getX();
+    int translatedY = yNew + layersCenter.getY();
+
+    return new Point(translatedX, translatedY);
+  }
+
   @Override
   public void dragged(MouseStatus mouseStatus) {
     if (model.getActiveLayer() != null) {
-      model.updateStroke(PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color));
+      Point tempPoint = getRotatedPoint(mouseStatus);
+      model.updateStroke(PixelFactory.createPixel(tempPoint.getX(), tempPoint.getY(), color));
     }
   }
 
   @Override
   public void pressed(MouseStatus mouseStatus) {
     if (model.getActiveLayer() != null) {
-      IPixel pixel = PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color);
+      Point tempPoint = getRotatedPoint(mouseStatus);
+      IPixel pixel = PixelFactory.createPixel(tempPoint.getX(), tempPoint.getY(), color);
       model.startStroke(pixel, diameter);
     }
   }
@@ -48,7 +74,9 @@ final class Pencil implements ITool {
   @Override
   public void released(MouseStatus mouseStatus) {
     if (model.getActiveLayer() != null) {
-      model.endStroke(PixelFactory.createPixel(mouseStatus.getX(), mouseStatus.getY(), color));
+      Point tempPoint = getRotatedPoint(mouseStatus);
+      IPixel pixel = PixelFactory.createPixel(tempPoint.getX(), tempPoint.getY(), color);
+      model.endStroke(pixel);
     }
   }
 
