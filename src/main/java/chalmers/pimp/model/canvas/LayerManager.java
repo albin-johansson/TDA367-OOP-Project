@@ -2,6 +2,7 @@ package chalmers.pimp.model.canvas;
 
 import chalmers.pimp.model.canvas.layer.IColorable;
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IRasterLayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;

@@ -31,7 +31,7 @@ final class Rectangle implements ILayer, IColorable {
     layerDelegate = new LayerDelegate(LayerType.SHAPE);
     layerDelegate.setX(x);
     layerDelegate.setY(y);
-    this.width = width; // FIXME don't allow width/height to be < 0
+    this.width = width;
     this.height = height;
     this.color = Objects.requireNonNull(color);
 
