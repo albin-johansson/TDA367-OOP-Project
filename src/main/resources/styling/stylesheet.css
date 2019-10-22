@@ -188,7 +188,7 @@
 
 .text-input {
   -fx-font-size: 12pt;
-  -fx-font-weight: normal;
+
 }
 
 #rename-box{
@@ -197,4 +197,6 @@
 
 #layers-label{
   -fx-font-size: 20px;
+  -fx-border-width: 2px 0px 2px 0px;
+  -fx-border-color: -background-pressed-color;
 }

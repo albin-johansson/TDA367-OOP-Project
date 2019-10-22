@@ -25,9 +25,6 @@ final class LayerItemContainerPane extends AnchorPane implements ILayerUpdateLis
   private final IModel model;
   @FXML
   @SuppressWarnings("unused")
-  private StackPane stackPane; // TODO rename
-  @FXML
-  @SuppressWarnings("unused")
   private AnchorPane emptyLayerPane;
   @FXML
   @SuppressWarnings("unused")
