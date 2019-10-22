@@ -7,14 +7,15 @@ import chalmers.pimp.model.canvas.ICanvas;
 import java.util.Objects;
 
 /**
- * The {@code MoveCommand} class is a subclass of {@code AbstractCommand} that represents the
- * action of moving a layer (by changing its x- and y-coordinates).
+ * The {@code MoveCommand} class is a subclass of {@code AbstractCommand} that represents the action
+ * of moving a layer (by changing its x- and y-coordinates).
  *
  * @see AbstractCommand
  * @see ICommand
  */
 final class MoveCommand extends AbstractCommand {
 
+  private final ICanvas canvas;
   private final int layerDepthIndex;
   private final int x;
   private final int y;
@@ -28,7 +29,8 @@ final class MoveCommand extends AbstractCommand {
    */
   MoveCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, int layerDepthIndex,
       LayerMovement movement) {
-    super(canvas, mementoTarget);
+    super(mementoTarget);
+    this.canvas = Objects.requireNonNull(canvas);
     this.layerDepthIndex = layerDepthIndex;
     Objects.requireNonNull(movement);
 
@@ -41,9 +43,9 @@ final class MoveCommand extends AbstractCommand {
   public void execute() {
     updateModelMemento();
 
-    getCanvas().selectLayer(layerDepthIndex);
-    getCanvas().setActiveLayerX(x);
-    getCanvas().setActiveLayerY(y);
+    canvas.selectLayer(layerDepthIndex);
+    canvas.setActiveLayerX(x);
+    canvas.setActiveLayerY(y);
   }
 
   @Override

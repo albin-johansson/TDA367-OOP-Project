@@ -2,7 +2,6 @@ package chalmers.pimp.model.command;
 
 import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.ModelMemento;
-import chalmers.pimp.model.canvas.ICanvas;
 import java.util.Objects;
 
 /**
@@ -13,17 +12,14 @@ import java.util.Objects;
  */
 abstract class AbstractCommand implements ICommand {
 
-  private final ICanvas canvas;
   private final IMementoTarget<ModelMemento> mementoTarget;
   private ModelMemento modelMemento;
 
   /**
-   * @param canvas        the associated canvas instance.
    * @param mementoTarget the memento target that will be used.
    * @throws NullPointerException if any references are {@code null}.
    */
-  AbstractCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget) {
-    this.canvas = Objects.requireNonNull(canvas);
+  AbstractCommand(IMementoTarget<ModelMemento> mementoTarget) {
     this.mementoTarget = Objects.requireNonNull(mementoTarget);
   }
 
@@ -42,15 +38,6 @@ abstract class AbstractCommand implements ICommand {
    */
   void setModelMemento(ModelMemento modelMemento) {
     this.modelMemento = modelMemento;
-  }
-
-  /**
-   * Returns the associated canvas instance.
-   *
-   * @return the associated canvas instance.
-   */
-  final ICanvas getCanvas() {
-    return canvas;
   }
 
   @Override

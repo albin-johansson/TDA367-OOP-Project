@@ -16,6 +16,7 @@ import java.util.Objects;
  */
 final class StrokeCommand extends AbstractCommand {
 
+  private final ICanvas canvas;
   private final Stroke stroke;
 
   /**
@@ -25,7 +26,8 @@ final class StrokeCommand extends AbstractCommand {
    * @throws NullPointerException if any references are {@code null}.
    */
   StrokeCommand(ICanvas canvas, IMementoTarget<ModelMemento> mementoTarget, Stroke stroke) {
-    super(canvas, mementoTarget);
+    super(mementoTarget);
+    this.canvas = Objects.requireNonNull(canvas);
     this.stroke = Objects.requireNonNull(stroke);
 
     setModelMemento(stroke.getModelMemento());
@@ -36,7 +38,7 @@ final class StrokeCommand extends AbstractCommand {
     updateModelMemento();
 
     for (IPixel pixel : stroke.getPixels()) {
-      stroke.updatePixels(getCanvas(), pixel);
+      stroke.updatePixels(canvas, pixel);
     }
   }
 
