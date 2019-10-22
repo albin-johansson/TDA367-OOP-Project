@@ -2,6 +2,7 @@ package chalmers.pimp.model.canvas;
 
 import chalmers.pimp.model.canvas.layer.IColorable;
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.IRasterLayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.IColorChangeListener;
@@ -222,7 +223,9 @@ final class LayerManager implements IColorChangeListener {
   void setActiveLayerPixel(IPixel pixel) {
     Objects.requireNonNull(pixel);
     if (hasActiveLayer()) {
-      activeLayer.setPixel(pixel);
+      if (activeLayer instanceof IRasterLayer) {
+        ((IRasterLayer) activeLayer).setPixel(pixel);
+      }
     }
   }
 
@@ -247,7 +250,9 @@ final class LayerManager implements IColorChangeListener {
         // TODO this is a little bit strange?
         int dx = x - activeLayer.getX();
         int dy = y - activeLayer.getY();
-        activeLayer.setPixel(PixelFactory.createPixelWithOffset(pixel, dx, dy));
+        if (activeLayer instanceof IRasterLayer) {
+          ((IRasterLayer)activeLayer).setPixel(PixelFactory.createPixelWithOffset(pixel, dx, dy));
+        }
       }
     }
   }

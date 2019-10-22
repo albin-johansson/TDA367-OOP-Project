@@ -84,7 +84,7 @@ public final class LayerFactory {
    * @param color the color of the line strokes.
    * @return a doodle layer.
    */
-  public static ILayer createDoodle(int lineWidth, IColor color) {
+  public static IDoodleLayer createDoodle(int lineWidth, IColor color) {
     return new Doodle(lineWidth, color);
   }
 }
