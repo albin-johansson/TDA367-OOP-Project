@@ -247,11 +247,12 @@ final class LayerManager {
       return;
     }
 
+    int dx = x - activeLayer.getX();
+    int dy = y - activeLayer.getY();
+
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
       for (IReadOnlyPixel pixel : row) {
         // TODO this is a little bit strange?
-        int dx = x - activeLayer.getX();
-        int dy = y - activeLayer.getY();
         activeLayer.setPixel(PixelFactory.createPixelWithOffset(pixel, dx, dy));
       }
     }
