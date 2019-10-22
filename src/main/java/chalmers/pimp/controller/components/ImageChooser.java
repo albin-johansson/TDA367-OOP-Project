@@ -1,7 +1,7 @@
 package chalmers.pimp.controller.components;
 
-import chalmers.pimp.model.pixeldata.PixelData;
-import chalmers.pimp.service.FXToPixelDataService;
+import chalmers.pimp.model.pixeldata.IRasterData;
+import chalmers.pimp.service.RasterDataService;
 import chalmers.pimp.service.FileService;
 import chalmers.pimp.service.ImageImportService;
 import java.io.File;
@@ -38,7 +38,7 @@ public final class ImageChooser {
    * @throws IOException          if an image cannot be loaded.
    * @throws NullPointerException if the supplied window is {@code null}.
    */
-  public PixelData openDialog(Window window) throws IOException {
+  public IRasterData openDialog(Window window) throws IOException {
     Objects.requireNonNull(window);
 
     File file = fileChooser.showOpenDialog(window);
@@ -49,7 +49,7 @@ public final class ImageChooser {
     setMostRecentFileName(file);
 
     Image image = ImageImportService.importImage(file);
-    return FXToPixelDataService.createPixelDataCopy(image);
+    return RasterDataService.createPixelDataCopy(image);
   }
 
   /**

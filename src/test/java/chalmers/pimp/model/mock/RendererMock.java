@@ -3,7 +3,7 @@ package chalmers.pimp.model.mock;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class RendererMock implements IRenderer {
   }
 
   @Override
-  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
+  public void drawImage(IReadOnlyRasterData readOnlyPixelData, int x, int y) {
 
   }
 

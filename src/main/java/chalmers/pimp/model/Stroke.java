@@ -3,8 +3,9 @@ package chalmers.pimp.model;
 import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.PixelData;
+import chalmers.pimp.model.pixeldata.IRasterData;
 import chalmers.pimp.model.pixeldata.PixelFactory;
+import chalmers.pimp.model.pixeldata.RasterDataFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -55,7 +56,7 @@ public final class Stroke {
     Objects.requireNonNull(pixel);
     Objects.requireNonNull(color);
 
-    var pixels = new PixelData(diameter, diameter);
+    IRasterData pixels = RasterDataFactory.createRasterData(diameter, diameter);
 
     for (int row = 0; row < diameter; row++) {
       for (int col = 0; col < diameter; col++) {

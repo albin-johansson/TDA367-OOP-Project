@@ -1,6 +1,10 @@
 package chalmers.pimp.model.pixeldata;
 
-public interface IReadOnlyPixelData {
+/**
+ * The {@code IReadOnlyRasterData} interface specifies objects that represent some kind of pixel
+ * data that is read-only.
+ */
+public interface IReadOnlyRasterData {
 
   /**
    * Returns a read only matrix of colors (raster).
