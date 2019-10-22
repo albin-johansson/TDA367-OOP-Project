@@ -251,7 +251,7 @@ final class LayerDelegate {
    * @param rotationDegrees the new rotation.
    */
   void setRotationDegrees(double rotationDegrees) {
-    this.rotationDegrees = rotationDegrees;
+    this.rotationDegrees = rotationDegrees % 360;
   }
 
   /**

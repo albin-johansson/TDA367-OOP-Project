@@ -26,7 +26,8 @@ class InfoPane extends AnchorPane {
   private Label layerWidth;
   @FXML
   private Label layerHeight;
-
+  @FXML
+  private Label layerRotation;
 
   InfoPane() throws IOException {
     ControllerUtils.makeController(this, Resources.find(getClass(), "info_pane.fxml"));
@@ -34,6 +35,7 @@ class InfoPane extends AnchorPane {
 
   /**
    * Updates the canvasWidth Label.
+   *
    * @param string the new width.
    */
   void setCanvasWidthLabel(String string) {
@@ -42,6 +44,7 @@ class InfoPane extends AnchorPane {
 
   /**
    * Updates the canvasHeight Label.
+   *
    * @param string the new height.
    */
   void setCanvasHeightLabel(String string) {
@@ -50,6 +53,7 @@ class InfoPane extends AnchorPane {
 
   /**
    * Updates the mouse-coordinates displayed.
+   *
    * @param e the associated mouseEvent.
    */
   void updateCoordinates(MouseEvent e) {
@@ -59,6 +63,7 @@ class InfoPane extends AnchorPane {
 
   /**
    * Stops displaying mouse-coordinates when the mouse leaves the canvas.
+   *
    * @param e the associated mouseEvent.
    */
   void turnOffCoordinates(MouseEvent e) {
@@ -68,6 +73,7 @@ class InfoPane extends AnchorPane {
 
   /**
    * Updates the layerWidth Label.
+   *
    * @param string the new width.
    */
   void setLayerWidthLabel(String string) {
@@ -76,9 +82,19 @@ class InfoPane extends AnchorPane {
 
   /**
    * Updates the layerHeight Label.
+   *
    * @param string the new height.
    */
   void setLayerHeightLabel(String string) {
     layerHeight.setText(string);
+  }
+
+  /**
+   * Updates the layerRotation label.
+   *
+   * @param string the layer with the new rotation.
+   */
+  void setLayerRotationLabel(String string) {
+    layerRotation.setText(string);
   }
 }

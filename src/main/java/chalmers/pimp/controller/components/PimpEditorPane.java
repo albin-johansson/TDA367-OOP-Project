@@ -70,20 +70,19 @@ public final class PimpEditorPane extends AnchorPane {
       palettePane.updateEnabledTools(model.getActiveLayer());
     });
 
-
     // Info pane (DOWN)
     var infoPane = new InfoPane();
     bottomAnchorPane.getChildren().add(infoPane);
     AnchorPanes.setZeroAnchors(infoPane);
 
     initiateInfoPane(canvasPane, infoPane, controller, model);
-
   }
 
   /**
    * Adds listeners to the Canvas which in turn call for the infoPane to update itself.
    */
-  private void initiateInfoPane(CanvasPane canvasPane, InfoPane infoPane, IController controller, IModel model) {
+  private void initiateInfoPane(CanvasPane canvasPane, InfoPane infoPane, IController controller,
+      IModel model) {
     canvasPane.getGraphics().getCanvas().heightProperty()
         .addListener((observable, oldvalue, newvalue) ->
             infoPane.setCanvasHeightLabel(String.valueOf(newvalue.intValue()))
@@ -97,15 +96,19 @@ public final class PimpEditorPane extends AnchorPane {
     canvasPane.setOnMouseDragged((e) -> {
       infoPane.updateCoordinates(e);
       controller.selectedToolDragged(e);
+      if (model.getActiveLayer() != null) {
+        infoPane.setLayerRotationLabel(String.valueOf((int) model.getActiveLayer().getRotation()));
+      }
     });
 
     canvasPane.setOnMouseMoved(infoPane::updateCoordinates);
     canvasPane.setOnMouseExited(infoPane::turnOffCoordinates);
 
-    model.addLayerUpdateListener(event->{
-      if(model.getActiveLayer() != null){
+    model.addLayerUpdateListener(event -> {
+      if (model.getActiveLayer() != null) {
         infoPane.setLayerHeightLabel(String.valueOf(model.getActiveLayer().getHeight()));
         infoPane.setLayerWidthLabel(String.valueOf(model.getActiveLayer().getWidth()));
+        infoPane.setLayerRotationLabel(String.valueOf((int) model.getActiveLayer().getRotation()));
       }
     });
   }
@@ -118,5 +121,4 @@ public final class PimpEditorPane extends AnchorPane {
   public GraphicsContext getGraphics() {
     return canvasPane.getGraphics();
   }
-
 }
