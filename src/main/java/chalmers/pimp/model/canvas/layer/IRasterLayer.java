@@ -1,6 +1,7 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.pixeldata.IPixel;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 
 /**
  * The {@code IRasterLayer} is a subinterface of {@code ILayer} and extends its functionality
@@ -18,4 +19,10 @@ public interface IRasterLayer extends ILayer {
    * @throws NullPointerException if any arguments are {@code null}.
    */
   void setPixel(IPixel pixel);
+
+  /**
+   * 
+   * @return
+   */
+  IReadOnlyRasterData getPixelData();
 }
