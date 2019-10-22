@@ -260,8 +260,6 @@ final class LayerManager implements IColorChangeListener {
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
       for (IReadOnlyPixel pixel : row) {
         // TODO this is a little bit strange?
-        int dx = x - activeLayer.getX();
-        int dy = y - activeLayer.getY();
         if (activeLayer instanceof IRasterLayer) {
           ((IRasterLayer)activeLayer).setPixel(PixelFactory.createPixelWithOffset(pixel, dx, dy));
         }
