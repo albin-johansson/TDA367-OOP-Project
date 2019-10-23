@@ -50,16 +50,15 @@ final class GraphicsHandler {
    * @param vy the viewport y-coordinate.
    */
   private void drawTransparencyGrid(int vx, int vy) {
-    final int size = 10;
-    final int nRows = Math.min(model.getWidth() / size, renderer.getCanvasWidth() / size);
-    final int nCols = Math.min(model.getHeight() / size, renderer.getCanvasHeight() / size);
+    int size = 10;
+    int nRows = model.getWidth() / size;
+    int nCols = model.getHeight() / size;
 
     for (int row = 0; row < nRows; row++) {
       for (int col = 0; col < nCols; col++) {
-        int x = vx + (row * size);
-        int y = vy + (col * size);
-
         if ((row % 2 == 0) == (col % 2 == 0)) {
+          int x = vx + (row * size);
+          int y = vy + (col * size);
           renderer.setFillColor(Colors.LIGHT_GRAY);
           renderer.fillRect(x, y, size, size);
         }

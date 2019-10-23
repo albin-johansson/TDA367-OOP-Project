@@ -2,7 +2,7 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.model.pixeldata.IRasterData;
 import chalmers.pimp.service.RasterDataService;
-import chalmers.pimp.service.FileService;
+import chalmers.pimp.util.FileUtils;
 import chalmers.pimp.service.ImageImportService;
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +58,7 @@ public final class ImageChooser {
    * @param mostRecentFileName the {@code File} from which the name comes from.
    */
   private void setMostRecentFileName(File mostRecentFileName) {
-    this.mostRecentFileName = FileService.getFileNameFromFile(mostRecentFileName);
+    this.mostRecentFileName = FileUtils.getSimpleFileName(mostRecentFileName);
   }
 
   /**

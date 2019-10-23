@@ -6,7 +6,6 @@ import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.ColorFactory;
 import chalmers.pimp.model.mock.Line;
 import chalmers.pimp.model.mock.RendererMock;
-import chalmers.pimp.model.pixeldata.PixelFactory;
 import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import chalmers.pimp.model.viewport.ViewportFactory;
 import java.util.ArrayList;

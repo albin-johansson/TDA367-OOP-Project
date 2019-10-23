@@ -317,6 +317,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void selectedToolPressed(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus);
     if (hasSelectedTool()) {
       selectedTool.pressed(mouseStatus);
     }
@@ -324,6 +325,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void selectedToolDragged(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus);
     if (hasSelectedTool()) {
       selectedTool.dragged(mouseStatus);
     }
@@ -331,6 +333,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void selectedToolReleased(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus);
     if (hasSelectedTool()) {
       selectedTool.released(mouseStatus);
     }
@@ -339,7 +342,7 @@ final class ModelImpl implements IModel {
 
   @Override
   public void setRenderer(IRenderer renderer) {
-    this.renderer = Objects.requireNonNull(renderer);
+    this.renderer = renderer;
   }
 
   @Override

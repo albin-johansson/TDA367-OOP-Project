@@ -30,6 +30,7 @@ public class RotateTool implements ITool {
 
   @Override
   public void released(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus); // required by specification
     model.stopRotatingActiveLayer();
   }
 }
