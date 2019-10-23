@@ -273,7 +273,7 @@ final class ModelImpl implements IModel {
   public void startRotatingActiveLayer(int x, int y) {
     if (hasActiveLayer()) {
       layerRotation = new LayerRotation();
-      var point = new Point(x, y);
+      var point = viewportModel.getViewport().translate(new Point(x, y));
 
       Point centerPoint = canvas.getActiveLayer().getCenterPoint();
       int rotation = canvas.getActiveLayer().getRotation();
@@ -286,6 +286,8 @@ final class ModelImpl implements IModel {
     if (layerRotation == null) {
       return;
     }
+    x = viewportModel.getViewport().getTranslatedX(x);
+    y = viewportModel.getViewport().getTranslatedY(y);
     layerRotation.update(x, y);
     rotateActiveLayer(layerRotation.getCurrentDegree());
   }
