@@ -2,6 +2,7 @@ package chalmers.pimp.model.canvas;
 
 import chalmers.pimp.model.canvas.layer.IColorable;
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IRasterLayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
@@ -193,13 +194,7 @@ final class LayerManager implements IColorChangeListener {
       boolean removedLayerWasActive = hasActiveLayer() && (index == activeLayer.getDepthIndex());
 
       if (removedLayerWasActive) {
-        if (inBounds(index - 1)) {
-          activeLayer = layers.get(index - 1);
-        } else if (inBounds(index + 1)) {
-          activeLayer = layers.get(index + 1);
-        } else {
-          activeLayer = null;
-        }
+        selectNewActiveLayer(index);
       }
 
       ILayer removedLayer = layers.remove(index);
@@ -211,6 +206,21 @@ final class LayerManager implements IColorChangeListener {
       event.setRemovedLayer(removedLayer);
 
       layerUpdateListeners.layersUpdated(event);
+    }
+  }
+
+  /**
+   * Selects a new active layer after having removed the currently active one.
+   *
+   * @param index index of the removed layer
+   */
+  private void selectNewActiveLayer(int index) {
+    if (inBounds(index - 1)) {
+      activeLayer = layers.get(index - 1);
+    } else if (inBounds(index + 1)) {
+      activeLayer = layers.get(index + 1);
+    } else {
+      activeLayer = null;
     }
   }
 
@@ -245,11 +255,12 @@ final class LayerManager implements IColorChangeListener {
       return;
     }
 
+    int dx = x - activeLayer.getX();
+    int dy = y - activeLayer.getY();
+
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
       for (IReadOnlyPixel pixel : row) {
         // TODO this is a little bit strange?
-        int dx = x - activeLayer.getX();
-        int dy = y - activeLayer.getY();
         if (activeLayer instanceof IRasterLayer) {
           ((IRasterLayer)activeLayer).setPixel(PixelFactory.createPixelWithOffset(pixel, dx, dy));
         }

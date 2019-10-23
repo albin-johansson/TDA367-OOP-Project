@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
-import chalmers.pimp.model.canvas.ILayerUpdateListener;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import org.junit.jupiter.api.BeforeEach;
