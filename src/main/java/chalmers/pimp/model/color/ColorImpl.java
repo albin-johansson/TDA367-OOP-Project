@@ -10,8 +10,6 @@ import java.util.Objects;
  */
 final class ColorImpl implements IColor {
 
-  private static final int MAX_VALUE = 255;
-  private static final int MIN_VALUE = 0;
   private final int red;
   private final int green;
   private final int blue;
