@@ -17,6 +17,7 @@ public final class LayerRotation {
   private boolean isFinished;
   private Point rotationAnchorPoint;
   private int mouseStartDegree;
+  private double mouseStartDx;
   private int baseDegree;
   private int currentDegree;
 
@@ -64,10 +65,16 @@ public final class LayerRotation {
     }
     double dx = x - rotationAnchorPoint.getX();
     double dy = y - rotationAnchorPoint.getY();
+
     currentDegree = (int) toDegrees(Math.atan(dy / dx));
-//    if (dx < 0) {
-//      currentDegree = 180 + currentDegree;
-//    }
+    /**
+     *     Since Math.atan isn't defined for angles in second and third quadrant and simply inverts
+     *     the result a half rotation is added.
+     *     Not a perfect solution but works for this prototype project.
+     */
+    if ((mouseStartDx > 0 && dx < 0) || (mouseStartDx < 0 && dx > 0)) {
+      currentDegree += 180;
+    }
     //Any rotation is based on the start position of the mouse.
     currentDegree = baseDegree + (currentDegree - mouseStartDegree);
   }
@@ -81,6 +88,7 @@ public final class LayerRotation {
    */
   private void setMouseStartDegree(int x, int y) {
     double dx = x - rotationAnchorPoint.getX();
+    mouseStartDx = dx;
     double dy = y - rotationAnchorPoint.getY();
     mouseStartDegree = (int) toDegrees(Math.atan(dy / dx));
   }
