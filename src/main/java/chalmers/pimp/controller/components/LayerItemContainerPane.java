@@ -2,8 +2,9 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.LayerUpdateEvent;
+import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.service.LayerImageService;
 import chalmers.pimp.util.Resources;
@@ -52,7 +53,10 @@ final class LayerItemContainerPane extends AnchorPane implements ILayerUpdateLis
     for (IReadOnlyLayer layer : event.getLayers()) {
       try {
         var layerItemPane = new LayerItemPane(model, layer.getDepthIndex());
-        layerItemPane.setImage(LayerImageService.getLayerImage(layer));
+
+        ILayer layerCopy = event.getCopyOfLayer(layer.getDepthIndex());
+        layerItemPane.setImage(LayerImageService.getLayerImage(layerCopy));
+
         layerItemVBox.getChildren().add(0, layerItemPane);
       } catch (Exception e) {
         System.out.println("Failed to create layer item pane! Exception: " + e);

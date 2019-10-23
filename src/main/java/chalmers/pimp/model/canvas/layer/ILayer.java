@@ -64,4 +64,7 @@ public interface ILayer extends IReadOnlyLayer {
    * @param alpha the new alpha value.
    */
   void setAlpha(double alpha);
+
+  @Override
+  ILayer clone();
 }

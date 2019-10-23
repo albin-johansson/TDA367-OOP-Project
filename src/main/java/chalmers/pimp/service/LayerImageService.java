@@ -38,13 +38,13 @@ public final class LayerImageService {
   /**
    * Creates a JavaFX Image representing a layer.
    *
-   * @param layer the layer to be converted.
+   * @param layer the layer to be converted, the supplied layer will not be mutated.
    * @return a JavaFX Image of the target layer.
    * @throws NullPointerException if the supplied layer is {@code null}.
    */
-  public static Image getLayerImage(IReadOnlyLayer layer) {
+  public static Image getLayerImage(ILayer layer) {
     Objects.requireNonNull(layer);
-    ILayer copy = layer.copy();
+    ILayer copy = layer.clone();
 
     int size = getPreviewAreaSize(copy);
 

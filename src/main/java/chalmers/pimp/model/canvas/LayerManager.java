@@ -43,7 +43,7 @@ final class LayerManager implements IColorChangeListener {
 
     layers = new ArrayList<>(layerManager.layers.size());
     for (ILayer layer : layerManager.layers) {
-      layers.add(layer.copy());
+      layers.add(layer.clone());
     }
 
     if (layerManager.hasActiveLayer()) {
@@ -76,7 +76,8 @@ final class LayerManager implements IColorChangeListener {
   }
 
   /**
-   * Searches for the supplied layer and returns it if it's found.
+   * Searches for the supplied layer and returns it if it's found. Note! This method compares the
+   * actual references.
    *
    * @param readOnlyLayer the layer to look for.
    * @return a layer instance if a match is found; {@code null} otherwise.
@@ -97,7 +98,7 @@ final class LayerManager implements IColorChangeListener {
    * informative event.
    */
   void notifyListeners() {
-    layerUpdateListeners.layersUpdated(new LayerUpdateEvent(layers, layers.size()));
+    layerUpdateListeners.layersUpdated(new LayerUpdateEvent(layers));
   }
 
   /**
@@ -134,7 +135,7 @@ final class LayerManager implements IColorChangeListener {
       layers.add(layerIndex + dz, layers.remove(layerIndex));
       resetDepthValues();
 
-      var event = new LayerUpdateEvent(layers, layers.size());
+      var event = new LayerUpdateEvent(layers);
       layerUpdateListeners.layersUpdated(event);
     }
   }
@@ -149,7 +150,7 @@ final class LayerManager implements IColorChangeListener {
     if (inBounds(index)) {
       activeLayer = layers.get(index);
 
-      var event = new LayerUpdateEvent(layers, layers.size());
+      var event = new LayerUpdateEvent(layers);
       event.setSelectedLayer(index);
       event.setSelectionUpdated(true);
 
@@ -174,7 +175,7 @@ final class LayerManager implements IColorChangeListener {
 
       activeLayer = layer;
 
-      var event = new LayerUpdateEvent(layers, layers.size());
+      var event = new LayerUpdateEvent(layers);
       event.setAddedLayer(layer);
       event.setSelectionUpdated(true);
 
@@ -201,7 +202,7 @@ final class LayerManager implements IColorChangeListener {
 
       resetDepthValues();
 
-      var event = new LayerUpdateEvent(layers, layers.size());
+      var event = new LayerUpdateEvent(layers);
       event.setSelectionUpdated(true);
       event.setRemovedLayer(removedLayer);
 

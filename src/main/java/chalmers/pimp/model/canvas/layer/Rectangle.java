@@ -164,8 +164,13 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public ILayer copy() {
-    return new Rectangle(this);
+  public ILayer clone() {
+    try {
+      var clone = (Rectangle) super.clone();
+      return new Rectangle(clone);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   @Override

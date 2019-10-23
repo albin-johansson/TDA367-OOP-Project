@@ -1,13 +1,12 @@
 package chalmers.pimp.model.canvas.layer;
 
-import chalmers.pimp.model.ICopiable;
 import chalmers.pimp.model.IDrawable;
 import chalmers.pimp.model.Point;
 
 /**
  * The {@code IReadOnlyLayer} interface specifies the basic read-only methods for layers.
  */
-public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
+public interface IReadOnlyLayer extends IDrawable, Cloneable {
 
   /**
    * Indicates whether or not the layer is visible.
@@ -85,4 +84,12 @@ public interface IReadOnlyLayer extends IDrawable, ICopiable<ILayer> {
    * @return the height of the layer.
    */
   int getHeight();
+
+  /**
+   * Returns a copy of the layer.
+   *
+   * @return a copy of the layer.
+   * @throws IllegalStateException if the layer cannot be copied.
+   */
+  IReadOnlyLayer clone();
 }

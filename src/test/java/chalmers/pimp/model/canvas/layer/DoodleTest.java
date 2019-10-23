@@ -35,9 +35,9 @@ class DoodleTest {
 
   @Test
   void setX() {
-    doodle.addPoint(new Point(10,10));
-    doodle.addPoint(new Point(20,20));
-    doodle.addPoint(new Point(30,5));
+    doodle.addPoint(new Point(10, 10));
+    doodle.addPoint(new Point(20, 20));
+    doodle.addPoint(new Point(30, 5));
 
     doodle.setX(10);
     assertEquals(doodle.getX(), 10);
@@ -47,9 +47,9 @@ class DoodleTest {
 
   @Test
   void setY() {
-    doodle.addPoint(new Point(10,10));
-    doodle.addPoint(new Point(20,20));
-    doodle.addPoint(new Point(30,5));
+    doodle.addPoint(new Point(10, 10));
+    doodle.addPoint(new Point(20, 20));
+    doodle.addPoint(new Point(30, 5));
 
     doodle.setY(10);
     assertEquals(doodle.getY(), 10);
@@ -118,8 +118,7 @@ class DoodleTest {
   }
 
   @Test
-  void copy() {
-    List<Point> pixels = new ArrayList<>();
+  void cloneTest() {
     int nPixels = 10;
     var points = new ArrayList<Point>(nPixels);
 
@@ -133,7 +132,7 @@ class DoodleTest {
 
     var renderer = new RendererMock();
 
-    ILayer doodle2 = doodle.copy();
+    ILayer doodle2 = doodle.clone();
     doodle2.draw(renderer, viewport);
 
     assertEquals(renderer.lines.size(), nPixels - 1);

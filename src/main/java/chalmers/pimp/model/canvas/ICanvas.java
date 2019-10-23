@@ -1,6 +1,5 @@
 package chalmers.pimp.model.canvas;
 
-import chalmers.pimp.model.ICopiable;
 import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
@@ -16,12 +15,10 @@ import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
  * ICopiable}.
  *
  * @see IMementoTarget
- * @see ICopiable
  * @see CanvasFactory
  * @see ILayer
  */
-public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanvas>,
-    IColorChangeListener {
+public interface ICanvas extends IMementoTarget<CanvasMemento>, Cloneable, IColorChangeListener {
 
   /**
    * Notifies all registered canvas update listeners.
@@ -212,4 +209,11 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, ICopiable<ICanva
    * @param color the color to be set. Does nothing if the color is {@code null}.
    */
   void setActiveLayerColor(IColor color);
+
+  /**
+   * Creates and returns a copy of the canvas.
+   *
+   * @return a copy of the canvas.
+   */
+  ICanvas clone();
 }
