@@ -1,6 +1,7 @@
 package chalmers.pimp.model.canvas;
 
 import chalmers.pimp.model.AbstractComposite;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import java.util.Objects;
 
 /**

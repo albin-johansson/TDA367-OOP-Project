@@ -3,6 +3,7 @@ package chalmers.pimp.model.canvas;
 import chalmers.pimp.model.ICopiable;
 import chalmers.pimp.model.IMementoTarget;
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.IColorChangeListener;

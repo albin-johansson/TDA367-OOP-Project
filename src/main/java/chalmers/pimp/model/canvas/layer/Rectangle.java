@@ -3,10 +3,6 @@ package chalmers.pimp.model.canvas.layer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.pixeldata.IRasterData;
-import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
-import chalmers.pimp.model.pixeldata.PixelFactory;
-import chalmers.pimp.model.pixeldata.RasterDataFactory;
 import chalmers.pimp.model.viewport.IReadOnlyViewport;
 import java.util.Objects;
 
@@ -35,7 +31,7 @@ final class Rectangle implements ILayer, IColorable {
     layerDelegate = new LayerDelegate(LayerType.SHAPE);
     layerDelegate.setX(x);
     layerDelegate.setY(y);
-    this.width = width; // FIXME don't allow width/height to be < 0
+    this.width = width;
     this.height = height;
     this.color = Objects.requireNonNull(color);
 
@@ -150,23 +146,6 @@ final class Rectangle implements ILayer, IColorable {
   @Override
   public int getHeight() {
     return height;
-  }
-
-  @Override
-  public IReadOnlyRasterData getPixelData() {
-    // Ensures that the pixel data is at least 1x1
-    int dx = (width < 1) ? 1 : 0;
-    int dy = (height < 1) ? 1 : 0;
-
-    IRasterData pixelData = RasterDataFactory.createRasterData(width + dx, height + dy);
-
-    for (int row = 0; row < height; row++) {
-      for (int col = 0; col < width; col++) {
-        pixelData.setPixel(PixelFactory.createPixel(col, row, color));
-      }
-    }
-
-    return pixelData;
   }
 
   @Override

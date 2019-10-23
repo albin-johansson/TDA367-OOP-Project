@@ -2,7 +2,7 @@ package chalmers.pimp.controller.components;
 
 import chalmers.pimp.controller.ControllerUtils;
 import chalmers.pimp.model.IModel;
-import chalmers.pimp.model.canvas.ILayerUpdateListener;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.LayerUpdateEvent;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.service.LayerImageService;
@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -23,9 +22,6 @@ import javafx.scene.layout.VBox;
 final class LayerItemContainerPane extends AnchorPane implements ILayerUpdateListener {
 
   private final IModel model;
-  @FXML
-  @SuppressWarnings("unused")
-  private StackPane stackPane; // TODO rename
   @FXML
   @SuppressWarnings("unused")
   private AnchorPane emptyLayerPane;

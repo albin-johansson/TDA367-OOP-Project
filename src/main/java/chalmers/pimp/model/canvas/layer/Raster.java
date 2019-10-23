@@ -164,8 +164,7 @@ final class Raster implements IRasterLayer {
   public int getHeight() {
     return rasterData.getHeight();
   }
-
-  @Override
+  
   public IReadOnlyRasterData getPixelData() {
     return rasterData;
   }

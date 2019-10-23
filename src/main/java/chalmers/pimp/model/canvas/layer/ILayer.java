@@ -1,7 +1,5 @@
 package chalmers.pimp.model.canvas.layer;
 
-import chalmers.pimp.model.pixeldata.IPixel;
-
 /**
  * The {@code ILayer} interface specifies objects that represent some sort of layer. This interface
  * is a subinterface to {@code IReadOnlyLayer}.
