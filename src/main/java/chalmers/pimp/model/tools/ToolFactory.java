@@ -25,6 +25,15 @@ public final class ToolFactory {
     return new RasterPen(diameter, model);
   }
 
+  /**
+   * Creates and returns a raster eraser pen.
+   *
+   * @param diameter the diameter of the pencil.
+   * @param model    the associated model instance.
+   * @return a tool that represents a raster eraser.
+   * @throws NullPointerException     if the supplied model is {@code null}.
+   * @throws IllegalArgumentException if the supplied diameter isn't greater than zero.
+   */
   public static ITool createRasterEraser(int diameter, IModel model) {
     return new RasterPen(diameter, model, Colors.TRANSPARENT);
   }
@@ -68,7 +77,8 @@ public final class ToolFactory {
    * @param diameter the diameter of the stroke line.
    * @param model    the associated model instance.
    * @return a tool which represents a doodle tool.
-   * @throws NullPointerException if the supplied model is {@code null}.
+   * @throws IllegalArgumentException if the supplied line width isn't greater than zero.
+   * @throws NullPointerException     if the supplied model is {@code null}.
    */
   public static ITool createDoodleTool(int diameter, IModel model) {
     return new DoodleTool(diameter, model);

@@ -4,9 +4,7 @@ import chalmers.pimp.model.IModel;
 import chalmers.pimp.model.MouseStatus;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.canvas.layer.IDoodleLayer;
-import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
-import chalmers.pimp.model.pixeldata.PixelFactory;
 import java.util.Objects;
 
 /**
@@ -24,21 +22,27 @@ final class DoodleTool implements ITool {
   /**
    * @param lineWidth the line width of the doodle.
    * @param model     the associated model instance.
-   * @throws NullPointerException if any references are {@code null}.
+   * @throws IllegalArgumentException if the supplied line width isn't greater than zero.
+   * @throws NullPointerException     if any references are {@code null}.
    */
   DoodleTool(int lineWidth, IModel model) {
+    if (lineWidth < 1) {
+      throw new IllegalArgumentException("Invalid line width: " + lineWidth);
+    }
     this.lineWidth = lineWidth;
     this.model = Objects.requireNonNull(model);
   }
 
   @Override
   public void pressed(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus);
     doodle = LayerFactory.createDoodle(lineWidth, model.getSelectedColor());
     dragged(mouseStatus);
   }
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus);
     model.notifyCanvasUpdateListeners();
 
     int x = model.getViewport().getTranslatedX(mouseStatus.getX());
@@ -50,6 +54,8 @@ final class DoodleTool implements ITool {
 
   @Override
   public void released(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus);
+
     model.addLayer(doodle);
   }
 }

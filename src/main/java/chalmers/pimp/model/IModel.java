@@ -177,18 +177,18 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void addLayer(ILayer layer);
 
   /**
-   * Removes the layer associated with the specified index. The layer index is zero-indexed.
+   * Removes the layer associated with the specified index. The layer index is zero-indexed. This
+   * method has no effect if there is no active layer.
    *
    * @param layerIndex the layer associated with the specified index (zero-indexed).
-   * @throws IllegalArgumentException if the specified index isn't associated with a layer.
    */
   void removeLayer(int layerIndex);
 
   /**
-   * Selects the layer associated with the specified index.
+   * Selects the layer associated with the specified index. This method has no effect if there is no
+   * active layer.
    *
    * @param layerIndex the index associated with the layer that will be made active.
-   * @throws IllegalArgumentException if the supplied index isn't associated with a layer.
    */
   void selectLayer(int layerIndex);
 
@@ -204,17 +204,16 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
 
   /**
    * Sets the the pixel at the pixels coordinate, in the active layer. The coordinates are
-   * zero-indexed.
+   * zero-indexed. This method has no effect if there is no active layer.
    *
-   * @param pixel the pixel to be set
-   * @throws IllegalStateException     if there is no active layer.
-   * @throws IndexOutOfBoundsException if the specified coordinate is out-of-bounds.
-   * @throws NullPointerException      if any arguments are {@code null}.
+   * @param pixel the pixel to be set.
+   * @throws NullPointerException if the supplied pixel is {@code null}.
    */
   void setActiveLayerPixel(IPixel pixel);
 
   /**
-   * Sets the name of an indexed layer.
+   * Sets the name of an indexed layer. This method has no effect if the supplied index isn't
+   * associated with a layer.
    *
    * @param layerIndex the index for the layer.
    * @param layerName  the new name for the layer.
@@ -222,11 +221,11 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void setLayerName(int layerIndex, String layerName);
 
   /**
-   * Sets the visibility property value for the supplied layer.
+   * Sets the visibility property value for the supplied layer.  This method has no effect if the
+   * supplied index isn't associated with a layer.
    *
    * @param layerIndex the {@code int} index of the layer which will have it's visibility changed.
-   * @param isVisible  {@code true} if the active layer should be visible; {@code false} otherwise.
-   * @throws IllegalStateException if there is no active layer.
+   * @param isVisible  {@code true} if the layer should be visible; {@code false} otherwise.
    */
   void setLayerVisibility(int layerIndex, boolean isVisible);
 
@@ -284,6 +283,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * Tells the model that the selected tool has been pressed.
    *
    * @param mouseStatus the status of the mouse.
+   * @throws NullPointerException if the supplied mouse status is {@code null}.
    */
   void selectedToolPressed(MouseStatus mouseStatus);
 
@@ -291,6 +291,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * Tells the model that the selected tool has been dragged.
    *
    * @param mouseStatus the status of the mouse.
+   * @throws NullPointerException if the supplied mouse status is {@code null}.
    */
   void selectedToolDragged(MouseStatus mouseStatus);
 
@@ -298,6 +299,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * Tells the model that the selected tool has been Released
    *
    * @param mouseStatus the status of the mouse.
+   * @throws NullPointerException if the supplied mouse status is {@code null}.
    */
   void selectedToolReleased(MouseStatus mouseStatus);
 
@@ -305,7 +307,6 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    * Sets the models renderer.
    *
    * @param renderer the specific renderer implementation.
-   * @throws NullPointerException if the supplied renderer is {@code null}.
    */
   void setRenderer(IRenderer renderer);
 
