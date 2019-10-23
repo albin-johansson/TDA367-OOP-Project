@@ -22,11 +22,11 @@ final class RasterPen implements ITool {
   /**
    * @param diameter the diameter of the pencil.
    * @param model    the associated model instance.
-   * @throws NullPointerException if any references are {@code null}.
+   * @throws NullPointerException     if any references are {@code null}.
    * @throws IllegalArgumentException if the supplied diameter is less than 1.
    */
   RasterPen(int diameter, IModel model) {
-    if(diameter < 1){
+    if (diameter < 1) {
       throw new IllegalArgumentException("Diameter can't be less than 1!");
     }
     this.diameter = diameter;
