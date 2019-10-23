@@ -31,22 +31,7 @@ public class RendererMock implements IRenderer {
   }
 
   @Override
-  public void drawEllipse(int x, int y, int radiusX, int radiusY) {
-
-  }
-
-  @Override
-  public void fillEllipse(int x, int y, int radiusX, int radiusY) {
-
-  }
-
-  @Override
   public void drawImage(IReadOnlyRasterData readOnlyPixelData, int x, int y) {
-
-  }
-
-  @Override
-  public void drawText(String content, int x, int y, int fontSize) {
 
   }
 
@@ -75,11 +60,6 @@ public class RendererMock implements IRenderer {
 
   @Override
   public void setBorderColor(IColor color) {
-
-  }
-
-  @Override
-  public void setBorderWidth(int width) {
 
   }
 

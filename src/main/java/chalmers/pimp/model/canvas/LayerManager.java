@@ -260,9 +260,8 @@ final class LayerManager implements IColorChangeListener {
 
     for (Iterable<? extends IReadOnlyPixel> row : pixelData.getPixels()) {
       for (IReadOnlyPixel pixel : row) {
-        // TODO this is a little bit strange?
         if (activeLayer instanceof IRasterLayer) {
-          ((IRasterLayer)activeLayer).setPixel(PixelFactory.createPixelWithOffset(pixel, dx, dy));
+          ((IRasterLayer) activeLayer).setPixel(PixelFactory.createPixelWithOffset(pixel, dx, dy));
         }
       }
     }
@@ -377,7 +376,7 @@ final class LayerManager implements IColorChangeListener {
    * @return {@code true} if the layer associated with the supplied index is visible; {@code false}
    * otherwise.
    */
-  boolean isLayerVisible(int layerIndex) { // TODO test
+  boolean isLayerVisible(int layerIndex) {
     if (inBounds(layerIndex)) {
       return layers.get(layerIndex).isVisible();
     } else {

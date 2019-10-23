@@ -2,9 +2,12 @@ package chalmers.pimp.model.canvas;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.canvas.layer.LayerType;
@@ -186,17 +189,29 @@ class LayerManagerTest {
 
   @Test
   void isLayerVisible() {
+    manager.addLayer(LayerFactory.createRectangle(0, 0, 5, 5));
+
+    assertTrue(manager.isLayerVisible(0)); // layers should be visible by default
+
+    manager.setLayerVisibility(0, false);
+    assertFalse(manager.isLayerVisible(0));
   }
 
   @Test
   void getActiveLayer() {
+    ILayer layer = LayerFactory.createRectangle(0, 0, 5, 5);
+    manager.addLayer(layer);
+
+    assertEquals(layer, manager.getActiveLayer()); // Not the same reference, but should be equal
   }
 
   @Test
   void getLayers() {
+    assertNotNull(manager.getLayers());
   }
 
   @Test
   void testToString() {
+    System.out.println(manager);
   }
 }

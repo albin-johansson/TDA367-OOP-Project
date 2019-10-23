@@ -34,26 +34,6 @@ public interface IRenderer {
   void fillRect(int x, int y, int width, int height);
 
   /**
-   * Draws an ellipse.
-   *
-   * @param x       the zero-indexed x coordinate of the ellipse.
-   * @param y       the zero-indexed y coordinate of the ellipse.
-   * @param radiusX the x radius of the ellipse.
-   * @param radiusY the y radius of the ellipse.
-   */
-  void drawEllipse(int x, int y, int radiusX, int radiusY);
-
-  /**
-   * Draws a filled ellipse.
-   *
-   * @param x       the zero-indexed x coordinate of the ellipse.
-   * @param y       the zero-indexed y coordinate of the ellipse.
-   * @param radiusX the x radius of the ellipse.
-   * @param radiusY the y radius of the ellipse.
-   */
-  void fillEllipse(int x, int y, int radiusX, int radiusY);
-
-  /**
    * Draws an image. This method has no effect if startPoint is {@code Null}.
    *
    * @param readOnlyPixelData the image to draw.
@@ -61,16 +41,6 @@ public interface IRenderer {
    * @param y                 the zero-indexed y coordinate of the image.
    */
   void drawImage(IReadOnlyRasterData readOnlyPixelData, int x, int y);
-
-  /**
-   * Draws a text.
-   *
-   * @param content  the string to write on the screen.
-   * @param x        the zero-indexed x coordinate.
-   * @param y        the zero-indexed y coordinate.
-   * @param fontSize the size of the font in pixels.
-   */
-  void drawText(String content, int x, int y, int fontSize);
 
   /**
    * Draws a line from point p1 to point p2. This method has no effect if startPoint is {@code
@@ -116,13 +86,6 @@ public interface IRenderer {
    * @param color the color to be set.
    */
   void setBorderColor(IColor color);
-
-  /**
-   * Sets the border width.
-   *
-   * @param width the width of borders.
-   */
-  void setBorderWidth(int width);
 
   /**
    * Sets the width of the line which will be drawn

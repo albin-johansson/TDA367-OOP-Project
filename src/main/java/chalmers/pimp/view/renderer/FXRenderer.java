@@ -66,27 +66,12 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void drawEllipse(int x, int y, int radiusX, int radiusY) {
-  }
-
-  @Override
-  public void fillEllipse(int x, int y, int radiusX, int radiusY) {
-  }
-
-  @Override
   public void drawImage(IReadOnlyRasterData readOnlyPixelData, int x, int y) {
     if (readOnlyPixelData == null) {
       return;
     }
     Image image = RasterDataService.toFXImage(readOnlyPixelData);
     graphicsContext.drawImage(image, x, y);
-  }
-
-  @Override
-  public void drawText(String content, int x, int y, int fontSize) {
-    if (content != null) {
-      graphicsContext.fillText(content, x, y, fontSize);
-    }
   }
 
   @Override
@@ -130,11 +115,6 @@ final class FXRenderer implements IRenderer {
   @Override
   public void setBorderColor(IColor color) {
     graphicsContext.setStroke(ColorConverterService.toFXColor(color));
-  }
-
-  @Override
-  public void setBorderWidth(int width) {
-    graphicsContext.setLineWidth(width);
   }
 
   @Override

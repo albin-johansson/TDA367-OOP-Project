@@ -5,6 +5,7 @@ import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.viewport.ViewportFactory;
 import chalmers.pimp.view.renderer.RendererFactory;
+import java.util.Objects;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -18,11 +19,19 @@ public final class LayerImageService {
   private LayerImageService() {
   }
 
-  private static int getSize(IReadOnlyLayer layer) {
+  /**
+   * Returns the preview area size (the width and height of the preview area).
+   *
+   * @param layer the layer that will be used for the calculation.
+   * @return the preview area size (the width and height of the preview area).
+   * @throws NullPointerException if the supplied layer is {@code null}.
+   */
+  private static int getPreviewAreaSize(IReadOnlyLayer layer) {
+    Objects.requireNonNull(layer);
     if (layer.getRotation() != 0) {
       return (int) Math.hypot(layer.getWidth(), layer.getHeight());
     } else {
-      return Math.max(layer.getWidth(), layer.getHeight()) + 10;
+      return Math.max(layer.getWidth(), layer.getHeight()) + 10; // creates a small margin
     }
   }
 
@@ -31,11 +40,13 @@ public final class LayerImageService {
    *
    * @param layer the layer to be converted.
    * @return a JavaFX Image of the target layer.
+   * @throws NullPointerException if the supplied layer is {@code null}.
    */
   public static Image getLayerImage(IReadOnlyLayer layer) {
+    Objects.requireNonNull(layer);
     ILayer copy = layer.copy();
 
-    int size = getSize(copy);
+    int size = getPreviewAreaSize(copy);
 
     copy.setX(size);
     copy.setY(size);

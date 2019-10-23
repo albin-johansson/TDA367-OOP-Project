@@ -2,15 +2,19 @@ package chalmers.pimp.model;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
+import chalmers.pimp.model.color.Colors;
+import chalmers.pimp.model.pixeldata.PixelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,79 +46,7 @@ class ModelImplTest {
 
     assertDoesNotThrow(() -> model.selectLayer(0));
   }
-
-  @Test
-  void moveLayer() {
-    model.addLayer(LayerFactory.createRasterLayer(1, 1));
-    model.addLayer(LayerFactory.createRasterLayer(2, 2));
-    model.addLayer(LayerFactory.createRasterLayer(3, 3));
-
-    // TODO rewrite
-//    int index = 0;
-//    for (IReadOnlyLayer layer : model.getLayers()) {
-//      switch (index) {
-//        case 0:
-//          assertEquals(layer, layer0);
-//          break;
-//        case 1:
-//          assertEquals(layer, layer1);
-//          break;
-//        case 2:
-//          assertEquals(layer, layer2);
-//          break;
-//      }
-//      index++;
-//    }
-//
-//    //Try to move back layer backwards and front layer forwards, should not change anything
-//    model.changeLayerDepthIndex(layer0, -1);
-//    model.changeLayerDepthIndex(layer2, 1);
-//
-//    //Move middle layer "zero" steps
-//    model.changeLayerDepthIndex(layer1, 0);
-//
-//    //Assert order 1,2,3
-//    index = 0;
-//    for (IReadOnlyLayer layer : model.getLayers()) {
-//      switch (index) {
-//        case 0:
-//          assertEquals(layer, layer0);
-//          break;
-//        case 1:
-//          assertEquals(layer, layer1);
-//          break;
-//        case 2:
-//          assertEquals(layer, layer2);
-//          break;
-//      }
-//      index++;
-//    }
-//
-//    //Move back layer forwards, then front layer backwards. Each one step.
-//    model.changeLayerDepthIndex(layer0, 1);
-//    model.changeLayerDepthIndex(layer2, -1);
-//
-//    //Assert order 2,3,1
-//    for (IReadOnlyLayer l : model.getLayers()) {
-//      switch (index) {
-//        case 0:
-//          assertEquals(l, layer1);
-//          break;
-//        case 1:
-//          assertEquals(l, layer2);
-//          break;
-//        case 2:
-//          assertEquals(l, layer0);
-//          break;
-//      }
-//      index++;
-//    }
-//
-//    //Supply invalid layer
-//    IReadOnlyLayer temp = LayerFactory.createRasterLayer(5, 5);
-//    assertDoesNotThrow(() -> model.changeLayerDepthIndex(temp, 1));
-  }
-
+  
   @Test
   void setPixel() {
     ILayer layer = LayerFactory.createRasterLayer(10, 10);
@@ -123,25 +55,6 @@ class ModelImplTest {
 
     assertThrows(NullPointerException.class, () -> model.setActiveLayerPixel(null));
   }
-
-//  @Test
-//  void setLayerNameByReference() {
-//    ILayer layer = LayerFactory.createRasterLayer(10, 10);
-//    model.addLayer(layer);
-//    model.selectLayer(0);
-//
-//    String temp = layer.getName();
-//    String fooName = "foo";
-//    assertNotEquals(temp, fooName);
-//
-//    model.setLayerName(layer, fooName);
-//
-//    assertEquals(fooName, model.getActiveLayer().getName());
-//
-//    final String temp2 = null;
-//    assertThrows(NullPointerException.class, () -> model.setLayerName(layer, temp2));
-//    assertThrows(NullPointerException.class, () -> model.setLayerName(null, temp));
-//  }
 
   @Test
   void setLayerNameByIndex() {
@@ -218,5 +131,234 @@ class ModelImplTest {
 
     assertEquals(35, model.getActiveLayer().getX());
     assertEquals(25, model.getActiveLayer().getY());
+  }
+
+  @Test
+  void addUndoRedoListener() {
+    assertThrows(NullPointerException.class, () -> model.addUndoRedoListener(null));
+  }
+
+  @Test
+  void addModelSizeListener() {
+    assertThrows(NullPointerException.class, () -> model.addModelSizeListener(null));
+  }
+
+  @Test
+  void draw() {
+    assertThrows(NullPointerException.class, () -> model.draw(null));
+  }
+
+  @Test
+  void moveViewport() {
+    int dx = 199;
+    int dy = 795;
+
+    model.moveViewport(dx, dy);
+
+    // This works as the viewport should start at (0,0)
+    assertEquals(dx, model.getViewport().getX());
+    assertEquals(dy, model.getViewport().getY());
+  }
+
+  @Test
+  void setViewportWidth() {
+    int width = 472;
+    model.setViewportWidth(width);
+
+    assertEquals(width, model.getViewport().getWidth());
+  }
+
+  @Test
+  void setViewportHeight() {
+    int height = 8214;
+    model.setViewportHeight(height);
+
+    assertEquals(height, model.getViewport().getHeight());
+  }
+
+  @Test
+  void getWidth() {
+    assertDoesNotThrow(() -> model.getWidth());
+  }
+
+  @Test
+  void getHeight() {
+    assertDoesNotThrow(() -> model.getHeight());
+  }
+
+  @Test
+  void getViewport() {
+    assertNotNull(model.getViewport());
+  }
+
+  @Test
+  void startMovingActiveLayer() {
+    assertDoesNotThrow(() -> model.startMovingActiveLayer(0, 0));
+  }
+
+  @Test
+  void updateMovingActiveLayer() {
+    assertDoesNotThrow(() -> model.updateMovingActiveLayer(0, 0));
+  }
+
+  @Test
+  void stopMovingActiveLayer() {
+    assertDoesNotThrow(() -> model.stopMovingActiveLayer());
+  }
+
+  @Test
+  void startStroke() {
+    assertThrows(NullPointerException.class, () -> model.startStroke(null, 0, null));
+    assertDoesNotThrow(() -> model.startStroke(PixelFactory.createPixel(0, 0), 1, Colors.BLACK));
+  }
+
+  @Test
+  void updateStroke() {
+    assertThrows(NullPointerException.class, () -> model.updateStroke(null));
+    assertDoesNotThrow(() -> model.updateStroke(PixelFactory.createPixel(0, 0)));
+  }
+
+  @Test
+  void endStroke() {
+    assertThrows(NullPointerException.class, () -> model.endStroke(null));
+    assertDoesNotThrow(() -> model.endStroke(PixelFactory.createPixel(0, 0)));
+  }
+
+  @Test
+  void removeLayer() {
+    assertDoesNotThrow(() -> model.removeLayer(0));
+  }
+
+  @Test
+  void selectLayer() {
+    assertDoesNotThrow(() -> model.selectLayer(0));
+  }
+
+  @Test
+  void changeLayerDepthIndex() {
+    assertDoesNotThrow(() -> model.changeLayerDepthIndex(24, 124));
+  }
+
+  @Test
+  void setActiveLayerPixel() {
+    // No active layer -> method has no effect
+    assertDoesNotThrow(() -> model.setActiveLayerPixel(PixelFactory.createPixel(0, 0)));
+
+    assertThrows(NullPointerException.class, () -> model.setActiveLayerPixel(null));
+  }
+
+  @Test
+  void setLayerName() {
+    assertDoesNotThrow(() -> model.setLayerName(-1, "Hello"));
+  }
+
+  @Test
+  void setLayerVisibility() {
+    assertDoesNotThrow(() -> model.setLayerVisibility(-1, true));
+  }
+
+  @Test
+  void moveActiveLayer() {
+    assertDoesNotThrow(() -> model.moveActiveLayer(0, 0));
+  }
+
+  @Test
+  void startRotatingActiveLayer() {
+    assertDoesNotThrow(() -> model.startRotatingActiveLayer(0, 0));
+  }
+
+  @Test
+  void updateRotatingActiveLayer() {
+    assertDoesNotThrow(() -> model.updateRotatingActiveLayer(0, 0));
+  }
+
+  @Test
+  void stopRotatingActiveLayer() {
+    assertDoesNotThrow(() -> model.stopRotatingActiveLayer());
+  }
+
+  @Test
+  void rotateActiveLayer() {
+    assertDoesNotThrow(() -> model.rotateActiveLayer(0));
+  }
+
+  @Test
+  void selectedToolPressed() {
+    assertThrows(NullPointerException.class, () -> model.selectedToolPressed(null));
+  }
+
+  @Test
+  void selectedToolDragged() {
+    assertThrows(NullPointerException.class, () -> model.selectedToolDragged(null));
+  }
+
+  @Test
+  void selectedToolReleased() {
+    assertThrows(NullPointerException.class, () -> model.selectedToolReleased(null));
+  }
+
+  @Test
+  void setRenderer() {
+    assertDoesNotThrow(() -> model.setRenderer(null));
+  }
+
+  @Test
+  void isLayerVisible() {
+    model.addLayer(LayerFactory.createRectangle(0, 0, 10, 10));
+    assertTrue(model.isLayerVisible(0));
+  }
+
+  @Test
+  void hasActiveLayer() {
+    assertFalse(model.hasActiveLayer());
+
+    model.addLayer(LayerFactory.createRectangle(0, 0, 10, 10));
+
+    assertTrue(model.hasActiveLayer());
+  }
+
+  @Test
+  void getLayerName() {
+    assertNull(model.getActiveLayer());
+  }
+
+  @Test
+  void getRenderer() {
+    assertNull(model.getRenderer());
+  }
+
+  @Test
+  void addColorChangeListener() {
+    assertThrows(NullPointerException.class, () -> model.addColorChangeListener(null));
+  }
+
+  @Test
+  void restore() {
+    assertThrows(NullPointerException.class, () -> model.restore(null));
+  }
+
+  @Test
+  void createSnapShot() {
+    assertNotNull(model.createSnapShot());
+  }
+
+  @Test
+  void undo() {
+    assertDoesNotThrow(() -> model.undo());
+  }
+
+  @Test
+  void redo() {
+    assertDoesNotThrow(() -> model.redo());
+  }
+
+  @Test
+  void setSelectedColor() {
+    assertThrows(NullPointerException.class, () -> model.setSelectedColor(null));
+  }
+
+  @Test
+  void getSelectedColor() {
+    assertEquals(Colors.BLACK, model.getSelectedColor());
   }
 }

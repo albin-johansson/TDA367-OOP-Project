@@ -28,6 +28,7 @@ final class ShapeTool implements ITool {
 
   @Override
   public void dragged(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus);
     model.notifyCanvasUpdateListeners();
     ILayer newShape = createRect(mouseStatus);
     newShape.draw(model.getRenderer(), model.getViewport());
@@ -35,12 +36,14 @@ final class ShapeTool implements ITool {
 
   @Override
   public void pressed(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus);
     x = mouseStatus.getX();
     y = mouseStatus.getY();
   }
 
   @Override
   public void released(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus);
     ILayer newShape = createRect(mouseStatus);
     model.addLayer(newShape);
   }
