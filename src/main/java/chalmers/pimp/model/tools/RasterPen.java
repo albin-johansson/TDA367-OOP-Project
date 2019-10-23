@@ -52,7 +52,7 @@ final class RasterPen implements ITool {
   private Point getRotatedPoint(Point point) {
 
     //Rotate the point around center point with the layers negative angle
-    double rotation = -model.getActiveLayer().getRotation();
+    double rotation = Math.toRadians(-model.getActiveLayer().getRotation());
     double s = Math.sin(rotation);
     double c = Math.cos(rotation);
 
