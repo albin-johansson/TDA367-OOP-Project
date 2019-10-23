@@ -38,7 +38,7 @@ public final class ColorConverterService {
   public static IColor fxToIColor(Color fxColor) {
     Objects.requireNonNull(fxColor);
 
-    int max = 255;
+    int max = IColor.MAX_VALUE;
     return ColorFactory.createColor(
         (int) (fxColor.getRed() * max),
         (int) (fxColor.getGreen() * max),

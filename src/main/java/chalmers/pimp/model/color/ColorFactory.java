@@ -41,6 +41,6 @@ public final class ColorFactory {
    * @return a color specified by the given color components and no transparency.
    */
   public static IColor createColor(int red, int green, int blue) {
-    return new ColorImpl(red, green, blue, 255);
+    return new ColorImpl(red, green, blue, IColor.MAX_VALUE);
   }
 }

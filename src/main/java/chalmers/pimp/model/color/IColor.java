@@ -6,6 +6,16 @@ package chalmers.pimp.model.color;
 public interface IColor {
 
   /**
+   * The max value for a color component.
+   */
+  int MAX_VALUE = 255;
+
+  /**
+   * The minimum value for a color component.
+   */
+  int MIN_VALUE = 0;
+
+  /**
    * Returns a new color with the supplied RGBA values.
    *
    * @param red   the red component [0, 255].
