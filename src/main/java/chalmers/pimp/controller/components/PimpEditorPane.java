@@ -69,7 +69,6 @@ public final class PimpEditorPane extends AnchorPane {
       palettePane.updateEnabledTools(model.getActiveLayer());
     });
 
-
     // Info pane (DOWN)
     var infoPane = new InfoPane();
     bottomAnchorPane.getChildren().add(infoPane);
@@ -98,6 +97,9 @@ public final class PimpEditorPane extends AnchorPane {
     canvasPane.setOnMouseDragged(e -> {
       infoPane.updateMouseCoordinates((int) e.getX(), (int) e.getY(), model.getViewport());
       controller.selectedToolDragged(e);
+      if (model.hasActiveLayer()) {
+        infoPane.setLayerRotationLabel(model.getActiveLayer().getRotation());
+      }
     });
 
     canvasPane.setOnMouseMoved(e -> {
@@ -110,6 +112,7 @@ public final class PimpEditorPane extends AnchorPane {
         IReadOnlyLayer layer = model.getActiveLayer();
         infoPane.setLayerWidthLabel(layer.getWidth());
         infoPane.setLayerHeightLabel(layer.getHeight());
+        infoPane.setLayerRotationLabel(model.getActiveLayer().getRotation());
       } else {
         infoPane.disableMouseCoordinates();
       }

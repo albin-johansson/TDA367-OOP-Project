@@ -1,5 +1,6 @@
 package chalmers.pimp.model.pixeldata;
 
+import chalmers.pimp.model.color.IColor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +40,25 @@ final class RasterDataImpl implements IRasterData {
   }
 
   /**
+   * Creates a PixelData with the given width (amount of pixels horizontally) and height (amount of
+   * pixels vertically).
+   *
+   * @param width  the amount of pixels in width.
+   * @param height the amount of pixels in height.
+   * @param color  the color of the pixels.
+   * @throws NullPointerException      if the provided color is @{code null}.
+   * @throws IndexOutOfBoundsException if width or height is smaller than or equal to zero.
+   */
+  RasterDataImpl(int width, int height, IColor color) {
+    Objects.requireNonNull(color);
+    if ((width <= 0) || (width > MAX_WIDTH) || (height <= 0) || (height > MAX_HEIGHT)) {
+      throw new IndexOutOfBoundsException("Bad dimensions: (" + width + "x" + height + ")");
+    } else {
+      pixels = createPixelDataMatrix(width, height, color);
+    }
+  }
+
+  /**
    * Creates a copy of the supplied pixel data instance.
    *
    * @param rasterData the pixel data instance that will be copied.
@@ -71,6 +91,30 @@ final class RasterDataImpl implements IRasterData {
 
       for (int col = 0; col < width; col++) {
         pixelRow.add(new PixelImpl(col, row));
+      }
+      result.add(pixelRow);
+    }
+
+    return result;
+  }
+
+  /**
+   * Returns a matrix with the desired width, height and color pixels. Returns a matrix (a list of
+   * rows).
+   *
+   * @param width  the amount of pixels in width.
+   * @param height the amount of pixels in height.
+   * @param color  the color of all the pixels.
+   * @return a matrix of colors.
+   */
+  private List<List<IPixel>> createPixelDataMatrix(int width, int height, IColor color) {
+    var result = new ArrayList<List<IPixel>>(height);
+
+    for (int row = 0; row < height; row++) {
+      var pixelRow = new ArrayList<IPixel>(width);
+
+      for (int col = 0; col < width; col++) {
+        pixelRow.add(new PixelImpl(col, row, color));
       }
       result.add(pixelRow);
     }

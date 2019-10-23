@@ -9,6 +9,7 @@
   -selected-color: #AB82FF;
 
   -background-color: #333333; /* Used for the background of panes. */
+  -background-color-lighter: #696969;
   -background-hover-color: derive(-background-color, 15%);
   -background-pressed-color: derive(-background-color, 25%);
 
@@ -179,7 +180,7 @@
 
 .separator:vertical .line {
   -fx-border-color: transparent transparent transparent transparent,
-  transparent transparent transparent -text-color;
+  transparent transparent transparent -background-color-lighter;
 }
 
 .text-field {
@@ -188,10 +189,10 @@
 
 .text-input {
   -fx-font-size: 12pt;
-
+  -fx-font-weight: normal;
 }
 
-#rename-box{
+#rename-box {
   -fx-background-color: rgba(0, 0, 0, 0.40);
 }
 

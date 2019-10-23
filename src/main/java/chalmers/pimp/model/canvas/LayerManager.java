@@ -285,7 +285,7 @@ final class LayerManager implements IColorChangeListener {
    *
    * @param alpha the rotation in degrees.
    */
-  void rotateActiveLayer(double alpha) {
+  void rotateActiveLayer(int alpha) {
     if (hasActiveLayer()) {
       activeLayer.setRotation(alpha);
     }

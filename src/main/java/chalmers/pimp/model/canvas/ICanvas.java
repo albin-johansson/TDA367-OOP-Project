@@ -99,7 +99,7 @@ public interface ICanvas extends IMementoTarget<CanvasMemento>, Cloneable, IColo
    *
    * @param alpha the rotation in degrees.
    */
-  void setActiveLayerRotation(double alpha);
+  void setActiveLayerRotation(int alpha);
 
   /**
    * Sets the visibility property of the layer associated with the supplied depth index. This method

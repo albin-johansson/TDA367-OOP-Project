@@ -101,7 +101,7 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
-  public void setRotation(double rotation) {
+  public void setRotation(int rotation) {
     layerDelegate.setRotationDegrees(rotation);
   }
 
@@ -146,7 +146,7 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
-  public double getRotation() {
+  public int getRotation() {
     return layerDelegate.getRotationDegrees();
   }
 
