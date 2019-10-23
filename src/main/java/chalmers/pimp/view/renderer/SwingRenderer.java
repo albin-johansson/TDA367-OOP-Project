@@ -11,7 +11,6 @@ import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.Objects;
@@ -30,7 +29,6 @@ final class SwingRenderer implements IRenderer {
   private final IArea area;
   private Color borderColor;
   private Color fillColor;
-  private int borderWidth;
   private int rotation;
   private int lineWidth;
 
@@ -47,7 +45,6 @@ final class SwingRenderer implements IRenderer {
 
     borderColor = Color.BLACK;
     fillColor = Color.BLACK;
-    borderWidth = 1;
     rotation = 0;
   }
 
@@ -81,29 +78,10 @@ final class SwingRenderer implements IRenderer {
   }
 
   @Override
-  public void drawEllipse(int x, int y, int radiusX, int radiusY) {
-    // TODO
-  }
-
-  @Override
-  public void fillEllipse(int x, int y, int radiusX, int radiusY) {
-    // TODO
-  }
-
-  @Override
   public void drawImage(IReadOnlyRasterData readOnlyPixelData, int x, int y) {
     if (readOnlyPixelData != null) {
       Image img = SwingFXUtils.fromFXImage(toFXImage(readOnlyPixelData), null);
       graphics.drawImage(img, x, y, null);
-    }
-  }
-
-  @Override
-  public void drawText(String content, int x, int y, int fontSize) {
-    if (content != null) {
-      graphics.setColor(borderColor); // FIXME might be a little bit strange
-      graphics.setFont(new Font("Arial", Font.PLAIN, fontSize)); // FIXME
-      graphics.drawString(content, x, y);
     }
   }
 
@@ -143,11 +121,6 @@ final class SwingRenderer implements IRenderer {
     if (color != null) {
       borderColor = toSwingColor(color);
     }
-  }
-
-  @Override
-  public void setBorderWidth(int width) {
-    borderWidth = width;
   }
 
   @Override
