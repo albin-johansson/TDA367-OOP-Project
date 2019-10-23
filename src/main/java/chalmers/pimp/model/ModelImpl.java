@@ -12,7 +12,7 @@ import static chalmers.pimp.model.command.CommandFactory.createStrokeCommand;
 import chalmers.pimp.model.canvas.CanvasFactory;
 import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
-import chalmers.pimp.model.canvas.ILayerUpdateListener;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;

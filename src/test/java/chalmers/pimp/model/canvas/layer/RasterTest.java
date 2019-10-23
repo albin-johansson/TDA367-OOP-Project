@@ -58,11 +58,6 @@ class RasterTest {
   }
 
   @Test
-  void getPixelData() {
-    assertNotNull(raster.getPixelData());
-  }
-
-  @Test
   void setName() {
     final String setName = "name";
     raster.setName(setName);
