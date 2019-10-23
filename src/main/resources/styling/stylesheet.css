@@ -187,7 +187,6 @@
   -fx-background-color: transparent;
 }
 
-/* TODO: Set color to permanently white*/
 .text-input {
   -fx-font-size: 12pt;
   -fx-font-weight: normal;
@@ -195,4 +194,10 @@
 
 #rename-box {
   -fx-background-color: rgba(0, 0, 0, 0.40);
+}
+
+#layers-label{
+  -fx-font-size: 20px;
+  -fx-border-width: 2px 0px 2px 0px;
+  -fx-border-color: -background-pressed-color;
 }

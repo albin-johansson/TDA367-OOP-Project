@@ -131,30 +131,6 @@ class CanvasImplTest {
   }
 
   @Test
-  void setActiveLayerPixels() {
-    // TODO implement
-//    assertDoesNotThrow(() -> canvas.setActiveLayerPixels(0, 0, new PixelData(1, 1)));
-//    assertThrows(NullPointerException.class, () -> canvas.setActiveLayerPixels(0, 0, null));
-//
-//    canvas.addLayer(defaultLayer);
-//    canvas.selectLayer(0);
-//
-//    var pixelData = new PixelData(5, 5);
-//    double green = 1;
-//
-//    IPixel pixel = PixelFactory.createPixel(0, 0, 0, green, 0, 1);
-//
-//    pixelData.setPixel(pixel);
-//
-//    canvas.setActiveLayerPixels(0, 0, pixelData);
-//
-//    IReadOnlyColor color = canvas.getActiveLayer().getPixelData().getPixel(0, 0).getColor();
-//    double actualGreen = color.getGreenPercentage();
-//
-//    assertEquals(green, actualGreen, 0.05);
-  }
-
-  @Test
   void moveActiveLayer() {
     assertDoesNotThrow(() -> canvas.moveActiveLayer(0, 0));
   }

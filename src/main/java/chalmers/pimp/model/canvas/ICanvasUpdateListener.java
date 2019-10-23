@@ -9,5 +9,5 @@ public interface ICanvasUpdateListener {
   /**
    * Invoked when the canvas has been updated.
    */
-  void canvasUpdated(); // TODO add CanvasUpdateEvent parameter
+  void canvasUpdated();
 }

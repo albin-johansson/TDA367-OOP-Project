@@ -53,11 +53,6 @@ class RectangleTest {
   }
 
   @Test
-  void getPixelData() {
-    assertNotNull(rectangle.getPixelData());
-  }
-
-  @Test
   void setName() {
     final String setName = "name";
     rectangle.setName(setName);

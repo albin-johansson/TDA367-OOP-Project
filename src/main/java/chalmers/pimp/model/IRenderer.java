@@ -1,7 +1,7 @@
 package chalmers.pimp.model;
 
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 
 /**
  * The {@code IRenderer} interface specifies the render methods the view should be able to render.
@@ -60,7 +60,7 @@ public interface IRenderer {
    * @param x                 the zero-indexed x coordinate of the image.
    * @param y                 the zero-indexed y coordinate of the image.
    */
-  void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y);
+  void drawImage(IReadOnlyRasterData readOnlyPixelData, int x, int y);
 
   /**
    * Draws a text.

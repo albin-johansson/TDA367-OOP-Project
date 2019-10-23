@@ -3,9 +3,9 @@ package chalmers.pimp.view.renderer;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 import chalmers.pimp.service.ColorConverterService;
-import chalmers.pimp.service.PixelDataToFXService;
+import chalmers.pimp.service.RasterDataService;
 import java.util.Objects;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.BoxBlur;
@@ -74,11 +74,11 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
-  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
+  public void drawImage(IReadOnlyRasterData readOnlyPixelData, int x, int y) {
     if (readOnlyPixelData == null) {
       return;
     }
-    Image image = PixelDataToFXService.getFXImage(readOnlyPixelData);
+    Image image = RasterDataService.toFXImage(readOnlyPixelData);
     graphicsContext.drawImage(image, x, y);
   }
 

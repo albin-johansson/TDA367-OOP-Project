@@ -1,10 +1,11 @@
 package chalmers.pimp.model.canvas;
 
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 import java.util.Objects;
 
 /**
@@ -106,7 +107,7 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
-  public void setActiveLayerPixels(int x, int y, IReadOnlyPixelData pixelData) {
+  public void setActiveLayerPixels(int x, int y, IReadOnlyRasterData pixelData) {
     layerManager.setActiveLayerPixels(x, y, pixelData);
     notifyCanvasUpdateListeners();
   }

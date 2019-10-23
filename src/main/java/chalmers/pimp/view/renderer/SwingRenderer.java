@@ -1,6 +1,6 @@
 package chalmers.pimp.view.renderer;
 
-import static chalmers.pimp.service.PixelDataToFXService.getFXImage;
+import static chalmers.pimp.service.RasterDataService.toFXImage;
 import static java.awt.RenderingHints.KEY_RENDERING;
 import static java.awt.RenderingHints.VALUE_RENDER_QUALITY;
 
@@ -8,7 +8,7 @@ import chalmers.pimp.model.IArea;
 import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.Point;
 import chalmers.pimp.model.color.IColor;
-import chalmers.pimp.model.pixeldata.IReadOnlyPixelData;
+import chalmers.pimp.model.pixeldata.IReadOnlyRasterData;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -91,9 +91,9 @@ final class SwingRenderer implements IRenderer {
   }
 
   @Override
-  public void drawImage(IReadOnlyPixelData readOnlyPixelData, int x, int y) {
+  public void drawImage(IReadOnlyRasterData readOnlyPixelData, int x, int y) {
     if (readOnlyPixelData != null) {
-      Image img = SwingFXUtils.fromFXImage(getFXImage(readOnlyPixelData), null);
+      Image img = SwingFXUtils.fromFXImage(toFXImage(readOnlyPixelData), null);
       graphics.drawImage(img, x, y, null);
     }
   }

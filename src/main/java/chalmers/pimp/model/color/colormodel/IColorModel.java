@@ -1,7 +1,7 @@
 package chalmers.pimp.model.color.colormodel;
 
 import chalmers.pimp.model.IMementoTarget;
-import chalmers.pimp.model.canvas.ILayerUpdateListener;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.color.IColor;
 
 /**
