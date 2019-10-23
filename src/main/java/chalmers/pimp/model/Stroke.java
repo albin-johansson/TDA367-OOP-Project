@@ -56,14 +56,7 @@ public final class Stroke {
     Objects.requireNonNull(pixel);
     Objects.requireNonNull(color);
 
-    IRasterData pixels = RasterDataFactory.createRasterData(diameter, diameter);
-
-    for (int row = 0; row < diameter; row++) {
-      for (int col = 0; col < diameter; col++) {
-        IPixel p = PixelFactory.createPixel(col, row, color);
-        pixels.setPixel(p);
-      }
-    }
+    IRasterData pixels = RasterDataFactory.createRasterData(diameter, diameter, color);
 
     int radius = (int) (diameter / 2.0);
     canvas.setActiveLayerPixels(pixel.getX() - radius, pixel.getY() - radius, pixels);

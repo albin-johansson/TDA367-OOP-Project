@@ -36,6 +36,9 @@ final class InfoPane extends AnchorPane implements IModelSizeListener {
   @FXML
   @SuppressWarnings("unused")
   private Label layerHeight;
+  @FXML
+  private Label layerRotation;
+
 
   /**
    * @throws IOException if the associated FXML-file cannot be loaded.
@@ -111,5 +114,14 @@ final class InfoPane extends AnchorPane implements IModelSizeListener {
   public void sizeUpdated(int width, int height) {
     setCanvasWidthLabel(width);
     setCanvasHeightLabel(height);
+  }
+
+  /**
+   * Updates the layerRotation label.
+   *
+   * @param rotation the layer with the new rotation.
+   */
+  void setLayerRotationLabel(int rotation) {
+    layerRotation.setText(String.valueOf(rotation));
   }
 }

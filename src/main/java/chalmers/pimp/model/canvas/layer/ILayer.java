@@ -56,7 +56,7 @@ public interface ILayer extends IReadOnlyLayer {
    *
    * @param rotation the new rotation.
    */
-  void setRotation(double rotation);
+  void setRotation(int rotation);
 
   /**
    * Sets the alpha value for this layer.

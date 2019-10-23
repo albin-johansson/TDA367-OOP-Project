@@ -19,7 +19,8 @@ public final class ToolFactory {
    * @param diameter the diameter of the pencil.
    * @param model    the associated model instance.
    * @return a tool that represents a raster pen.
-   * @throws NullPointerException if the supplied model is {@code null}.
+   * @throws NullPointerException     if the supplied model is {@code null}.
+   * @throws IllegalArgumentException if the supplied diameter is less than 1.
    */
   public static ITool createRasterPen(int diameter, IModel model) {
     return new RasterPen(diameter, model);

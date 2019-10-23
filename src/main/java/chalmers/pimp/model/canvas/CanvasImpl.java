@@ -85,7 +85,7 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
-  public void setActiveLayerRotation(double alpha) {
+  public void setActiveLayerRotation(int alpha) {
     layerManager.rotateActiveLayer(alpha);
   }
 

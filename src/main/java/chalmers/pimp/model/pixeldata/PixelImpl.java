@@ -27,6 +27,19 @@ final class PixelImpl implements IPixel {
   }
 
   /**
+   * @param x     the x-coordinate of the pixel (the column index).
+   * @param y     the y-coordinate of the pixel (the row index).
+   * @param color the color of the pixel.
+   * @throws NullPointerException if supplied color is {@code null}.
+   */
+  PixelImpl(int x, int y, IColor color) {
+    Objects.requireNonNull(color);
+    this.x = x;
+    this.y = y;
+    this.color = color;
+  }
+
+  /**
    * Creates a copy of the supplied pixel.
    *
    * @param pixel the pixel that will be copied.

@@ -1,5 +1,7 @@
 package chalmers.pimp.model.pixeldata;
 
+import chalmers.pimp.model.color.IColor;
+
 /**
  * The {@code RasterDataFactory} class is a factory for creating instances of the {@code
  * IRasterData} interface.
@@ -21,6 +23,19 @@ public final class RasterDataFactory {
    */
   public static IRasterData createRasterData(int width, int height) {
     return new RasterDataImpl(width, height);
+  }
+
+  /**
+   * Creates and returns a raster data instance.
+   *
+   * @param width  the width of the raster data instance.
+   * @param height the height of the raster data instance.
+   * @return a raster data instance.
+   * @throws NullPointerException      if the provided color is {@code null}.
+   * @throws IndexOutOfBoundsException if width or height isn't greater than 1.
+   */
+  public static IRasterData createRasterData(int width, int height, IColor color) {
+    return new RasterDataImpl(width, height, color);
   }
 
   /**
