@@ -98,7 +98,7 @@ public final class PimpEditorPane extends AnchorPane {
       infoPane.updateMouseCoordinates((int) e.getX(), (int) e.getY(), model.getViewport());
       controller.selectedToolDragged(e);
       if (model.hasActiveLayer()) {
-        infoPane.setLayerRotationLabel(String.valueOf((int) model.getActiveLayer().getRotation()));
+        infoPane.setLayerRotationLabel(model.getActiveLayer().getRotation());
       }
     });
 
@@ -112,7 +112,7 @@ public final class PimpEditorPane extends AnchorPane {
         IReadOnlyLayer layer = model.getActiveLayer();
         infoPane.setLayerWidthLabel(layer.getWidth());
         infoPane.setLayerHeightLabel(layer.getHeight());
-        infoPane.setLayerRotationLabel(String.valueOf((int) model.getActiveLayer().getRotation()));
+        infoPane.setLayerRotationLabel(model.getActiveLayer().getRotation());
       } else {
         infoPane.disableMouseCoordinates();
       }

@@ -121,7 +121,7 @@ final class InfoPane extends AnchorPane implements IModelSizeListener {
    *
    * @param rotation the layer with the new rotation.
    */
-  void setLayerRotationLabel(String rotation) {
-    layerRotation.setText(rotation);
+  void setLayerRotationLabel(int rotation) {
+    layerRotation.setText(String.valueOf(rotation));
   }
 }
