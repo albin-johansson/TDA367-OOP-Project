@@ -97,7 +97,7 @@ public final class PimpEditorPane extends AnchorPane {
     canvasPane.setOnMouseDragged(e -> {
       infoPane.updateMouseCoordinates((int) e.getX(), (int) e.getY(), model.getViewport());
       controller.selectedToolDragged(e);
-      if (model.getActiveLayer() != null) {
+      if (model.hasActiveLayer()) {
         infoPane.setLayerRotationLabel(String.valueOf((int) model.getActiveLayer().getRotation()));
       }
     });

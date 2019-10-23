@@ -142,7 +142,7 @@ final class LayerDelegate {
    */
   void setRotationDegrees(int rotationDegrees) {
     int temp = rotationDegrees % 360;
-    if(temp < 0){
+    if (temp < 0) {
       temp = 360 + temp;
     }
     this.rotationDegrees = temp;
