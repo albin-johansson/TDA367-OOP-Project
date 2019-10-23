@@ -1,8 +1,8 @@
 package chalmers.pimp.model;
 
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.IColorChangeListener;
@@ -350,7 +350,7 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
    *
    * @return the currently active layer; {@code null} otherwise.
    */
-  IReadOnlyLayer getActiveLayer(); // TODO remove, high risk of invalid use
+  IReadOnlyLayer getActiveLayer();
 
   /**
    * Sets the color that should be used for drawing items on the canvas.

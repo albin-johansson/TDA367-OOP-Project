@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
 import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.pixeldata.PixelFactory;
@@ -46,79 +46,7 @@ class ModelImplTest {
 
     assertDoesNotThrow(() -> model.selectLayer(0));
   }
-
-  @Test
-  void moveLayer() {
-    model.addLayer(LayerFactory.createRasterLayer(1, 1));
-    model.addLayer(LayerFactory.createRasterLayer(2, 2));
-    model.addLayer(LayerFactory.createRasterLayer(3, 3));
-
-    // TODO rewrite
-//    int index = 0;
-//    for (IReadOnlyLayer layer : model.getLayers()) {
-//      switch (index) {
-//        case 0:
-//          assertEquals(layer, layer0);
-//          break;
-//        case 1:
-//          assertEquals(layer, layer1);
-//          break;
-//        case 2:
-//          assertEquals(layer, layer2);
-//          break;
-//      }
-//      index++;
-//    }
-//
-//    //Try to move back layer backwards and front layer forwards, should not change anything
-//    model.changeLayerDepthIndex(layer0, -1);
-//    model.changeLayerDepthIndex(layer2, 1);
-//
-//    //Move middle layer "zero" steps
-//    model.changeLayerDepthIndex(layer1, 0);
-//
-//    //Assert order 1,2,3
-//    index = 0;
-//    for (IReadOnlyLayer layer : model.getLayers()) {
-//      switch (index) {
-//        case 0:
-//          assertEquals(layer, layer0);
-//          break;
-//        case 1:
-//          assertEquals(layer, layer1);
-//          break;
-//        case 2:
-//          assertEquals(layer, layer2);
-//          break;
-//      }
-//      index++;
-//    }
-//
-//    //Move back layer forwards, then front layer backwards. Each one step.
-//    model.changeLayerDepthIndex(layer0, 1);
-//    model.changeLayerDepthIndex(layer2, -1);
-//
-//    //Assert order 2,3,1
-//    for (IReadOnlyLayer l : model.getLayers()) {
-//      switch (index) {
-//        case 0:
-//          assertEquals(l, layer1);
-//          break;
-//        case 1:
-//          assertEquals(l, layer2);
-//          break;
-//        case 2:
-//          assertEquals(l, layer0);
-//          break;
-//      }
-//      index++;
-//    }
-//
-//    //Supply invalid layer
-//    IReadOnlyLayer temp = LayerFactory.createRasterLayer(5, 5);
-//    assertDoesNotThrow(() -> model.changeLayerDepthIndex(temp, 1));
-  }
-
+  
   @Test
   void setPixel() {
     ILayer layer = LayerFactory.createRasterLayer(10, 10);
