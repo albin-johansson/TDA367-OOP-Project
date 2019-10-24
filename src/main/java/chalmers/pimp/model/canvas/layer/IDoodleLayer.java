@@ -1,7 +1,6 @@
 package chalmers.pimp.model.canvas.layer;
 
 import chalmers.pimp.model.Point;
-import chalmers.pimp.model.viewport.IReadOnlyViewport;
 
 /**
  * The {@code IDoodleLayer} is a subinterface of {@code ILayer} and extends its functionality

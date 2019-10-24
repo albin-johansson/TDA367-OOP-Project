@@ -37,38 +37,6 @@ public interface IColor {
   IColor setColor(int red, int green, int blue);
 
   /**
-   * Sets the red component in the range [0, 255] and returns a new color.
-   *
-   * @param red the red component.
-   * @return a new color.
-   */
-  IColor setRed(int red);
-
-  /**
-   * Sets the green component in the range [0, 255] and returns a new color.
-   *
-   * @param green the red component.
-   * @return a new color.
-   */
-  IColor setGreen(int green);
-
-  /**
-   * Sets the blue component in the range [0, 255] and returns a new color.
-   *
-   * @param blue the red component.
-   * @return a new color.
-   */
-  IColor setBlue(int blue);
-
-  /**
-   * Sets the alpha value in the range [0, 255] and returns a new color.
-   *
-   * @param alpha the alpha value.
-   * @return a new color.
-   */
-  IColor setAlpha(int alpha);
-
-  /**
    * Sets the red percentage of the color in the range [0, 1] and returns a new color.
    *
    * @param red the blue percentage.
@@ -108,11 +76,27 @@ public interface IColor {
   int getRed();
 
   /**
+   * Sets the red component in the range [0, 255] and returns a new color.
+   *
+   * @param red the red component.
+   * @return a new color.
+   */
+  IColor setRed(int red);
+
+  /**
    * Returns the green component in the range [0, 255].
    *
    * @return the green component.
    */
   int getGreen();
+
+  /**
+   * Sets the green component in the range [0, 255] and returns a new color.
+   *
+   * @param green the red component.
+   * @return a new color.
+   */
+  IColor setGreen(int green);
 
   /**
    * Returns the blue component in the range [0, 255].
@@ -122,11 +106,27 @@ public interface IColor {
   int getBlue();
 
   /**
+   * Sets the blue component in the range [0, 255] and returns a new color.
+   *
+   * @param blue the red component.
+   * @return a new color.
+   */
+  IColor setBlue(int blue);
+
+  /**
    * Returns the alpha value in the range [0, 255].
    *
    * @return the alpha value.
    */
   int getAlpha();
+
+  /**
+   * Sets the alpha value in the range [0, 255] and returns a new color.
+   *
+   * @param alpha the alpha value.
+   * @return a new color.
+   */
+  IColor setAlpha(int alpha);
 
   /**
    * Returns the red percentage of the color in the range [0, 1].

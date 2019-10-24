@@ -15,9 +15,9 @@ import org.junit.jupiter.api.Test;
 
 class DoodleTest {
 
+  private static final int lineWidth = 10;
   private IDoodleLayer doodle;
   private IReadOnlyViewport viewport;
-  private static final int lineWidth = 10;
 
   @BeforeEach
   void init() {

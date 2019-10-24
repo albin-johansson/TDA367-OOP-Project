@@ -1,11 +1,9 @@
 package chalmers.pimp.model.canvas.layer;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import chalmers.pimp.model.color.ColorFactory;
-import chalmers.pimp.model.pixeldata.PixelFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

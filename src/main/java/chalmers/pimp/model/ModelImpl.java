@@ -12,8 +12,8 @@ import static chalmers.pimp.model.command.CommandFactory.createStrokeCommand;
 import chalmers.pimp.model.canvas.CanvasFactory;
 import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
-import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.ILayer;
+import chalmers.pimp.model.canvas.layer.ILayerUpdateListener;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.color.colormodel.ColorModelFactory;
@@ -341,11 +341,6 @@ final class ModelImpl implements IModel {
   }
 
   @Override
-  public void setRenderer(IRenderer renderer) {
-    this.renderer = renderer;
-  }
-
-  @Override
   public boolean isLayerVisible(int layerIndex) {
     return canvas.isLayerVisible(layerIndex);
   }
@@ -363,6 +358,11 @@ final class ModelImpl implements IModel {
   @Override
   public IRenderer getRenderer() {
     return renderer;
+  }
+
+  @Override
+  public void setRenderer(IRenderer renderer) {
+    this.renderer = renderer;
   }
 
   @Override
@@ -409,16 +409,16 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public IColor getSelectedColor() {
+    return colorModel.getColor();
+  }
+
+  @Override
   public void setSelectedColor(IColor color) {
     Objects.requireNonNull(color);
 
     ICommand cmd = createChangeColorCommand(colorModel, this, color);
     cmd.execute();
     commandManager.insertCommand(cmd);
-  }
-
-  @Override
-  public IColor getSelectedColor() {
-    return colorModel.getColor();
   }
 }

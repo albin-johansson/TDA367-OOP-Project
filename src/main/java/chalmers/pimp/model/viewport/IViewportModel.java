@@ -33,6 +33,13 @@ public interface IViewportModel extends IMementoTarget<ViewportModelMemento> {
   void moveViewport(int dx, int dy);
 
   /**
+   * Returns the x-coordinate of the viewport.
+   *
+   * @return the x-coordinate of the viewport.
+   */
+  int getX();
+
+  /**
    * Sets the x-coordinate of the model.
    *
    * @param x the x-coordinate of the model.
@@ -40,11 +47,25 @@ public interface IViewportModel extends IMementoTarget<ViewportModelMemento> {
   void setX(int x);
 
   /**
+   * Returns the y-coordinate of the viewport.
+   *
+   * @return the y-coordinate of the viewport.
+   */
+  int getY();
+
+  /**
    * Sets the y-coordinate of the model.
    *
    * @param y the y-coordinate of the model.
    */
   void setY(int y);
+
+  /**
+   * Returns the width of the viewport.
+   *
+   * @return the width of the viewport.
+   */
+  int getWidth();
 
   /**
    * Sets the width of the viewport.
@@ -55,40 +76,19 @@ public interface IViewportModel extends IMementoTarget<ViewportModelMemento> {
   void setWidth(int width);
 
   /**
+   * Returns the height of the viewport.
+   *
+   * @return the height of the viewport.
+   */
+  int getHeight();
+
+  /**
    * Sets the height of the viewport.
    *
    * @param height the new height of the viewport.
    * @throws IllegalArgumentException if the supplied height isn't greater than zero.
    */
   void setHeight(int height);
-
-  /**
-   * Returns the x-coordinate of the viewport.
-   *
-   * @return the x-coordinate of the viewport.
-   */
-  int getX();
-
-  /**
-   * Returns the y-coordinate of the viewport.
-   *
-   * @return the y-coordinate of the viewport.
-   */
-  int getY();
-
-  /**
-   * Returns the width of the viewport.
-   *
-   * @return the width of the viewport.
-   */
-  int getWidth();
-
-  /**
-   * Returns the height of the viewport.
-   *
-   * @return the height of the viewport.
-   */
-  int getHeight();
 
   /**
    * Returns a copy of the current viewport.

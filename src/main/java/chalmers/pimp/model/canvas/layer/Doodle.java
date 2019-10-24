@@ -68,6 +68,13 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
+  public int getX() {
+    List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
+    int min = getExtreme(xValues, (a, b) -> a > b);
+    return min + layerDelegate.getX();
+  }
+
+  @Override
   public void setX(int x) {
     List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
     int min = getExtreme(xValues, (a, b) -> a > b);
@@ -76,25 +83,18 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
+  public int getY() {
+    List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
+    int min = getExtreme(yValues, (a, b) -> a > b);
+    return min + layerDelegate.getY();
+  }
+
+  @Override
   public void setY(int y) {
     List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
     int min = getExtreme(yValues, (a, b) -> a > b);
 
     layerDelegate.setY(y - min);
-  }
-
-  @Override
-  public int getX() {
-    List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
-    int min = getExtreme(xValues, (a, b) -> a > b);
-    return min + layerDelegate.getX();
-  }
-
-  @Override
-  public int getY() {
-    List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
-    int min = getExtreme(yValues, (a, b) -> a > b);
-    return min + layerDelegate.getY();
   }
 
   @Override
@@ -154,13 +154,13 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public Point getCenterPoint() {
-    return new Point(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
   }
 
   @Override
-  public void setDepthIndex(int depthIndex) {
-    layerDelegate.setDepthIndex(depthIndex);
+  public Point getCenterPoint() {
+    return new Point(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
   }
 
   @Override
@@ -251,12 +251,12 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public void setColor(IColor color) {
-    this.color = Objects.requireNonNull(color);
+  public IColor getColor() {
+    return color;
   }
 
   @Override
-  public IColor getColor() {
-    return color;
+  public void setColor(IColor color) {
+    this.color = Objects.requireNonNull(color);
   }
 }

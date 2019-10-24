@@ -46,7 +46,7 @@ class ModelImplTest {
 
     assertDoesNotThrow(() -> model.selectLayer(0));
   }
-  
+
   @Test
   void setPixel() {
     ILayer layer = LayerFactory.createRasterLayer(10, 10);

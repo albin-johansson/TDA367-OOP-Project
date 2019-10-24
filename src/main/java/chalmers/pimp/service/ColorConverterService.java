@@ -6,8 +6,7 @@ import java.util.Objects;
 import javafx.scene.paint.Color;
 
 /**
- * The {@code ColorService} is responsible for converting colors between different
- * formats.
+ * The {@code ColorService} is responsible for converting colors between different formats.
  */
 public final class ColorConverterService {
 

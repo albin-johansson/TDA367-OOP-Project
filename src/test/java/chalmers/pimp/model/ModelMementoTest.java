@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import chalmers.pimp.model.canvas.CanvasFactory;
 import chalmers.pimp.model.canvas.CanvasMemento;
 import chalmers.pimp.model.canvas.ICanvas;
-import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.colormodel.ColorModelFactory;
 import chalmers.pimp.model.color.colormodel.ColorModelMemento;
 import chalmers.pimp.model.viewport.IViewportModel;

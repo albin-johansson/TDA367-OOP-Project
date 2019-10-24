@@ -22,6 +22,15 @@ public final class Point {
   }
 
   /**
+   * Returns the x component of the point.
+   *
+   * @return the x component of the point.
+   */
+  public int getX() {
+    return x;
+  }
+
+  /**
    * Returns a new point with the same y component and the new x component.
    *
    * @param x the new x component.
@@ -32,6 +41,15 @@ public final class Point {
   }
 
   /**
+   * Returns the y component of the point.
+   *
+   * @return the y component of the point.
+   */
+  public int getY() {
+    return y;
+  }
+
+  /**
    * Returns a new point with the same x component and the new y component.
    *
    * @param y the new y component.
@@ -39,24 +57,6 @@ public final class Point {
    */
   public Point setY(int y) {
     return new Point(x, y);
-  }
-
-  /**
-   * Returns the x component of the point.
-   *
-   * @return the x component of the point.
-   */
-  public int getX() {
-    return x;
-  }
-
-  /**
-   * Returns the y component of the point.
-   *
-   * @return the y component of the point.
-   */
-  public int getY() {
-    return y;
   }
 
   /**

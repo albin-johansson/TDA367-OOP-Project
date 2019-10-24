@@ -66,6 +66,11 @@ public interface IController {
   void selectDoodleTool();
 
   /**
+   * Sets a move tool as selected tool in model.
+   */
+  void selectMoveTool();
+
+  /**
    * Undoes the previously executed command. This method has no effect if there is nothing to undo.
    */
   void undo();
@@ -74,11 +79,6 @@ public interface IController {
    * Redoes the previously undone command. This method has no effect if there is nothing to redo.
    */
   void redo();
-
-  /**
-   * Sets a move tool as selected tool in model.
-   */
-  void selectMoveTool();
 
   /**
    * Tells the model that the selected tool has been pressed.
