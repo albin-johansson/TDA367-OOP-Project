@@ -25,23 +25,13 @@ public final class UndoRedoEvent {
   }
 
   /**
-   * Sets whether there is an available undo command.
+   * Returns the name of the available undo command. By default, {@value DEFAULT_COMMAND_NAME} is
+   * returned.
    *
-   * @param isUndoable {@code true} if there is at least one undoable command; {@code false}
-   *                   otherwise.
+   * @return the name of the available undo command.
    */
-  void setUndoable(boolean isUndoable) {
-    this.isUndoable = isUndoable;
-  }
-
-  /**
-   * Sets whether there is an available redo command.
-   *
-   * @param isRedoable {@code true} if there is at least one redoable command; {@code false}
-   *                   otherwise.
-   */
-  void setRedoable(boolean isRedoable) {
-    this.isRedoable = isRedoable;
+  public String getUndoCommandName() {
+    return undoCommandName;
   }
 
   /**
@@ -56,6 +46,16 @@ public final class UndoRedoEvent {
   }
 
   /**
+   * Returns the name of the available redo command. By default, {@value DEFAULT_COMMAND_NAME} is
+   * returned.
+   *
+   * @return the name of the available redo command.
+   */
+  public String getRedoCommandName() {
+    return redoCommandName;
+  }
+
+  /**
    * Sets the name of the available redo command. By default, this property is set to {@value
    * DEFAULT_COMMAND_NAME}.
    *
@@ -64,26 +64,6 @@ public final class UndoRedoEvent {
    */
   void setRedoCommandName(String redoCommandName) {
     this.redoCommandName = Objects.requireNonNull(redoCommandName);
-  }
-
-  /**
-   * Returns the name of the available undo command. By default, {@value DEFAULT_COMMAND_NAME} is
-   * returned.
-   *
-   * @return the name of the available undo command.
-   */
-  public String getUndoCommandName() {
-    return undoCommandName;
-  }
-
-  /**
-   * Returns the name of the available redo command. By default, {@value DEFAULT_COMMAND_NAME} is
-   * returned.
-   *
-   * @return the name of the available redo command.
-   */
-  public String getRedoCommandName() {
-    return redoCommandName;
   }
 
   /**
@@ -96,11 +76,31 @@ public final class UndoRedoEvent {
   }
 
   /**
+   * Sets whether there is an available undo command.
+   *
+   * @param isUndoable {@code true} if there is at least one undoable command; {@code false}
+   *                   otherwise.
+   */
+  void setUndoable(boolean isUndoable) {
+    this.isUndoable = isUndoable;
+  }
+
+  /**
    * Indicates whether or not there is an redoable command.
    *
    * @return {@code true} if there is at least one redoable command; {@code false} otherwise.
    */
   public boolean isRedoable() {
     return isRedoable;
+  }
+
+  /**
+   * Sets whether there is an available redo command.
+   *
+   * @param isRedoable {@code true} if there is at least one redoable command; {@code false}
+   *                   otherwise.
+   */
+  void setRedoable(boolean isRedoable) {
+    this.isRedoable = isRedoable;
   }
 }

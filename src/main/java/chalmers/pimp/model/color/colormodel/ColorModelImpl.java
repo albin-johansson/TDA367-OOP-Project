@@ -2,10 +2,8 @@ package chalmers.pimp.model.color.colormodel;
 
 import chalmers.pimp.model.canvas.LayerUpdateEvent;
 import chalmers.pimp.model.canvas.layer.IColorable;
-import chalmers.pimp.model.color.Colors;
 import chalmers.pimp.model.color.IColor;
 import java.util.Objects;
-import javax.swing.Icon;
 
 /**
  * The {@code ColorModelImpl} class is an implementation of the {@code IColorModel} interface.

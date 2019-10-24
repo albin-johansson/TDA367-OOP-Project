@@ -24,7 +24,7 @@
         </ScrollPane>
             <AnchorPane fx:id="emptyLayerPane" StackPane.alignment="CENTER">
                <children>
-            <Label alignment="CENTER" layoutX="19.0" prefHeight="62.0" prefWidth="272.0" text="You currently haver no layers, use the tools on the left to get started!" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="19.0">
+            <Label alignment="CENTER" layoutX="19.0" prefHeight="62.0" prefWidth="272.0" text="You currently have no layers, use the tools on the left to get started!" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="19.0">
               <font>
                 <Font size="36.0" />
               </font>

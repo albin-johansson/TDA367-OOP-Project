@@ -71,43 +71,8 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
-  }
-
-  @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
-  }
-
-  @Override
-  public void setX(int x) {
-    layerDelegate.setX(x);
-  }
-
-  @Override
-  public void setY(int y) {
-    layerDelegate.setY(y);
-  }
-
-  @Override
-  public void setName(String name) {
-    layerDelegate.setName(name);
-  }
-
-  @Override
-  public void setDepthIndex(int depthIndex) {
-    layerDelegate.setDepthIndex(depthIndex);
-  }
-
-  @Override
-  public void setRotation(int rotation) {
-    layerDelegate.setRotationDegrees(rotation);
-  }
-
-  @Override
-  public void setAlpha(double alpha) {
-    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -116,8 +81,18 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
+  public void setVisible(boolean isVisible) {
+    layerDelegate.setVisible(isVisible);
+  }
+
+  @Override
   public int getX() {
     return layerDelegate.getX();
+  }
+
+  @Override
+  public void setX(int x) {
+    layerDelegate.setX(x);
   }
 
   @Override
@@ -126,13 +101,28 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
+  public void setY(int y) {
+    layerDelegate.setY(y);
+  }
+
+  @Override
   public String getName() {
     return layerDelegate.getName();
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
   public int getDepthIndex() {
     return layerDelegate.getDepthIndex();
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
   }
 
   @Override
@@ -151,8 +141,18 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
+  public void setRotation(int rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
   public double getAlpha() {
     return layerDelegate.getAlpha();
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
   }
 
   @Override

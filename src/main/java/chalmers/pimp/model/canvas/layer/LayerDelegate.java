@@ -60,24 +60,6 @@ final class LayerDelegate {
   }
 
   /**
-   * Sets the x-coordinate of the layer's point.
-   *
-   * @param x the new x-coordinate of the layer's point.
-   */
-  void setX(int x) {
-    position = position.setX(x);
-  }
-
-  /**
-   * Sets the y-coordinate of the layer's point.
-   *
-   * @param y the new y-coordinate of the layer's point.
-   */
-  void setY(int y) {
-    position = position.setY(y);
-  }
-
-  /**
    * Offsets the x- and y-coordinates.
    *
    * @param dx the x-axis offset, may be negative.
@@ -89,12 +71,13 @@ final class LayerDelegate {
   }
 
   /**
-   * Sets the name of the layer.
+   * Indicates whether or not the layer is visible. By default, this property is set to {@value
+   * LayerDelegate#DEFAULT_VISIBILITY_VALUE}.
    *
-   * @param name the new name of the layer.
+   * @return {@code true} if the layer is visible; {@code false} otherwise.
    */
-  void setName(String name) {
-    this.name = name;
+  boolean isVisible() {
+    return isVisible;
   }
 
   /**
@@ -105,16 +88,6 @@ final class LayerDelegate {
    */
   void setVisible(boolean isVisible) {
     this.isVisible = isVisible;
-  }
-
-  /**
-   * Indicates whether or not the layer is visible. By default, this property is set to {@value
-   * LayerDelegate#DEFAULT_VISIBILITY_VALUE}.
-   *
-   * @return {@code true} if the layer is visible; {@code false} otherwise.
-   */
-  boolean isVisible() {
-    return isVisible;
   }
 
   /**
@@ -136,25 +109,21 @@ final class LayerDelegate {
   }
 
   /**
-   * Sets the rotation for this layer.
-   *
-   * @param rotationDegrees the new rotation.
-   */
-  void setRotationDegrees(int rotationDegrees) {
-    int temp = rotationDegrees % 360;
-    if (temp < 0) {
-      temp = 360 + temp;
-    }
-    this.rotationDegrees = temp;
-  }
-
-  /**
    * Returns the x-coordinate of the layer. By default, this property is set to {@code 0}.
    *
    * @return the x-coordinate of the layer.
    */
   int getX() {
     return position.getX();
+  }
+
+  /**
+   * Sets the x-coordinate of the layer's point.
+   *
+   * @param x the new x-coordinate of the layer's point.
+   */
+  void setX(int x) {
+    position = position.setX(x);
   }
 
   /**
@@ -167,12 +136,34 @@ final class LayerDelegate {
   }
 
   /**
+   * Sets the y-coordinate of the layer's point.
+   *
+   * @param y the new y-coordinate of the layer's point.
+   */
+  void setY(int y) {
+    position = position.setY(y);
+  }
+
+  /**
    * Returns the rotation value for this layer.
    *
    * @return the rotation value.
    */
   int getRotationDegrees() {
     return rotationDegrees;
+  }
+
+  /**
+   * Sets the rotation for this layer.
+   *
+   * @param rotationDegrees the new rotation.
+   */
+  void setRotationDegrees(int rotationDegrees) {
+    int temp = rotationDegrees % 360;
+    if (temp < 0) {
+      temp = 360 + temp;
+    }
+    this.rotationDegrees = temp;
   }
 
   /**
@@ -200,6 +191,15 @@ final class LayerDelegate {
    */
   String getName() {
     return name;
+  }
+
+  /**
+   * Sets the name of the layer.
+   *
+   * @param name the new name of the layer.
+   */
+  void setName(String name) {
+    this.name = name;
   }
 
   /**

@@ -13,9 +13,9 @@ import java.util.Objects;
 final class Rectangle implements ILayer, IColorable {
 
   private final LayerDelegate layerDelegate;
-  private IColor color;
   private final int width;
   private final int height;
+  private IColor color;
 
   /**
    * Creates a rectangle.
@@ -54,43 +54,8 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
-  }
-
-  @Override
   public void move(int dx, int dy) {
     layerDelegate.move(dx, dy);
-  }
-
-  @Override
-  public void setX(int x) {
-    layerDelegate.setX(x);
-  }
-
-  @Override
-  public void setY(int y) {
-    layerDelegate.setY(y);
-  }
-
-  @Override
-  public void setName(String name) {
-    layerDelegate.setName(name);
-  }
-
-  @Override
-  public void setDepthIndex(int depthIndex) {
-    layerDelegate.setDepthIndex(depthIndex);
-  }
-
-  @Override
-  public void setRotation(int rotation) {
-    layerDelegate.setRotationDegrees(rotation);
-  }
-
-  @Override
-  public void setAlpha(double alpha) {
-    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -99,8 +64,18 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
+  public void setVisible(boolean isVisible) {
+    layerDelegate.setVisible(isVisible);
+  }
+
+  @Override
   public int getX() {
     return layerDelegate.getX();
+  }
+
+  @Override
+  public void setX(int x) {
+    layerDelegate.setX(x);
   }
 
   @Override
@@ -109,13 +84,28 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
+  public void setY(int y) {
+    layerDelegate.setY(y);
+  }
+
+  @Override
   public String getName() {
     return layerDelegate.getName();
   }
 
   @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
   public int getDepthIndex() {
     return layerDelegate.getDepthIndex();
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
   }
 
   @Override
@@ -134,8 +124,18 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
+  public void setRotation(int rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
   public double getAlpha() {
     return layerDelegate.getAlpha();
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -198,12 +198,12 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public void setColor(IColor color) {
-    this.color = Objects.requireNonNull(color);
+  public IColor getColor() {
+    return color;
   }
 
   @Override
-  public IColor getColor() {
-    return color;
+  public void setColor(IColor color) {
+    this.color = Objects.requireNonNull(color);
   }
 }

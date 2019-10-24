@@ -92,24 +92,6 @@ public final class LayerMovement {
   }
 
   /**
-   * Sets the value of the property for the final x-coordinate of the layer.
-   *
-   * @param endX the value of the property for the final x-coordinate of the layer.
-   */
-  void setEndX(int endX) {
-    this.endX = endX;
-  }
-
-  /**
-   * Sets the value of the property for the final y-coordinate of the layer.
-   *
-   * @param endY the value of the property for the final y-coordinate of the layer.
-   */
-  void setEndY(int endY) {
-    this.endY = endY;
-  }
-
-  /**
    * Returns the model memento instance that represents the state of the model just before the layer
    * movement begun.
    *
@@ -130,11 +112,29 @@ public final class LayerMovement {
   }
 
   /**
+   * Sets the value of the property for the final x-coordinate of the layer.
+   *
+   * @param endX the value of the property for the final x-coordinate of the layer.
+   */
+  void setEndX(int endX) {
+    this.endX = endX;
+  }
+
+  /**
    * Returns the final y-coordinate of the layer, after movement seized.
    *
    * @return the final y-coordinate of the layer, after movement seized.
    */
   public int getEndY() {
     return endY;
+  }
+
+  /**
+   * Sets the value of the property for the final y-coordinate of the layer.
+   *
+   * @param endY the value of the property for the final y-coordinate of the layer.
+   */
+  void setEndY(int endY) {
+    this.endY = endY;
   }
 }

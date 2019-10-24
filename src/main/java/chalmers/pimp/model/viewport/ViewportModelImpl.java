@@ -27,28 +27,13 @@ final class ViewportModelImpl implements IViewportModel {
   }
 
   @Override
-  public void setX(int x) {
-    viewport.setX(x);
-  }
-
-  @Override
-  public void setY(int y) {
-    viewport.setY(y);
-  }
-
-  @Override
-  public void setWidth(int width) {
-    viewport.setWidth(width);
-  }
-
-  @Override
-  public void setHeight(int height) {
-    viewport.setHeight(height);
-  }
-
-  @Override
   public int getX() {
     return viewport.getX();
+  }
+
+  @Override
+  public void setX(int x) {
+    viewport.setX(x);
   }
 
   @Override
@@ -57,13 +42,28 @@ final class ViewportModelImpl implements IViewportModel {
   }
 
   @Override
+  public void setY(int y) {
+    viewport.setY(y);
+  }
+
+  @Override
   public int getWidth() {
     return viewport.getWidth();
   }
 
   @Override
+  public void setWidth(int width) {
+    viewport.setWidth(width);
+  }
+
+  @Override
   public int getHeight() {
     return viewport.getHeight();
+  }
+
+  @Override
+  public void setHeight(int height) {
+    viewport.setHeight(height);
   }
 
   @Override

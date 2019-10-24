@@ -4,8 +4,8 @@ import chalmers.pimp.model.IRenderer;
 import chalmers.pimp.model.canvas.ICanvasUpdateListener;
 
 /**
- * The {@code IView} interface specifies the main model component in the Pimp
- * application. extends {@link ICanvasUpdateListener}
+ * The {@code IView} interface specifies the main model component in the Pimp application. extends
+ * {@link ICanvasUpdateListener}
  */
 public interface IView extends ICanvasUpdateListener {
 

@@ -4,7 +4,6 @@ import chalmers.pimp.model.canvas.ICanvas;
 import chalmers.pimp.model.color.IColor;
 import chalmers.pimp.model.pixeldata.IPixel;
 import chalmers.pimp.model.pixeldata.IRasterData;
-import chalmers.pimp.model.pixeldata.PixelFactory;
 import chalmers.pimp.model.pixeldata.RasterDataFactory;
 import java.util.ArrayList;
 import java.util.List;

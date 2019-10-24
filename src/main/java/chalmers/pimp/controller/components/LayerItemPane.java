@@ -52,6 +52,8 @@ final class LayerItemPane extends AnchorPane {
     }
   }
 
+  private final IModel model;
+  private final int associatedLayerIndex;
   @FXML
   @SuppressWarnings("unused")
   private Label layerName;
@@ -79,9 +81,6 @@ final class LayerItemPane extends AnchorPane {
   @FXML
   @SuppressWarnings("unused")
   private Button renameButton;
-
-  private final IModel model;
-  private final int associatedLayerIndex;
 
   /**
    * @param model                the associated model instance.

@@ -39,7 +39,6 @@ final class InfoPane extends AnchorPane implements IModelSizeListener {
   @FXML
   private Label layerRotation;
 
-
   /**
    * @throws IOException if the associated FXML-file cannot be loaded.
    */

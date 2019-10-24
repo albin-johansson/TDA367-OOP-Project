@@ -304,13 +304,6 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   void selectedToolReleased(MouseStatus mouseStatus);
 
   /**
-   * Sets the models renderer.
-   *
-   * @param renderer the specific renderer implementation.
-   */
-  void setRenderer(IRenderer renderer);
-
-  /**
    * Indicates whether or not the layer associated with the supplied index is visible. This method
    * has no effect if the supplied index is out-of-bounds.
    *
@@ -345,6 +338,13 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   IRenderer getRenderer();
 
   /**
+   * Sets the models renderer.
+   *
+   * @param renderer the specific renderer implementation.
+   */
+  void setRenderer(IRenderer renderer);
+
+  /**
    * Returns the currently active layer. Note! Use this method with caution since the returned
    * reference may become invalidated as a result of executing other actions.
    *
@@ -353,19 +353,19 @@ public interface IModel extends IChangeable, IMementoTarget<ModelMemento> {
   IReadOnlyLayer getActiveLayer();
 
   /**
+   * Returns the selected color that is used for when creating new shapes, drawings etc.
+   *
+   * @return the selected color that is used for when creating new shapes, drawings etc.
+   */
+  IColor getSelectedColor();
+
+  /**
    * Sets the color that should be used for drawing items on the canvas.
    *
    * @param color the new color.
    * @throws NullPointerException if the provided color is {@code null}.
    */
   void setSelectedColor(IColor color);
-
-  /**
-   * Returns the selected color that is used for when creating new shapes, drawings etc.
-   *
-   * @return the selected color that is used for when creating new shapes, drawings etc.
-   */
-  IColor getSelectedColor();
 
   /**
    * Returns all of the layers in the model.
