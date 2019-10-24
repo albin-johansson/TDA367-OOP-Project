@@ -13,6 +13,7 @@ public final class Colors {
   public static final IColor BLUE = ColorFactory.createColor(0, 0, 0xFF);
   public static final IColor DARK_GRAY = ColorFactory.createColor(0x4A, 0x44, 0x43);
   public static final IColor LIGHT_GRAY = ColorFactory.createColor(0xD3, 0xD4, 0xD6);
+
   private Colors() {
   }
 }
