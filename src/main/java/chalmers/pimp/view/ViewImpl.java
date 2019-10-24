@@ -26,15 +26,15 @@ final class ViewImpl implements IView {
   }
 
   @Override
-  public void setRenderer(IRenderer renderer) {
-    Objects.requireNonNull(renderer);
-    graphicsHandler = new GraphicsHandler(renderer, model);
-  }
-
-  @Override
   public void repaint() {
     if (graphicsHandler != null) {
       graphicsHandler.render();
     }
+  }
+
+  @Override
+  public void setRenderer(IRenderer renderer) {
+    Objects.requireNonNull(renderer);
+    graphicsHandler = new GraphicsHandler(renderer, model);
   }
 }

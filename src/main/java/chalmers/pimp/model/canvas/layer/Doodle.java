@@ -53,18 +53,8 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public void move(int dx, int dy) {
-    layerDelegate.move(dx, dy);
-  }
-
-  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
-  }
-
-  @Override
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
   }
 
   @Override
@@ -75,14 +65,6 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public void setX(int x) {
-    List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
-    int min = getExtreme(xValues, (a, b) -> a > b);
-
-    layerDelegate.setX(x - min);
-  }
-
-  @Override
   public int getY() {
     List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
     int min = getExtreme(yValues, (a, b) -> a > b);
@@ -90,11 +72,18 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public void setY(int y) {
-    List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
-    int min = getExtreme(yValues, (a, b) -> a > b);
+  public String getName() {
+    return layerDelegate.getName();
+  }
 
-    layerDelegate.setY(y - min);
+  @Override
+  public int getDepthIndex() {
+    return layerDelegate.getDepthIndex();
+  }
+
+  @Override
+  public Point getCenterPoint() {
+    return new Point(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
   }
 
   @Override
@@ -108,18 +97,8 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public void setRotation(int rotation) {
-    layerDelegate.setRotationDegrees(rotation);
-  }
-
-  @Override
   public double getAlpha() {
     return layerDelegate.getAlpha();
-  }
-
-  @Override
-  public void setAlpha(double alpha) {
-    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -139,8 +118,29 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public String getName() {
-    return layerDelegate.getName();
+  public void setVisible(boolean isVisible) {
+    layerDelegate.setVisible(isVisible);
+  }
+
+  @Override
+  public void move(int dx, int dy) {
+    layerDelegate.move(dx, dy);
+  }
+
+  @Override
+  public void setX(int x) {
+    List<Integer> xValues = points.stream().map(Point::getX).collect(Collectors.toList());
+    int min = getExtreme(xValues, (a, b) -> a > b);
+
+    layerDelegate.setX(x - min);
+  }
+
+  @Override
+  public void setY(int y) {
+    List<Integer> yValues = points.stream().map(Point::getY).collect(Collectors.toList());
+    int min = getExtreme(yValues, (a, b) -> a > b);
+
+    layerDelegate.setY(y - min);
   }
 
   @Override
@@ -149,18 +149,18 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public int getDepthIndex() {
-    return layerDelegate.getDepthIndex();
-  }
-
-  @Override
   public void setDepthIndex(int depthIndex) {
     layerDelegate.setDepthIndex(depthIndex);
   }
 
   @Override
-  public Point getCenterPoint() {
-    return new Point(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
+  public void setRotation(int rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
   }
 
   @Override

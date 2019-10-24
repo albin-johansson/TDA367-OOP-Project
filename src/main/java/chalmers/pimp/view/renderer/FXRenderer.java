@@ -75,6 +75,16 @@ final class FXRenderer implements IRenderer {
   }
 
   @Override
+  public void drawLine(Point p1, Point p2) {
+    if ((p1 == null) || (p2 == null)) {
+      return;
+    }
+    graphicsContext.setEffect(lineBlurEffect);
+    graphicsContext.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+    graphicsContext.setEffect(null);
+  }
+
+  @Override
   public void startTransform(double rotation, Point centerPoint) {
     if (centerPoint == null) {
       return;
@@ -85,16 +95,6 @@ final class FXRenderer implements IRenderer {
     var rotate = new Affine();
     rotate.appendRotation(rotation, centerPoint.getX(), centerPoint.getY());
     graphicsContext.setTransform(rotate);
-  }
-
-  @Override
-  public void drawLine(Point p1, Point p2) {
-    if ((p1 == null) || (p2 == null)) {
-      return;
-    }
-    graphicsContext.setEffect(lineBlurEffect);
-    graphicsContext.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-    graphicsContext.setEffect(null);
   }
 
   @Override

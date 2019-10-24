@@ -95,18 +95,6 @@ final class ControllerImpl implements IController {
   }
 
   @Override
-  public void undo() {
-    model.undo();
-    view.repaint();
-  }
-
-  @Override
-  public void redo() {
-    model.redo();
-    view.repaint();
-  }
-
-  @Override
   public void selectRasterPen() {
     ITool pencil = ToolFactory.createRasterPen(2, model);
     model.setSelectedTool(pencil);
@@ -137,6 +125,18 @@ final class ControllerImpl implements IController {
   @Override
   public void selectMoveTool() {
     model.setSelectedTool(ToolFactory.createMoveTool(model));
+  }
+
+  @Override
+  public void undo() {
+    model.undo();
+    view.repaint();
+  }
+
+  @Override
+  public void redo() {
+    model.redo();
+    view.repaint();
   }
 
   @Override
