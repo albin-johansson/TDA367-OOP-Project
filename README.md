@@ -1,7 +1,7 @@
 # Object oriented project for TDA367
 [![Build Status](https://travis-ci.org/albin-johansson/TDA367-OOP-Project.svg?branch=master)](https://travis-ci.org/albin-johansson/TDA367-OOP-Project)
 
-![snowman](/readme/halloween_gui.png)
+![snowman](/readme_images/halloween_gui.png)
 
 A "Professional Image Manipulation Program" built for the TDA367 course at Chalmers.
 
@@ -14,10 +14,10 @@ A "Professional Image Manipulation Program" built for the TDA367 course at Chalm
 
 ## Demo pictures
 
-![snowman](/readme/snowman.png)
+![snowman](/readme_images/snowman.png)
 
 A beatiful snowman in a snow landscape! Made by [Minus](https://github.com/Minus98) age 21.
 
-![snowman](/readme/scenery.png)
+![snowman](/readme_images/scenery.png)
 
 A summer scenery which reminds you of all the unforgettable summer days! Made by [Oet](https://github.com/theowiik) age 20.
