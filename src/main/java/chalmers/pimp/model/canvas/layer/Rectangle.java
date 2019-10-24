@@ -54,18 +54,8 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public void move(int dx, int dy) {
-    layerDelegate.move(dx, dy);
-  }
-
-  @Override
   public boolean isVisible() {
     return layerDelegate.isVisible();
-  }
-
-  @Override
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
   }
 
   @Override
@@ -74,18 +64,8 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public void setX(int x) {
-    layerDelegate.setX(x);
-  }
-
-  @Override
   public int getY() {
     return layerDelegate.getY();
-  }
-
-  @Override
-  public void setY(int y) {
-    layerDelegate.setY(y);
   }
 
   @Override
@@ -94,18 +74,8 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public void setName(String name) {
-    layerDelegate.setName(name);
-  }
-
-  @Override
   public int getDepthIndex() {
     return layerDelegate.getDepthIndex();
-  }
-
-  @Override
-  public void setDepthIndex(int depthIndex) {
-    layerDelegate.setDepthIndex(depthIndex);
   }
 
   @Override
@@ -124,18 +94,8 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public void setRotation(int rotation) {
-    layerDelegate.setRotationDegrees(rotation);
-  }
-
-  @Override
   public double getAlpha() {
     return layerDelegate.getAlpha();
-  }
-
-  @Override
-  public void setAlpha(double alpha) {
-    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -146,6 +106,46 @@ final class Rectangle implements ILayer, IColorable {
   @Override
   public int getHeight() {
     return height;
+  }
+
+  @Override
+  public void setVisible(boolean isVisible) {
+    layerDelegate.setVisible(isVisible);
+  }
+
+  @Override
+  public void move(int dx, int dy) {
+    layerDelegate.move(dx, dy);
+  }
+
+  @Override
+  public void setX(int x) {
+    layerDelegate.setX(x);
+  }
+
+  @Override
+  public void setY(int y) {
+    layerDelegate.setY(y);
+  }
+
+  @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
+  public void setRotation(int rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -164,23 +164,6 @@ final class Rectangle implements ILayer, IColorable {
   }
 
   @Override
-  public ILayer clone() {
-    try {
-      var clone = (Rectangle) super.clone();
-      return new Rectangle(clone);
-    } catch (Exception e) {
-      throw new IllegalStateException(e);
-    }
-  }
-
-  @Override
-  public String toString() {
-    String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
-    String state = "X: " + getX() + ", Y: " + getY() + ", Width: " + width + ", Height: " + height;
-    return "(" + id + " | " + state + ")";
-  }
-
-  @Override
   public boolean equals(Object object) {
     if (!(object instanceof Rectangle)) {
       return false;
@@ -195,6 +178,23 @@ final class Rectangle implements ILayer, IColorable {
         && (width == rectangle.width)
         && (height == rectangle.height)
         && color.equals(rectangle.color);
+  }
+
+  @Override
+  public ILayer clone() {
+    try {
+      var clone = (Rectangle) super.clone();
+      return new Rectangle(clone);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  @Override
+  public String toString() {
+    String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
+    String state = "X: " + getX() + ", Y: " + getY() + ", Width: " + width + ", Height: " + height;
+    return "(" + id + " | " + state + ")";
   }
 
   @Override

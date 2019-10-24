@@ -371,6 +371,20 @@ final class ModelImpl implements IModel {
   }
 
   @Override
+  public IColor getSelectedColor() {
+    return colorModel.getColor();
+  }
+
+  @Override
+  public void setSelectedColor(IColor color) {
+    Objects.requireNonNull(color);
+
+    ICommand cmd = createChangeColorCommand(colorModel, this, color);
+    cmd.execute();
+    commandManager.insertCommand(cmd);
+  }
+
+  @Override
   public Iterable<? extends IReadOnlyLayer> getLayers() {
     return canvas.getLayers();
   }
@@ -406,19 +420,5 @@ final class ModelImpl implements IModel {
   @Override
   public void redo() {
     commandManager.redo();
-  }
-
-  @Override
-  public IColor getSelectedColor() {
-    return colorModel.getColor();
-  }
-
-  @Override
-  public void setSelectedColor(IColor color) {
-    Objects.requireNonNull(color);
-
-    ICommand cmd = createChangeColorCommand(colorModel, this, color);
-    cmd.execute();
-    commandManager.insertCommand(cmd);
   }
 }

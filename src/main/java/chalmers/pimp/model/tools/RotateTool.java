@@ -19,13 +19,13 @@ public class RotateTool implements ITool {
   }
 
   @Override
-  public void pressed(MouseStatus mouseStatus) {
-    model.startRotatingActiveLayer(mouseStatus.getX(), mouseStatus.getY());
+  public void dragged(MouseStatus mouseStatus) {
+    model.updateRotatingActiveLayer(mouseStatus.getX(), mouseStatus.getY());
   }
 
   @Override
-  public void dragged(MouseStatus mouseStatus) {
-    model.updateRotatingActiveLayer(mouseStatus.getX(), mouseStatus.getY());
+  public void pressed(MouseStatus mouseStatus) {
+    model.startRotatingActiveLayer(mouseStatus.getX(), mouseStatus.getY());
   }
 
   @Override

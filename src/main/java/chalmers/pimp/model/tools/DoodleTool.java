@@ -34,13 +34,6 @@ final class DoodleTool implements ITool {
   }
 
   @Override
-  public void pressed(MouseStatus mouseStatus) {
-    Objects.requireNonNull(mouseStatus);
-    doodle = LayerFactory.createDoodle(lineWidth, model.getSelectedColor());
-    dragged(mouseStatus);
-  }
-
-  @Override
   public void dragged(MouseStatus mouseStatus) {
     Objects.requireNonNull(mouseStatus);
     model.notifyCanvasUpdateListeners();
@@ -50,6 +43,13 @@ final class DoodleTool implements ITool {
 
     doodle.addPoint(new Point(x, y));
     doodle.draw(model.getRenderer(), model.getViewport());
+  }
+
+  @Override
+  public void pressed(MouseStatus mouseStatus) {
+    Objects.requireNonNull(mouseStatus);
+    doodle = LayerFactory.createDoodle(lineWidth, model.getSelectedColor());
+    dragged(mouseStatus);
   }
 
   @Override
