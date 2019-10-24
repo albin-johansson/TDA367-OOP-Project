@@ -164,8 +164,13 @@ final class Doodle implements IDoodleLayer, IColorable {
   }
 
   @Override
-  public ILayer copy() {
-    return new Doodle(this);
+  public ILayer clone() {
+    try {
+      var clone = (Doodle) super.clone();
+      return new Doodle(clone);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   @Override

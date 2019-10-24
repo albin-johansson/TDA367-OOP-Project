@@ -1,6 +1,8 @@
 package chalmers.pimp.model.canvas;
 
+import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.IReadOnlyLayer;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -8,8 +10,7 @@ import java.util.Objects;
  */
 public final class LayerUpdateEvent {
 
-  private final Iterable<? extends IReadOnlyLayer> layers;
-  private final int nLayers;
+  private final List<ILayer> layers;
   private IReadOnlyLayer selectedLayer;
   private IReadOnlyLayer removedLayer;
   private IReadOnlyLayer addedLayer;
@@ -17,13 +18,11 @@ public final class LayerUpdateEvent {
   private boolean selectionUpdated;
 
   /**
-   * @param layers  all of the layers contained in the model.
-   * @param nLayers the number of supplied layers.
+   * @param layers all of the layers contained in the model.
    * @throws NullPointerException if any references are {@code null}.
    */
-  LayerUpdateEvent(Iterable<? extends IReadOnlyLayer> layers, int nLayers) {
+  LayerUpdateEvent(List<ILayer> layers) {
     this.layers = Objects.requireNonNull(layers);
-    this.nLayers = nLayers;
 
     selectedLayer = null;
     removedLayer = null;
@@ -117,7 +116,7 @@ public final class LayerUpdateEvent {
    * @return the amount of layers associated with this layer update event.
    */
   public int getAmountOfLayers() {
-    return nLayers;
+    return layers.size();
   }
 
   /**
@@ -143,6 +142,17 @@ public final class LayerUpdateEvent {
       }
       i++;
     }
+  }
+
+  /**
+   * Returns a copy of the layer associated with the supplied layer depth index.
+   *
+   * @param layerDepthIndex the layer depth index of the desired layer.
+   * @return a copy of the layer associated with the supplied layer depth index.
+   * @throws IndexOutOfBoundsException if the supplied index isn't associated with a layer.
+   */
+  public ILayer getCopyOfLayer(int layerDepthIndex) {
+    return layers.get(layerDepthIndex).clone();
   }
 
   /**

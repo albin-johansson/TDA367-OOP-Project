@@ -74,14 +74,14 @@ class RasterTest {
   }
 
   @Test
-  void copy() {
-    var copy = raster.copy();
+  void cloneTest() {
+    ILayer copy = raster.clone();
     assertEquals(raster, copy);
   }
 
   @Test
   void equalsTest() {
-    var copy = raster.copy();
+    var copy = raster.clone();
 
     assertNotEquals(null, raster);
 
@@ -91,7 +91,7 @@ class RasterTest {
     assertEquals(copy, raster);
     assertEquals(raster, copy);
 
-    var secondCopy = copy.copy();
+    var secondCopy = copy.clone();
 
     // Transitive
     assertEquals(raster, copy);

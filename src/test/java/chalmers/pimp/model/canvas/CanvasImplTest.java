@@ -223,11 +223,11 @@ class CanvasImplTest {
   }
 
   @Test
-  void copy() {
+  void cloneTest() {
     canvas.addLayer(defaultLayer);
     canvas.selectLayer(0);
 
-    ICanvas copy = canvas.copy();
+    ICanvas copy = canvas.clone();
 
     assertEquals(canvas.getAmountOfLayers(), copy.getAmountOfLayers());
     assertEquals(canvas.getActiveLayer().getDepthIndex(), copy.getActiveLayer().getDepthIndex());

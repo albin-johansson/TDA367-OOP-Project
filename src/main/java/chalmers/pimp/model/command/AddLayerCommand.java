@@ -33,7 +33,7 @@ final class AddLayerCommand extends AbstractCommand {
   @Override
   public void execute() {
     updateModelMemento();
-    canvas.addLayer(layer.copy());
+    canvas.addLayer(layer.clone());
   }
 
   @Override

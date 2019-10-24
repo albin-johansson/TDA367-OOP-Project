@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chalmers.pimp.model.canvas.layer.ILayer;
 import chalmers.pimp.model.canvas.layer.LayerFactory;
+import java.util.List;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,13 +19,16 @@ class LayerUpdateEventTest {
   private Random random;
 
   @BeforeEach
+  @SuppressWarnings("unchecked")
   private void setUp() {
     random = new Random(System.currentTimeMillis());
 
     layerManager = new LayerManager();
     layerManager.addLayer(LayerFactory.createRectangle(0, 0, 10, 10));
 
-    event = new LayerUpdateEvent(layerManager.getLayers(), layerManager.getAmountOfLayers());
+    // We know that this is OK
+    List<ILayer> layers = (List<ILayer>) layerManager.getLayers();
+    event = new LayerUpdateEvent(layers);
   }
 
   @Test

@@ -164,7 +164,7 @@ final class Raster implements IRasterLayer {
   public int getHeight() {
     return rasterData.getHeight();
   }
-  
+
   public IReadOnlyRasterData getPixelData() {
     return rasterData;
   }
@@ -184,8 +184,13 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
-  public IRasterLayer copy() {
-    return new Raster(this);
+  public IRasterLayer clone() {
+    try {
+      var clone = (Raster) super.clone();
+      return new Raster(clone);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   @Override

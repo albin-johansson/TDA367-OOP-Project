@@ -182,8 +182,13 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
-  public ICanvas copy() {
-    return new CanvasImpl(this);
+  public ICanvas clone() {
+    try {
+      var clone = (CanvasImpl) super.clone();
+      return new CanvasImpl(clone);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   @Override
