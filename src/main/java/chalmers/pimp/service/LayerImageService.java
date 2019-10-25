@@ -46,7 +46,7 @@ public final class LayerImageService {
     Objects.requireNonNull(layer);
     ILayer copy = layer.clone();
 
-    // Always show the layer so preview will be shown.
+    // Always show the layer so that the preview will be shown.
     copy.setVisible(true);
 
     int size = getPreviewAreaSize(copy);
