@@ -46,6 +46,9 @@ public final class LayerImageService {
     Objects.requireNonNull(layer);
     ILayer copy = layer.clone();
 
+    // Always show the layer so that the preview will be shown.
+    copy.setVisible(true);
+
     int size = getPreviewAreaSize(copy);
 
     copy.setX(size);
@@ -62,7 +65,7 @@ public final class LayerImageService {
 
     WritableImage image = canvas.snapshot(new SnapshotParameters(), null);
 
-    //Crops the Image with the layer focused in the middle and a small margin
+    // Crops the Image with the layer focused in the middle and a small margin
     return new WritableImage(image.getPixelReader(), cropX, cropY, size, size);
   }
 }

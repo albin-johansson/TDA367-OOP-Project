@@ -175,13 +175,6 @@ final class CanvasImpl implements ICanvas {
   }
 
   @Override
-  public String toString() {
-    String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
-    String state = "Layer manager: " + layerManager;
-    return "(" + id + " | " + state + ")";
-  }
-
-  @Override
   public ICanvas clone() {
     try {
       var clone = (CanvasImpl) super.clone();
@@ -189,6 +182,13 @@ final class CanvasImpl implements ICanvas {
     } catch (Exception e) {
       throw new IllegalStateException(e);
     }
+  }
+
+  @Override
+  public String toString() {
+    String id = getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
+    String state = "Layer manager: " + layerManager;
+    return "(" + id + " | " + state + ")";
   }
 
   @Override

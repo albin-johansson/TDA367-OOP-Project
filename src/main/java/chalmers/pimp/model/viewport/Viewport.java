@@ -80,27 +80,9 @@ final class Viewport implements IReadOnlyViewport {
     return x;
   }
 
-  /**
-   * Sets the x-coordinate of the viewport.
-   *
-   * @param x the new x-coordinate of the viewport.
-   */
-  void setX(int x) {
-    this.x = x;
-  }
-
   @Override
   public int getY() {
     return y;
-  }
-
-  /**
-   * Sets the y-coordinate of the viewport.
-   *
-   * @param y the new y-coordinate of the viewport.
-   */
-  void setY(int y) {
-    this.y = y;
   }
 
   @Override
@@ -119,9 +101,32 @@ final class Viewport implements IReadOnlyViewport {
     return this.y + y;
   }
 
+  /**
+   * Sets the x-coordinate of the viewport.
+   *
+   * @param x the new x-coordinate of the viewport.
+   */
+  void setX(int x) {
+    this.x = x;
+  }
+
+  /**
+   * Sets the y-coordinate of the viewport.
+   *
+   * @param y the new y-coordinate of the viewport.
+   */
+  void setY(int y) {
+    this.y = y;
+  }
+
   @Override
   public int getWidth() {
     return width;
+  }
+
+  @Override
+  public int getHeight() {
+    return height;
   }
 
   /**
@@ -135,11 +140,6 @@ final class Viewport implements IReadOnlyViewport {
       throw new IllegalArgumentException("Invalid viewport width: " + width);
     }
     this.width = width;
-  }
-
-  @Override
-  public int getHeight() {
-    return height;
   }
 
   /**

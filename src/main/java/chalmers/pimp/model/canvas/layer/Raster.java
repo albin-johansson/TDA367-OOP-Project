@@ -70,9 +70,8 @@ final class Raster implements IRasterLayer {
     rasterData.setPixel(pixel);
   }
 
-  @Override
-  public void move(int dx, int dy) {
-    layerDelegate.move(dx, dy);
+  public IReadOnlyRasterData getPixelData() {
+    return rasterData;
   }
 
   @Override
@@ -81,18 +80,8 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
-  public void setVisible(boolean isVisible) {
-    layerDelegate.setVisible(isVisible);
-  }
-
-  @Override
   public int getX() {
     return layerDelegate.getX();
-  }
-
-  @Override
-  public void setX(int x) {
-    layerDelegate.setX(x);
   }
 
   @Override
@@ -101,28 +90,13 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
-  public void setY(int y) {
-    layerDelegate.setY(y);
-  }
-
-  @Override
   public String getName() {
     return layerDelegate.getName();
   }
 
   @Override
-  public void setName(String name) {
-    layerDelegate.setName(name);
-  }
-
-  @Override
   public int getDepthIndex() {
     return layerDelegate.getDepthIndex();
-  }
-
-  @Override
-  public void setDepthIndex(int depthIndex) {
-    layerDelegate.setDepthIndex(depthIndex);
   }
 
   @Override
@@ -141,18 +115,8 @@ final class Raster implements IRasterLayer {
   }
 
   @Override
-  public void setRotation(int rotation) {
-    layerDelegate.setRotationDegrees(rotation);
-  }
-
-  @Override
   public double getAlpha() {
     return layerDelegate.getAlpha();
-  }
-
-  @Override
-  public void setAlpha(double alpha) {
-    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -165,8 +129,44 @@ final class Raster implements IRasterLayer {
     return rasterData.getHeight();
   }
 
-  public IReadOnlyRasterData getPixelData() {
-    return rasterData;
+  @Override
+  public void setVisible(boolean isVisible) {
+    layerDelegate.setVisible(isVisible);
+  }
+
+  @Override
+  public void move(int dx, int dy) {
+    layerDelegate.move(dx, dy);
+  }
+
+  @Override
+  public void setX(int x) {
+    layerDelegate.setX(x);
+  }
+
+  @Override
+  public void setY(int y) {
+    layerDelegate.setY(y);
+  }
+
+  @Override
+  public void setName(String name) {
+    layerDelegate.setName(name);
+  }
+
+  @Override
+  public void setDepthIndex(int depthIndex) {
+    layerDelegate.setDepthIndex(depthIndex);
+  }
+
+  @Override
+  public void setRotation(int rotation) {
+    layerDelegate.setRotationDegrees(rotation);
+  }
+
+  @Override
+  public void setAlpha(double alpha) {
+    layerDelegate.setAlpha(alpha);
   }
 
   @Override
@@ -180,16 +180,6 @@ final class Raster implements IRasterLayer {
       renderer.drawImage(rasterData, drawX, drawY);
 
       renderer.endTransform();
-    }
-  }
-
-  @Override
-  public IRasterLayer clone() {
-    try {
-      var clone = (Raster) super.clone();
-      return new Raster(clone);
-    } catch (Exception e) {
-      throw new IllegalStateException(e);
     }
   }
 
@@ -210,5 +200,15 @@ final class Raster implements IRasterLayer {
     var raster = (Raster) object;
 
     return layerDelegate.equals(raster.layerDelegate) && rasterData.equals(raster.rasterData);
+  }
+
+  @Override
+  public IRasterLayer clone() {
+    try {
+      var clone = (Raster) super.clone();
+      return new Raster(clone);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    }
   }
 }

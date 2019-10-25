@@ -91,26 +91,6 @@ final class ColorImpl implements IColor {
   }
 
   @Override
-  public IColor setRed(int red) {
-    return new ColorImpl(red, green, blue, alpha);
-  }
-
-  @Override
-  public IColor setGreen(int green) {
-    return new ColorImpl(red, green, blue, alpha);
-  }
-
-  @Override
-  public IColor setBlue(int blue) {
-    return new ColorImpl(red, green, blue, alpha);
-  }
-
-  @Override
-  public IColor setAlpha(int alpha) {
-    return new ColorImpl(red, green, blue, alpha);
-  }
-
-  @Override
   public IColor setPercentageRed(double percentageRed) {
     return new ColorImpl(convertPercentage(percentageRed), green, blue, alpha);
   }
@@ -136,8 +116,18 @@ final class ColorImpl implements IColor {
   }
 
   @Override
+  public IColor setRed(int red) {
+    return new ColorImpl(red, green, blue, alpha);
+  }
+
+  @Override
   public int getGreen() {
     return green;
+  }
+
+  @Override
+  public IColor setGreen(int green) {
+    return new ColorImpl(red, green, blue, alpha);
   }
 
   @Override
@@ -146,8 +136,18 @@ final class ColorImpl implements IColor {
   }
 
   @Override
+  public IColor setBlue(int blue) {
+    return new ColorImpl(red, green, blue, alpha);
+  }
+
+  @Override
   public int getAlpha() {
     return alpha;
+  }
+
+  @Override
+  public IColor setAlpha(int alpha) {
+    return new ColorImpl(red, green, blue, alpha);
   }
 
   @Override

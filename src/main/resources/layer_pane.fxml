@@ -7,30 +7,35 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<fx:root prefWidth="310.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root xmlns:fx="http://javafx.com/fxml/1" prefWidth="310.0" styleClass="pane" stylesheets="@styling/stylesheet.css"
+  type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171">
   <children>
-      <Label id="layers-label" alignment="CENTER" prefHeight="40.0" prefWidth="310.0" text="Layers:" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-    <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+    <Label AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" alignment="CENTER" id="layers-label" prefHeight="40.0"
+      prefWidth="310.0" text="Layers:" textAlignment="CENTER"/>
+    <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
       <children>
-        <ScrollPane hbarPolicy="NEVER">
-          <content>
-            <VBox fx:id="layerItemVBox" alignment="TOP_RIGHT" spacing="5.0">
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </VBox>
-          </content>
-        </ScrollPane>
-            <AnchorPane fx:id="emptyLayerPane" StackPane.alignment="CENTER">
-               <children>
-            <Label alignment="CENTER" layoutX="19.0" prefHeight="62.0" prefWidth="272.0" text="You currently have no layers, use the tools on the left to get started!" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="19.0">
+        <AnchorPane StackPane.alignment="CENTER" fx:id="emptyLayerPane">
+          <children>
+            <Label AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="19.0" alignment="CENTER" layoutX="19.0"
+              prefHeight="62.0"
+              prefWidth="272.0" text="You currently have no layers, use the tools on the left to get started!" textAlignment="CENTER"
+              wrapText="true">
               <font>
-                <Font size="36.0" />
+                <Font size="36.0"/>
               </font>
             </Label>
-               </children>
-            </AnchorPane>
+          </children>
+        </AnchorPane>
+        <ScrollPane hbarPolicy="NEVER">
+          <content>
+            <VBox alignment="TOP_RIGHT" spacing="5.0" fx:id="layerItemVBox">
+              <padding>
+                <Insets left="5.0"/>
+              </padding>
+            </VBox>
+          </content>
+        </ScrollPane>
       </children>
     </StackPane>
   </children>

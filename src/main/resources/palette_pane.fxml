@@ -8,89 +8,95 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-
-<fx:root prefHeight="400.0" prefWidth="64.0" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="64.0" stylesheets="@styling/stylesheet.css"
+  type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171">
   <children>
-    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+      alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0"
+      spacing="8.0">
       <children>
-        <ToggleButton fx:id="doodleButton" mnemonicParsing="false" onAction="#selectDoodleTool">
+        <ToggleButton mnemonicParsing="false" onAction="#selectDoodleTool" fx:id="doodleButton">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@images/light/pencil.png" />
+                <Image url="@images/light/pencil.png"/>
               </image>
             </ImageView>
           </graphic>
-          <tooltip>
-            <Tooltip text="Doodle tool" />
-          </tooltip>
           <toggleGroup>
-            <ToggleGroup fx:id="palette" />
+            <ToggleGroup fx:id="palette"/>
           </toggleGroup>
+          <tooltip>
+            <Tooltip text="Doodle tool"/>
+          </tooltip>
         </ToggleButton>
-        <ToggleButton mnemonicParsing="false" onAction="#selectRectangleTool" toggleGroup="$palette">
+        <ToggleButton mnemonicParsing="false" onAction="#selectRectangleTool"
+          toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@images/light/rectangle.png" />
+                <Image url="@images/light/rectangle.png"/>
               </image>
             </ImageView>
           </graphic>
           <tooltip>
-            <Tooltip text="Rectangle Tool" />
+            <Tooltip text="Rectangle Tool"/>
           </tooltip>
         </ToggleButton>
         <ToggleButton mnemonicParsing="false" onAction="#selectMoveTool" toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@images/light/move.png" />
+                <Image url="@images/light/move.png"/>
               </image>
             </ImageView>
           </graphic>
           <tooltip>
-            <Tooltip text="Move Tool" />
+            <Tooltip text="Move Tool"/>
           </tooltip>
         </ToggleButton>
-        <ToggleButton layoutX="16.0" layoutY="268.0" mnemonicParsing="false" onAction="#selectRotateTool" toggleGroup="$palette">
+        <ToggleButton layoutX="16.0" layoutY="268.0" mnemonicParsing="false"
+          onAction="#selectRotateTool" toggleGroup="$palette">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@images/light/rotate.png" />
+                <Image url="@images/light/rotate.png"/>
               </image>
             </ImageView>
           </graphic>
           <tooltip>
-            <Tooltip text="Rotate Tool" />
+            <Tooltip text="Rotate Tool"/>
           </tooltip>
         </ToggleButton>
-        <ToggleButton fx:id="eraserButton" mnemonicParsing="false" onAction="#selectEraser" toggleGroup="$palette">
+        <ToggleButton mnemonicParsing="false" onAction="#selectEraser" toggleGroup="$palette"
+          fx:id="eraserButton">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@images/light/eraser.png" />
+                <Image url="@images/light/eraser.png"/>
               </image>
             </ImageView>
           </graphic>
           <tooltip>
-            <Tooltip text="Eraser Tool" />
+            <Tooltip text="Eraser Tool"/>
           </tooltip>
         </ToggleButton>
-        <ToggleButton fx:id="pixelPenButton" mnemonicParsing="false" onAction="#selectRasterPen" toggleGroup="$palette">
+        <ToggleButton mnemonicParsing="false" onAction="#selectRasterPen" toggleGroup="$palette"
+          fx:id="pixelPenButton">
           <graphic>
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@images/light/raster_pen.png" />
+                <Image url="@images/light/raster_pen.png"/>
               </image>
             </ImageView>
           </graphic>
           <tooltip>
-            <Tooltip text="Pencil Tool" />
+            <Tooltip text="Pencil Tool"/>
           </tooltip>
         </ToggleButton>
       </children>
       <padding>
-        <Insets top="8.0" />
+        <Insets top="8.0"/>
       </padding>
     </VBox>
   </children>
