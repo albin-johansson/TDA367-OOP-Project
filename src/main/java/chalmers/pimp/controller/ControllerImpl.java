@@ -96,13 +96,13 @@ final class ControllerImpl implements IController {
 
   @Override
   public void selectRasterPen() {
-    ITool pencil = ToolFactory.createRasterPen(2, model);
+    ITool pencil = ToolFactory.createRasterPen(10, model);
     model.setSelectedTool(pencil);
   }
 
   @Override
   public void selectEraser() {
-    model.setSelectedTool(ToolFactory.createRasterEraser(2, model));
+    model.setSelectedTool(ToolFactory.createRasterEraser(10, model));
   }
 
   @Override
