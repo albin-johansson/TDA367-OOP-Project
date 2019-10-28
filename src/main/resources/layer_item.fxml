@@ -13,76 +13,59 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<fx:root xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-  prefHeight="80.0" prefWidth="280.0" styleClass="pane" stylesheets="@styling/stylesheet.css"
-  type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171">
+
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="280.0" styleClass="pane" stylesheets="@styling/stylesheet.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-      AnchorPane.topAnchor="0.0" prefHeight="150.0" prefWidth="200.0">
+    <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <AnchorPane id="rename-box" prefHeight="200.0" prefWidth="200.0" fx:id="renamePane">
+        <AnchorPane id="rename-box" fx:id="renamePane" prefHeight="200.0" prefWidth="200.0">
           <children>
-            <AnchorPane AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="12.0"
-              id="layer-item" layoutX="7.0" layoutY="11.0"
-              prefHeight="55.0" prefWidth="263.0">
+            <AnchorPane id="layer-item" layoutX="7.0" layoutY="11.0" prefHeight="55.0" prefWidth="263.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="12.0">
               <children>
-                <Button layoutX="211.0" layoutY="12.0" mnemonicParsing="false" onAction="#setName"
-                  prefHeight="32.0" prefWidth="44.0" fx:id="renameButton">
+                <Button fx:id="renameButton" layoutX="211.0" layoutY="12.0" mnemonicParsing="false" onAction="#setName" prefHeight="32.0" prefWidth="44.0">
                   <graphic>
-                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true"
-                      preserveRatio="true">
+                    <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                       <image>
-                        <Image url="@images/light/checkmark.png"/>
+                        <Image url="@images/light/checkmark.png" />
                       </image>
                     </ImageView>
                   </graphic>
                 </Button>
-                <TextField AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="12.0"
-                  onAction="#setName" onKeyPressed="#checkIfCancel" prefHeight="32.0"
-                  prefWidth="187.0" fx:id="renameField"/>
+                <TextField fx:id="renameField" onAction="#setName" onKeyPressed="#checkIfCancel" prefHeight="32.0" prefWidth="187.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="12.0" />
               </children>
             </AnchorPane>
           </children>
         </AnchorPane>
-        <AnchorPane id="layer-item" prefHeight="200.0" prefWidth="200.0" fx:id="standardPane">
+        <AnchorPane id="layer-item" fx:id="standardPane" prefHeight="200.0" prefWidth="200.0">
           <children>
-            <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" alignment="CENTER_LEFT"
-              nodeOrientation="LEFT_TO_RIGHT">
+            <HBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <children>
-                <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true"
-                  fx:id="layerPreview">
+                <Label fx:id="layerName" alignment="CENTER" prefHeight="71.0" prefWidth="127.0" text="Label" textAlignment="CENTER" wrapText="true" />
+                <ImageView fx:id="layerPreview" fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                   <HBox.margin>
-                    <Insets/>
+                    <Insets />
                   </HBox.margin>
                   <image>
-                    <Image url="@images/light/raster.png"/>
+                    <Image url="@images/light/raster.png" />
                   </image>
                 </ImageView>
-                <Label alignment="CENTER" prefHeight="71.0" prefWidth="127.0" text="Label"
-                  textAlignment="CENTER" wrapText="true" fx:id="layerName"/>
-                <ToggleButton mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT"
-                  onAction="#toggleVisibility" prefHeight="34.0" prefWidth="44.0"
-                  selected="true" textAlignment="CENTER" fx:id="toggleButton">
+                <ToggleButton fx:id="toggleButton" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#toggleVisibility" prefHeight="34.0" prefWidth="44.0" selected="true" textAlignment="CENTER">
                   <HBox.margin>
-                    <Insets left="20.0"/>
+                    <Insets left="20.0" />
                   </HBox.margin>
                   <contextMenu>
                     <ContextMenu fx:id="contextMenu">
                       <items>
-                        <MenuItem mnemonicParsing="false" onAction="#removeLayer"
-                          text="Delete Layer"/>
-                        <MenuItem mnemonicParsing="false" onAction="#renameLayer"
-                          text="Rename Layer"/>
+                        <MenuItem mnemonicParsing="false" onAction="#removeLayer" text="Delete Layer" />
+                        <MenuItem mnemonicParsing="false" onAction="#renameLayer" text="Rename Layer" />
                       </items>
                     </ContextMenu>
                   </contextMenu>
                   <graphic>
-                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                      preserveRatio="true" fx:id="imageView"/>
+                    <ImageView fx:id="imageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                   </graphic>
                   <tooltip>
-                    <Tooltip text="Toggle visibility for this layer"/>
+                    <Tooltip text="Toggle visibility for this layer" />
                   </tooltip>
                 </ToggleButton>
               </children>
